@@ -6,20 +6,12 @@ import {Logo} from "../components/Logo";
 
 export const App = () => (
   <Stack spacing={0}>
-    <Background/>
     <Header/>
     <Center>
       <Content/>
     </Center>
   </Stack>
 )
-
-const Background = () => {
-  return (
-    <Stack h={"100vh"} w={"100vw"} bg={"black"} zIndex={"hide"} position={"absolute"}>
-    </Stack>
-  )
-}
 
 const Header = () => {
   return (
@@ -31,7 +23,7 @@ const Header = () => {
 
 const Content = () => {
   return (
-    <Stack background={"rgba(255,255,255, 0.5)"} borderRadius={20} w={"1366px"} h={"792px"} mx={"22px"}>
+    <Stack background={"rgba(255,255,255, 0.5)"} borderRadius={20} w={"1366px"} h={"792px"} mx={"22px"} mb={"22px"}>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Root/>}/>
