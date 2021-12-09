@@ -16,7 +16,7 @@ export const App = () => (
 
 const Background = () => {
   return (
-    <Stack h={"100vh"} w={"100vw"} bg={"gray"} zIndex={"hide"} position={"absolute"}>
+    <Stack h={"100vh"} w={"100vw"} bg={"black"} zIndex={"hide"} position={"absolute"}>
     </Stack>
   )
 }
@@ -31,7 +31,7 @@ const Header = () => {
 
 const Content = () => {
   return (
-    <Stack background={"white"} borderRadius={20} w={"1366px"} h={"792px"} mx={"22px"} opacity={0.5}>
+    <Stack background={"rgba(255,255,255, 0.5)"} borderRadius={20} w={"1366px"} h={"792px"} mx={"22px"}>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Root/>}/>
