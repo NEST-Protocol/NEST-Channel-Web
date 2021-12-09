@@ -13,13 +13,10 @@ export const Button = {
       _hover: {
         bg: "primary",
         color: "white",
-        opacity: 0.8,
-        border: "none",
       },
       _active: {
         bg: "primary",
         opacity: 0.5,
-        border: "none",
       },
     },
     solid: {
@@ -27,7 +24,6 @@ export const Button = {
       color: "white",
       _hover: {
         bg: "primary",
-        opacity: 0.8
       },
       _focus: "none",
       _active: {

@@ -3,9 +3,9 @@ import { FC } from "react";
 
 const Information = () => {
   return (
-    <Stack bg={"white"} w={"100%"} borderRadius={20} p={"22px"} spacing={"14px"}>
+    <Stack bg={"white"} w={"100%"} borderRadius={20} p={"22px"}>
       <Text fontWeight={600} fontSize={"17px"}>Information</Text>
-      <Wrap justify={"space-between"} spacing={"14px"}>
+      <Wrap justify={"space-between"}>
         <InformationDetail title={"ChannelId"} value={1}/>
         <InformationDetail title={"Number of Quotes"} value={1}/>
         <InformationDetail title={"Fee Balance"} value={30} unit={"BNB"}/>
