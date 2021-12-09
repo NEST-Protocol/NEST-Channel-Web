@@ -7,6 +7,7 @@ export const Input = {
       field: {
         borderRadius: "20px",
         bg: "#EEEEEE",
+        height: "40px",
         fontSize: "13px",
         fontWeight: "bold",
         _focus: {
@@ -14,7 +15,7 @@ export const Input = {
           bg: "#EEEEEE",
         },
         _hover: "none",
-        boxShadow: "0 0 10px 0 #EEEEEE",
+        boxShadow: "0 0 -1px 0 #EEEEEE",
       }
     },
   },

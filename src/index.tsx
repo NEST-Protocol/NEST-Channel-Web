@@ -6,7 +6,6 @@ import * as serviceWorker from "./serviceWorker"
 import {ChakraProvider} from "@chakra-ui/react"
 import theme from "./theme"
 import {createGlobalStyle} from "styled-components"
-import "@fontsource/montserrat"
 import "focus-visible/dist/focus-visible"
 
 const GlobalStyle = createGlobalStyle`
