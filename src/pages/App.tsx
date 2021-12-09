@@ -23,8 +23,8 @@ const Background = () => {
 
 const Header = () => {
   return (
-    <Stack w={"100vw"} h={"60px"} justifyContent={"center"} alignItems={"center"}>
-      <Logo w={88} h={28}/>
+    <Stack w={"100vw"} h={"66px"} justifyContent={"center"} alignItems={"center"}>
+      <Logo w={"88px"} h={"28px"}/>
     </Stack>
   )
 }

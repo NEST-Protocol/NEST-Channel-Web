@@ -1,6 +1,7 @@
 export const Button = {
   baseStyle: {
     borderRadius: "20px",
+    fontWeight: "bold",
   },
   variants: {
     outline: {
