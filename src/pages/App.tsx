@@ -5,9 +5,9 @@ import {Center, Stack} from "@chakra-ui/react";
 import {Logo} from "../components/Logo";
 
 export const App = () => (
-  <Stack spacing={0}>
+  <Stack spacing={0} w={"100vw"}>
     <Header/>
-    <Center>
+    <Center w={"100%"}>
       <Content/>
     </Center>
   </Stack>
@@ -23,7 +23,7 @@ const Header = () => {
 
 const Content = () => {
   return (
-    <Stack background={"rgba(255,255,255, 0.5)"} borderRadius={20} w={"1366px"} h={"792px"} mx={"22px"} mb={"22px"}>
+    <Stack background={"rgba(255,255,255, 0.5)"} borderRadius={20} w={"1366px"} h={"100%"} mx={"22px"} mb={"22px"}>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Root/>}/>
