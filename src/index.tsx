@@ -1,14 +1,30 @@
 import * as React from "react"
 import ReactDOM from "react-dom"
-import { App } from "./pages/App"
+import {App} from "./pages/App"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
-import {ChakraProvider, theme} from "@chakra-ui/react";
+import {ChakraProvider} from "@chakra-ui/react"
+import theme from "./theme"
+import {HashRouter} from "react-router-dom"
+import {createGlobalStyle} from "styled-components"
+
+const GlobalStyle = createGlobalStyle`
+  .js-focus-visible :focus:not([data-focus-visible-added]) {
+    outline: none;
+    box-shadow: none;
+  }
+`;
+
+const Updaters = () => {
+  return <></>
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <App />
+      <GlobalStyle/>
+      <Updaters/>
+      <App/>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root"),

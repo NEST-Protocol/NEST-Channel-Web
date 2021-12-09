@@ -1,10 +1,12 @@
 import * as React from "react"
-import {
-  Box,
-} from "@chakra-ui/react"
+import {HashRouter, Route, Routes} from "react-router-dom"
+import Root from "./Root";
 
 export const App = () => (
-  <Box textAlign="center" fontSize="xl">
-
-  </Box>
+  <HashRouter>
+    <Routes>
+      <Route path="/" element={<Root/>}/>
+      <Route/>
+    </Routes>
+  </HashRouter>
 )
