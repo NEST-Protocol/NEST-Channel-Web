@@ -8,7 +8,7 @@ const WalletAndTokenList = () => {
         Connect
       </Button>
 
-      <Input borderRadius={"20px"}/>
+      <Input variant='filled' placeholder='Token Address'/>
 
       <Stack>
         <TokenListItem id={1} token1={"NEST"} token2={"USDT"} count={8}/>
