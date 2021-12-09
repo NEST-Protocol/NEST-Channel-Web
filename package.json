@@ -2,7 +2,9 @@
   "name": "nest-channel-web",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@fontsource/montserrat": "^4.5.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

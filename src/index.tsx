@@ -5,10 +5,14 @@ import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
 import {ChakraProvider} from "@chakra-ui/react"
 import theme from "./theme"
-import {HashRouter} from "react-router-dom"
 import {createGlobalStyle} from "styled-components"
+import "@fontsource/montserrat"
 
 const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: "Montserrat", serif;
+  }
+  
   .js-focus-visible :focus:not([data-focus-visible-added]) {
     outline: none;
     box-shadow: none;
