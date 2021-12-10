@@ -20,7 +20,7 @@ const Header = () => {
   const navigate = useNavigate()
   return (
     <Stack w={"full"} h={"60px"} justifyContent={"center"} alignItems={"center"} mb={"6px"}>
-      <Button variant={"ghost"} onClick={()=> {
+      <Button variant={"ghost"} onClick={() => {
         navigate("/")
       }}>
         <Logo w={"88px"} h={"28px"}/>

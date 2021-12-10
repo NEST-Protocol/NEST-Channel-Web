@@ -9,11 +9,11 @@ import {createGlobalStyle} from "styled-components"
 import "focus-visible/dist/focus-visible"
 import {HashRouter} from "react-router-dom";
 import {RecoilRoot} from "recoil";
+import Background from "./components/Background";
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Montserrat", serif;
-    background: gray;
   }
 
   .js-focus-visible :focus:not([data-focus-visible-added]) {
@@ -33,6 +33,7 @@ ReactDOM.render(
         <ChakraProvider theme={theme}>
           <GlobalStyle/>
           <Updaters/>
+          <Background/>
           <App/>
         </ChakraProvider>
       </HashRouter>

@@ -24,7 +24,7 @@ const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
 
   return (
-    <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
+    <Stack p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
         <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"} hidden={activeStep === 3}>
           <StepButton  id={0} title={"Token Address"}/>
