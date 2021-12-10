@@ -10,7 +10,7 @@ export const Input = {
         boxShadow: "inset 0 0 10px 0 #EEEEEE",
         height: "40px",
         fontSize: "xs",
-        fontWeight: "bold",
+        fontWeight: "500",
         _focus: {
           borderColor: "primary",
           bg: "#F7F8FA",

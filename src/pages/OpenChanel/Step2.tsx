@@ -4,7 +4,7 @@ const Step2 = () => {
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <FormControl id='price token uint'>
-        <FormLabel>Price Token Unit:</FormLabel>
+        <FormLabel fontWeight={"600"}>Price Token Unit:</FormLabel>
         <Select placeholder='Select price token'>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
@@ -12,7 +12,7 @@ const Step2 = () => {
       </FormControl>
 
       <FormControl id='standard output'>
-        <FormLabel>Standard Output:</FormLabel>
+        <FormLabel fontWeight={"600"}>Standard Output:</FormLabel>
         <Select placeholder='Select price token'>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
@@ -20,7 +20,7 @@ const Step2 = () => {
       </FormControl>
 
       <FormControl id='quotation fee'>
-        <FormLabel>Quotation Fee:</FormLabel>
+        <FormLabel fontWeight={"600"}>Quotation Fee:</FormLabel>
         <Select placeholder='Select price token'>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
@@ -28,7 +28,7 @@ const Step2 = () => {
       </FormControl>
 
       <FormControl id='price calling fee'>
-        <FormLabel>Price Calling Fee:</FormLabel>
+        <FormLabel fontWeight={"600"}>Price Calling Fee:</FormLabel>
         <Select placeholder='Select price token'>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
@@ -36,7 +36,7 @@ const Step2 = () => {
       </FormControl>
 
       <FormControl id='attenuation factor'>
-        <FormLabel>Attenuation Factor:</FormLabel>
+        <FormLabel fontWeight={"600"}>Attenuation Factor:</FormLabel>
         <Select placeholder='Select price token'>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
