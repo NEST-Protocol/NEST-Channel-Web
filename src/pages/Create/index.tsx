@@ -26,15 +26,11 @@ const OpenChanel = () => {
   return (
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
-        <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"}>
+        <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"} hidden={activeStep === 3}>
           <StepButton  id={0} title={"Token Address"}/>
-
           <Divider active={activeStep >= 1}/>
-
           <StepButton  id={1} title={"Configuration"}/>
-
           <Divider active={activeStep >= 2}/>
-
           <StepButton  id={2} title={"Confirm"}/>
         </Stack>
         {steps.map((step) => (
