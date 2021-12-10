@@ -7,14 +7,12 @@ import {Heading} from "./components/heading"
 import {colors} from "./foundations/colors"
 import {Input} from "./components/input"
 import {Select} from "./components/select";
-import {Steps} from "./components/steps";
 
 const theme = extendTheme({
   colors,
   config,
   borders,
   components: {
-    Steps,
     Select,
     Button,
     Text,

@@ -14,11 +14,14 @@ export const Button = {
       _hover: {
         bg: "primary.500",
         color: "white",
+        border: "none",
       },
       _active: {
         bg: "primary.500",
         opacity: 0.5,
+        border: "none",
       },
+      _focus: "none",
     },
     solid: {
       bg: "primary.500",
@@ -29,7 +32,8 @@ export const Button = {
       _focus: "none",
       _active: {
         bg: "primary.500",
-        opacity: 0.5
+        opacity: 0.5,
+        border: "none",
       },
       fontWeight: "800",
       fontFamily: "Montserrat"

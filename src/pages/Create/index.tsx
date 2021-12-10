@@ -1,9 +1,9 @@
-import {Button, Stack} from "@chakra-ui/react";
-import {Step, Steps, useSteps} from "chakra-ui-steps";
+import {Button, Divider, Stack, Text} from "@chakra-ui/react";
 import Step1, {Tip1} from "./Step1";
 import Step2, {Tip2} from "./Step2";
 import Step3, {Tip3} from "./Step3";
 import Done from "./Done";
+import {useState} from "react";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <Step1/>},
@@ -18,24 +18,50 @@ const tips = [
 ]
 
 const OpenChanel = () => {
-  const {nextStep, setStep, activeStep} = useSteps({
-    initialStep: 0,
-  })
+  const [activeStep, setActiveStep] = useState(0)
 
   return (
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
-        <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep} state={"loading"} colorScheme={"blue"}>
-          {steps.map(({label, content}) => (
-            <Step label={label} key={label}>
-              {content}
-            </Step>
-          ))}
-        </Steps>
+        <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"}>
+          <Button w={"40px"} variant={activeStep >= 0 ? "solid" : "outline"} onClick={()=>{
+            setActiveStep(0)
+          }} color={activeStep >= 0 ? "white" : "secondary.500"}
+                  borderColor={activeStep >= 0 ? "primary.500" : "secondary.500"}>
+            1
+          </Button>
+          <Text color={activeStep >= 0 ? "black" : "secondary.500"}>Token Address</Text>
+
+          <Divider />
+
+          <Button w={"40px"} variant={activeStep >= 1 ? "solid" : "outline"} onClick={()=> {
+            setActiveStep(1)
+          }} color={activeStep >= 1 ? "white" : "secondary.500"} borderColor={activeStep >= 1 ? "primary.500" : "secondary.500"}>
+            2
+          </Button>
+          <Text color={activeStep >= 1 ? "black" : "secondary.500"}>Configuration</Text>
+
+          <Divider />
+
+          <Button w={"40px"} variant={activeStep >= 2 ? "solid" : "outline"} onClick={()=>{
+            setActiveStep(2)
+          }} color={activeStep >= 2 ? "white" : "secondary.500"} borderColor={activeStep >= 2 ? "primary.500" : "secondary.500"}>
+            3
+          </Button>
+          <Text color={activeStep >= 2 ? "black" : "secondary.500"}>Confirm</Text>
+        </Stack>
+        {steps.map((step) => (
+          <Stack hidden={activeStep !== step.id} key={step.id}>
+            { step.content }
+          </Stack>
+        ))}
         { activeStep === 3 ? (
           <Done/>
         ) : (
-          <Button onClick={nextStep} w={"176px"}>
+          <Button w={"176px"} onClick={()=> {
+            const newStep = activeStep + 1
+            setActiveStep(newStep)
+          }}>
             {activeStep === steps.length - 1 ? "Create" : "Next"}
           </Button>
         ) }
@@ -44,7 +70,7 @@ const OpenChanel = () => {
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"} hidden={activeStep === 2 || activeStep === 3}>
         {tips.map((tip) => {
           return (
-            <Stack hidden={activeStep !== tip.id }>
+            <Stack hidden={activeStep !== tip.id } key={tip.id}>
               { tip.content }
             </Stack>
           )
