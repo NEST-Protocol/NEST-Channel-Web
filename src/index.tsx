@@ -7,6 +7,7 @@ import {ChakraProvider} from "@chakra-ui/react"
 import theme from "./theme"
 import {createGlobalStyle} from "styled-components"
 import "focus-visible/dist/focus-visible"
+import {HashRouter} from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -26,11 +27,13 @@ const Updaters = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <GlobalStyle/>
-      <Updaters/>
-      <App/>
-    </ChakraProvider>
+    <HashRouter>
+      <ChakraProvider theme={theme}>
+        <GlobalStyle/>
+        <Updaters/>
+        <App/>
+      </ChakraProvider>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById("root"),
 )
