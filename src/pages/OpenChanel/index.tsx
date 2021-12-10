@@ -3,6 +3,7 @@ import {Step, Steps, useSteps} from "chakra-ui-steps";
 import Step1, {Tip1} from "./Step1";
 import Step2, {Tip2} from "./Step2";
 import Step3, {Tip3} from "./Step3";
+import Done from "./Done";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <Step1/>},
@@ -24,19 +25,23 @@ const OpenChanel = () => {
   return (
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
-        <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep}>
+        <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep} colorScheme={"primary"}>
           {steps.map(({label, content}) => (
             <Step label={label} key={label}>
               {content}
             </Step>
           ))}
         </Steps>
-        <Button onClick={nextStep} w={"176px"}>
-          {activeStep === steps.length - 1 ? "Create" : "Next"}
-        </Button>
+        { activeStep === 3 ? (
+          <Done/>
+        ) : (
+          <Button onClick={nextStep} w={"176px"}>
+            {activeStep === steps.length - 1 ? "Create" : "Next"}
+          </Button>
+        ) }
       </Stack>
 
-      <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"} hidden={activeStep === 2}>
+      <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"} hidden={activeStep === 2 || activeStep === 3}>
         {tips.map((tip) => {
           return (
             <Stack hidden={activeStep !== tip.id }>

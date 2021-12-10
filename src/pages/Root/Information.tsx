@@ -37,7 +37,7 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
         <Text color={"secondary"} fontWeight={"600"}>{ props.title }</Text>
         <Spacer/>
         { props.link ? (
-          <Link href={props.link} isExternal color={"link"} fontWeight={"bold"}>{props.value} {props.unit}</Link>
+          <Link href={props.link} isExternal color={"link.500"} fontWeight={"bold"}>{props.value} {props.unit}</Link>
         ) : (
           <Text fontWeight={"bold"}>{ props.value } {props.unit}</Text>
         ) }

@@ -33,13 +33,13 @@ export const Tip1 = () => {
       <Text fontWeight={"bold"}>Instructions</Text>
       <p/>
       <Text fontSize={"sm"} fontWeight={"600"}>Price Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The quoted pair...</Text>
+      <Text fontSize={"sm"} color={"secondary.500"} fontWeight={"600"}>The quoted pair...</Text>
       <p/>
       <Text fontSize={"sm"} fontWeight={"600"}>Quotation Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The address of the ...</Text>
+      <Text fontSize={"sm"} color={"secondary.500"} fontWeight={"600"}>The address of the ...</Text>
       <p/>
       <Text fontSize={"sm"} fontWeight={"600"}>Quotation Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>Set the ...</Text>
+      <Text fontSize={"sm"} color={"secondary.500"} fontWeight={"600"}>Set the ...</Text>
     </Stack>
   )
 }

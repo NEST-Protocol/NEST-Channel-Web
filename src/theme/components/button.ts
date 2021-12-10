@@ -7,28 +7,28 @@ export const Button = {
   variants: {
     outline: {
       bg: "white",
-      color: "primary",
+      color: "primary.500",
       border: "2px",
       borderRadius: "20px",
-      borderColor: "primary",
+      borderColor: "primary.500",
       _hover: {
-        bg: "primary",
+        bg: "primary.500",
         color: "white",
       },
       _active: {
-        bg: "primary",
+        bg: "primary.500",
         opacity: 0.5,
       },
     },
     solid: {
-      bg: "primary",
+      bg: "primary.500",
       color: "white",
       _hover: {
-        bg: "primary",
+        bg: "primary.500",
       },
       _focus: "none",
       _active: {
-        bg: "primary",
+        bg: "primary.500",
         opacity: 0.5
       },
       fontWeight: "800",
