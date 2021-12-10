@@ -6,16 +6,16 @@ export const Input = {
     filled: {
       field: {
         borderRadius: "20px",
-        bg: "#EEEEEE",
+        bg: "#F7F8FA",
+        boxShadow: "inset 0 0 10px 0 #EEEEEE",
         height: "40px",
         fontSize: "xs",
         fontWeight: "bold",
         _focus: {
           borderColor: "primary",
-          bg: "#EEEEEE",
+          bg: "#F7F8FA",
         },
         _hover: "none",
-        boxShadow: "0 0 -1px 0 #EEEEEE",
       }
     },
   },
