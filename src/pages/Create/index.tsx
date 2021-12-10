@@ -5,7 +5,8 @@ import Confirm, {ConfirmTip} from "./Confirm";
 import Done from "./Done";
 import Divider from "../../components/Divider";
 import {FC} from "react";
-import {atom, useRecoilState} from "recoil";
+import {useRecoilState} from "recoil";
+import {activeStepAtom} from "../../state/Create/activeStepAtom";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <TokenAddress/>},
@@ -18,11 +19,6 @@ const tips = [
   {id: 1, label: "Configuration", content: <ConfigurationTip/>},
   {id: 2, label: "Confirm", content: <ConfirmTip/>},
 ]
-
-const activeStepAtom = atom({
-  key: 'activeStep',
-  default: 0,
-});
 
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
