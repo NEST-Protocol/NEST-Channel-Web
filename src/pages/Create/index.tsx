@@ -1,9 +1,10 @@
-import {Button, Divider, Stack, Text} from "@chakra-ui/react";
+import {Button, Stack, Text} from "@chakra-ui/react";
 import Step1, {Tip1} from "./Step1";
 import Step2, {Tip2} from "./Step2";
 import Step3, {Tip3} from "./Step3";
 import Done from "./Done";
 import {useState} from "react";
+import Divider from "../../components/Divider";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <Step1/>},
@@ -32,7 +33,7 @@ const OpenChanel = () => {
           </Button>
           <Text color={activeStep >= 0 ? "black" : "secondary.500"}>Token Address</Text>
 
-          <Divider />
+         <Divider active={activeStep >= 1}/>
 
           <Button w={"40px"} variant={activeStep >= 1 ? "solid" : "outline"} onClick={()=> {
             setActiveStep(1)
@@ -41,7 +42,7 @@ const OpenChanel = () => {
           </Button>
           <Text color={activeStep >= 1 ? "black" : "secondary.500"}>Configuration</Text>
 
-          <Divider />
+          <Divider active={activeStep >= 2}/>
 
           <Button w={"40px"} variant={activeStep >= 2 ? "solid" : "outline"} onClick={()=>{
             setActiveStep(2)
