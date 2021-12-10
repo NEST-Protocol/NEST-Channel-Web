@@ -3,8 +3,9 @@ import Step1, {Tip1} from "./Step1";
 import Step2, {Tip2} from "./Step2";
 import Step3, {Tip3} from "./Step3";
 import Done from "./Done";
-import {useState} from "react";
 import Divider from "../../components/Divider";
+import {FC} from "react";
+import {atom, useRecoilState} from "recoil";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <Step1/>},
@@ -18,38 +19,27 @@ const tips = [
   {id: 2, label: "Confirm", content: <Tip3/>},
 ]
 
+const activeStepAtom = atom({
+  key: 'activeStep',
+  default: 0,
+});
+
 const OpenChanel = () => {
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
 
   return (
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
         <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"}>
-          <Button w={"40px"} variant={activeStep >= 0 ? "solid" : "outline"} onClick={()=>{
-            setActiveStep(0)
-          }} color={activeStep >= 0 ? "white" : "secondary.500"}
-                  borderColor={activeStep >= 0 ? "primary.500" : "secondary.500"}>
-            1
-          </Button>
-          <Text color={activeStep >= 0 ? "black" : "secondary.500"}>Token Address</Text>
+          <StepItem  id={0} title={"Token Address"}/>
 
-         <Divider active={activeStep >= 1}/>
+          <Divider active={activeStep >= 1}/>
 
-          <Button w={"40px"} variant={activeStep >= 1 ? "solid" : "outline"} onClick={()=> {
-            setActiveStep(1)
-          }} color={activeStep >= 1 ? "white" : "secondary.500"} borderColor={activeStep >= 1 ? "primary.500" : "secondary.500"}>
-            2
-          </Button>
-          <Text color={activeStep >= 1 ? "black" : "secondary.500"}>Configuration</Text>
+          <StepItem  id={1} title={"Configuration"}/>
 
           <Divider active={activeStep >= 2}/>
 
-          <Button w={"40px"} variant={activeStep >= 2 ? "solid" : "outline"} onClick={()=>{
-            setActiveStep(2)
-          }} color={activeStep >= 2 ? "white" : "secondary.500"} borderColor={activeStep >= 2 ? "primary.500" : "secondary.500"}>
-            3
-          </Button>
-          <Text color={activeStep >= 2 ? "black" : "secondary.500"}>Confirm</Text>
+          <StepItem  id={2} title={"Confirm"}/>
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
@@ -78,6 +68,27 @@ const OpenChanel = () => {
         })}
       </Stack>
     </Stack>
+  )
+}
+
+type StepItemProps = {
+  title: string,
+  id: number,
+}
+
+const StepItem: FC<StepItemProps> = ({...props}) => {
+  const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
+
+  return (
+    <>
+      <Button w={"40px"} variant={activeStep >= props.id ? "solid" : "outline"} onClick={()=>{
+        setActiveStep(props.id)
+      }} color={activeStep >= props.id ? "white" : "secondary.500"}
+              borderColor={activeStep >= props.id ? "primary.500" : "secondary.500"}>
+        { props.id + 1 }
+      </Button>
+      <Text color={activeStep >= props.id ? "black" : "secondary.500"}>{props.title}</Text>
+    </>
   )
 }
 

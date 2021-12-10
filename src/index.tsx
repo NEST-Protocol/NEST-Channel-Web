@@ -8,13 +8,14 @@ import theme from "./theme"
 import {createGlobalStyle} from "styled-components"
 import "focus-visible/dist/focus-visible"
 import {HashRouter} from "react-router-dom";
+import {RecoilRoot} from "recoil";
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Montserrat", serif;
     background: gray;
   }
-  
+
   .js-focus-visible :focus:not([data-focus-visible-added]) {
     outline: none;
     box-shadow: none;
@@ -27,13 +28,15 @@ const Updaters = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
-      <ChakraProvider theme={theme}>
-        <GlobalStyle/>
-        <Updaters/>
-        <App/>
-      </ChakraProvider>
-    </HashRouter>
+    <RecoilRoot>
+      <HashRouter>
+        <ChakraProvider theme={theme}>
+          <GlobalStyle/>
+          <Updaters/>
+          <App/>
+        </ChakraProvider>
+      </HashRouter>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root"),
 )
