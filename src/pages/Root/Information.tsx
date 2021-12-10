@@ -34,7 +34,7 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
   return (
     <WrapItem>
       <Stack direction={"row"} w={"300px"}>
-        <Text color={"secondary"} fontWeight={"bold"}>{ props.title }</Text>
+        <Text color={"secondary"} fontWeight={"600"}>{ props.title }</Text>
         <Spacer/>
         { props.link ? (
           <Link href={props.link} isExternal color={"link"} fontWeight={"bold"}>{props.value} {props.unit}</Link>

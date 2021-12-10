@@ -51,20 +51,20 @@ export const Tip2 = () => {
     <Stack w={"764px"} spacing={"12px"}>
       <Text fontWeight={"bold"}>Instructions</Text>
       <p/>
-      <Text fontSize={"sm"}>Price Token Uint</Text>
-      <Text fontSize={"sm"} color={"secondary"}>The quoted pair...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Price Token Uint</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The quoted pair...</Text>
       <p/>
-      <Text fontSize={"sm"}>Standard Output</Text>
-      <Text fontSize={"sm"} color={"secondary"}>The address of the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Standard Output</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The address of the ...</Text>
       <p/>
-      <Text fontSize={"sm"}>Quotation Fee</Text>
-      <Text fontSize={"sm"} color={"secondary"}>Set the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Quotation Fee</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>Set the ...</Text>
       <p/>
-      <Text fontSize={"sm"}>Price Calling Fee</Text>
-      <Text fontSize={"sm"} color={"secondary"}>Set the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Price Calling Fee</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>Set the ...</Text>
       <p/>
-      <Text fontSize={"sm"}>Attenuation Factor</Text>
-      <Text fontSize={"sm"} color={"secondary"}>Set the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Attenuation Factor</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>Set the ...</Text>
     </Stack>
   )
 }

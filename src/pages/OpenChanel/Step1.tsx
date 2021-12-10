@@ -31,14 +31,14 @@ export const Tip1 = () => {
     <Stack w={"764px"} spacing={"12px"}>
       <Text fontWeight={"bold"}>Instructions</Text>
       <p/>
-      <Text fontSize={"sm"}>Price Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"}>The quoted pair...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Price Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The quoted pair...</Text>
       <p/>
-      <Text fontSize={"sm"}>Quotation Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"}>The address of the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Quotation Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>The address of the ...</Text>
       <p/>
-      <Text fontSize={"sm"}>Quotation Token Address</Text>
-      <Text fontSize={"sm"} color={"secondary"}>Set the ...</Text>
+      <Text fontSize={"sm"} fontWeight={"600"}>Quotation Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"} fontWeight={"600"}>Set the ...</Text>
     </Stack>
   )
 }

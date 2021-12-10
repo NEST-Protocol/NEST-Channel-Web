@@ -32,14 +32,14 @@ const OpenChanel = () => {
           ))}
         </Steps>
         <Button onClick={nextStep} w={"176px"}>
-          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+          {activeStep === steps.length - 1 ? "Create" : "Next"}
         </Button>
       </Stack>
 
-      <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
+      <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"} hidden={activeStep === 2}>
         {tips.map((tip) => {
           return (
-            <Stack hidden={activeStep !== tip.id}>
+            <Stack hidden={activeStep !== tip.id }>
               { tip.content }
             </Stack>
           )

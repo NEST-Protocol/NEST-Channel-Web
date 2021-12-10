@@ -40,11 +40,11 @@ const TokenListItem: FC<TokenListItemProps> = ({...props}) => {
   return (
     <Stack>
       <Stack direction={"row"}>
-        <Text color={"secondary"} fontWeight={"bold"}>
+        <Text color={"secondary"} fontWeight={"600"}>
           {props.id} : {props.token1} {props.token2}
         </Text>
         <Spacer/>
-        <Text color={"secondary"} fontWeight={"bold"}>
+        <Text color={"secondary"} fontWeight={"600"}>
           {props.count}
         </Text>
       </Stack>
