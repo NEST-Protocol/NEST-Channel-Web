@@ -1,4 +1,4 @@
-import {FormControl, FormErrorMessage, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
+import {FormControl, FormErrorMessage, FormLabel, Input, Select, Stack, Text} from "@chakra-ui/react";
 
 const Step1 = () => {
   return (
@@ -22,6 +22,23 @@ const Step1 = () => {
         <Input variant={"filled"} placeholder={"Input Token Address"}/>
         <FormErrorMessage>We'll never share your email.</FormErrorMessage>
       </FormControl>
+    </Stack>
+  )
+}
+
+export const Tip1 = () => {
+  return (
+    <Stack w={"764px"} spacing={"12px"}>
+      <Text fontWeight={"bold"}>Instructions</Text>
+      <p/>
+      <Text fontSize={"sm"}>Price Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"}>The quoted pair...</Text>
+      <p/>
+      <Text fontSize={"sm"}>Quotation Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"}>The address of the ...</Text>
+      <p/>
+      <Text fontSize={"sm"}>Quotation Token Address</Text>
+      <Text fontSize={"sm"} color={"secondary"}>Set the ...</Text>
     </Stack>
   )
 }

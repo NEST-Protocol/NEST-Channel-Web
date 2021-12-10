@@ -10,4 +10,14 @@ const Step2 = () => {
   );
 }
 
+export const Tip2 = () => {
+  return (
+    <Stack>
+      <Text>
+        Tip2
+      </Text>
+    </Stack>
+  )
+}
+
 export default Step2
