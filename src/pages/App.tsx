@@ -3,7 +3,7 @@ import {Route, Routes, useNavigate} from "react-router-dom"
 import Root from "./Root";
 import {Button, Center, Stack} from "@chakra-ui/react";
 import {Logo} from "../components/Logo";
-import OpenChanel from "./OpenChanel";
+import OpenChanel from "./Create";
 
 export const App = () => {
   return (
