@@ -6,12 +6,14 @@ import { Text } from "./components/text"
 import { Heading } from "./components/heading"
 import { colors } from "./foundations/colors"
 import { Input } from "./components/input"
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 
 const theme = extendTheme({
   colors,
   config,
   borders,
   components: {
+    Steps,
     Button,
     Text,
     Heading,

@@ -6,7 +6,7 @@ const WalletAndTokenList = () => {
   const navigate = useNavigate()
 
   return (
-    <Stack bg={"white"} minW={"3xs"} h={"auto"} borderRadius={"2xl"} p={5} spacing={6}>
+    <Stack bg={"white"} minW={"3xs"} h={"auto"} borderRadius={"2xl"} p={"20px"} spacing={"24px"}>
       <Button>
         Connect
       </Button>

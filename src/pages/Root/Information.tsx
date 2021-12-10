@@ -3,8 +3,8 @@ import { FC } from "react";
 
 const Information = () => {
   return (
-    <Stack bg={"white"} w={"100%"} borderRadius={20} p={5}>
-      <Text fontWeight={600}>Information</Text>
+    <Stack bg={"white"} w={"full"} borderRadius={"20px"} p={"20px"}>
+      <Text fontWeight={"bold"}>Information</Text>
       <Wrap justify={"space-between"}>
         <InformationDetail title={"ChannelId"} value={1}/>
         <InformationDetail title={"Number of Quotes"} value={1}/>

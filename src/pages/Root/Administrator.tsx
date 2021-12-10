@@ -9,9 +9,9 @@ import {
 
 const Administrator = () => {
   return (
-    <Stack bg={"white"} w={"full"} borderRadius={20} px={5} py={2} alignItems={"center"} direction={"row"}>
-      <Text fontWeight={600} mr={24}>Administrator</Text>
-      <Stack direction={"row"} spacing={12}>
+    <Stack bg={"white"} w={"full"} borderRadius={"20px"} px={"20px"} py={"8px"} alignItems={"center"} direction={"row"}>
+      <Text fontWeight={"bold"} mr={"88px"}>Administrator</Text>
+      <Stack direction={"row"} spacing={"44px"}>
         <DepositPopover />
         <WithdrawPopover />
         <WithdrawFeePopover />
@@ -26,9 +26,9 @@ const DepositPopover = () => {
       <PopoverTrigger>
         <Button variant={"outline"}>Deposit</Button>
       </PopoverTrigger>
-      <PopoverContent p={2} borderRadius={"20px"}>
+      <PopoverContent p={"20px"} borderRadius={"20px"}>
         <PopoverBody>
-          <Stack alignItems={"center"} spacing={4}>
+          <Stack alignItems={"center"} spacing={"20px"}>
             <Text fontWeight={"bold"}>Deposit</Text>
             <Input variant={"filled"} placeholder={"Input Quantity"}/>
             <Text fontWeight={"bold"} fontSize={"sm"} color={"secondary"}>Balance (myself): 80</Text>
@@ -46,9 +46,9 @@ const WithdrawPopover = () => {
       <PopoverTrigger>
         <Button variant={"outline"}>Withdraw</Button>
       </PopoverTrigger>
-      <PopoverContent p={2} borderRadius={"20px"}>
+      <PopoverContent p={"20px"} borderRadius={"20px"}>
         <PopoverBody>
-          <Stack alignItems={"center"} spacing={4}>
+          <Stack alignItems={"center"} spacing={"20px"}>
             <Text fontWeight={"bold"}>Withdraw</Text>
             <Input variant={"filled"} placeholder={"Input Quantity"}/>
             <Text fontWeight={"bold"} fontSize={"sm"} color={"secondary"}>Balance (myself): 80</Text>
@@ -66,9 +66,9 @@ const WithdrawFeePopover = () => {
       <PopoverTrigger>
         <Button variant={"outline"}>Withdraw Fee</Button>
       </PopoverTrigger>
-      <PopoverContent p={2} borderRadius={"20px"}>
+      <PopoverContent p={"20px"} borderRadius={"20px"}>
         <PopoverBody>
-          <Stack alignItems={"center"} spacing={4}>
+          <Stack alignItems={"center"} spacing={"20px"}>
             <Text fontWeight={"bold"}>Withdraw Fee</Text>
             <Input variant={"filled"} placeholder={"Input Quantity"}/>
             <Text fontWeight={"bold"} fontSize={"sm"} color={"secondary"}>Balance (myself): 80</Text>

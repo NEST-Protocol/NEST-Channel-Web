@@ -6,9 +6,9 @@ import {Stack} from "@chakra-ui/react";
 
 const Root = () => {
   return (
-    <Stack p={5} spacing={5} direction={"row"}>
+    <Stack p={"20px"} spacing={"20px"} direction={"row"}>
       <WalletAndTokenList />
-      <Stack spacing={5}>
+      <Stack spacing={"20px"}>
         <Information />
         <Administrator />
         <QuotationFrequency />
