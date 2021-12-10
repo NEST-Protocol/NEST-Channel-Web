@@ -25,7 +25,7 @@ const OpenChanel = () => {
   return (
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
-        <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep} state={"loading"}>
+        <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep} state={"loading"} colorScheme={"blue"}>
           {steps.map(({label, content}) => (
             <Step label={label} key={label}>
               {content}

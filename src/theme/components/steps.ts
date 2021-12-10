@@ -20,10 +20,14 @@ export const Steps = {
         color: "white",
         border: "none",
       },
+      _invalid: {
+        bg: 'red.500',
+        borderColor: 'red.500',
+      },
       _highlighted: {
         bg: "primary.500",
         color: "white",
-        border: "none",
+        borderColor: "primary.500",
       },
       '&[data-clickable]:hover': {
         borderColor: "primary.500",
@@ -31,10 +35,10 @@ export const Steps = {
     },
     label: {
       fontFamily: "Montserrat",
-      fontWeight: "600",
     },
     labelContainer: {
-      ml: "16px",
+      m: "16px",
+      fontWeight: "600",
     }
   }
 }
