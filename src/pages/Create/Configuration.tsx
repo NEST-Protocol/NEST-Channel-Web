@@ -1,7 +1,7 @@
 import {FormControl, FormLabel, Select, Stack, Text} from "@chakra-ui/react";
 import {ImCircleDown} from "react-icons/all";
 
-const Step2 = () => {
+const Configuration = () => {
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <FormControl id='price token uint'>
@@ -47,7 +47,7 @@ const Step2 = () => {
   );
 }
 
-export const Tip2 = () => {
+export const ConfigurationTip = () => {
   return (
     <Stack w={"764px"} spacing={"12px"}>
       <Text fontWeight={"bold"}>Instructions</Text>
@@ -70,4 +70,4 @@ export const Tip2 = () => {
   )
 }
 
-export default Step2
+export default Configuration

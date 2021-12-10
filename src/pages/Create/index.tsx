@@ -1,22 +1,22 @@
 import {Button, Stack, Text} from "@chakra-ui/react";
-import Step1, {Tip1} from "./Step1";
-import Step2, {Tip2} from "./Step2";
-import Step3, {Tip3} from "./Step3";
+import TokenAddress, {TokenAddressTip} from "./TokenAddress";
+import Configuration, {ConfigurationTip} from "./Configuration";
+import Confirm, {ConfirmTip} from "./Confirm";
 import Done from "./Done";
 import Divider from "../../components/Divider";
 import {FC} from "react";
 import {atom, useRecoilState} from "recoil";
 
 const steps = [
-  {id: 0, label: 'Token Address', content: <Step1/>},
-  {id: 1, label: 'Configuration', content: <Step2/>},
-  {id: 2, label: 'Confirm', content: <Step3/>},
+  {id: 0, label: 'Token Address', content: <TokenAddress/>},
+  {id: 1, label: 'Configuration', content: <Configuration/>},
+  {id: 2, label: 'Confirm', content: <Confirm/>},
 ];
 
 const tips = [
-  {id: 0, label: "Token Address", content: <Tip1/>},
-  {id: 1, label: "Configuration", content: <Tip2/>},
-  {id: 2, label: "Confirm", content: <Tip3/>},
+  {id: 0, label: "Token Address", content: <TokenAddressTip/>},
+  {id: 1, label: "Configuration", content: <ConfigurationTip/>},
+  {id: 2, label: "Confirm", content: <ConfirmTip/>},
 ]
 
 const activeStepAtom = atom({
@@ -31,15 +31,15 @@ const OpenChanel = () => {
     <Stack h={"full"} w={"full"} p={"20px"} spacing={"20px"}>
       <Stack bg={"white"} px={"190px"} py={"60px"} borderRadius={"20px"} alignItems={"center"} spacing={"0"}>
         <Stack direction={"row"} w={"800px"} alignItems={"center"} fontWeight={"bold"} spacing={"20px"} whiteSpace={"nowrap"}>
-          <StepItem  id={0} title={"Token Address"}/>
+          <StepButton  id={0} title={"Token Address"}/>
 
           <Divider active={activeStep >= 1}/>
 
-          <StepItem  id={1} title={"Configuration"}/>
+          <StepButton  id={1} title={"Configuration"}/>
 
           <Divider active={activeStep >= 2}/>
 
-          <StepItem  id={2} title={"Confirm"}/>
+          <StepButton  id={2} title={"Confirm"}/>
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
@@ -76,7 +76,7 @@ type StepItemProps = {
   id: number,
 }
 
-const StepItem: FC<StepItemProps> = ({...props}) => {
+const StepButton: FC<StepItemProps> = ({...props}) => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
 
   return (

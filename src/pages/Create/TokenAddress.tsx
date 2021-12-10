@@ -1,7 +1,7 @@
 import {FormControl, FormErrorMessage, FormLabel, Input, Select, Stack, Text} from "@chakra-ui/react";
 import {ImCircleDown} from "react-icons/all";
 
-const Step1 = () => {
+const TokenAddress = () => {
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <FormControl id='quotation token address'>
@@ -27,7 +27,7 @@ const Step1 = () => {
   )
 }
 
-export const Tip1 = () => {
+export const TokenAddressTip = () => {
   return (
     <Stack w={"764px"} spacing={"12px"}>
       <Text fontWeight={"bold"}>Instructions</Text>
@@ -44,4 +44,4 @@ export const Tip1 = () => {
   )
 }
 
-export default Step1
+export default TokenAddress

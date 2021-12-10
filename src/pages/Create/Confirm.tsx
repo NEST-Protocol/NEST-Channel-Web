@@ -1,7 +1,7 @@
 import {Link, Spacer, Stack, Text} from "@chakra-ui/react";
 import {FC} from "react";
 
-const Step3 = () => {
+const Confirm = () => {
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <ConfirmDetail title={"Price Token (PUSD):"} value={"0x0000000"} link={"eeee"}/>
@@ -37,8 +37,8 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
   )
 }
 
-export const Tip3 = () => {
+export const ConfirmTip = () => {
   return <></>
 }
 
-export default Step3
+export default Confirm
