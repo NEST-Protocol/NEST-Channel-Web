@@ -8,7 +8,7 @@ export const Input = {
         borderRadius: "20px",
         bg: "#EEEEEE",
         height: "40px",
-        fontSize: "13px",
+        fontSize: "xs",
         fontWeight: "bold",
         _focus: {
           borderColor: "primary",

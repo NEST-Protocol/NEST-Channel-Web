@@ -11,7 +11,7 @@ import "focus-visible/dist/focus-visible"
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Montserrat", serif;
-    background: black;
+    background: gray;
   }
   
   .js-focus-visible :focus:not([data-focus-visible-added]) {

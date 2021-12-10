@@ -31,7 +31,6 @@ export const Button = {
         bg: "primary",
         opacity: 0.5
       },
-      fontSize: "16px",
       fontWeight: "800",
       fontFamily: "Montserrat"
     },

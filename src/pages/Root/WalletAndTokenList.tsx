@@ -1,9 +1,12 @@
 import {Stack, Button, Spacer, Input, Text, Divider} from "@chakra-ui/react";
 import {FC} from "react";
+import {useNavigate} from "react-router-dom";
 
 const WalletAndTokenList = () => {
+  const navigate = useNavigate()
+
   return (
-    <Stack bg={"white"} minW={"204px"} h={"auto"} borderRadius={20} py={"22px"} px={"14px"} spacing={"22px"}>
+    <Stack bg={"white"} minW={"3xs"} h={"auto"} borderRadius={"2xl"} p={5} spacing={6}>
       <Button>
         Connect
       </Button>
@@ -17,7 +20,9 @@ const WalletAndTokenList = () => {
       </Stack>
 
       <Spacer/>
-      <Button variant={"outline"}>
+      <Button variant={"outline"} onClick={() => {
+        navigate("/create")
+      }}>
         Create
       </Button>
     </Stack>

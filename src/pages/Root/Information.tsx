@@ -3,8 +3,8 @@ import { FC } from "react";
 
 const Information = () => {
   return (
-    <Stack bg={"white"} w={"100%"} borderRadius={20} p={"22px"}>
-      <Text fontWeight={600} fontSize={"17px"}>Information</Text>
+    <Stack bg={"white"} w={"100%"} borderRadius={20} p={5}>
+      <Text fontWeight={600}>Information</Text>
       <Wrap justify={"space-between"}>
         <InformationDetail title={"ChannelId"} value={1}/>
         <InformationDetail title={"Number of Quotes"} value={1}/>
@@ -33,8 +33,8 @@ type InformationDetailProps = {
 const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
   return (
     <WrapItem>
-      <Stack direction={"row"} w={"308px"}>
-        <Text color={"secondary"} fontWeight={"bold"} h={"14px"}>{ props.title }</Text>
+      <Stack direction={"row"} w={"300px"}>
+        <Text color={"secondary"} fontWeight={"bold"}>{ props.title }</Text>
         <Spacer/>
         { props.link ? (
           <Link href={props.link} isExternal color={"link"} fontWeight={"bold"}>{props.value} {props.unit}</Link>

@@ -3,9 +3,9 @@ import LineChart from "../../components/LineChart";
 
 const QuotationFrequency = () => {
   return (
-    <Stack bg={"white"} w={"100%"} h={"460px"} borderRadius={20} p={"22px"}>
-      <Text fontWeight={600} fontSize={"17px"}>Quotation Frequency</Text>
-      <Stack p={"22px"} h={"100%"}>
+    <Stack bg={"white"} w={"full"} h={"460px"} borderRadius={20} p={5}>
+      <Text fontWeight={600}>Quotation Frequency</Text>
+      <Stack p={5} h={"full"}>
         <LineChart />
       </Stack>
     </Stack>
