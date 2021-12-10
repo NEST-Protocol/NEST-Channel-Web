@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 const Done = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const navigate = useNavigate()
+  console.log(activeStep)
 
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} h={"400px"} spacing={"20px"} alignItems={"center"}>

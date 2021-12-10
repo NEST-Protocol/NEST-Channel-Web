@@ -1,6 +1,5 @@
 import {Line} from '@ant-design/charts';
 import React, { useState, useEffect } from 'react';
-import {Stack} from "@chakra-ui/react";
 
 const LineChart = () => {
   const [data, setData] = useState([]);

@@ -14,12 +14,12 @@ export const Button = {
       _hover: {
         bg: "primary.500",
         color: "white",
-        border: "none",
+        borderColor: "primary.500",
       },
       _active: {
         bg: "primary.500",
         opacity: 0.5,
-        border: "none",
+        borderColor: "primary.500",
       },
       _focus: "none",
     },
@@ -33,7 +33,6 @@ export const Button = {
       _active: {
         bg: "primary.500",
         opacity: 0.5,
-        border: "none",
       },
       fontWeight: "800",
       fontFamily: "Montserrat"
