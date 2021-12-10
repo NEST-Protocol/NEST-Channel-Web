@@ -1,4 +1,5 @@
 import {FormControl, FormErrorMessage, FormLabel, Input, Select, Stack, Text} from "@chakra-ui/react";
+import {ImCircleDown} from "react-icons/all";
 
 const Step1 = () => {
   return (
@@ -11,7 +12,7 @@ const Step1 = () => {
 
       <FormControl id='price token'>
         <FormLabel fontWeight={"600"}>Price Token:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>

@@ -1,6 +1,5 @@
-export const Input = {
+export const Select = {
   baseStyle: {
-
   },
   variants: {
     filled: {
@@ -10,7 +9,7 @@ export const Input = {
         boxShadow: "inset 0 0 10px 0 #EEEEEE",
         height: "40px",
         fontSize: "md",
-        fontWeight: "500",
+        fontWeight: "bold",
         _focus: {
           borderColor: "primary",
           bg: "#F7F8FA",

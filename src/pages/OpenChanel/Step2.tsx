@@ -1,11 +1,12 @@
 import {FormControl, FormLabel, Select, Stack, Text} from "@chakra-ui/react";
+import {ImCircleDown} from "react-icons/all";
 
 const Step2 = () => {
   return (
     <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <FormControl id='price token uint'>
         <FormLabel fontWeight={"600"}>Price Token Unit:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>
@@ -13,7 +14,7 @@ const Step2 = () => {
 
       <FormControl id='standard output'>
         <FormLabel fontWeight={"600"}>Standard Output:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>
@@ -21,7 +22,7 @@ const Step2 = () => {
 
       <FormControl id='quotation fee'>
         <FormLabel fontWeight={"600"}>Quotation Fee:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>
@@ -29,7 +30,7 @@ const Step2 = () => {
 
       <FormControl id='price calling fee'>
         <FormLabel fontWeight={"600"}>Price Calling Fee:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>
@@ -37,7 +38,7 @@ const Step2 = () => {
 
       <FormControl id='attenuation factor'>
         <FormLabel fontWeight={"600"}>Attenuation Factor:</FormLabel>
-        <Select placeholder='Select price token'>
+        <Select placeholder='Select price token' variant={"filled"} icon={<ImCircleDown/>} iconColor={"secondary"}>
           <option>United Arab Emirates</option>
           <option>Nigeria</option>
         </Select>
