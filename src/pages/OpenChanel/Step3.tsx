@@ -2,9 +2,9 @@ import {Stack, Text} from "@chakra-ui/react";
 
 const Step3 = () => {
   return (
-    <Stack>
+    <Stack pt={"60px"} pb={"30px"} w={"600px"} spacing={"20px"}>
       <Text>
-        Step2
+        Step3
       </Text>
     </Stack>
   )
@@ -12,7 +12,7 @@ const Step3 = () => {
 
 export const Tip3 = () => {
   return (
-    <Stack>
+    <Stack w={"764px"} spacing={"12px"}>
       <Text>
         Tip3
       </Text>
