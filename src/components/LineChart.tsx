@@ -21,8 +21,8 @@ const LineChart = () => {
     data,
     xField: "Date",
     yField: "scales",
-
     color: "#EAAA00",
+    autoFit: true,
     point: {
       shape: "circle",
       size: 4
