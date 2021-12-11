@@ -12,7 +12,7 @@ export const Input = {
         fontSize: "md",
         fontWeight: "500",
         _focus: {
-          borderColor: "primary",
+          borderColor: "primary.500",
           bg: "#F7F8FA",
         },
         _hover: "none",
