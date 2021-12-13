@@ -1,15 +1,15 @@
-import * as React from "react"
-import ReactDOM from "react-dom"
-import {App} from "./pages/App"
-import reportWebVitals from "./reportWebVitals"
-import * as serviceWorker from "./serviceWorker"
-import {ChakraProvider} from "@chakra-ui/react"
-import theme from "./theme"
-import {createGlobalStyle} from "styled-components"
-import "focus-visible/dist/focus-visible"
-import {HashRouter} from "react-router-dom";
-import {RecoilRoot} from "recoil";
-import Background from "./components/Background";
+import * as React from 'react'
+import ReactDOM from 'react-dom'
+import { App } from './pages/App'
+import reportWebVitals from './reportWebVitals'
+import * as serviceWorker from './serviceWorker'
+import { ChakraProvider } from '@chakra-ui/react'
+import theme from './theme'
+import { createGlobalStyle } from 'styled-components'
+import 'focus-visible/dist/focus-visible'
+import { HashRouter } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
+import Background from './components/Background'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     box-shadow: none;
   }
-`;
+`
 
 const Updaters = () => {
   return <></>
@@ -31,15 +31,15 @@ ReactDOM.render(
     <RecoilRoot>
       <HashRouter>
         <ChakraProvider theme={theme}>
-          <GlobalStyle/>
-          <Updaters/>
-          <Background/>
-          <App/>
+          <GlobalStyle />
+          <Updaters />
+          <Background />
+          <App />
         </ChakraProvider>
       </HashRouter>
     </RecoilRoot>
   </React.StrictMode>,
-  document.getElementById("root"),
+  document.getElementById('root')
 )
 
 // If you want your app to work offline and load faster, you can change

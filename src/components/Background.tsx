@@ -1,10 +1,10 @@
-import {Stack} from "@chakra-ui/react";
-import {useEffect, useRef, useState, Suspense} from "react";
+import { Stack } from '@chakra-ui/react'
+import { useEffect, useRef, useState, Suspense } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useTexture } from '@react-three/drei'
-import planet from "../assets/image/plant.jpg"
-import track from "../assets/image/track.png"
+import planet from '../assets/image/plant.jpg'
+import track from '../assets/image/track.png'
 
 const Background = () => {
   const Planet = (props: JSX.IntrinsicElements['mesh']) => {
@@ -59,16 +59,13 @@ const Background = () => {
   }, [])
 
   return (
-    <Stack bg={"black"} w={"full"} h={"full"} pos={"fixed"} zIndex={"-1"} top={0} left={0} overflow={"hidden"}>
+    <Stack bg={'black'} w={'full'} h={'full'} pos={'fixed'} zIndex={'-1'} top={0} left={0} overflow={'hidden'}>
       <Canvas>
         <ambientLight intensity={0.01} />
         <directionalLight color="white" position={[800, 360, 30]} intensity={1.5} />
         <directionalLight color="white" position={[20, 20, 20]} intensity={0.12} castShadow />
         <Suspense fallback={null}>
-          <PlanetAndTrack
-            rotation={[-0.7, -0.35, 0]}
-            position={width > height ? [-1, -0.5, 1.4] : [-1.5, -1, 0]}
-          />
+          <PlanetAndTrack rotation={[-0.7, -0.35, 0]} position={width > height ? [-1, -0.5, 1.4] : [-1.5, -1, 0]} />
           <OrbitControls />
         </Suspense>
       </Canvas>
