@@ -3,8 +3,8 @@ import { useEffect, useRef, useState, Suspense } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useTexture } from '@react-three/drei'
-import planet from '../assets/image/plant.jpg'
-import track from '../assets/image/track.png'
+import planet from '../../assets/image/plant.jpg'
+import track from '../../assets/image/track.png'
 
 const Background = () => {
   const Planet = (props: JSX.IntrinsicElements['mesh']) => {
