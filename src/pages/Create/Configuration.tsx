@@ -1,7 +1,24 @@
 import { FormControl, FormLabel, Select, Stack, Text } from '@chakra-ui/react'
 import { ImCircleDown } from 'react-icons/all'
+import useCreateChannel from "../../hooks/useCreateChannel";
+import {useState} from "react";
 
 const Configuration = () => {
+  const {
+    priceTokenUnit,
+    setPriceTokenUnit,
+    standardOutput,
+    setStandardOutput,
+    quotationFee,
+    setQuotationFee,
+    priceCallingFee,
+    setPriceCallingFee,
+    attenuationFactor,
+    setAttenuationFactor
+  } = useCreateChannel()
+  const [priceTokenUnitSelectValid, setPriceTokenUnitSelectValid] = useState(false)
+  // Todo: add valid test
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <FormControl id="price token uint">

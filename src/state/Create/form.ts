@@ -1,4 +1,4 @@
-import {atom, selector} from "recoil";
+import {atom} from "recoil";
 
 // Step 1: Token Address
 // 报价代币，0表示eth，address
