@@ -1,14 +1,13 @@
 import {
-  attenuationFactorAtom, isInvalidConfigurationAtom, isInvalidTokenAddressAtom,
+  attenuationFactorAtom, isConfigurationValidAtom, isTokenAddressValidAtom,
   miningTokenAtom, priceCallingFeeAtom,
   priceTokenAtom,
   priceTokenUnitAtom, quotationFeeAtom,
   quotationTokenAtom,
   standardOutputAtom
 } from "../state/Create/form";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {ZERO_ADDRESS} from "../constants/misc";
-
+import {useRecoilState} from "recoil";
+import {useEffect, useState} from "react";
 
 const useCreateChannel = () => {
   const [quotationToken, setQuotationToken ] = useRecoilState(quotationTokenAtom)
@@ -19,18 +18,35 @@ const useCreateChannel = () => {
   const [quotationFee, setQuotationFee] = useRecoilState(quotationFeeAtom)
   const [priceCallingFee, setPriceCallingFee] = useRecoilState(priceCallingFeeAtom)
   const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
-  const isInvalidTokenAddress = useRecoilValue(isInvalidTokenAddressAtom)
-  const isInvalidConfiguration = useRecoilValue(isInvalidConfigurationAtom)
+
+  const [isTokenAddressValid, setIsTokenAddressValid] = useRecoilState(isTokenAddressValidAtom)
+  const [isConfigurationValid, setIsConfigurationValid] = useRecoilState(isConfigurationValidAtom)
+
+  useEffect(()=>{
+    if (quotationToken === '' || priceToken === '' || miningToken === ''){
+      setIsTokenAddressValid(true)
+    } else {
+      setIsTokenAddressValid(false)
+    }
+  }, [quotationToken, priceToken, miningToken, setIsTokenAddressValid])
+
+  useEffect(()=> {
+    if (priceTokenUnit === -1 || standardOutput === -1 || quotationFee === -1 || priceCallingFee === -1 || attenuationFactor === -1){
+      setIsConfigurationValid(true)
+    } else {
+      setIsConfigurationValid(false)
+    }
+  }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setIsConfigurationValid, standardOutput])
 
   // Todo: verify parameter type and default value
   const resetConfig = () => {
-    setQuotationToken(ZERO_ADDRESS)
-    setPriceToken(ZERO_ADDRESS)
-    setMiningToken(ZERO_ADDRESS)
-    setPriceTokenUnit(1)
-    setStandardOutput(1)
-    setQuotationFee("1")
-    setPriceCallingFee("1")
+    setQuotationToken("")
+    setPriceToken("")
+    setMiningToken("")
+    setPriceTokenUnit(0)
+    setStandardOutput(0)
+    setQuotationFee(0)
+    setPriceCallingFee(0)
     setAttenuationFactor(0.8)
   }
 
@@ -41,8 +57,24 @@ const useCreateChannel = () => {
 
   return {
     resetConfig,
-    isInvalidTokenAddress,
-    isInvalidConfiguration,
+    setQuotationToken,
+    setPriceToken,
+    setMiningToken,
+    setPriceTokenUnit,
+    setStandardOutput,
+    setQuotationFee,
+    setPriceCallingFee,
+    setAttenuationFactor,
+    quotationToken,
+    priceToken,
+    miningToken,
+    priceTokenUnit,
+    standardOutput,
+    quotationFee,
+    priceCallingFee,
+    attenuationFactor,
+    isTokenAddressValid,
+    isConfigurationValid,
   }
 }
 

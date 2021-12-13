@@ -4,9 +4,10 @@ import Configuration, { ConfigurationTip } from './Configuration'
 import Confirm, { ConfirmTip } from './Confirm'
 import Done from './Done'
 import Divider from '../../components/Divider'
-import { FC } from 'react'
+import {FC} from 'react'
 import { useRecoilState } from 'recoil'
 import { activeStepAtom } from '../../state/Create/activeStepAtom'
+import useCreateChannel from "../../hooks/useCreateChannel";
 
 const steps = [
   { id: 0, label: 'Token Address', content: <TokenAddress /> },
@@ -22,6 +23,9 @@ const tips = [
 
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
+  const { isTokenAddressValid, isConfigurationValid } = useCreateChannel()
+
+  console.log(isTokenAddressValid, isConfigurationValid)
 
   return (
     <Stack p={'20px'} spacing={'20px'}>
@@ -35,11 +39,11 @@ const OpenChanel = () => {
           whiteSpace={'nowrap'}
           hidden={activeStep === 3}
         >
-          <StepButton id={0} title={'Token Address'} />
-          <Divider active={activeStep >= 1} />
-          <StepButton id={1} title={'Configuration'} />
+          <StepButton id={0} title={'Token Address'}/>
+          <Divider active={activeStep >= 1}/>
+          <StepButton id={1} title={'Configuration'}/>
           <Divider active={activeStep >= 2} />
-          <StepButton id={2} title={'Confirm'} />
+          <StepButton id={2} title={'Confirm'}/>
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
