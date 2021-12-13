@@ -15,7 +15,7 @@ import {
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
 import { isMobile } from "react-device-detect"
 import { SUPPORTED_WALLETS } from "../../constants/wallet"
-import {injected, walletconnect} from "../../connectors"
+import {injected} from "../../connectors"
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
 import { AbstractConnector } from "@web3-react/abstract-connector"
 import { useEffect, useState } from "react"
@@ -26,7 +26,6 @@ import usePrevious from "../../hooks/usePrevious"
 import AccountDetails from "../AccountDetails"
 import { Activity } from "react-feather"
 import { shortenAddress } from "../../utils"
-import WalletConnectIcon from "../../assets/image/walletConnectIcon.svg";
 
 const IconWrapper = styled.div<{ size?: number | null }>`
   align-items: center;
