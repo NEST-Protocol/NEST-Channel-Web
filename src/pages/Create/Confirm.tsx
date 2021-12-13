@@ -25,7 +25,7 @@ type ConfirmDetailProps = {
 
 const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
   return (
-    <Stack direction={"row"} w={"540px"}>
+    <Stack direction={"row"} w={"full"}>
       <Text color={"secondary.500"} fontWeight={"600"}>{ props.title }</Text>
       <Spacer/>
       { props.link ? (
