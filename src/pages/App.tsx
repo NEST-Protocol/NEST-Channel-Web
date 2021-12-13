@@ -5,6 +5,7 @@ import {Button, Center, Stack} from '@chakra-ui/react'
 import {Logo} from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
+import NetworkCard from "../components/NetworkCard";
 
 export const App = () => {
   return (
@@ -22,7 +23,7 @@ export const App = () => {
 const Header = () => {
   const navigate = useNavigate()
   return (
-    <Stack w={'full'} h={'60px'} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
+    <Stack w={'full'} h={'60px'} direction={"row"} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
       <Button
         variant={'ghost'}
         onClick={() => {
@@ -31,6 +32,7 @@ const Header = () => {
       >
         <Logo w={'88px'} h={'28px'}/>
       </Button>
+      <NetworkCard />
     </Stack>
   )
 }

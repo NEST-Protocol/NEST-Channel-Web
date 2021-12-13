@@ -286,7 +286,7 @@ export const WalletModal = () => {
   return (
     <>
       {getWeb3Status()}
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose}>
         {getModalContent()}
       </Modal>
     </>
