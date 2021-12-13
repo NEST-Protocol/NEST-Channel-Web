@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Route, Routes, useNavigate} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import Root from './Root'
 import {Button, Center, Stack} from '@chakra-ui/react'
 import {Logo} from '../components/Logo'
@@ -21,13 +21,14 @@ export const App = () => {
 }
 
 const Header = () => {
-  const navigate = useNavigate()
   return (
     <Stack w={'full'} h={'60px'} direction={"row"} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
       <Button
         variant={'ghost'}
         onClick={() => {
-          navigate('/')
+          const w = window.open("about:blank")
+          // @ts-ignore
+          w.location.href='https://nestprotocol.org/'
         }}
       >
         <Logo w={'88px'} h={'28px'}/>

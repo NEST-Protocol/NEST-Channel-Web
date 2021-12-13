@@ -1,4 +1,4 @@
-import {Badge, Link} from "@chakra-ui/react";
+import {Badge} from "@chakra-ui/react";
 import {useActiveWeb3React} from "../../hooks/web3";
 import {CHAIN_INFO, SupportedChainId} from "../../constants/chains";
 
