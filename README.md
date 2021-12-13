@@ -28,6 +28,7 @@
 
 ## Contracts
 
+### Rinkeby
 ** 开始部署合约 rinkeby@20211211.js **
 pusd: 0x5407cab67ad304FB8A4aC46D83b3Dd63A9dbA575
 nest: 0xE313F3f49B647fBEDDC5F2389Edb5c93CBf4EE25
@@ -40,4 +41,13 @@ nestBatchPlatform2: 0x12af92C6e7a1F855008c6B9dDEd7DcA19B49B51B
 
 NEST批量报价版本已经部署到rinkeby，报价，吃单，关闭和价格查询接口都有相应的调整
 已经开通了hbtc/pusd报价通道，矿币nest，每个区块出一个，佣金0，通道号0
+
+### BSC Testnet
+nest: 0x821edD79cc386E56FeC9DA5793b87a3A52373cdE 
+pusd: 0x3DA5c9aafc6e6D6839E62e2fB65825869019F291
+peth: 0xc39dC1385a44fBB895991580EA55FC10e7451cB3
+nestGovernance: 0x5691dc0770D55B9469a3242DA282754687687935
+nestLedger: 0x78D5E2fC85969e51580fd2C0Fd6D056a444167cE
+nestOpenMining: 0xF2f9E62f52389EF223f5Fa8b9926e95386935277
+
 

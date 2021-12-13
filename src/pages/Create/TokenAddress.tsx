@@ -7,21 +7,21 @@ const TokenAddress = () => {
       <FormControl id="quotation token address">
         <FormLabel fontWeight={'600'}>Quotation Token:</FormLabel>
         <Input variant={'filled'} placeholder={'Input Token Address'} />
-        <FormErrorMessage>We'll never share your email.</FormErrorMessage>
+        <FormErrorMessage>The quotation token address is void!</FormErrorMessage>
       </FormControl>
 
       <FormControl id="price token">
         <FormLabel fontWeight={'600'}>Price Token:</FormLabel>
         <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>United Arab Emirates</option>
-          <option>Nigeria</option>
+          <option>PETH</option>
+          <option>PUSD</option>
         </Select>
       </FormControl>
 
       <FormControl id="mining token">
         <FormLabel fontWeight={'600'}>Mining Token:</FormLabel>
         <Input variant={'filled'} placeholder={'Input Token Address'} />
-        <FormErrorMessage>We'll never share your email.</FormErrorMessage>
+        <FormErrorMessage>The mining token address is void!</FormErrorMessage>
       </FormControl>
     </Stack>
   )
@@ -36,21 +36,23 @@ export const TokenAddressTip = () => {
         Price Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
-        The quoted pair...
+        The quoted pair is denominated in that Token, as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where PUSD and PETH are
+        the denominated tokens.
       </Text>
       <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
         Quotation Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
-        The address of the ...
+        The address of the quoted assets in the quotation pair, such as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where
+        Token and USDT are quoted tokens.
       </Text>
       <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
-        Quotation Token Address
+        Mining Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
-        Set the ...
+        Set the offer incentive tokens for the offer will mine a change of tokens according to the mining rules.
       </Text>
     </Stack>
   )
