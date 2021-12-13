@@ -1,18 +1,21 @@
 import * as React from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import {Route, Routes, useNavigate} from 'react-router-dom'
 import Root from './Root'
-import { Button, Center, Stack } from '@chakra-ui/react'
-import { Logo } from '../components/Logo'
+import {Button, Center, Stack} from '@chakra-ui/react'
+import {Logo} from '../components/Logo'
 import OpenChanel from './Create'
+import Web3ReactManager from '../components/Web3ReactManager'
 
 export const App = () => {
   return (
-    <Stack spacing={0} w={'full'} h={'full'}>
-      <Header />
-      <Center>
-        <Content />
-      </Center>
-    </Stack>
+    <Web3ReactManager>
+      <Stack spacing={0} w={'full'} h={'full'}>
+        <Header/>
+        <Center>
+          <Content/>
+        </Center>
+      </Stack>
+    </Web3ReactManager>
   )
 }
 
@@ -26,7 +29,7 @@ const Header = () => {
           navigate('/')
         }}
       >
-        <Logo w={'88px'} h={'28px'} />
+        <Logo w={'88px'} h={'28px'}/>
       </Button>
     </Stack>
   )
@@ -43,9 +46,9 @@ const Content = () => {
       mb={'20px'}
     >
       <Routes>
-        <Route path="/" element={<Root />} />
-        <Route path="/create" element={<OpenChanel />} />
-        <Route />
+        <Route path="/" element={<Root/>}/>
+        <Route path="/create" element={<OpenChanel/>}/>
+        <Route/>
       </Routes>
     </Stack>
   )

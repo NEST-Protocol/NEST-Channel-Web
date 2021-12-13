@@ -1,12 +1,12 @@
 import { injected, walletconnect } from "../../connectors"
 import { SUPPORTED_WALLETS } from "../../constants/wallet"
-import { Button, Link, Stack, Text, useClipboard } from "@chakra-ui/react"
+import {Button, Link, Spacer, Stack, Text} from "@chakra-ui/react"
 import { useActiveWeb3React } from "../../hooks/web3"
 import styled from "styled-components"
-import WalletConnectIcon from "../../assets/images/walletConnectIcon.svg"
-import Identicon from "../Identicon"
+import WalletConnectIcon from "../../assets/image/walletConnectIcon.svg"
 import { ExplorerDataType, getExplorerLink } from "../../utils/getExplorerLink"
 import { shortenAddress } from "../../utils"
+import MetamaskIcon from '../../assets/image/metamask.png'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -26,7 +26,6 @@ interface AccountDetailsProps {
 
 const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
   const { chainId, account, connector } = useActiveWeb3React()
-  const { onCopy } = useClipboard(account ?? "")
 
   function formatConnectorName() {
     const { ethereum } = window
@@ -38,22 +37,22 @@ const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
       )
       .map(k => SUPPORTED_WALLETS[k].name)[0]
     return (
-      <Stack>
+      <Text fontWeight={"600"}>
         Connected with {name}
-      </Stack>
+      </Text>
     )
   }
 
   function getStatusIcon() {
     if (connector === injected) {
       return (
-        <IconWrapper size={16}>
-          <Identicon />
+        <IconWrapper size={20}>
+          <img src={MetamaskIcon} alt={"Metamask logo"}/>
         </IconWrapper>
       )
     } else if (connector === walletconnect) {
       return (
-        <IconWrapper size={16}>
+        <IconWrapper size={20}>
           <img src={WalletConnectIcon} alt={"WalletConnect logo"} />
         </IconWrapper>
       )
@@ -62,29 +61,30 @@ const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
   }
 
   return (
-    <Stack>
+    <Stack spacing={"20px"}>
       {formatConnectorName()}
-      {connector !== injected  && (
-        <Button
-          onClick={() => {
-            ;(connector as any).close()
-          }}
-        >
-         Disconnect
-        </Button>
-      )}
-      <Button onClick={openOptions}>
-        Change
-      </Button>
-      {getStatusIcon()}
-      <Stack direction={"row"} alignItems={"center"}>
-        <Text>{account && shortenAddress(account)}</Text>
-        <Button onClick={onCopy} variant={"ghost"}>
-          Copy
-        </Button>
+      <Stack direction={"row"} justifyContent={"center"}>
+        {getStatusIcon()}
+        <Text fontWeight={"600"}>{account && shortenAddress(account)}</Text>
+        <Spacer/>
         {chainId && account && (
-          <Link href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)}>View on Explorer</Link>
+          <Link href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)} fontWeight={"600"} color={"secondary.500"}>View on Explorer</Link>
         )}
+      </Stack>
+      <Stack direction={"row"} w={"full"}>
+        {connector !== injected  && (
+          <Button
+            onClick={() => {
+              ;(connector as any).close()
+            }}
+            isFullWidth
+          >
+            Disconnect
+          </Button>
+        )}
+        <Button onClick={openOptions} variant={"outline"} isFullWidth>
+          Change
+        </Button>
       </Stack>
     </Stack>
   )

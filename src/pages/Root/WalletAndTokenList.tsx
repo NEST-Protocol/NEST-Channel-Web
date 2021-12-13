@@ -1,13 +1,14 @@
 import { Stack, Button, Spacer, Input, Text, Divider } from '@chakra-ui/react'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Web3Status from '../../components/Web3Status'
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
 
   return (
     <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'2xl'} p={'20px'} spacing={'24px'}>
-      <Button>Connect</Button>
+      <Web3Status/>
 
       <Input variant="filled" placeholder="Token Address" />
 
