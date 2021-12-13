@@ -1,4 +1,4 @@
-import {atom} from "recoil";
+import {atom, selector} from "recoil";
 import {ZERO_ADDRESS} from "../../constants/misc";
 
 // Step 1: Token Address
@@ -47,6 +47,33 @@ export const attenuationFactorAtom = atom({
   key: 'attenuationFactor',
   default: 0,
 })
+
+export const isInvalidTokenAddressAtom = selector({
+  key: 'isInvalidTokenAddress',
+  get: ({get}) => {
+    const quotationToken = get(quotationTokenAtom)
+    const priceToken = get(priceTokenAtom)
+    const miningToken = get(miningTokenAtom)
+
+    return true
+  }
+})
+
+export const isInvalidConfigurationAtom = selector({
+  key: 'isInvalidTokenAddress',
+  get: ({get}) => {
+    const quotationToken = get(priceTokenUnitAtom)
+    const priceToken = get(standardOutputAtom)
+    const miningToken = get(quotationFeeAtom)
+    const priceCallingFee = get(priceCallingFeeAtom)
+    const attenuationFactor = get(attenuationFactorAtom)
+
+    return true
+  }
+})
+
+
+
 
 
 
