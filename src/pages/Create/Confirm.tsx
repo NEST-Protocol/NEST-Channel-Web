@@ -1,17 +1,29 @@
 import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
 import { FC } from 'react'
+import useCreateChannel from "../../hooks/useCreateChannel";
 
 const Confirm = () => {
+  const {
+    quotationToken,
+    priceToken,
+    miningToken,
+    priceTokenUnit,
+    standardOutput,
+    quotationFee,
+    priceCallingFee,
+    attenuationFactor
+  } = useCreateChannel()
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <ConfirmDetail title={'Price Token (PUSD):'} value={'0x0000000'} link={'eeee'} />
-      <ConfirmDetail title={'Quotation Token (PETH):'} value={'0x0000000'} link={'eeee'} />
-      <ConfirmDetail title={'Mining Token (NEST):'} value={'0x0000000'} link={'eeee'} />
-      <ConfirmDetail title={'Price Token Unit:'} value={'1'} unit={'ETH'} />
-      <ConfirmDetail title={'Standard Output:'} value={'10'} unit={'NEST/Block'} />
-      <ConfirmDetail title={'Quotation Fee:'} value={'0.01'} unit={'ETH'} />
-      <ConfirmDetail title={'Price Calling Fee:'} value={'0.001'} unit={'ETH'} />
-      <ConfirmDetail title={'Attenuation Factor:'} value={'80'} unit={'%'} />
+      <ConfirmDetail title={'Price Token:'} value={priceToken} link={'eeee'} />
+      <ConfirmDetail title={'Quotation Token:'} value={quotationToken} link={'eeee'} />
+      <ConfirmDetail title={'Mining Token:'} value={miningToken} link={'eeee'} />
+      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit} unit={'ETH'} />
+      <ConfirmDetail title={'Standard Output:'} value={standardOutput} unit={'NEST/Block'} />
+      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee} unit={'ETH'} />
+      <ConfirmDetail title={'Price Calling Fee:'} value={priceCallingFee} unit={'ETH'} />
+      <ConfirmDetail title={'Attenuation Factor:'} value={attenuationFactor} unit={'%'} />
     </Stack>
   )
 }
