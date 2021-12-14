@@ -1,6 +1,7 @@
 import {Box, Button, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
 import Divider from '../Divider'
 import { FC, useState } from 'react'
+import {formatWithUnit, parseToNumber} from "../../utils/unit";
 
 type OptionInput = {
   title: string
@@ -25,19 +26,6 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
 
   console.log(value)
 
-  const format = (val: string, unit: string | undefined) => {
-    if (unit) {
-      return val + " " +  unit
-    }
-    return val
-  }
-  const parse = (val: string, unit: string | undefined) =>  {
-    if (unit){
-      return val.replace(/[a-zA-Z\s]+/g, '')
-    }
-    return val
-  }
-
   return (
     <Box pb={showOption ? '40px' : '0'}>
       <Text fontWeight={'600'} mb={'16px'} mx={'16px'}>
@@ -58,10 +46,10 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
             onChange={(valueString) => {
-              setValue(parse(valueString, props.unit))
-              props.onChange(parse(valueString, props.unit))
+              setValue(parseToNumber(valueString, props.unit))
+              props.onChange(parseToNumber(valueString, props.unit))
             }}
-            value={format(value, props.unit)}
+            value={formatWithUnit(value, props.unit)}
             max={props.max}
             min={props.min}
             onFocus={() => {
@@ -79,10 +67,10 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
             onChange={(event) => {
-              setValue(parse(event.target.value, props.unit))
-              props.onChange(parse(event.target.value, props.unit))
+              setValue(parseToNumber(event.target.value, props.unit))
+              props.onChange(parseToNumber(event.target.value, props.unit))
             }}
-            value={format(value, props.unit)}
+            value={formatWithUnit(value, props.unit)}
             onFocus={() => {
               setShowOption(true)
             }}
@@ -103,8 +91,8 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 borderRadius={0}
                 key={item.title}
                 onClick={() => {
-                  setValue(parse(item.data, props.unit))
-                  props.onChange(parse(item.data, props.unit))
+                  setValue(parseToNumber(item.data, props.unit))
+                  props.onChange(parseToNumber(item.data, props.unit))
                   setShowOption(false)
                 }}
                 _hover={{ bg: 'secondary.400' }}
