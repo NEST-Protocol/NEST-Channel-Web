@@ -11,11 +11,11 @@ export const Select = {
         fontWeight: 'bold',
         _focus: {
           borderColor: 'primary.500',
-          bg: 'secondary.200',
+          bg: 'white',
         },
         _hover: {
           borderColor: 'primary.500',
-          bg: 'secondary.200',
+          bg: 'white',
         }
       },
     },

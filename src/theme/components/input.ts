@@ -1,5 +1,6 @@
 export const Input = {
   baseStyle: {
+    fontFamily: "Montserrat",
   },
   variants: {
     filled: {
@@ -12,13 +13,25 @@ export const Input = {
         fontWeight: '500',
         _focus: {
           borderColor: 'primary.500',
-          bg: 'secondary.200',
+          bg: 'white',
+          boxShadow: "none",
         },
         _hover: {
           borderColor: 'primary.500',
-          bg: 'secondary.200',
+          bg: 'white',
+          boxShadow: "none",
         }
       },
     },
+    unstyled: {
+      field: {
+        bg: 'white',
+        height: '36px',
+        fontSize: 'md',
+        fontWeight: '500',
+        px: "16px",
+        borderRadius: "20px",
+      }
+    }
   },
 }
