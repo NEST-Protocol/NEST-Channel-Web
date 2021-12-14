@@ -1,8 +1,9 @@
-import { FormControl, FormLabel, Input, Select, Stack, Text } from '@chakra-ui/react'
+import { Input, Select, Stack, Text } from '@chakra-ui/react'
 import { ImCircleDown } from 'react-icons/all'
 import useCreateChannel from "../../hooks/useCreateChannel";
 import {isAddress} from "../../utils";
 import {useState} from "react";
+import InputWithSelect from "../../components/InputWithSelect";
 
 const TokenAddress = () => {
   const { quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken } = useCreateChannel()
@@ -21,17 +22,6 @@ const TokenAddress = () => {
     }
   }
 
-  const handlePriceTokenChange = (event: any) => {
-    const address = event.target.value
-    setPriceToken(address)
-    if (address === "") {
-      // 地址不合法，返回true
-      setPriceTokenSelectValid(true)
-    } else {
-      setPriceTokenSelectValid(false)
-    }
-  }
-
   const handleMiningTokenChange = (event: any) => {
     const address = isAddress(event.target.value)
     if (address){
@@ -46,28 +36,21 @@ const TokenAddress = () => {
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <FormControl id="quotation token address">
-        <FormLabel fontWeight={'600'}>Quotation Token:</FormLabel>
+      <Stack id="quotation token address" spacing={"16px"}>
+        <Text fontWeight={'600'} mx={"16px"}>Quotation Token:</Text>
         <Input variant={'filled'} placeholder={'Input Token Address'} isInvalid={quotationTokenInputValid}
                onChange={handleQuotationTokenChange} defaultValue={quotationToken}/>
-      </FormControl>
+      </Stack>
 
-      <FormControl id="price token">
-        <FormLabel fontWeight={'600'}>Price Token:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}
-                onChange={handlePriceTokenChange} isInvalid={priceTokenSelectValid} defaultValue={priceToken}>
-          // Todo: edit as Token.PETH, Token.PUSD
-          <option value={"0xPETH"}>PETH</option>
-          <option value={"0xPUSD"}>PUSD</option>
-        </Select>
-      </FormControl>
+      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceToken}
+                       onChange={setPriceToken} datalist={[{title: "PETH", data: "1"}, {title: "PUSD", data: "2"}]} />
 
-      <FormControl id="mining token">
-        <FormLabel fontWeight={'600'}>Mining Token:</FormLabel>
+      <Stack spacing={"16px"}>
+        <Text fontWeight={'600'} mx={"16px"}>Mining Token:</Text>
         <Input variant={'filled'} placeholder={'Input Token Address'} onChange={handleMiningTokenChange}
                defaultValue={miningToken} isInvalid={miningTokenInputValid}
         />
-      </FormControl>
+      </Stack>
     </Stack>
   )
 }

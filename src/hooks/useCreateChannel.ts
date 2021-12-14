@@ -7,7 +7,7 @@ import {
   standardOutputAtom
 } from "../state/Create/form";
 import {useRecoilState} from "recoil";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 const useCreateChannel = () => {
   const [quotationToken, setQuotationToken ] = useRecoilState(quotationTokenAtom)
@@ -31,7 +31,7 @@ const useCreateChannel = () => {
   }, [quotationToken, priceToken, miningToken, setIsTokenAddressValid])
 
   useEffect(()=> {
-    if (priceTokenUnit === -1 || standardOutput === -1 || quotationFee === -1 || priceCallingFee === -1 || attenuationFactor === -1){
+    if (priceTokenUnit === "" || standardOutput === "" || quotationFee === "" || priceCallingFee === "" || attenuationFactor === ""){
       setIsConfigurationValid(true)
     } else {
       setIsConfigurationValid(false)
@@ -43,11 +43,11 @@ const useCreateChannel = () => {
     setQuotationToken("")
     setPriceToken("")
     setMiningToken("")
-    setPriceTokenUnit(0)
-    setStandardOutput(0)
-    setQuotationFee(0)
-    setPriceCallingFee(0)
-    setAttenuationFactor(0.8)
+    setPriceTokenUnit("")
+    setStandardOutput("")
+    setQuotationFee("")
+    setPriceCallingFee("")
+    setAttenuationFactor("")
   }
 
   // Todo: create channel

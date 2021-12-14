@@ -1,19 +1,9 @@
 import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input, Popover, PopoverArrow, PopoverBody,
-  PopoverCloseButton,
-  PopoverContent, PopoverFooter,
-  PopoverHeader, PopoverTrigger,
-  Select,
   Stack,
   Text
 } from '@chakra-ui/react'
-import {ImCircleDown} from 'react-icons/all'
 import useCreateChannel from "../../hooks/useCreateChannel";
-import {useRef, useState} from "react";
-import Divider from "../../components/Divider";
+import InputWithSelect from "../../components/InputWithSelect";
 
 const Configuration = () => {
   const {
@@ -28,69 +18,36 @@ const Configuration = () => {
     attenuationFactor,
     setAttenuationFactor
   } = useCreateChannel()
-  const [priceTokenUnitSelectValid, setPriceTokenUnitSelectValid] = useState(false)
-  const [standardOutputValid, setStandardOutputValid] = useState(false)
-  const [quotationFeeValid, setQuotationFeeValid] = useState(false)
-  const [priceCallingFeeValid, setPriceCallingFeeValid] = useState(false)
-  const [attenuationFactorValid, setAttenuationFactorValid] = useState(false)
-
-  const [showOption, setShowOption] = useState(false)
-  const handlePriceTokenUnitChange = (event: any) => {
-    console.log(event.target.value)
-  }
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <FormControl id="price token uint" pb={showOption ? "40px" : "0"}>
-        <FormLabel fontWeight={'600'}>Price Token Unit:</FormLabel>
-        <Stack bg={"white"} width={"full"} spacing={0}
-               borderRadius={showOption ? "10px" : "0"} border={showOption ? "2px" : "0"} borderColor={"primary.500"}
-               pos={showOption ? "absolute" : "static"} zIndex={showOption ? 10 : 0}>
-          <Input variant={showOption ? 'unstyled' : "filled"} placeholder={'Input Price Token Unit'} isInvalid={priceTokenUnitSelectValid}
-                 defaultValue={priceTokenUnit} list={"priceTokenUint"}
-                 onChange={handlePriceTokenUnitChange}
-                 onFocus={() => {
-                   setShowOption(true)
-                 }}
-                 onBlur={()=>{
-                   setShowOption(false)
-                 }}
-          />
-          <Stack hidden={!showOption} spacing={0} pb={1} top={"72px"}>
-            <Divider/>
-            <Button variant={"ghost"} justifyContent={"flex-start"} fontWeight={"500"} borderRadius={0}
-                    _hover={{bg: "secondary.400"}}>1</Button>
-            <Button variant={"ghost"} justifyContent={"flex-start"} fontWeight={"500"} borderRadius={0}
-                    _hover={{bg: "secondary.400"}}>2</Button>
-            <Button variant={"ghost"} justifyContent={"flex-start"} fontWeight={"500"} borderRadius={0}
-                    _hover={{bg: "secondary.400"}}>3</Button>
-          </Stack>
-        </Stack>
-      </FormControl>
 
-      <FormControl id="standard output">
-        <FormLabel fontWeight={'600'}>Standard Output:</FormLabel>
-        <Input variant={'filled'} placeholder={'Input Standard Output'} isInvalid={priceTokenUnitSelectValid}
-               defaultValue={priceTokenUnit}/>
-      </FormControl>
+      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceTokenUnit}
+                       onChange={setPriceTokenUnit} datalist={[{title: "1", data: "1"}]} />
 
-      <FormControl id="quotation fee">
-        <FormLabel fontWeight={'600'}>Quotation Fee:</FormLabel>
-        <Input variant={'filled'} placeholder={'Input Quotation Fee'} isInvalid={priceTokenUnitSelectValid}
-               defaultValue={priceTokenUnit}/>
-      </FormControl>
+      {/*<FormControl id="standard output">*/}
+      {/*  <FormLabel fontWeight={'600'}>Standard Output:</FormLabel>*/}
+      {/*  <Input variant={'filled'} placeholder={'Input Standard Output'} isInvalid={priceTokenUnitSelectValid}*/}
+      {/*         defaultValue={priceTokenUnit}/>*/}
+      {/*</FormControl>*/}
 
-      <FormControl id="price calling fee">
-        <FormLabel fontWeight={'600'}>Price Calling Fee:</FormLabel>
-        <Input variant={'filled'} placeholder={'Input Calling Fee'} isInvalid={priceTokenUnitSelectValid}
-               defaultValue={priceTokenUnit}/>
-      </FormControl>
+      {/*<FormControl id="quotation fee">*/}
+      {/*  <FormLabel fontWeight={'600'}>Quotation Fee:</FormLabel>*/}
+      {/*  <Input variant={'filled'} placeholder={'Input Quotation Fee'} isInvalid={priceTokenUnitSelectValid}*/}
+      {/*         defaultValue={priceTokenUnit}/>*/}
+      {/*</FormControl>*/}
 
-      <FormControl id="attenuation factor">
-        <FormLabel fontWeight={'600'}>Attenuation Factor:</FormLabel>
-        <Input variant={'filled'} placeholder={'Input Attenuation Factor'} isInvalid={priceTokenUnitSelectValid}
-               defaultValue={priceTokenUnit}/>
-      </FormControl>
+      {/*<FormControl id="price calling fee">*/}
+      {/*  <FormLabel fontWeight={'600'}>Price Calling Fee:</FormLabel>*/}
+      {/*  <Input variant={'filled'} placeholder={'Input Calling Fee'} isInvalid={priceTokenUnitSelectValid}*/}
+      {/*         defaultValue={priceTokenUnit}/>*/}
+      {/*</FormControl>*/}
+
+      {/*<FormControl id="attenuation factor">*/}
+      {/*  <FormLabel fontWeight={'600'}>Attenuation Factor:</FormLabel>*/}
+      {/*  <Input variant={'filled'} placeholder={'Input Attenuation Factor'} isInvalid={priceTokenUnitSelectValid}*/}
+      {/*         defaultValue={priceTokenUnit}/>*/}
+      {/*</FormControl>*/}
     </Stack>
   )
 }
