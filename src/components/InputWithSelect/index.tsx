@@ -7,7 +7,7 @@ type OptionInput = {
   defaultValue: string
   onChange: (value: string) => void
   datalist: item[]
-  disabled?: boolean
+  onCheck: (value: string) => boolean
 }
 
 type item = {
@@ -21,13 +21,13 @@ const InputWithSelect: FC<OptionInput> = ({...props}) => {
 
   return (
     <Box pb={showOption ? "40px" : "0"}>
-      <Text fontWeight={'600'} mb={"16px"} mx={"16px"}>{ props.title }</Text>
+      <Text fontWeight={'600'} mb={"16px"} mx={"16px"}>{props.title}</Text>
       <Box bg={"white"} width={"600px"}
            borderRadius={showOption ? "10px" : "0"} border={showOption ? "2px" : "0"} borderColor={"primary.500"}
            pos={showOption ? "absolute" : "static"} zIndex={showOption ? 10 : 0}>
         <Input variant={showOption ? 'unstyled' : "filled"} placeholder={'Input Price Token Unit'}
-               isInvalid={value === ""} disabled={props.disabled}
-               onChange={(event)=>{
+               isInvalid={props.onCheck(value)}
+               onChange={(event) => {
                  setValue(event.target.value)
                  props.onChange(event.target.value)
                }}
@@ -43,19 +43,21 @@ const InputWithSelect: FC<OptionInput> = ({...props}) => {
                }}
         />
 
-        { props.datalist.length > 0 && (
+        {props.datalist.length > 0 && (
           <Stack hidden={!showOption} pb={1} top={"72px"} spacing={0}>
             <Divider/>
-            { props.datalist.map((item)=>(
-              <Button variant={"ghost"} justifyContent={"flex-start"} fontWeight={"500"} borderRadius={0} key={item.title}
-                      onClick={()=>{
+            {props.datalist.map((item) => (
+              <Button variant={"ghost"} justifyContent={"flex-start"} fontWeight={"500"} borderRadius={0}
+                      key={item.title}
+                      onClick={() => {
                         setValue(item.data)
                         props.onChange(item.data)
+                        setShowOption(false)
                       }}
-                      _hover={{bg: "secondary.400"}} >{item.title}</Button>
-            )) }
+                      _hover={{bg: "secondary.400"}}>{item.title}</Button>
+            ))}
           </Stack>
-        ) }
+        )}
       </Box>
     </Box>
   )

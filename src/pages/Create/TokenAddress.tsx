@@ -1,5 +1,4 @@
-import { Input, Select, Stack, Text } from '@chakra-ui/react'
-import { ImCircleDown } from 'react-icons/all'
+import { Input, Stack, Text } from '@chakra-ui/react'
 import useCreateChannel from "../../hooks/useCreateChannel";
 import {isAddress} from "../../utils";
 import {useState} from "react";
@@ -8,7 +7,6 @@ import InputWithSelect from "../../components/InputWithSelect";
 const TokenAddress = () => {
   const { quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken } = useCreateChannel()
   const [quotationTokenInputValid, setQuotationTokenInputValid] = useState(false)
-  const [priceTokenSelectValid, setPriceTokenSelectValid] = useState(false)
   const [miningTokenInputValid, setMiningTokenInputValid] = useState(false)
   const handleQuotationTokenChange = (event: any) => {
     const address = isAddress(event.target.value)
@@ -34,6 +32,10 @@ const TokenAddress = () => {
     }
   }
 
+  const handleIsValid = (value: string) => {
+    return value !== "PETH" && value !== "PUSD";
+  }
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <Stack id="quotation token address" spacing={"16px"}>
@@ -42,8 +44,8 @@ const TokenAddress = () => {
                onChange={handleQuotationTokenChange} defaultValue={quotationToken}/>
       </Stack>
 
-      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceToken}
-                       onChange={setPriceToken} datalist={[{title: "PETH", data: "1"}, {title: "PUSD", data: "2"}]} />
+      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceToken} onCheck={handleIsValid}
+                       onChange={setPriceToken} datalist={[{title: "PETH", data: "PETH"}, {title: "PUSD", data: "PUSD"}]} />
 
       <Stack spacing={"16px"}>
         <Text fontWeight={'600'} mx={"16px"}>Mining Token:</Text>

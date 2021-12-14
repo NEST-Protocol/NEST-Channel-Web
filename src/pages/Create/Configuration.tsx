@@ -19,35 +19,28 @@ const Configuration = () => {
     setAttenuationFactor
   } = useCreateChannel()
 
+  const handleIsValid = (value: string) => {
+    return value === "";
+  }
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
 
-      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceTokenUnit}
+      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceTokenUnit} onCheck={handleIsValid}
                        onChange={setPriceTokenUnit} datalist={[{title: "1", data: "1"}]} />
 
-      {/*<FormControl id="standard output">*/}
-      {/*  <FormLabel fontWeight={'600'}>Standard Output:</FormLabel>*/}
-      {/*  <Input variant={'filled'} placeholder={'Input Standard Output'} isInvalid={priceTokenUnitSelectValid}*/}
-      {/*         defaultValue={priceTokenUnit}/>*/}
-      {/*</FormControl>*/}
+      <InputWithSelect title={"Standard Output:"} defaultValue={standardOutput} onCheck={handleIsValid}
+                       onChange={setStandardOutput} datalist={[{title: "1", data: "1"}]} />
 
-      {/*<FormControl id="quotation fee">*/}
-      {/*  <FormLabel fontWeight={'600'}>Quotation Fee:</FormLabel>*/}
-      {/*  <Input variant={'filled'} placeholder={'Input Quotation Fee'} isInvalid={priceTokenUnitSelectValid}*/}
-      {/*         defaultValue={priceTokenUnit}/>*/}
-      {/*</FormControl>*/}
+      <InputWithSelect title={"Quotation Fee:"} defaultValue={quotationFee} onCheck={handleIsValid}
+                       onChange={setQuotationFee} datalist={[{title: "1", data: "1"}]} />
 
-      {/*<FormControl id="price calling fee">*/}
-      {/*  <FormLabel fontWeight={'600'}>Price Calling Fee:</FormLabel>*/}
-      {/*  <Input variant={'filled'} placeholder={'Input Calling Fee'} isInvalid={priceTokenUnitSelectValid}*/}
-      {/*         defaultValue={priceTokenUnit}/>*/}
-      {/*</FormControl>*/}
+      <InputWithSelect title={"Price Calling Fee:"} defaultValue={priceCallingFee} onCheck={handleIsValid}
+                       onChange={setPriceCallingFee} datalist={[{title: "1", data: "1"}]} />
 
-      {/*<FormControl id="attenuation factor">*/}
-      {/*  <FormLabel fontWeight={'600'}>Attenuation Factor:</FormLabel>*/}
-      {/*  <Input variant={'filled'} placeholder={'Input Attenuation Factor'} isInvalid={priceTokenUnitSelectValid}*/}
-      {/*         defaultValue={priceTokenUnit}/>*/}
-      {/*</FormControl>*/}
+      <InputWithSelect title={"Attenuation Factor:"} defaultValue={attenuationFactor} onCheck={handleIsValid}
+                       onChange={setAttenuationFactor} datalist={[{title: "1", data: "1"}]} />
+
     </Stack>
   )
 }
