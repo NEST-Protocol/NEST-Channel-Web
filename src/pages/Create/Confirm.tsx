@@ -17,14 +17,14 @@ const Confirm = () => {
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <ConfirmDetail title={'Price Token:'} value={priceToken} link={'eeee'} isAddress/>
-      <ConfirmDetail title={'Quotation Token:'} value={quotationToken} link={'eeee'} isAddress/>
-      <ConfirmDetail title={'Mining Token:'} value={miningToken} link={'eeee'} isAddress/>
-      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit} unit={'ETH'} />
-      <ConfirmDetail title={'Standard Output:'} value={standardOutput} unit={'NEST/Block'} />
-      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee} unit={'ETH'} />
-      <ConfirmDetail title={'Price Calling Fee:'} value={priceCallingFee} unit={'ETH'} />
-      <ConfirmDetail title={'Attenuation Factor:'} value={attenuationFactor} unit={'%'} />
+      <ConfirmDetail title={'Price Token:'} value={priceToken === "" ? "NaN" : priceToken} link={'eeee'} isAddress/>
+      <ConfirmDetail title={'Quotation Token:'} value={quotationToken === "" ? "NaN": quotationToken} link={'eeee'} isAddress/>
+      <ConfirmDetail title={'Mining Token:'} value={miningToken === "" ? "NaN" : miningToken} link={'eeee'} isAddress/>
+      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === "" ? "NaN" : priceTokenUnit} unit={'ETH'} />
+      <ConfirmDetail title={'Standard Output:'} value={standardOutput === "" ? "NaN" : standardOutput} unit={'NEST/Block'} />
+      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee === "" ? "NaN": quotationFee} unit={'ETH'} />
+      <ConfirmDetail title={'Price Calling Fee:'} value={priceCallingFee === "" ? "NaN": priceCallingFee} unit={'ETH'} />
+      <ConfirmDetail title={'Attenuation Factor:'} value={attenuationFactor === "" ? "NaN": attenuationFactor} unit={'%'} />
     </Stack>
   )
 }
@@ -54,7 +54,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
           {props.value}
         </Link>
       ) : (
-        <Text fontWeight={'bold'}>
+        <Text fontWeight={'bold'} color={props.value === "NaN" ? "red" : "black"}>
           {props.value} {props.unit}
         </Text>
       )}

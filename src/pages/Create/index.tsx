@@ -26,12 +26,9 @@ type StepItemProps = {
   id: number
 }
 
-
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const { isTokenAddressValid, isConfigurationValid } = useCreateChannel()
-
-  console.log(isTokenAddressValid, isConfigurationValid)
 
   const StepButton: FC<StepItemProps> = ({ ...props }) => {
     return (
@@ -80,9 +77,14 @@ const OpenChanel = () => {
         ) : (
           <Button
             w={'176px'}
+            disabled={activeStep === steps.length - 1 ? ( isTokenAddressValid || isConfigurationValid ) : false}
             onClick={() => {
               const newStep = activeStep + 1
               setActiveStep(newStep)
+
+              if (activeStep === steps.length - 1 ) {
+                console.log("create")
+              }
             }}
           >
             {activeStep === steps.length - 1 ? 'Create' : 'Next'}

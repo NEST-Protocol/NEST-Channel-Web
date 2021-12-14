@@ -8,6 +8,7 @@ import {
 } from "../state/Create/form";
 import {useRecoilState} from "recoil";
 import {useEffect} from "react";
+import {isAddress} from "../utils";
 
 const useCreateChannel = () => {
   const [quotationToken, setQuotationToken ] = useRecoilState(quotationTokenAtom)
@@ -23,7 +24,7 @@ const useCreateChannel = () => {
   const [isConfigurationValid, setIsConfigurationValid] = useRecoilState(isConfigurationValidAtom)
 
   useEffect(()=>{
-    if (quotationToken === '' || priceToken === '' || miningToken === ''){
+    if (isAddress(quotationToken) === false || isAddress(priceToken) === false || isAddress(miningToken) === false){
       setIsTokenAddressValid(true)
     } else {
       setIsTokenAddressValid(false)
