@@ -1,6 +1,5 @@
 import {
   Button,
-  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,28 +11,29 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
-import { isMobile } from "react-device-detect"
-import { SUPPORTED_WALLETS } from "../../constants/wallet"
+import {UnsupportedChainIdError, useWeb3React} from "@web3-react/core"
+import {isMobile} from "react-device-detect"
+import {SUPPORTED_WALLETS} from "../../constants/wallet"
 import {injected} from "../../connectors"
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
-import { AbstractConnector } from "@web3-react/abstract-connector"
-import { useEffect, useState } from "react"
+import {WalletConnectConnector} from "@web3-react/walletconnect-connector"
+import {AbstractConnector} from "@web3-react/abstract-connector"
+import {useEffect, useState} from "react"
 import MetamaskIcon from "../../assets/image/metamask.png"
 import styled from "styled-components"
 import PendingView from "./PeddingView"
 import usePrevious from "../../hooks/usePrevious"
 import AccountDetails from "../AccountDetails"
-import { Activity } from "react-feather"
-import { shortenAddress } from "../../utils"
+import {Activity} from "react-feather"
+import {shortenAddress} from "../../utils"
 
 const IconWrapper = styled.div<{ size?: number | null }>`
   align-items: center;
   justify-content: center;
+
   & > img,
   span {
-    height: ${({ size }) => (size ? size + "px" : "24px")};
-    width: ${({ size }) => (size ? size + "px" : "24px")};
+    height: ${({size}) => (size ? size + "px" : "24px")};
+    width: ${({size}) => (size ? size + "px" : "24px")};
   }
 `
 
@@ -52,8 +52,8 @@ const WALLET_VIEWS = {
 }
 
 export const WalletModal = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { active, account, connector, activate, error } = useWeb3React()
+  const {isOpen, onOpen, onClose} = useDisclosure()
+  const {active, account, connector, activate, error} = useWeb3React()
   const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
   const [pendingError, setPendingError] = useState<boolean>()
@@ -98,13 +98,13 @@ export const WalletModal = () => {
     }
 
     connector &&
-      activate(connector, undefined, true).catch(error => {
-        if (error instanceof UnsupportedChainIdError) {
-          activate(connector)
-        } else {
-          setPendingError(true)
-        }
-      })
+    activate(connector, undefined, true).catch(error => {
+      if (error instanceof UnsupportedChainIdError) {
+        activate(connector)
+      } else {
+        setPendingError(true)
+      }
+    })
   }
 
   const getWeb3Status = () => {
@@ -119,7 +119,7 @@ export const WalletModal = () => {
     if (error) {
       return (
         <>
-          <NetworkIcon />
+          <NetworkIcon/>
           <Text>{error instanceof UnsupportedChainIdError ? "Wrong Network" : "Error"}</Text>
         </>
       )
@@ -144,18 +144,15 @@ export const WalletModal = () => {
             <Button
               id={`connect-${key}`}
               key={key}
-              isFullWidth={true}
-              variant={"outline"}
-              size={"lg"}
               onClick={() => {
                 option.connector !== connector && !option.href && tryActivation(option.connector)
               }}
             >
               <Stack direction={"row"} w={"100%"} alignItems={"center"}>
                 <Text>{option.name}</Text>
-                <Spacer />
+                <Spacer/>
                 <IconWrapper>
-                  <img src={option.iconURL} alt={"Icon"} />
+                  <img src={option.iconURL} alt={"Icon"}/>
                 </IconWrapper>
               </Stack>
             </Button>
@@ -170,18 +167,21 @@ export const WalletModal = () => {
         if (!(window.web3 || window.ethereum)) {
           if (option.name === "MetaMask") {
             return (
-              <Button id={`connect-${key}`} key={key} isFullWidth={true} size={"lg"} variant={"outline"}>
-                <Link href={"https://metamask.io/"} isExternal w={"100%"}>
-                  <Stack direction={"row"} w={"100%"} alignItems={"center"}>
-                    <Text>
-                      Install Metamask
-                    </Text>
-                    <Spacer />
-                    <IconWrapper>
-                      <img src={MetamaskIcon} alt={"Icon"} />
-                    </IconWrapper>
-                  </Stack>
-                </Link>
+              <Button id={`connect-${key}`} key={key} isFullWidth={true} size={"lg"} variant={"outline"}
+                      onClick={() => {
+                        const w = window.open("about:blank")
+                        // @ts-ignore
+                        w.location.href = "https://metamask.io/"
+                      }}>
+                <Stack direction={"row"} w={"100%"} alignItems={"center"}>
+                  <Text>
+                    Install Metamask
+                  </Text>
+                  <Spacer/>
+                  <IconWrapper>
+                    <img src={MetamaskIcon} alt={"Icon"}/>
+                  </IconWrapper>
+                </Stack>
               </Button>
             )
           } else {
@@ -231,12 +231,12 @@ export const WalletModal = () => {
     if (error) {
       return (
         <>
-          <ModalOverlay />
+          <ModalOverlay/>
           <ModalContent>
             <ModalHeader>
               Error
             </ModalHeader>
-            <ModalCloseButton />
+            <ModalCloseButton/>
             <ModalBody>{error}</ModalBody>
           </ModalContent>
         </>
@@ -245,13 +245,13 @@ export const WalletModal = () => {
     if (account && walletView === WALLET_VIEWS.ACCOUNT) {
       return (
         <>
-          <ModalOverlay />
+          <ModalOverlay/>
           <ModalContent padding={"20px"} borderRadius={"20px"}>
             <ModalHeader>
               Account
             </ModalHeader>
             <ModalBody>
-              <AccountDetails openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)} />
+              <AccountDetails openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}/>
             </ModalBody>
           </ModalContent>
         </>
@@ -260,10 +260,10 @@ export const WalletModal = () => {
 
     return (
       <>
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent padding={"20px"} borderRadius={"20px"}>
           <ModalHeader>
-            Connect wallet
+            Connect Wallet
           </ModalHeader>
           <ModalBody padding={"20px"}>
             {walletView === WALLET_VIEWS.PENDING ? (
