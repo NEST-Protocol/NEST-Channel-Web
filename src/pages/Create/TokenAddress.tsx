@@ -55,8 +55,7 @@ const TokenAddress = () => {
       <FormControl id="price token">
         <FormLabel fontWeight={'600'}>Price Token:</FormLabel>
         <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}
-                onChange={handlePriceTokenChange} isInvalid={priceTokenSelectValid}
-                defaultValue={priceToken}>
+                onChange={handlePriceTokenChange} isInvalid={priceTokenSelectValid} defaultValue={priceToken}>
           // Todo: edit as Token.PETH, Token.PUSD
           <option value={"0xPETH"}>PETH</option>
           <option value={"0xPUSD"}>PUSD</option>

@@ -13,7 +13,10 @@ export const Select = {
           borderColor: 'primary.500',
           bg: 'secondary.200',
         },
-        _hover: 'none',
+        _hover: {
+          borderColor: 'primary.500',
+          bg: 'secondary.200',
+        }
       },
     },
   },

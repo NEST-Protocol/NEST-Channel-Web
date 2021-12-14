@@ -21,7 +21,6 @@ export const Button = {
         opacity: 0.5,
         borderColor: 'primary.500',
       },
-      _focus: 'none',
     },
     solid: {
       bg: 'primary.500',
@@ -29,7 +28,6 @@ export const Button = {
       _hover: {
         bg: 'primary.500',
       },
-      _focus: 'none',
       _active: {
         bg: 'primary.500',
         opacity: 0.5,
@@ -46,7 +44,6 @@ export const Button = {
         bg: 'none',
         opacity: 0.5,
       },
-      _focus: 'none',
     },
   },
 }

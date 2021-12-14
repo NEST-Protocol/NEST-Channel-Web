@@ -1,4 +1,15 @@
-import { FormControl, FormLabel, Select, Stack, Text } from '@chakra-ui/react'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input, Popover, PopoverArrow, PopoverBody,
+  PopoverCloseButton,
+  PopoverContent, PopoverFooter,
+  PopoverHeader, PopoverTrigger,
+  Select,
+  Stack,
+  Text
+} from '@chakra-ui/react'
 import { ImCircleDown } from 'react-icons/all'
 import useCreateChannel from "../../hooks/useCreateChannel";
 import {useState} from "react";
@@ -17,50 +28,76 @@ const Configuration = () => {
     setAttenuationFactor
   } = useCreateChannel()
   const [priceTokenUnitSelectValid, setPriceTokenUnitSelectValid] = useState(false)
-  // Todo: add valid test
+  const [standardOutputValid, setStandardOutputValid] = useState(false)
+  const [quotationFeeValid, setQuotationFeeValid] = useState(false)
+  const [priceCallingFeeValid, setPriceCallingFeeValid] = useState(false)
+  const [attenuationFactorValid, setAttenuationFactorValid] = useState(false)
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <FormControl id="price token uint">
         <FormLabel fontWeight={'600'}>Price Token Unit:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </Select>
+        <Input variant={'filled'} placeholder={'Input Price Token Unit'} isInvalid={priceTokenUnitSelectValid}
+               defaultValue={priceTokenUnit} list={"priceTokenUint"}/>
+        <datalist id="priceTokenUint">
+          <option value="中国 北京" />
+          <option value="中国 上海" />
+          <option value="中国 广州" />
+          <option value="中国 深圳" />
+          <option value="中国 东莞" />
+        </datalist>
       </FormControl>
 
       <FormControl id="standard output">
         <FormLabel fontWeight={'600'}>Standard Output:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>1 /Block</option>
-          <option>5 /Block</option>
-          <option>10 /Block</option>
-        </Select>
+        <Input variant={'filled'} placeholder={'Input Standard Output'} isInvalid={priceTokenUnitSelectValid}
+               defaultValue={priceTokenUnit} list={"standardOutput"}/>
+        <datalist id="standardOutput">
+          <option value="中国 北京" />
+          <option value="中国 上海" />
+          <option value="中国 广州" />
+          <option value="中国 深圳" />
+          <option value="中国 东莞" />
+        </datalist>
       </FormControl>
 
       <FormControl id="quotation fee">
         <FormLabel fontWeight={'600'}>Quotation Fee:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>1</option>
-          <option>2</option>
-        </Select>
+        <Input variant={'filled'} placeholder={'Input Quotation Fee'} isInvalid={priceTokenUnitSelectValid}
+               defaultValue={priceTokenUnit} list={"quotationFee"}/>
+        <datalist id="quotationFee">
+          <option value="中国 北京" />
+          <option value="中国 上海" />
+          <option value="中国 广州" />
+          <option value="中国 深圳" />
+          <option value="中国 东莞" />
+        </datalist>
       </FormControl>
 
       <FormControl id="price calling fee">
         <FormLabel fontWeight={'600'}>Price Calling Fee:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>1</option>
-          <option>2</option>
-        </Select>
+        <Input variant={'filled'} placeholder={'Input Calling Fee'} isInvalid={priceTokenUnitSelectValid}
+               defaultValue={priceTokenUnit} list={"callingFee"}/>
+        <datalist id="callingFee">
+          <option value="中国 北京" />
+          <option value="中国 上海" />
+          <option value="中国 广州" />
+          <option value="中国 深圳" />
+          <option value="中国 东莞" />
+        </datalist>
       </FormControl>
 
       <FormControl id="attenuation factor">
         <FormLabel fontWeight={'600'}>Attenuation Factor:</FormLabel>
-        <Select placeholder="Select price token" variant={'filled'} icon={<ImCircleDown />} iconColor={'secondary'}>
-          <option>1</option>
-          <option>2</option>
-        </Select>
+        <Input variant={'filled'} placeholder={'Input Attenuation Factor'} isInvalid={priceTokenUnitSelectValid}
+               defaultValue={priceTokenUnit} list={"attenuationFactor"}/>
+        <datalist id="attenuationFactor">
+          <option value="中国 北京" />
+          <option value="中国 上海" />
+          <option value="中国 广州" />
+          <option value="中国 深圳" />
+          <option value="中国 东莞" />
+        </datalist>
       </FormControl>
     </Stack>
   )
