@@ -1,4 +1,4 @@
-import { Box, Button, Input, Stack, Text } from '@chakra-ui/react'
+import {Box, Button, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
 import Divider from '../Divider'
 import { FC, useState } from 'react'
 
@@ -8,6 +8,10 @@ type OptionInput = {
   onChange: (value: string) => void
   datalist: item[]
   onCheck: (value: string) => boolean
+  unit?: string
+  isNumber?: boolean
+  max?: number
+  min?: number
 }
 
 type item = {
@@ -18,6 +22,21 @@ type item = {
 const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [showOption, setShowOption] = useState(false)
   const [value, setValue] = useState(props.defaultValue)
+
+  console.log(value)
+
+  const format = (val: string, unit: string | undefined) => {
+    if (unit) {
+      return val + " " +  unit
+    }
+    return val
+  }
+  const parse = (val: string, unit: string | undefined) =>  {
+    if (unit){
+      return val.replace(/[a-zA-Z\s]+/g, '')
+    }
+    return val
+  }
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
@@ -33,22 +52,45 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         pos={showOption ? 'absolute' : 'static'}
         zIndex={showOption ? 10 : 0}
       >
-        <Input
-          variant={showOption ? 'unstyled' : 'filled'}
-          placeholder={'Input Price Token Unit'}
-          isInvalid={props.onCheck(value)}
-          onChange={(event) => {
-            setValue(event.target.value)
-            props.onChange(event.target.value)
-          }}
-          value={value}
-          onFocus={() => {
-            setShowOption(true)
-          }}
-          onBlur={() => {
-            setTimeout(() => setShowOption(false), 200)
-          }}
-        />
+        { props.isNumber ? (
+          <NumberInput
+            variant={showOption ? 'unstyled' : 'filled'}
+            placeholder={'Input Price Token Unit'}
+            isInvalid={props.onCheck(value)}
+            onChange={(valueString) => {
+              setValue(parse(valueString, props.unit))
+              props.onChange(parse(valueString, props.unit))
+            }}
+            value={format(value, props.unit)}
+            max={props.max}
+            min={props.min}
+            onFocus={() => {
+              setShowOption(true)
+            }}
+            onBlur={() => {
+              setTimeout(() => setShowOption(false), 200)
+            }}
+          >
+            <NumberInputField />
+          </NumberInput>
+        ) : (
+          <Input
+            variant={showOption ? 'unstyled' : 'filled'}
+            placeholder={'Input Price Token Unit'}
+            isInvalid={props.onCheck(value)}
+            onChange={(event) => {
+              setValue(parse(event.target.value, props.unit))
+              props.onChange(parse(event.target.value, props.unit))
+            }}
+            value={format(value, props.unit)}
+            onFocus={() => {
+              setShowOption(true)
+            }}
+            onBlur={() => {
+              setTimeout(() => setShowOption(false), 200)
+            }}
+          />
+        ) }
 
         {props.datalist.length > 0 && (
           <Stack hidden={!showOption} pb={1} top={'72px'} spacing={0}>
@@ -61,8 +103,8 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 borderRadius={0}
                 key={item.title}
                 onClick={() => {
-                  setValue(item.data)
-                  props.onChange(item.data)
+                  setValue(parse(item.data, props.unit))
+                  props.onChange(parse(item.data, props.unit))
                   setShowOption(false)
                 }}
                 _hover={{ bg: 'secondary.400' }}

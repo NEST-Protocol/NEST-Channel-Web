@@ -27,9 +27,11 @@ const Configuration = () => {
         defaultValue={priceTokenUnit}
         onCheck={handleIsValid}
         onChange={setPriceTokenUnit}
+        unit={"ETH"}
+        isNumber
         datalist={[
-          { title: '1 ETH', data: '1' },
-          { title: '2 ETH', data: '2' },
+          { title: '1ETH', data: '1' },
+          { title: '2ETH', data: '2' },
         ]}
       />
 
@@ -38,10 +40,12 @@ const Configuration = () => {
         defaultValue={standardOutput}
         onCheck={handleIsValid}
         onChange={setStandardOutput}
+        isNumber
+        unit={"NEST/Block"}
         datalist={[
-          { title: '1 NEST/Block', data: '1' },
-          { title: '5 NEST/Block', data: '2' },
-          { title: '10 NEST/Block', data: '10' },
+          { title: '1NEST/Block', data: '1' },
+          { title: '5NEST/Block', data: '5' },
+          { title: '10NEST/Block', data: '10' },
         ]}
       />
 
@@ -50,10 +54,12 @@ const Configuration = () => {
         defaultValue={quotationFee}
         onCheck={handleIsValid}
         onChange={setQuotationFee}
+        isNumber
+        unit={"ETH"}
         datalist={[
-          { title: '0.01 ETH', data: '0.01' },
-          { title: '0.02 ETH', data: '0.02' },
-          { title: '0.03 ETH', data: '0.03' },
+          { title: '0.01ETH', data: '0.01' },
+          { title: '0.02ETH', data: '0.02' },
+          { title: '0.03ETH', data: '0.03' },
         ]}
       />
 
@@ -62,10 +68,12 @@ const Configuration = () => {
         defaultValue={priceCallingFee}
         onCheck={handleIsValid}
         onChange={setPriceCallingFee}
+        isNumber
+        unit={"ETH"}
         datalist={[
-          { title: '0.01 ETH', data: '0.01' },
-          { title: '0.02 ETH', data: '0.02' },
-          { title: '0.03 ETH', data: '0.03' },
+          { title: '0.01ETH', data: '0.01' },
+          { title: '0.02ETH', data: '0.02' },
+          { title: '0.03ETH', data: '0.03' },
         ]}
       />
 
@@ -74,9 +82,11 @@ const Configuration = () => {
         defaultValue={attenuationFactor}
         onCheck={handleIsValid}
         onChange={setAttenuationFactor}
+        isNumber
+        unit={"%"}
         datalist={[
-          { title: '80 %', data: '80' },
-          { title: '50 %', data: '50' },
+          { title: '80%', data: '80' },
+          { title: '50%', data: '50' },
         ]}
       />
     </Stack>
