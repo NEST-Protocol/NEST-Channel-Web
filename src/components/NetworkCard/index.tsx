@@ -1,8 +1,8 @@
-import {Badge} from "@chakra-ui/react";
-import {useActiveWeb3React} from "../../hooks/web3";
-import {CHAIN_INFO, SupportedChainId} from "../../constants/chains";
+import { Badge } from '@chakra-ui/react'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
 
-export const NetworkCard = () =>{
+export const NetworkCard = () => {
   const { chainId, library } = useActiveWeb3React()
   const info = chainId ? CHAIN_INFO[chainId] : undefined
 
@@ -11,7 +11,7 @@ export const NetworkCard = () =>{
   }
 
   return (
-    <Badge color={"white"} variant={"ghost"}>
+    <Badge color={'white'} variant={'ghost'}>
       {info.label}
     </Badge>
   )

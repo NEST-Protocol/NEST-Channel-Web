@@ -1,16 +1,16 @@
-import { AbstractConnector } from "@web3-react/abstract-connector"
-import { SUPPORTED_WALLETS } from "../../constants/wallet"
-import { injected } from "../../connectors"
-import { Button, Spacer, Stack, Text } from "@chakra-ui/react"
-import styled from "styled-components"
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { SUPPORTED_WALLETS } from '../../constants/wallet'
+import { injected } from '../../connectors'
+import { Button, Spacer, Stack, Text } from '@chakra-ui/react'
+import styled from 'styled-components'
 
 const IconWrapper = styled.div<{ size?: number | null }>`
   align-items: center;
   justify-content: center;
   & > img,
   span {
-    height: ${({ size }) => (size ? size + "px" : "24px")};
-    width: ${({ size }) => (size ? size + "px" : "24px")};
+    height: ${({ size }) => (size ? size + 'px' : '24px')};
+    width: ${({ size }) => (size ? size + 'px' : '24px')};
   }
 `
 
@@ -29,30 +29,22 @@ export default function PendingView({
 
   return (
     <Stack spacing={8} pb={4}>
-      {error ? (
-        <Text>
-          Error connecting
-        </Text>
-      ) : (
-        <Text>
-          Initializing...
-        </Text>
-      )}
-      {Object.keys(SUPPORTED_WALLETS).map(key => {
+      {error ? <Text>Error connecting</Text> : <Text>Initializing...</Text>}
+      {Object.keys(SUPPORTED_WALLETS).map((key) => {
         const option = SUPPORTED_WALLETS[key]
         if (option.connector === connector) {
           if (option.connector === injected) {
-            if (isMetamask && option.name !== "MetaMask") {
+            if (isMetamask && option.name !== 'MetaMask') {
               return null
             }
-            if (!isMetamask && option.name === "MetaMask") {
+            if (!isMetamask && option.name === 'MetaMask') {
               return null
             }
           }
           return (
             <Button
               isFullWidth={true}
-              size={"lg"}
+              size={'lg'}
               id={`connect-${key}`}
               key={key}
               icon={option.iconURL}
@@ -62,11 +54,11 @@ export default function PendingView({
                 connector && tryActivation(connector)
               }}
             >
-              <Stack direction={"row"} w={"100%"} alignItems={"center"}>
+              <Stack direction={'row'} w={'100%'} alignItems={'center'}>
                 <Text color={option.color}>{option.name}</Text>
                 <Spacer />
                 <IconWrapper>
-                  <img src={option.iconURL} alt={"Icon"} />
+                  <img src={option.iconURL} alt={'Icon'} />
                 </IconWrapper>
               </Stack>
             </Button>

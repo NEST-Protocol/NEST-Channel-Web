@@ -1,6 +1,6 @@
 export const Input = {
   baseStyle: {
-    fontFamily: "Montserrat",
+    fontFamily: 'Montserrat',
   },
   variants: {
     filled: {
@@ -14,13 +14,13 @@ export const Input = {
         _focus: {
           borderColor: 'primary.500',
           bg: 'white',
-          boxShadow: "none",
+          boxShadow: 'none',
         },
         _hover: {
           borderColor: 'primary.500',
           bg: 'white',
-          boxShadow: "none",
-        }
+          boxShadow: 'none',
+        },
       },
     },
     unstyled: {
@@ -29,9 +29,9 @@ export const Input = {
         height: '36px',
         fontSize: 'md',
         fontWeight: 'bold',
-        px: "16px",
-        borderRadius: "20px",
-      }
-    }
+        px: '16px',
+        borderRadius: '20px',
+      },
+    },
   },
 }

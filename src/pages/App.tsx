@@ -1,19 +1,19 @@
 import * as React from 'react'
-import {Route, Routes} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Root from './Root'
-import {Button, Center, Stack} from '@chakra-ui/react'
-import {Logo} from '../components/Logo'
+import { Button, Center, Stack } from '@chakra-ui/react'
+import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
-import NetworkCard from "../components/NetworkCard";
+import NetworkCard from '../components/NetworkCard'
 
 export const App = () => {
   return (
     <Web3ReactManager>
       <Stack spacing={0} w={'full'} h={'full'}>
-        <Header/>
+        <Header />
         <Center>
-          <Content/>
+          <Content />
         </Center>
       </Stack>
     </Web3ReactManager>
@@ -22,16 +22,16 @@ export const App = () => {
 
 const Header = () => {
   return (
-    <Stack w={'full'} h={'60px'} direction={"row"} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
+    <Stack w={'full'} h={'60px'} direction={'row'} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
       <Button
         variant={'ghost'}
         onClick={() => {
-          const w = window.open("about:blank")
+          const w = window.open('about:blank')
           // @ts-ignore
-          w.location.href='https://nestprotocol.org/'
+          w.location.href = 'https://nestprotocol.org/'
         }}
       >
-        <Logo w={'88px'} h={'28px'}/>
+        <Logo w={'88px'} h={'28px'} />
       </Button>
       <NetworkCard />
     </Stack>
@@ -49,9 +49,9 @@ const Content = () => {
       mb={'20px'}
     >
       <Routes>
-        <Route path="/" element={<Root/>}/>
-        <Route path="/create" element={<OpenChanel/>}/>
-        <Route/>
+        <Route path="/" element={<Root />} />
+        <Route path="/create" element={<OpenChanel />} />
+        <Route />
       </Routes>
     </Stack>
   )

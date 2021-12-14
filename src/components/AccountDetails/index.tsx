@@ -1,11 +1,11 @@
-import { injected, walletconnect } from "../../connectors"
-import { SUPPORTED_WALLETS } from "../../constants/wallet"
-import {Button, Link, Spacer, Stack, Text} from "@chakra-ui/react"
-import { useActiveWeb3React } from "../../hooks/web3"
-import styled from "styled-components"
-import WalletConnectIcon from "../../assets/image/walletConnectIcon.svg"
-import { ExplorerDataType, getExplorerLink } from "../../utils/getExplorerLink"
-import { shortenAddress } from "../../utils"
+import { injected, walletconnect } from '../../connectors'
+import { SUPPORTED_WALLETS } from '../../constants/wallet'
+import { Button, Link, Spacer, Stack, Text } from '@chakra-ui/react'
+import { useActiveWeb3React } from '../../hooks/web3'
+import styled from 'styled-components'
+import WalletConnectIcon from '../../assets/image/walletConnectIcon.svg'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { shortenAddress } from '../../utils'
 import MetamaskIcon from '../../assets/image/metamask.png'
 
 const IconWrapper = styled.div<{ size?: number }>`
@@ -15,8 +15,8 @@ const IconWrapper = styled.div<{ size?: number }>`
   margin-right: 8px;
   & > img,
   span {
-    height: ${({ size }) => (size ? size + "px" : "32px")};
-    width: ${({ size }) => (size ? size + "px" : "32px")};
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
 `
 
@@ -32,28 +32,24 @@ const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
     const isMetaMask = !!(ethereum && ethereum.isMetaMask)
     const name = Object.keys(SUPPORTED_WALLETS)
       .filter(
-        k =>
-          SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === "METAMASK"))
+        (k) =>
+          SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === 'METAMASK'))
       )
-      .map(k => SUPPORTED_WALLETS[k].name)[0]
-    return (
-      <Text fontWeight={"600"}>
-        Connected with {name}
-      </Text>
-    )
+      .map((k) => SUPPORTED_WALLETS[k].name)[0]
+    return <Text fontWeight={'600'}>Connected with {name}</Text>
   }
 
   function getStatusIcon() {
     if (connector === injected) {
       return (
         <IconWrapper size={20}>
-          <img src={MetamaskIcon} alt={"Metamask logo"}/>
+          <img src={MetamaskIcon} alt={'Metamask logo'} />
         </IconWrapper>
       )
     } else if (connector === walletconnect) {
       return (
         <IconWrapper size={20}>
-          <img src={WalletConnectIcon} alt={"WalletConnect logo"} />
+          <img src={WalletConnectIcon} alt={'WalletConnect logo'} />
         </IconWrapper>
       )
     }
@@ -61,18 +57,24 @@ const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
   }
 
   return (
-    <Stack spacing={"20px"}>
+    <Stack spacing={'20px'}>
       {formatConnectorName()}
-      <Stack direction={"row"} justifyContent={"center"}>
+      <Stack direction={'row'} justifyContent={'center'}>
         {getStatusIcon()}
-        <Text fontWeight={"600"}>{account && shortenAddress(account)}</Text>
-        <Spacer/>
+        <Text fontWeight={'600'}>{account && shortenAddress(account)}</Text>
+        <Spacer />
         {chainId && account && (
-          <Link href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)} fontWeight={"600"} color={"secondary.500"}>View on Explorer</Link>
+          <Link
+            href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)}
+            fontWeight={'600'}
+            color={'secondary.500'}
+          >
+            View on Explorer
+          </Link>
         )}
       </Stack>
-      <Stack direction={"row"} w={"full"}>
-        {connector !== injected  && (
+      <Stack direction={'row'} w={'full'}>
+        {connector !== injected && (
           <Button
             onClick={() => {
               ;(connector as any).close()
@@ -82,7 +84,7 @@ const AccountDetails = ({ openOptions }: AccountDetailsProps) => {
             Disconnect
           </Button>
         )}
-        <Button onClick={openOptions} variant={"outline"} isFullWidth>
+        <Button onClick={openOptions} variant={'outline'} isFullWidth>
           Change
         </Button>
       </Stack>

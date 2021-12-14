@@ -8,7 +8,7 @@ const WalletAndTokenList = () => {
 
   return (
     <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'2xl'} p={'20px'} spacing={'24px'}>
-      <Web3Status/>
+      <Web3Status />
 
       <Input variant="filled" placeholder="Token Address" />
 

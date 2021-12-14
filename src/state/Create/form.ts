@@ -1,69 +1,58 @@
-import {atom} from "recoil";
+import { atom } from 'recoil'
 
 // Step 1: Token Address
 // 报价代币，0表示eth，address
 export const quotationTokenAtom = atom({
   key: 'quotationToken',
-  default: "",
+  default: '',
 })
 
 // 计价代币，0表示eth，address
 export const priceTokenAtom = atom({
   key: 'priceToken',
-  default: "",
+  default: '',
 })
 
 // 矿币地址，矿币地址如果和token0或者token1是一种币，可能导致挖矿资产被当成矿币挖走，address
 export const miningTokenAtom = atom({
   key: 'miningToken',
-  default: "",
+  default: '',
 })
 
 // Step 2: Configuration
 // 计价代币单位，uint96
 export const priceTokenUnitAtom = atom({
   key: 'priceTokenUnit',
-  default: "",
+  default: '',
 })
 
 // 每个区块的标准出矿量，uint96
 export const standardOutputAtom = atom({
   key: 'standardOutput',
-  default: "",
+  default: '',
 })
 
 export const quotationFeeAtom = atom({
   key: 'quotationFee',
-  default: "",
+  default: '',
 })
 
 export const priceCallingFeeAtom = atom({
   key: 'priceCallingFee',
-  default: "",
+  default: '',
 })
 
 export const attenuationFactorAtom = atom({
   key: 'attenuationFactor',
-  default: "",
+  default: '',
 })
 
-
 export const isTokenAddressValidAtom = atom({
-  key: "isTokenAddressValid",
+  key: 'isTokenAddressValid',
   default: false,
 })
 
 export const isConfigurationValidAtom = atom({
-  key: "isConfigurationValid",
+  key: 'isConfigurationValid',
   default: false,
 })
-
-
-
-
-
-
-
-
-
-

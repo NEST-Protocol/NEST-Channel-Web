@@ -1,40 +1,57 @@
 import { Input, Stack, Text } from '@chakra-ui/react'
-import useCreateChannel from "../../hooks/useCreateChannel";
-import {isAddress} from "../../utils";
-import InputWithSelect from "../../components/InputWithSelect";
+import useCreateChannel from '../../hooks/useCreateChannel'
+import { isAddress } from '../../utils'
+import InputWithSelect from '../../components/InputWithSelect'
 
 const TokenAddress = () => {
-  const { quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken } = useCreateChannel()
+  const { quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken } =
+    useCreateChannel()
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
-    return !address;
+    return !address
   }
 
   const handleIsValid = (value: string) => {
-    return value !== "PETH" && value !== "PUSD";
+    return value !== 'PETH' && value !== 'PUSD'
   }
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <Stack id="quotation token address" spacing={"16px"}>
-        <Text fontWeight={'600'} mx={"16px"}>Quotation Token:</Text>
-        <Input variant={'filled'} placeholder={'Input Token Address'} isInvalid={checkAddress(quotationToken)}
-               onChange={(event)=>setQuotationToken(event.target.value)} defaultValue={quotationToken}/>
+      <Stack id="quotation token address" spacing={'16px'}>
+        <Text fontWeight={'600'} mx={'16px'}>
+          Quotation Token:
+        </Text>
+        <Input
+          variant={'filled'}
+          placeholder={'Input Token Address'}
+          isInvalid={checkAddress(quotationToken)}
+          onChange={(event) => setQuotationToken(event.target.value)}
+          defaultValue={quotationToken}
+        />
       </Stack>
 
-      <InputWithSelect title={"Price Token Unit:"} defaultValue={priceToken} onCheck={handleIsValid}
-                       onChange={setPriceToken} datalist=
-                         {[
-                           {title: "PETH", data: "PETH"},
-                           {title: "PUSD", data: "PUSD"},
-                         ]} />
+      <InputWithSelect
+        title={'Price Token Unit:'}
+        defaultValue={priceToken}
+        onCheck={handleIsValid}
+        onChange={setPriceToken}
+        datalist={[
+          { title: 'PETH', data: 'PETH' },
+          { title: 'PUSD', data: 'PUSD' },
+        ]}
+      />
 
-      <Stack spacing={"16px"}>
-        <Text fontWeight={'600'} mx={"16px"}>Mining Token:</Text>
-        <Input variant={'filled'} placeholder={'Input Token Address'}
-               onChange={(event)=>setMiningToken(event.target.value)}
-               defaultValue={miningToken} isInvalid={checkAddress(miningToken)}
+      <Stack spacing={'16px'}>
+        <Text fontWeight={'600'} mx={'16px'}>
+          Mining Token:
+        </Text>
+        <Input
+          variant={'filled'}
+          placeholder={'Input Token Address'}
+          onChange={(event) => setMiningToken(event.target.value)}
+          defaultValue={miningToken}
+          isInvalid={checkAddress(miningToken)}
         />
       </Stack>
     </Stack>

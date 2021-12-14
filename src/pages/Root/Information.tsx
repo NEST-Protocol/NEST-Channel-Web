@@ -1,7 +1,7 @@
-import {Link, Spacer, Stack, Text, Wrap, WrapItem} from '@chakra-ui/react'
-import {FC} from 'react'
-import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
-import {useActiveWeb3React} from "../../hooks/web3";
+import { Link, Spacer, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react'
+import { FC } from 'react'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { useActiveWeb3React } from '../../hooks/web3'
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
@@ -15,13 +15,25 @@ const Information = () => {
         <InformationDetail title={'Fee Balance'} value={30} unit={'BNB'} />
         <InformationDetail title={'Standard Output'} value={24} unit={'/Block'} />
         <InformationDetail title={'Total Mining Token'} value={24000} unit={'LYK'} />
-        <InformationDetail title={'Mining Token'} value={'0x2455...6784'} link={getExplorerLink(Number(chainId), "0x2373238383", ExplorerDataType.TOKEN)} />
+        <InformationDetail
+          title={'Mining Token'}
+          value={'0x2455...6784'}
+          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+        />
         <InformationDetail title={'Initial Block'} value={3049581} />
         <InformationDetail title={'Quotation Fee'} value={0} />
-        <InformationDetail title={'Price Token'} value={'0x2455...6784'} link={getExplorerLink(Number(chainId), "0x2373238383", ExplorerDataType.TOKEN)} />
+        <InformationDetail
+          title={'Price Token'}
+          value={'0x2455...6784'}
+          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+        />
         <InformationDetail title={'Price Calling Fee'} value={0.005} unit={'BNB'} />
         <InformationDetail title={'Attenuation Factor'} value={80} unit={'%'} />
-        <InformationDetail title={'Quotation Token'} value={'0x2455...6784'} link={getExplorerLink(Number(chainId), "0x2373238383", ExplorerDataType.TOKEN)} />
+        <InformationDetail
+          title={'Quotation Token'}
+          value={'0x2455...6784'}
+          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+        />
       </Wrap>
     </Stack>
   )

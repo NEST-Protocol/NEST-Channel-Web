@@ -4,10 +4,10 @@ import Configuration, { ConfigurationTip } from './Configuration'
 import Confirm, { ConfirmTip } from './Confirm'
 import Done from './Done'
 import Divider from '../../components/Divider'
-import {FC} from 'react'
+import { FC } from 'react'
 import { useRecoilState } from 'recoil'
 import { activeStepAtom } from '../../state/Create/activeStepAtom'
-import useCreateChannel from "../../hooks/useCreateChannel";
+import useCreateChannel from '../../hooks/useCreateChannel'
 
 const steps = [
   { id: 0, label: 'Token Address', content: <TokenAddress /> },
@@ -61,11 +61,11 @@ const OpenChanel = () => {
           whiteSpace={'nowrap'}
           hidden={activeStep === 3}
         >
-          <StepButton id={0} title={'Token Address'}/>
-          <Divider active={activeStep >= 1}/>
-          <StepButton id={1} title={'Configuration'}/>
+          <StepButton id={0} title={'Token Address'} />
+          <Divider active={activeStep >= 1} />
+          <StepButton id={1} title={'Configuration'} />
           <Divider active={activeStep >= 2} />
-          <StepButton id={2} title={'Confirm'}/>
+          <StepButton id={2} title={'Confirm'} />
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
@@ -77,13 +77,13 @@ const OpenChanel = () => {
         ) : (
           <Button
             w={'176px'}
-            disabled={activeStep === steps.length - 1 ? ( isTokenAddressValid || isConfigurationValid ) : false}
+            disabled={activeStep === steps.length - 1 ? isTokenAddressValid || isConfigurationValid : false}
             onClick={() => {
               const newStep = activeStep + 1
               setActiveStep(newStep)
 
-              if (activeStep === steps.length - 1 ) {
-                console.log("create")
+              if (activeStep === steps.length - 1) {
+                console.log('create')
               }
             }}
           >

@@ -1,9 +1,9 @@
-import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
-import {FC} from 'react'
-import useCreateChannel from "../../hooks/useCreateChannel";
-import {isAddress} from "../../utils";
-import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
-import {useActiveWeb3React} from "../../hooks/web3";
+import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
+import { FC } from 'react'
+import useCreateChannel from '../../hooks/useCreateChannel'
+import { isAddress } from '../../utils'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { useActiveWeb3React } from '../../hooks/web3'
 
 const Confirm = () => {
   const {
@@ -14,21 +14,48 @@ const Confirm = () => {
     standardOutput,
     quotationFee,
     priceCallingFee,
-    attenuationFactor
+    attenuationFactor,
   } = useCreateChannel()
 
   const { chainId } = useActiveWeb3React()
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <ConfirmDetail title={'Price Token:'} value={priceToken === "" ? "NaN" : priceToken} link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)} isAddress/>
-      <ConfirmDetail title={'Quotation Token:'} value={quotationToken === "" ? "NaN": quotationToken} link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)} isAddress/>
-      <ConfirmDetail title={'Mining Token:'} value={miningToken === "" ? "NaN" : miningToken} link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)} isAddress/>
-      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === "" ? "NaN" : priceTokenUnit} unit={'ETH'} />
-      <ConfirmDetail title={'Standard Output:'} value={standardOutput === "" ? "NaN" : standardOutput} unit={'NEST/Block'} />
-      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee === "" ? "NaN": quotationFee} unit={'ETH'} />
-      <ConfirmDetail title={'Price Calling Fee:'} value={priceCallingFee === "" ? "NaN": priceCallingFee} unit={'ETH'} />
-      <ConfirmDetail title={'Attenuation Factor:'} value={attenuationFactor === "" ? "NaN": attenuationFactor} unit={'%'} />
+      <ConfirmDetail
+        title={'Price Token:'}
+        value={priceToken === '' ? 'NaN' : priceToken}
+        link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)}
+        isAddress
+      />
+      <ConfirmDetail
+        title={'Quotation Token:'}
+        value={quotationToken === '' ? 'NaN' : quotationToken}
+        link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)}
+        isAddress
+      />
+      <ConfirmDetail
+        title={'Mining Token:'}
+        value={miningToken === '' ? 'NaN' : miningToken}
+        link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)}
+        isAddress
+      />
+      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
+      <ConfirmDetail
+        title={'Standard Output:'}
+        value={standardOutput === '' ? 'NaN' : standardOutput}
+        unit={'NEST/Block'}
+      />
+      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'ETH'} />
+      <ConfirmDetail
+        title={'Price Calling Fee:'}
+        value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
+        unit={'ETH'}
+      />
+      <ConfirmDetail
+        title={'Attenuation Factor:'}
+        value={attenuationFactor === '' ? 'NaN' : attenuationFactor}
+        unit={'%'}
+      />
     </Stack>
   )
 }
@@ -44,7 +71,7 @@ type ConfirmDetailProps = {
 const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   const addressValid = (value: string) => {
     const address = isAddress(value)
-    return !address;
+    return !address
   }
 
   return (
@@ -54,11 +81,16 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
       </Text>
       <Spacer />
       {props.link ? (
-        <Link href={props.link} isExternal color={props.isAddress ? (addressValid(props.value) ? 'red' : 'link.500') : 'link.500'} fontWeight={'bold'}>
+        <Link
+          href={props.link}
+          isExternal
+          color={props.isAddress ? (addressValid(props.value) ? 'red' : 'link.500') : 'link.500'}
+          fontWeight={'bold'}
+        >
           {props.value}
         </Link>
       ) : (
-        <Text fontWeight={'bold'} color={props.value === "NaN" ? "red" : "black"}>
+        <Text fontWeight={'bold'} color={props.value === 'NaN' ? 'red' : 'black'}>
           {props.value} {props.unit}
         </Text>
       )}

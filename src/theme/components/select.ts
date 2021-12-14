@@ -16,7 +16,7 @@ export const Select = {
         _hover: {
           borderColor: 'primary.500',
           bg: 'white',
-        }
+        },
       },
     },
   },
