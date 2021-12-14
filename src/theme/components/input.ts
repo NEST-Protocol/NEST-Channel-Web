@@ -10,7 +10,7 @@ export const Input = {
         boxShadow: 'inset 0 0 10px 0 #EEEEEE',
         height: '40px',
         fontSize: 'md',
-        fontWeight: '500',
+        fontWeight: 'bold',
         _focus: {
           borderColor: 'primary.500',
           bg: 'white',
@@ -28,7 +28,7 @@ export const Input = {
         bg: 'white',
         height: '36px',
         fontSize: 'md',
-        fontWeight: '500',
+        fontWeight: 'bold',
         px: "16px",
         borderRadius: "20px",
       }

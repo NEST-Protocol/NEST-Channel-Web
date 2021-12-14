@@ -27,19 +27,42 @@ const Configuration = () => {
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
 
       <InputWithSelect title={"Price Token Unit:"} defaultValue={priceTokenUnit} onCheck={handleIsValid}
-                       onChange={setPriceTokenUnit} datalist={[{title: "1", data: "1"}]} />
+                       onChange={setPriceTokenUnit} datalist=
+                         {[
+                           {title: "1 ETH", data: "1"},
+                           {title: "2 ETH", data: "2"},
+                         ]}/>
 
       <InputWithSelect title={"Standard Output:"} defaultValue={standardOutput} onCheck={handleIsValid}
-                       onChange={setStandardOutput} datalist={[{title: "1", data: "1"}]} />
+                       onChange={setStandardOutput} datalist=
+                         {[
+                           {title: "1 NEST/Block", data: "1"},
+                           {title: "5 NEST/Block", data: "2"},
+                           {title: "10 NEST/Block", data: "10"},
+                         ]}/>
 
       <InputWithSelect title={"Quotation Fee:"} defaultValue={quotationFee} onCheck={handleIsValid}
-                       onChange={setQuotationFee} datalist={[{title: "1", data: "1"}]} />
+                       onChange={setQuotationFee} datalist=
+                         {[
+                           {title: "0.01 ETH", data: "0.01"},
+                           {title: "0.02 ETH", data: "0.02"},
+                           {title: "0.03 ETH", data: "0.03"},
+                         ]}/>
 
       <InputWithSelect title={"Price Calling Fee:"} defaultValue={priceCallingFee} onCheck={handleIsValid}
-                       onChange={setPriceCallingFee} datalist={[{title: "1", data: "1"}]} />
+                       onChange={setPriceCallingFee} datalist=
+                         {[
+                           {title: "0.01 ETH", data: "0.01"},
+                           {title: "0.02 ETH", data: "0.02"},
+                           {title: "0.03 ETH", data: "0.03"},
+                         ]}/>
 
       <InputWithSelect title={"Attenuation Factor:"} defaultValue={attenuationFactor} onCheck={handleIsValid}
-                       onChange={setAttenuationFactor} datalist={[{title: "1", data: "1"}]} />
+                       onChange={setAttenuationFactor} datalist=
+                         {[
+                           {title: "80 %", data: "80"},
+                           {title: "50 %", data: "50"},
+                         ]}/>
 
     </Stack>
   )

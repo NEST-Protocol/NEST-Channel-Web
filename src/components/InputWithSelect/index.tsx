@@ -38,7 +38,7 @@ const InputWithSelect: FC<OptionInput> = ({...props}) => {
                onBlur={() => {
                  setTimeout(
                    () => setShowOption(false),
-                   500
+                   200
                  )
                }}
         />
