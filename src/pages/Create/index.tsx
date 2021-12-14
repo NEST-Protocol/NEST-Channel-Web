@@ -21,11 +21,36 @@ const tips = [
   { id: 2, label: 'Confirm', content: <ConfirmTip /> },
 ]
 
+type StepItemProps = {
+  title: string
+  id: number
+}
+
+
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const { isTokenAddressValid, isConfigurationValid } = useCreateChannel()
 
   console.log(isTokenAddressValid, isConfigurationValid)
+
+  const StepButton: FC<StepItemProps> = ({ ...props }) => {
+    return (
+      <>
+        <Button
+          w={'40px'}
+          variant={activeStep >= props.id ? 'solid' : 'outline'}
+          onClick={() => {
+            setActiveStep(props.id)
+          }}
+          color={activeStep >= props.id ? 'white' : 'secondary.500'}
+          borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
+        >
+          {props.id + 1}
+        </Button>
+        <Text color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
+      </>
+    )
+  }
 
   return (
     <Stack p={'20px'} spacing={'20px'}>
@@ -83,32 +108,6 @@ const OpenChanel = () => {
         })}
       </Stack>
     </Stack>
-  )
-}
-
-type StepItemProps = {
-  title: string
-  id: number
-}
-
-const StepButton: FC<StepItemProps> = ({ ...props }) => {
-  const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-
-  return (
-    <>
-      <Button
-        w={'40px'}
-        variant={activeStep >= props.id ? 'solid' : 'outline'}
-        onClick={() => {
-          setActiveStep(props.id)
-        }}
-        color={activeStep >= props.id ? 'white' : 'secondary.500'}
-        borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
-      >
-        {props.id + 1}
-      </Button>
-      <Text color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
-    </>
   )
 }
 
