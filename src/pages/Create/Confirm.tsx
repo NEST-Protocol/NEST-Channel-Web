@@ -1,7 +1,9 @@
-import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
+import {FC} from 'react'
 import useCreateChannel from "../../hooks/useCreateChannel";
 import {isAddress} from "../../utils";
+import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
+import {useActiveWeb3React} from "../../hooks/web3";
 
 const Confirm = () => {
   const {
@@ -15,11 +17,13 @@ const Confirm = () => {
     attenuationFactor
   } = useCreateChannel()
 
+  const { chainId } = useActiveWeb3React()
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <ConfirmDetail title={'Price Token:'} value={priceToken === "" ? "NaN" : priceToken} link={'eeee'} isAddress/>
-      <ConfirmDetail title={'Quotation Token:'} value={quotationToken === "" ? "NaN": quotationToken} link={'eeee'} isAddress/>
-      <ConfirmDetail title={'Mining Token:'} value={miningToken === "" ? "NaN" : miningToken} link={'eeee'} isAddress/>
+      <ConfirmDetail title={'Price Token:'} value={priceToken === "" ? "NaN" : priceToken} link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)} isAddress/>
+      <ConfirmDetail title={'Quotation Token:'} value={quotationToken === "" ? "NaN": quotationToken} link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)} isAddress/>
+      <ConfirmDetail title={'Mining Token:'} value={miningToken === "" ? "NaN" : miningToken} link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)} isAddress/>
       <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === "" ? "NaN" : priceTokenUnit} unit={'ETH'} />
       <ConfirmDetail title={'Standard Output:'} value={standardOutput === "" ? "NaN" : standardOutput} unit={'NEST/Block'} />
       <ConfirmDetail title={'Quotation Fee:'} value={quotationFee === "" ? "NaN": quotationFee} unit={'ETH'} />
