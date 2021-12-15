@@ -1,9 +1,9 @@
-import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
+import {FC} from 'react'
 import useCreateChannel from '../../hooks/useCreateChannel'
-import { isAddress } from '../../utils'
-import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { useActiveWeb3React } from '../../hooks/web3'
+import {isAddress} from '../../utils'
+import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
+import {useActiveWeb3React} from '../../hooks/web3'
 
 const Confirm = () => {
   const {
@@ -25,19 +25,19 @@ const Confirm = () => {
         title={'Price Token:'}
         value={priceToken === '' ? 'NaN' : priceToken}
         link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)}
-        isAddress
+        isToken
       />
       <ConfirmDetail
         title={'Quotation Token:'}
         value={quotationToken === '' ? 'NaN' : quotationToken}
         link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)}
-        isAddress
+        isToken
       />
       <ConfirmDetail
         title={'Mining Token:'}
         value={miningToken === '' ? 'NaN' : miningToken}
         link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)}
-        isAddress
+        isToken
       />
       <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
       <ConfirmDetail
@@ -65,7 +65,7 @@ type ConfirmDetailProps = {
   value: string
   unit?: string
   link?: string
-  isAddress?: boolean
+  isToken?: boolean
 }
 
 const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
@@ -77,14 +77,14 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   return (
     <Stack direction={'row'} w={'full'}>
       <Text color={'secondary.500'} fontWeight={'600'}>
-        {props.title}
+        {props.title}:
       </Text>
       <Spacer />
       {props.link ? (
         <Link
           href={props.link}
           isExternal
-          color={props.isAddress ? (addressValid(props.value) ? 'red' : 'link.500') : 'link.500'}
+          color={props.isToken ? (addressValid(props.value) ? 'red' : 'link.500') : 'link.500'}
           fontWeight={'bold'}
         >
           {props.value}

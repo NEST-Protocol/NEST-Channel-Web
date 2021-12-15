@@ -23,7 +23,7 @@ const Configuration = () => {
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <InputWithSelect
-        title={'Price Token Unit:'}
+        title={'Price Token Unit'}
         defaultValue={priceTokenUnit}
         onCheck={handleIsValid}
         onChange={setPriceTokenUnit}
@@ -37,7 +37,7 @@ const Configuration = () => {
       />
 
       <InputWithSelect
-        title={'Standard Output:'}
+        title={'Standard Output'}
         defaultValue={standardOutput}
         onCheck={handleIsValid}
         onChange={setStandardOutput}
@@ -52,7 +52,7 @@ const Configuration = () => {
       />
 
       <InputWithSelect
-        title={'Quotation Fee:'}
+        title={'Quotation Fee'}
         defaultValue={quotationFee}
         onCheck={handleIsValid}
         onChange={setQuotationFee}
@@ -67,7 +67,7 @@ const Configuration = () => {
       />
 
       <InputWithSelect
-        title={'Price Calling Fee:'}
+        title={'Price Calling Fee'}
         defaultValue={priceCallingFee}
         onCheck={handleIsValid}
         onChange={setPriceCallingFee}
@@ -82,7 +82,7 @@ const Configuration = () => {
       />
 
       <InputWithSelect
-        title={'Attenuation Factor:'}
+        title={'Attenuation Factor'}
         defaultValue={attenuationFactor}
         onCheck={handleIsValid}
         onChange={setAttenuationFactor}

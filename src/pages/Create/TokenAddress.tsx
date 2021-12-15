@@ -34,7 +34,7 @@ const TokenAddress = () => {
       </Stack>
 
       <InputWithSelect
-        title={'Price Token Unit:'}
+        title={'Price Token Unit'}
         defaultValue={priceToken}
         onCheck={() => checkAddress(priceToken)}
         onChange={setPriceToken}

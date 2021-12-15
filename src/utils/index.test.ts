@@ -1,7 +1,7 @@
 import { isAddress, shortenAddress } from '.'
 
 describe('utils', () => {
-  describe('#isAddress', () => {
+  describe('#isToken', () => {
     it('returns false if not', () => {
       expect(isAddress('')).toBe(false)
       expect(isAddress('0x0000')).toBe(false)
