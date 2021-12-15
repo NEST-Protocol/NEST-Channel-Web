@@ -1,19 +1,18 @@
-import { Input, Stack, Text } from '@chakra-ui/react'
+import {Input, Stack, Text} from '@chakra-ui/react'
 import useCreateChannel from '../../hooks/useCreateChannel'
-import { isAddress } from '../../utils'
+import {isAddress} from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
+import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
+import {useActiveWeb3React} from "../../hooks/web3";
 
 const TokenAddress = () => {
-  const { quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken } =
+  const {chainId} = useActiveWeb3React()
+  const {quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken} =
     useCreateChannel()
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
     return !address
-  }
-
-  const handleIsValid = (value: string) => {
-    return value !== 'PETH' && value !== 'PUSD'
   }
 
   return (
@@ -28,7 +27,7 @@ const TokenAddress = () => {
           isInvalid={checkAddress(quotationToken)}
           onChange={(event) => setQuotationToken(event.target.value)}
           defaultValue={quotationToken}
-          onFocus={(e)=>{
+          onFocus={(e) => {
             e.target.setSelectionRange(0, quotationToken.length)
           }}
         />
@@ -37,11 +36,11 @@ const TokenAddress = () => {
       <InputWithSelect
         title={'Price Token Unit:'}
         defaultValue={priceToken}
-        onCheck={handleIsValid}
+        onCheck={() => checkAddress(priceToken)}
         onChange={setPriceToken}
         datalist={[
-          { title: 'PETH', data: 'PETH' },
-          { title: 'PUSD', data: 'PUSD' },
+          {title: 'PETH - ' + PETH_ADDRESS[chainId ?? 1], data: PETH_ADDRESS[chainId ?? 1]},
+          {title: 'PUSD - ' + PUSD_ADDRESS[chainId ?? 1], data: PUSD_ADDRESS[chainId ?? 1]},
         ]}
       />
 
@@ -55,7 +54,7 @@ const TokenAddress = () => {
           onChange={(event) => setMiningToken(event.target.value)}
           defaultValue={miningToken}
           isInvalid={checkAddress(miningToken)}
-          onFocus={(e)=>{
+          onFocus={(e) => {
             e.target.setSelectionRange(0, miningToken.length)
           }}
         />
@@ -68,7 +67,7 @@ export const TokenAddressTip = () => {
   return (
     <Stack w={'764px'} spacing={'12px'}>
       <Text fontWeight={'bold'}>Instructions</Text>
-      <p />
+      <p/>
       <Text fontSize={'sm'} fontWeight={'600'}>
         Price Token Address
       </Text>
@@ -76,7 +75,7 @@ export const TokenAddressTip = () => {
         The quoted pair is denominated in that Token, as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where PUSD and PETH are
         the denominated tokens.
       </Text>
-      <p />
+      <p/>
       <Text fontSize={'sm'} fontWeight={'600'}>
         Quotation Token Address
       </Text>
@@ -84,7 +83,7 @@ export const TokenAddressTip = () => {
         The address of the quoted assets in the quotation pair, such as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where
         Token and USDT are quoted tokens.
       </Text>
-      <p />
+      <p/>
       <Text fontSize={'sm'} fontWeight={'600'}>
         Mining Token Address
       </Text>
