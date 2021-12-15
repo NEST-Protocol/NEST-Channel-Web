@@ -52,6 +52,36 @@ export function getExplorerLink(chainId: number, data: string, type: ExplorerDat
   //   }
   // }
 
+  if (chainId === SupportedChainId.BSC) {
+    switch (type) {
+      case ExplorerDataType.TRANSACTION:
+        return `https://bscscan.com/tx/${data}`
+      case ExplorerDataType.ADDRESS:
+        return `https://bscscan.com/address/${data}`
+      case ExplorerDataType.TOKEN:
+        return `https://bscscan.com/token/${data}`
+      case ExplorerDataType.BLOCK:
+        return `https://bscscan.com/block/${data}`
+      default:
+        return `https://bscscan.com/`
+    }
+  }
+
+  if (chainId === SupportedChainId.BSCTestnet) {
+    switch (type) {
+      case ExplorerDataType.TRANSACTION:
+        return `https://testnet.bscscan.com/tx/${data}`
+      case ExplorerDataType.ADDRESS:
+        return `https://testnet.bscscan.com/address/${data}`
+      case ExplorerDataType.TOKEN:
+        return `https://testnet.bscscan.com/token/${data}`
+      case ExplorerDataType.BLOCK:
+        return `https://testnet.bscscan.com/block/${data}`
+      default:
+        return `https://testnet.bscscan.com/`
+    }
+  }
+
   const prefix = `https://${ETHERSCAN_PREFIXES[chainId] ?? ''}etherscan.io`
 
   switch (type) {
