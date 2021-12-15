@@ -7,6 +7,10 @@ const Done = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const navigate = useNavigate()
 
+  if (activeStep > 4 || activeStep < 0) {
+    setActiveStep(0)
+  }
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} h={'400px'} spacing={'20px'} alignItems={'center'}>
       <Text>Done!</Text>
