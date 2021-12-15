@@ -1,21 +1,29 @@
 import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
 import {FC} from 'react'
-import useCreateChannel from '../../hooks/useCreateChannel'
 import {isAddress} from '../../utils'
 import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
 import {useActiveWeb3React} from '../../hooks/web3'
+import {useRecoilValue} from "recoil";
+import {
+  attenuationFactorAtom,
+  miningTokenAtom,
+  priceCallingFeeAtom,
+  priceTokenAtom,
+  priceTokenUnitAtom,
+  quotationFeeAtom,
+  quotationTokenAtom,
+  standardOutputAtom
+} from "../../state/Create/form";
 
 const Confirm = () => {
-  const {
-    quotationToken,
-    priceToken,
-    miningToken,
-    priceTokenUnit,
-    standardOutput,
-    quotationFee,
-    priceCallingFee,
-    attenuationFactor,
-  } = useCreateChannel()
+  const quotationToken = useRecoilValue(quotationTokenAtom)
+  const priceToken = useRecoilValue(priceTokenAtom)
+  const miningToken = useRecoilValue(miningTokenAtom)
+  const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
+  const standardOutput = useRecoilValue(standardOutputAtom)
+  const quotationFee = useRecoilValue(quotationFeeAtom)
+  const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
+  const attenuationFactor = useRecoilValue(attenuationFactorAtom)
 
   const { chainId } = useActiveWeb3React()
 

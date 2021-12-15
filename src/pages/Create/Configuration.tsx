@@ -1,20 +1,20 @@
 import { Stack, Text } from '@chakra-ui/react'
-import useCreateChannel from '../../hooks/useCreateChannel'
 import InputWithSelect from '../../components/InputWithSelect'
+import {useRecoilState} from "recoil";
+import {
+  attenuationFactorAtom,
+  priceCallingFeeAtom,
+  priceTokenUnitAtom,
+  quotationFeeAtom,
+  standardOutputAtom
+} from "../../state/Create/form";
 
 const Configuration = () => {
-  const {
-    priceTokenUnit,
-    setPriceTokenUnit,
-    standardOutput,
-    setStandardOutput,
-    quotationFee,
-    setQuotationFee,
-    priceCallingFee,
-    setPriceCallingFee,
-    attenuationFactor,
-    setAttenuationFactor,
-  } = useCreateChannel()
+  const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
+  const [standardOutput, setStandardOutput] = useRecoilState(standardOutputAtom)
+  const [quotationFee, setQuotationFee] = useRecoilState(quotationFeeAtom)
+  const [priceCallingFee, setPriceCallingFee] = useRecoilState(priceCallingFeeAtom)
+  const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
 
   const handleIsValid = (value: string) => {
     return value === ''

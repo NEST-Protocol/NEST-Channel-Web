@@ -84,6 +84,7 @@ const OpenChanel = () => {
 
               if (activeStep === steps.length - 1) {
                 console.log('create')
+
               }
             }}
           >

@@ -10,19 +10,19 @@ import {
   quotationTokenAtom,
   standardOutputAtom,
 } from '../state/Create/form'
-import { useRecoilState } from 'recoil'
+import {useRecoilState, useRecoilValue} from 'recoil'
 import { useEffect } from 'react'
 import { isAddress } from '../utils'
 
 const useCreateChannel = () => {
-  const [quotationToken, setQuotationToken] = useRecoilState(quotationTokenAtom)
-  const [priceToken, setPriceToken] = useRecoilState(priceTokenAtom)
-  const [miningToken, setMiningToken] = useRecoilState(miningTokenAtom)
-  const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
-  const [standardOutput, setStandardOutput] = useRecoilState(standardOutputAtom)
-  const [quotationFee, setQuotationFee] = useRecoilState(quotationFeeAtom)
-  const [priceCallingFee, setPriceCallingFee] = useRecoilState(priceCallingFeeAtom)
-  const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
+  const quotationToken = useRecoilValue(quotationTokenAtom)
+  const priceToken = useRecoilValue(priceTokenAtom)
+  const miningToken = useRecoilValue(miningTokenAtom)
+  const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
+  const standardOutput = useRecoilValue(standardOutputAtom)
+  const quotationFee = useRecoilValue(quotationFeeAtom)
+  const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
+  const attenuationFactor = useRecoilValue(attenuationFactorAtom)
 
   const [isTokenAddressValid, setIsTokenAddressValid] = useRecoilState(isTokenAddressValidAtom)
   const [isConfigurationValid, setIsConfigurationValid] = useRecoilState(isConfigurationValidAtom)
@@ -49,43 +49,16 @@ const useCreateChannel = () => {
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setIsConfigurationValid, standardOutput])
 
-  // Todo: verify parameter type and default value
-  const resetConfig = () => {
-    setQuotationToken('')
-    setPriceToken('')
-    setMiningToken('')
-    setPriceTokenUnit('')
-    setStandardOutput('')
-    setQuotationFee('')
-    setPriceCallingFee('')
-    setAttenuationFactor('')
-  }
 
   // Todo: create channel
-  const create = () => {
+  const create = async () => {
     console.log('Create Channel')
   }
 
   return {
-    resetConfig,
-    setQuotationToken,
-    setPriceToken,
-    setMiningToken,
-    setPriceTokenUnit,
-    setStandardOutput,
-    setQuotationFee,
-    setPriceCallingFee,
-    setAttenuationFactor,
-    quotationToken,
-    priceToken,
-    miningToken,
-    priceTokenUnit,
-    standardOutput,
-    quotationFee,
-    priceCallingFee,
-    attenuationFactor,
     isTokenAddressValid,
     isConfigurationValid,
+    create,
   }
 }
 

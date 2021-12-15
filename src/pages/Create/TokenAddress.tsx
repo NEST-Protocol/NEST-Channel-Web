@@ -1,14 +1,20 @@
 import {Input, Stack, Text} from '@chakra-ui/react'
-import useCreateChannel from '../../hooks/useCreateChannel'
 import {isAddress} from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
 import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
 import {useActiveWeb3React} from "../../hooks/web3";
+import {useRecoilState} from "recoil";
+import {
+  miningTokenAtom,
+  priceTokenAtom,
+  quotationTokenAtom,
+} from "../../state/Create/form";
 
 const TokenAddress = () => {
   const {chainId} = useActiveWeb3React()
-  const {quotationToken, setQuotationToken, priceToken, setPriceToken, miningToken, setMiningToken} =
-    useCreateChannel()
+  const [quotationToken, setQuotationToken] = useRecoilState(quotationTokenAtom)
+  const [priceToken, setPriceToken] = useRecoilState(priceTokenAtom)
+  const [miningToken, setMiningToken] = useRecoilState(miningTokenAtom)
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
