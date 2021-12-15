@@ -29,9 +29,10 @@ const Configuration = () => {
         onChange={setPriceTokenUnit}
         unit={"ETH"}
         isNumber
+        min={0}
         datalist={[
-          { title: '1ETH', data: '1' },
-          { title: '2ETH', data: '2' },
+          { title: '1 ETH', data: '1' },
+          { title: '2 ETH', data: '2' },
         ]}
       />
 
@@ -41,11 +42,12 @@ const Configuration = () => {
         onCheck={handleIsValid}
         onChange={setStandardOutput}
         isNumber
+        min={0}
         unit={"NEST/Block"}
         datalist={[
-          { title: '1NEST/Block', data: '1' },
-          { title: '5NEST/Block', data: '5' },
-          { title: '10NEST/Block', data: '10' },
+          { title: '1 NEST/Block', data: '1' },
+          { title: '5 NEST/Block', data: '5' },
+          { title: '10 NEST/Block', data: '10' },
         ]}
       />
 
@@ -55,11 +57,12 @@ const Configuration = () => {
         onCheck={handleIsValid}
         onChange={setQuotationFee}
         isNumber
+        min={0}
         unit={"ETH"}
         datalist={[
-          { title: '0.01ETH', data: '0.01' },
-          { title: '0.02ETH', data: '0.02' },
-          { title: '0.03ETH', data: '0.03' },
+          { title: '0.01 ETH', data: '0.01' },
+          { title: '0.02 ETH', data: '0.02' },
+          { title: '0.03 ETH', data: '0.03' },
         ]}
       />
 
@@ -69,11 +72,12 @@ const Configuration = () => {
         onCheck={handleIsValid}
         onChange={setPriceCallingFee}
         isNumber
+        min={0}
         unit={"ETH"}
         datalist={[
-          { title: '0.01ETH', data: '0.01' },
-          { title: '0.02ETH', data: '0.02' },
-          { title: '0.03ETH', data: '0.03' },
+          { title: '0.01 ETH', data: '0.01' },
+          { title: '0.02 ETH', data: '0.02' },
+          { title: '0.03 ETH', data: '0.03' },
         ]}
       />
 
@@ -83,10 +87,12 @@ const Configuration = () => {
         onCheck={handleIsValid}
         onChange={setAttenuationFactor}
         isNumber
+        min={0}
+        max={100}
         unit={"%"}
         datalist={[
-          { title: '80%', data: '80' },
-          { title: '50%', data: '50' },
+          { title: '80 %', data: '80' },
+          { title: '50 %', data: '50' },
         ]}
       />
     </Stack>

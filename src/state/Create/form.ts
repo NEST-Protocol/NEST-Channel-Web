@@ -23,28 +23,28 @@ export const miningTokenAtom = atom({
 // 计价代币单位，uint96
 export const priceTokenUnitAtom = atom({
   key: 'priceTokenUnit',
-  default: '',
+  default: '0',
 })
 
 // 每个区块的标准出矿量，uint96
 export const standardOutputAtom = atom({
   key: 'standardOutput',
-  default: '',
+  default: '0',
 })
 
 export const quotationFeeAtom = atom({
   key: 'quotationFee',
-  default: '',
+  default: '0',
 })
 
 export const priceCallingFeeAtom = atom({
   key: 'priceCallingFee',
-  default: '',
+  default: '0',
 })
 
 export const attenuationFactorAtom = atom({
   key: 'attenuationFactor',
-  default: '',
+  default: '0',
 })
 
 export const isTokenAddressValidAtom = atom({
