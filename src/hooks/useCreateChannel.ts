@@ -13,6 +13,9 @@ import {
 import {useRecoilState, useRecoilValue} from 'recoil'
 import { useEffect } from 'react'
 import { isAddress } from '../utils'
+import {useNestOpenPlatform} from "./useContract";
+import {NEST_OPEN_PLATFORM} from "../constants/addresses";
+import {useActiveWeb3React} from "./web3";
 
 const useCreateChannel = () => {
   const quotationToken = useRecoilValue(quotationTokenAtom)
@@ -26,6 +29,12 @@ const useCreateChannel = () => {
 
   const [isTokenAddressValid, setIsTokenAddressValid] = useRecoilState(isTokenAddressValidAtom)
   const [isConfigurationValid, setIsConfigurationValid] = useRecoilState(isConfigurationValidAtom)
+
+  const { chainId } = useActiveWeb3React()
+
+  const nestOpenPlatform = useNestOpenPlatform(NEST_OPEN_PLATFORM[chainId ?? 1], true)
+
+  console.log(nestOpenPlatform)
 
   useEffect(() => {
     if (isAddress(quotationToken) === false || isAddress(priceToken) === false || isAddress(miningToken) === false) {
@@ -52,7 +61,28 @@ const useCreateChannel = () => {
 
   // Todo: create channel
   const create = async () => {
-    console.log('Create Channel')
+
+    if (nestOpenPlatform) {
+      nestOpenPlatform.open({
+        // 计价代币地址 address
+        token0: "",
+        // 计价单位 uint96
+        unit: "",
+        // 报价代币地址 address
+        token1: "",
+        // 标准出矿量 uint96
+        rewardPerBlock: "",
+        // 出矿代币地址 address
+        reward: "",
+        // post fee uint16
+        postFeeUnit: "",
+        // singleFee uint16
+        singleFee: "",
+        // 衰减系数 uint16，万分制
+        reductionRate: "",
+      })
+    }
+
   }
 
   return {

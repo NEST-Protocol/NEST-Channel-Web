@@ -44,7 +44,7 @@ export const NEST_LEDGER_ADDRESS: AddressMap = {
   [SupportedChainId.BSCTestnet]: '0x78D5E2fC85969e51580fd2C0Fd6D056a444167cE',
 }
 
-export const NEST_OPEN_MINING: AddressMap = {
+export const NEST_OPEN_PLATFORM: AddressMap = {
   [SupportedChainId.MAINNET]: '',
   [SupportedChainId.RINKEBY]: '0x638461F3Ae49CcC257ef49Fe76CCE5816A9234eF',
   [SupportedChainId.BSC]: '',
