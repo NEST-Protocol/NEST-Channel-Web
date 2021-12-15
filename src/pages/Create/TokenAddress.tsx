@@ -28,6 +28,9 @@ const TokenAddress = () => {
           isInvalid={checkAddress(quotationToken)}
           onChange={(event) => setQuotationToken(event.target.value)}
           defaultValue={quotationToken}
+          onFocus={(e)=>{
+            e.target.setSelectionRange(0, quotationToken.length)
+          }}
         />
       </Stack>
 
@@ -52,6 +55,9 @@ const TokenAddress = () => {
           onChange={(event) => setMiningToken(event.target.value)}
           defaultValue={miningToken}
           isInvalid={checkAddress(miningToken)}
+          onFocus={(e)=>{
+            e.target.setSelectionRange(0, miningToken.length)
+          }}
         />
       </Stack>
     </Stack>
