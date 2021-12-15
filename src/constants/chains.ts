@@ -7,6 +7,8 @@ export enum SupportedChainId {
   RINKEBY = 4,
   // GOERLI = 5,
   // KOVAN = 42,
+  BSC = 56,
+  BSCTestnet = 97,
 
   // ARBITRUM_ONE = 42161,
   // ARBITRUM_RINKEBY = 421611,
@@ -20,6 +22,8 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.RINKEBY,
   // SupportedChainId.GOERLI,
   // SupportedChainId.KOVAN,
+  SupportedChainId.BSC,
+  SupportedChainId.BSCTestnet,
 
   // SupportedChainId.ARBITRUM_ONE,
   // SupportedChainId.ARBITRUM_RINKEBY,
@@ -33,6 +37,8 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.RINKEBY,
   // SupportedChainId.GOERLI,
   // SupportedChainId.KOVAN,
+  SupportedChainId.BSC,
+  SupportedChainId.BSCTestnet,
 ] as const
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
@@ -62,11 +68,54 @@ type ChainInfo = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & {
 } & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
 
 export const CHAIN_INFO: ChainInfo = {
+  [SupportedChainId.MAINNET]: {
+    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+    explorer: 'https://etherscan.io/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Mainnet',
+  },
+  [SupportedChainId.RINKEBY]: {
+    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+    explorer: 'https://rinkeby.etherscan.io/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Rinkeby',
+  },
+  // [SupportedChainId.ROPSTEN]: {
+  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+  //   explorer: 'https://ropsten.etherscan.io/',
+  //   infoLink: 'https://nestprotocol.org/',
+  //   label: 'Ropsten',
+  // },
+  // [SupportedChainId.KOVAN]: {
+  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+  //   explorer: 'https://kovan.etherscan.io/',
+  //   infoLink: 'https://nestprotocol.org/',
+  //   label: 'Kovan',
+  // },
+  // [SupportedChainId.GOERLI]: {
+  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+  //   explorer: 'https://goerli.etherscan.io/',
+  //   infoLink: 'https://nestprotocol.org/',
+  //   label: 'Görli',
+  // },
+  [SupportedChainId.BSC]: {
+    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+    explorer: 'https://bscscan.com/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Smart Chain',
+  },
+  [SupportedChainId.BSCTestnet]: {
+    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+    explorer: 'https://testnet.bscscan.com/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Smart Chain - Testnet',
+  },
+
   // [SupportedChainId.ARBITRUM_ONE]: {
   //   bridge: 'https://bridge.arbitrum.io/',
   //   docs: 'https://offchainlabs.com/',
   //   explorer: 'https://arbiscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/arbitrum',
+  //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Arbitrum',
   //   logoUrl: arbitrumLogoUrl,
   // },
@@ -74,45 +123,15 @@ export const CHAIN_INFO: ChainInfo = {
   //   bridge: 'https://bridge.arbitrum.io/',
   //   docs: 'https://offchainlabs.com/',
   //   explorer: 'https://rinkeby-explorer.arbitrum.io/',
-  //   infoLink: 'https://info.uniswap.org/#/arbitrum/',
+  //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Arbitrum Rinkeby',
   //   logoUrl: arbitrumLogoUrl,
-  // },
-  [SupportedChainId.MAINNET]: {
-    docs: 'https://docs.uniswap.org/',
-    explorer: 'https://etherscan.io/',
-    infoLink: 'https://info.uniswap.org/#/',
-    label: 'Mainnet',
-  },
-  [SupportedChainId.RINKEBY]: {
-    docs: 'https://docs.uniswap.org/',
-    explorer: 'https://rinkeby.etherscan.io/',
-    infoLink: 'https://info.uniswap.org/#/',
-    label: 'Rinkeby',
-  },
-  // [SupportedChainId.ROPSTEN]: {
-  //   docs: 'https://docs.uniswap.org/',
-  //   explorer: 'https://ropsten.etherscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/',
-  //   label: 'Ropsten',
-  // },
-  // [SupportedChainId.KOVAN]: {
-  //   docs: 'https://docs.uniswap.org/',
-  //   explorer: 'https://kovan.etherscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/',
-  //   label: 'Kovan',
-  // },
-  // [SupportedChainId.GOERLI]: {
-  //   docs: 'https://docs.uniswap.org/',
-  //   explorer: 'https://goerli.etherscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/',
-  //   label: 'Görli',
   // },
   // [SupportedChainId.OPTIMISM]: {
   //   bridge: 'https://gateway.optimism.io/',
   //   docs: 'https://optimism.io/',
   //   explorer: 'https://optimistic.etherscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/optimism/',
+  //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Optimism',
   //   logoUrl: optimismLogoUrl,
   // },
@@ -120,7 +139,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   bridge: 'https://gateway.optimism.io/',
   //   docs: 'https://optimism.io/',
   //   explorer: 'https://optimistic.etherscan.io/',
-  //   infoLink: 'https://info.uniswap.org/#/optimism',
+  //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Optimistic Kovan',
   //   logoUrl: optimismLogoUrl,
   // },
