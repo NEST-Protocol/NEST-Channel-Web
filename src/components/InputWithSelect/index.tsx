@@ -1,4 +1,4 @@
-import {Box, Button, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
+import {Box, Button, FormControl, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
 import Divider from '../Divider'
 import {FC, useRef, useState} from 'react'
 import {formatWithUnit, parseToNumber} from "../../utils/unit";
@@ -30,7 +30,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
       <Text fontWeight={'600'} mb={'16px'} mx={'16px'}>
         {props.title}
       </Text>
-      <Box
+      <FormControl
         bg={'white'}
         width={'600px'}
         borderRadius={showOption ? '10px' : '0'}
@@ -63,6 +63,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
           </NumberInput>
         ) : (
           <Input
+            id={"amount"}
             ref={inputRef}
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
@@ -103,7 +104,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             ))}
           </Stack>
         )}
-      </Box>
+      </FormControl>
     </Box>
   )
 }
