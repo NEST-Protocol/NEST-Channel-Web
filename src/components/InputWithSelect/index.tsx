@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
 import Divider from '../Divider'
-import {FC, useRef, useState} from 'react'
+import {FC, useState} from 'react'
 import {formatWithUnit, parseToNumber} from "../../utils/unit";
 
 type OptionInput = {
@@ -23,7 +23,6 @@ type item = {
 const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [showOption, setShowOption] = useState(false)
   const [value, setValue] = useState(props.defaultValue)
-  const inputRef = useRef(null)
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
@@ -51,20 +50,19 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             value={formatWithUnit(value, props.unit)}
             max={props.max}
             min={props.min}
-            onFocus={() => {
+            onFocus={(e) => {
+              e.target.setSelectionRange(0, value.length)
               setShowOption(true)
-              console.log(inputRef.current)
             }}
             onBlur={() => {
               setTimeout(() => setShowOption(false), 200)
             }}
           >
-            <NumberInputField ref={inputRef}/>
+            <NumberInputField />
           </NumberInput>
         ) : (
           <Input
             id={"amount"}
-            ref={inputRef}
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
@@ -73,7 +71,8 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               props.onChange(parseToNumber(event.target.value, props.unit))
             }}
             value={formatWithUnit(value, props.unit)}
-            onFocus={() => {
+            onFocus={(e) => {
+              e.target.setSelectionRange(0, value.length)
               setShowOption(true)
             }}
             onBlur={() => {
