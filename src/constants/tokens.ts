@@ -58,3 +58,5 @@ export const USDC: {[chainId: number]: Token} = {
   [SupportedChainId.BSC]: new Token(SupportedChainId.BSC, USDC_ADDRESS[56], 18, 'USDC', 'USDC'),
   [SupportedChainId.BSCTestnet]: new Token(SupportedChainId.BSCTestnet, USDC_ADDRESS[97], 18, "USDC", "USDC"),
 }
+
+export const SupportTokensList: {[chainId: number]: Token}[] = [NEST, PETH, USDT, PUSD, COFIX, HBTC, USDC]
