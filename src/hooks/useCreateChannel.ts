@@ -11,10 +11,10 @@ import {
   standardOutputAtom,
 } from '../state/Create/form'
 import {useRecoilState, useRecoilValue} from 'recoil'
-import { useEffect } from 'react'
+import {useEffect, useState} from 'react'
 import { isAddress } from '../utils'
 import {useNestOpenPlatformContract} from "./useContract";
-import {NEST_OPEN_PLATFORM} from "../constants/addresses";
+import {NEST_OPEN_PLATFORM, PETH_ADDRESS, PUSD_ADDRESS} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
 import {parseToBigNumber} from "../utils/bignumberUtil";
 
@@ -34,6 +34,29 @@ const useCreateChannel = () => {
   const { chainId } = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
+
+  const [args, setArgs] = useState<{
+    token0: string
+    unit: string
+    token1: string
+    rewardPerBlock: string
+    reward: string
+    postFeeUnit: string
+    singleFee: string
+    reductionRate: string
+  }>()
+
+  const [priceTokenAddress, setPriceTokenAddress] = useState("")
+
+  useEffect(()=>{
+    if (priceTokenName === "PETH") {
+      setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
+    } else if (priceTokenName === "PUSD") {
+      setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
+    } else {
+      setPriceTokenAddress("Invalid Token")
+    }
+  }, [chainId, priceTokenName])
 
   useEffect(() => {
     if (isAddress(quotationTokenAddress) && isAddress(miningTokenAddress) && (priceTokenName === "PETH" || priceTokenName === "PUSD")) {
@@ -57,30 +80,34 @@ const useCreateChannel = () => {
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
 
+  const newArgs = {
+    // 计价代币地址 address
+    token0: priceTokenAddress,
+    // 计价单位 uint96
+    unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
+    // 报价代币地址 address
+    token1: quotationTokenAddress,
+    // 标准出矿量 uint96
+    rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
+    // 出矿代币地址 address
+    reward: miningTokenAddress,
+    // postFee uint16
+    postFeeUnit: parseToBigNumber(quotationFee).shiftedBy(6).toFixed(0),
+    // singleFee uint16
+    singleFee: parseToBigNumber(priceCallingFee).shiftedBy(6).toFixed(0),
+    // 衰减系数 uint16，万分制
+    reductionRate: parseToBigNumber(attenuationFactor).multipliedBy(100).toFixed(0),
+  }
+
+  if (JSON.stringify(newArgs) !== JSON.stringify(args)) {
+    setArgs(newArgs)
+  }
+
   // Todo: create channel
   const create = async () => {
-    const args = {
-      // 计价代币地址 address
-      token0: priceTokenName,
-      // 计价单位 uint96
-      unit: parseToBigNumber(priceTokenUnit),
-      // 报价代币地址 address
-      token1: quotationTokenAddress,
-      // 标准出矿量 uint96
-      rewardPerBlock: parseToBigNumber(standardOutput),
-      // 出矿代币地址 address
-      reward: miningTokenAddress,
-      // post fee uint16
-      postFeeUnit: parseToBigNumber(quotationFee),
-      // singleFee uint16
-      singleFee: parseToBigNumber(priceCallingFee),
-      // 衰减系数 uint16，万分制
-      reductionRate: parseToBigNumber(attenuationFactor).multipliedBy(100),
-    }
-
     if (nestOpenPlatform) {
-      // await nestOpenPlatform.open()
-      console.log(args)
+      const a = await nestOpenPlatform.open(args)
+      console.log(a)
     }
   }
 

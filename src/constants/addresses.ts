@@ -18,7 +18,7 @@ export const PUSD_ADDRESS: AddressMap = {
 
 export const USDT_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-  [SupportedChainId.RINKEBY]: '0x20125a7256EFafd0d4Eec24048E08C5045BC5900',
+  [SupportedChainId.RINKEBY]: '0x2d750210c0b5343a0b79beff8f054c9add7d2411',
   [SupportedChainId.BSC]: '0x55d398326f99059ff775485246999027b3197955',
   [SupportedChainId.BSCTestnet]: '0xDd4A68D8236247BDC159F7C5fF92717AA634cBCc',
 }
