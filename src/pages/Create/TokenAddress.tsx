@@ -1,9 +1,8 @@
 import {Input, Stack, Text} from '@chakra-ui/react'
 import {isAddress} from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
-import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
-import {useActiveWeb3React} from "../../hooks/web3";
 import {useRecoilState} from "recoil";
+import { useTokenName } from "../../hooks/Tokens";
 import {
   miningTokenAtom,
   priceTokenAtom,
@@ -11,57 +10,62 @@ import {
 } from "../../state/Create/form";
 
 const TokenAddress = () => {
-  const {chainId} = useActiveWeb3React()
-  const [quotationToken, setQuotationToken] = useRecoilState(quotationTokenAtom)
+  const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAtom)
   const [priceToken, setPriceToken] = useRecoilState(priceTokenAtom)
-  const [miningToken, setMiningToken] = useRecoilState(miningTokenAtom)
+  const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAtom)
+  const quotationTokenName = useTokenName(quotationTokenAddress)
+  const miningTokenName = useTokenName(miningTokenAddress)
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
     return !address
   }
 
+  const checkPriceToken = (value: string) => {
+    return !(value === "PETH" || value === "PUSD")
+  }
+
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <Stack id="quotation token address" spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
-          Quotation Token:
+          Quotation Token ({quotationTokenName}):
         </Text>
         <Input
           variant={'filled'}
           placeholder={'Input Token Address'}
-          isInvalid={checkAddress(quotationToken)}
-          onChange={(event) => setQuotationToken(event.target.value)}
-          defaultValue={quotationToken}
+          isInvalid={checkAddress(quotationTokenAddress)}
+          onChange={(event) => setQuotationTokenAddress(event.target.value)}
+          defaultValue={quotationTokenAddress}
           onFocus={(e) => {
-            e.target.setSelectionRange(0, quotationToken.length)
+            e.target.setSelectionRange(0, quotationTokenAddress.length)
           }}
         />
       </Stack>
 
       <InputWithSelect
-        title={'Price Token Unit'}
+        title={'Price Token'}
         defaultValue={priceToken}
-        onCheck={() => checkAddress(priceToken)}
+        onCheck={() => checkPriceToken(priceToken)}
         onChange={setPriceToken}
         datalist={[
-          {title: 'PETH - ' + PETH_ADDRESS[chainId ?? 1], data: PETH_ADDRESS[chainId ?? 1]},
-          {title: 'PUSD - ' + PUSD_ADDRESS[chainId ?? 1], data: PUSD_ADDRESS[chainId ?? 1]},
+          {title: 'PETH', data: 'PETH'},
+          {title: 'PUSD', data: 'PUSD'},
         ]}
       />
 
       <Stack spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
-          Mining Token:
+          Mining Token ({miningTokenName}):
         </Text>
         <Input
           variant={'filled'}
           placeholder={'Input Token Address'}
-          onChange={(event) => setMiningToken(event.target.value)}
-          defaultValue={miningToken}
-          isInvalid={checkAddress(miningToken)}
+          onChange={(event) => setMiningTokenAddress(event.target.value)}
+          defaultValue={miningTokenAddress}
+          isInvalid={checkAddress(miningTokenAddress)}
           onFocus={(e) => {
-            e.target.setSelectionRange(0, miningToken.length)
+            e.target.setSelectionRange(0, miningTokenAddress.length)
           }}
         />
       </Stack>

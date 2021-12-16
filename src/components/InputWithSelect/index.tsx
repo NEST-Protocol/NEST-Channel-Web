@@ -27,7 +27,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   return (
     <Box pb={showOption ? '40px' : '0'}>
       <Text fontWeight={'600'} mb={'16px'} mx={'16px'}>
-        {props.title}
+        {props.title}:
       </Text>
       <FormControl
         bg={'white'}
