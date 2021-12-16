@@ -1,9 +1,10 @@
 import { Stack, Text } from '@chakra-ui/react'
 import InputWithSelect from '../../components/InputWithSelect'
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {
   attenuationFactorAtom,
   priceCallingFeeAtom,
+  priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
   standardOutputAtom
@@ -15,76 +16,108 @@ const Configuration = () => {
   const [quotationFee, setQuotationFee] = useRecoilState(quotationFeeAtom)
   const [priceCallingFee, setPriceCallingFee] = useRecoilState(priceCallingFeeAtom)
   const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
+  const priceTokenName = useRecoilValue(priceTokenNameAtom)
 
-  const handleIsValid = (value: string) => {
+  // 若没有输入，则不合法，返回真
+  const handleInvalidInput = (value: string) => {
     return value === ''
+  }
+
+  const handlePriceTokenUnitInvalidInput = (value: string) => {
+    if (priceTokenName === "PETH") {
+      return value !== "1" && value !== "2" && value !== "3"
+    } else {
+      return value !== "1000" && value !== "2000" && value !== "3000"
+    }
   }
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      <InputWithSelect
-        title={'Price Token Unit'}
-        defaultValue={priceTokenUnit}
-        onCheck={handleIsValid}
-        onChange={setPriceTokenUnit}
-        unit={"ETH"}
-        isNumber
-        min={0}
-        datalist={[
-          { title: '1 ETH', data: '1' },
-          { title: '2 ETH', data: '2' },
-        ]}
-      />
+      {
+        priceTokenName === "PUSD" ? (
+          <InputWithSelect
+            title={'Price Token Unit'}
+            defaultValue={priceTokenUnit}
+            onCheck={handlePriceTokenUnitInvalidInput}
+            onChange={setPriceTokenUnit}
+            unit={"PUSD"}
+            isNumber
+            min={0}
+            datalist={[
+              { title: '1000 PUSD', data: '1000' },
+              { title: '2000 PUSD', data: '2000' },
+              { title: '3000 PUSD', data: '3000' },
+            ]}
+          />
+        ) : (
+          <InputWithSelect
+            title={'Price Token Unit'}
+            defaultValue={priceTokenUnit}
+            onCheck={handlePriceTokenUnitInvalidInput}
+            onChange={setPriceTokenUnit}
+            unit={"PETH"}
+            isNumber
+            min={0}
+            datalist={[
+              { title: '1 PETH', data: '1' },
+              { title: '2 PETH', data: '2' },
+              { title: '3 PETH', data: '3' },
+            ]}
+          />
+        )
+      }
 
       <InputWithSelect
         title={'Standard Output'}
         defaultValue={standardOutput}
-        onCheck={handleIsValid}
+        onCheck={handleInvalidInput}
         onChange={setStandardOutput}
         isNumber
         min={0}
         unit={"NEST/Block"}
         datalist={[
-          { title: '1 NEST/Block', data: '1' },
-          { title: '5 NEST/Block', data: '5' },
           { title: '10 NEST/Block', data: '10' },
+          { title: '5 NEST/Block', data: '5' },
+          { title: '0 NEST/Block', data: '0' },
         ]}
       />
 
       <InputWithSelect
         title={'Quotation Fee'}
         defaultValue={quotationFee}
-        onCheck={handleIsValid}
+        onCheck={handleInvalidInput}
         onChange={setQuotationFee}
         isNumber
         min={0}
-        unit={"ETH"}
+        unit={"BNB"}
         datalist={[
-          { title: '0.01 ETH', data: '0.01' },
-          { title: '0.02 ETH', data: '0.02' },
-          { title: '0.03 ETH', data: '0.03' },
+          { title: '0.1 BNB', data: '0.01' },
+          { title: '0.01 BNB', data: '0.01' },
+          { title: '0.001 BNB', data: '0.001' },
+          { title: '0 BNB', data: '0' },
         ]}
       />
 
       <InputWithSelect
         title={'Price Calling Fee'}
         defaultValue={priceCallingFee}
-        onCheck={handleIsValid}
+        onCheck={handleInvalidInput}
         onChange={setPriceCallingFee}
         isNumber
         min={0}
-        unit={"ETH"}
+        unit={"BNB"}
         datalist={[
-          { title: '0.01 ETH', data: '0.01' },
-          { title: '0.02 ETH', data: '0.02' },
-          { title: '0.03 ETH', data: '0.03' },
+          { title: '0.1 BNB', data: '0.1' },
+          { title: '0.01 BNB', data: '0.01' },
+          { title: '0.001 BNB', data: '0.001' },
+          { title: '0 BNB', data: '0' },
         ]}
       />
 
       <InputWithSelect
         title={'Attenuation Factor'}
         defaultValue={attenuationFactor}
-        onCheck={handleIsValid}
+        onCheck={handleInvalidInput}
         onChange={setAttenuationFactor}
         isNumber
         min={0}
@@ -92,7 +125,8 @@ const Configuration = () => {
         unit={"%"}
         datalist={[
           { title: '80 %', data: '80' },
-          { title: '50 %', data: '50' },
+          { title: '70 %', data: '70' },
+          { title: '60 %', data: '60' },
         ]}
       />
     </Stack>

@@ -5,14 +5,16 @@ import {useRecoilState} from "recoil";
 import { useTokenName } from "../../hooks/Tokens";
 import {
   miningTokenAddressAtom,
-  priceTokenNameAtom,
+  priceTokenNameAtom, priceTokenUnitAtom,
   quotationTokenAddressAtom,
 } from "../../state/Create/form";
+import {useEffect} from "react";
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
-  const [priceToken, setPriceToken] = useRecoilState(priceTokenNameAtom)
+  const [priceTokenName, setPriceTokenName] = useRecoilState(priceTokenNameAtom)
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
+  const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
   const quotationTokenName = useTokenName(quotationTokenAddress)
   const miningTokenName = useTokenName(miningTokenAddress)
 
@@ -24,6 +26,10 @@ const TokenAddress = () => {
   const checkPriceToken = (value: string) => {
     return !(value === "PETH" || value === "PUSD")
   }
+
+  useEffect(()=>{
+    setPriceTokenUnit("")
+  }, [priceTokenName, setPriceTokenUnit])
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
@@ -45,9 +51,9 @@ const TokenAddress = () => {
 
       <InputWithSelect
         title={'Price Token'}
-        defaultValue={priceToken}
-        onCheck={() => checkPriceToken(priceToken)}
-        onChange={setPriceToken}
+        defaultValue={priceTokenName}
+        onCheck={() => checkPriceToken(priceTokenName)}
+        onChange={setPriceTokenName}
         datalist={[
           {title: 'PETH', data: 'PETH'},
           {title: 'PUSD', data: 'PUSD'},

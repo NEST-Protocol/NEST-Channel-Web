@@ -62,17 +62,17 @@ const Confirm = () => {
         link={getExplorerLink(chainId || 1, miningTokenAddress, ExplorerDataType.TOKEN)}
         isToken
       />
-      <ConfirmDetail title={'Price Token Unit'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
+      <ConfirmDetail title={'Price Token Unit'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={priceTokenName} />
       <ConfirmDetail
         title={'Standard Output'}
         value={standardOutput === '' ? 'NaN' : standardOutput}
         unit={'NEST/Block'}
       />
-      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'ETH'} />
+      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'BNB'} />
       <ConfirmDetail
         title={'Price Calling Fee'}
         value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
-        unit={'ETH'}
+        unit={'BNB'}
       />
       <ConfirmDetail
         title={'Attenuation Factor'}
