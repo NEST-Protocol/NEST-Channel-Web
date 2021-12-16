@@ -11,7 +11,7 @@ export const NEST_ADDRESS: AddressMap = {
 
 export const PUSD_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0x5407cab67ad304FB8A4aC46D83b3Dd63A9dbA575',
-  [SupportedChainId.RINKEBY]: '0x5407cab67ad304FB8A4aC46D83b3Dd63A9dbA575',
+  [SupportedChainId.RINKEBY]: '0x7F037a1dF6F62B46Ede765c535187ECCeEF5D455',
   [SupportedChainId.BSC]: '0x3DA5c9aafc6e6D6839E62e2fB65825869019F291',
   [SupportedChainId.BSCTestnet]: '0x3DA5c9aafc6e6D6839E62e2fB65825869019F291',
 }
@@ -60,7 +60,7 @@ export const NEST_BATCH_PLATFORM2: AddressMap = {
 
 export const PETH_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0x53f878Fb7Ec7B86e4F9a0CB1E9a6c89C0555FbbD',
-  [SupportedChainId.RINKEBY]: '0x4D4B378eFbeb7eE15Aa498F3383C9949391557e0',
+  [SupportedChainId.RINKEBY]: '0xbe155CDf7F6dA37684A36DCC02076Ed314d5467a',
   [SupportedChainId.BSC]: '0xc39dC1385a44fBB895991580EA55FC10e7451cB3',
   [SupportedChainId.BSCTestnet]: '0xc39dC1385a44fBB895991580EA55FC10e7451cB3',
 }
