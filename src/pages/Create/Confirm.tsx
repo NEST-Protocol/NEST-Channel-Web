@@ -37,6 +37,8 @@ const Confirm = () => {
       setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
     } else if (priceTokenName === "PUSD") {
       setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
+    } else if (priceTokenName === "") {
+      setPriceTokenAddress("NaN")
     } else {
       setPriceTokenAddress("Invalid Token")
     }
@@ -45,7 +47,7 @@ const Confirm = () => {
   return (
     <Stack pt={'60px'} pb={'30px'} w={'680px'} spacing={'20px'}>
       <ConfirmDetail
-        title={`Price Token (${priceTokenName})`}
+        title={`Price Token (${priceTokenName === "" ? "NaN" : priceTokenName})`}
         value={priceTokenAddress}
         link={getExplorerLink(chainId || 1, priceTokenName, ExplorerDataType.TOKEN)}
         isToken
