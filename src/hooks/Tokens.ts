@@ -7,6 +7,10 @@ export function useTokenName(validated: string): string {
   const [name, setName] = useState("NaN")
 
   useEffect(()=>{
+    if (!validated){
+      setName("NaN")
+    }
+
     tokenContract?.name()
       .then(res=>{
         setName(res)
