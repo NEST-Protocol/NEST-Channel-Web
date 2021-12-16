@@ -4,15 +4,15 @@ import InputWithSelect from '../../components/InputWithSelect'
 import {useRecoilState} from "recoil";
 import { useTokenName } from "../../hooks/Tokens";
 import {
-  miningTokenAtom,
-  priceTokenAtom,
-  quotationTokenAtom,
+  miningTokenAddressAtom,
+  priceTokenNameAtom,
+  quotationTokenAddressAtom,
 } from "../../state/Create/form";
 
 const TokenAddress = () => {
-  const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAtom)
-  const [priceToken, setPriceToken] = useRecoilState(priceTokenAtom)
-  const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAtom)
+  const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
+  const [priceToken, setPriceToken] = useRecoilState(priceTokenNameAtom)
+  const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
   const quotationTokenName = useTokenName(quotationTokenAddress)
   const miningTokenName = useTokenName(miningTokenAddress)
 

@@ -1,13 +1,13 @@
 import {
   attenuationFactorAtom,
-  isConfigurationValidAtom,
-  isTokenAddressValidAtom,
-  miningTokenAtom,
+  invalidConfigurationAtom,
+  invalidTokenAddressAtom,
+  miningTokenAddressAtom,
   priceCallingFeeAtom,
-  priceTokenAtom,
+  priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
-  quotationTokenAtom,
+  quotationTokenAddressAtom,
   standardOutputAtom,
 } from '../state/Create/form'
 import {useRecoilState, useRecoilValue} from 'recoil'
@@ -19,29 +19,29 @@ import {useActiveWeb3React} from "./web3";
 import {parseToBigNumber} from "../utils/bignumberUtil";
 
 const useCreateChannel = () => {
-  const quotationToken = useRecoilValue(quotationTokenAtom)
-  const priceToken = useRecoilValue(priceTokenAtom)
-  const miningToken = useRecoilValue(miningTokenAtom)
+  const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
+  const priceTokenName = useRecoilValue(priceTokenNameAtom)
+  const miningTokenAddress = useRecoilValue(miningTokenAddressAtom)
   const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
   const standardOutput = useRecoilValue(standardOutputAtom)
   const quotationFee = useRecoilValue(quotationFeeAtom)
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
 
-  const [isTokenAddressValid, setIsTokenAddressValid] = useRecoilState(isTokenAddressValidAtom)
-  const [isConfigurationValid, setIsConfigurationValid] = useRecoilState(isConfigurationValidAtom)
+  const [invalidTokenAddress, setInvalidTokenAddress] = useRecoilState(invalidTokenAddressAtom)
+  const [invalidConfiguration, setInvalidConfiguration] = useRecoilState(invalidConfigurationAtom)
 
   const { chainId } = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
 
   useEffect(() => {
-    if (isAddress(quotationToken) === false || isAddress(priceToken) === false || isAddress(miningToken) === false) {
-      setIsTokenAddressValid(true)
+    if (isAddress(quotationTokenAddress) && isAddress(miningTokenAddress) && (priceTokenName === "PETH" || priceTokenName === "PUSD")) {
+      setInvalidTokenAddress(false)
     } else {
-      setIsTokenAddressValid(false)
+      setInvalidTokenAddress(true)
     }
-  }, [quotationToken, priceToken, miningToken, setIsTokenAddressValid])
+  }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress])
 
   useEffect(() => {
     if (
@@ -51,25 +51,25 @@ const useCreateChannel = () => {
       priceCallingFee === '' ||
       attenuationFactor === ''
     ) {
-      setIsConfigurationValid(true)
+      setInvalidConfiguration(true)
     } else {
-      setIsConfigurationValid(false)
+      setInvalidConfiguration(false)
     }
-  }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setIsConfigurationValid, standardOutput])
+  }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
 
   // Todo: create channel
   const create = async () => {
     const args = {
       // 计价代币地址 address
-      token0: priceToken,
+      token0: priceTokenName,
       // 计价单位 uint96
       unit: parseToBigNumber(priceTokenUnit),
       // 报价代币地址 address
-      token1: quotationToken,
+      token1: quotationTokenAddress,
       // 标准出矿量 uint96
       rewardPerBlock: parseToBigNumber(standardOutput),
       // 出矿代币地址 address
-      reward: miningToken,
+      reward: miningTokenAddress,
       // post fee uint16
       postFeeUnit: parseToBigNumber(quotationFee),
       // singleFee uint16
@@ -85,8 +85,8 @@ const useCreateChannel = () => {
   }
 
   return {
-    isTokenAddressValid,
-    isConfigurationValid,
+    invalidTokenAddress,
+    invalidConfiguration,
     create,
   }
 }

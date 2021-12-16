@@ -1,50 +1,65 @@
 import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {isAddress} from '../../utils'
 import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
 import {useActiveWeb3React} from '../../hooks/web3'
 import {useRecoilValue} from "recoil";
 import {
   attenuationFactorAtom,
-  miningTokenAtom,
+  miningTokenAddressAtom,
   priceCallingFeeAtom,
-  priceTokenAtom,
+  priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
-  quotationTokenAtom,
+  quotationTokenAddressAtom,
   standardOutputAtom
 } from "../../state/Create/form";
+import {useTokenName} from "../../hooks/Tokens";
+import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
 
 const Confirm = () => {
-  const quotationToken = useRecoilValue(quotationTokenAtom)
-  const priceToken = useRecoilValue(priceTokenAtom)
-  const miningToken = useRecoilValue(miningTokenAtom)
+  const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
+  const priceTokenName = useRecoilValue(priceTokenNameAtom)
+  const miningTokenAddress = useRecoilValue(miningTokenAddressAtom)
   const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
   const standardOutput = useRecoilValue(standardOutputAtom)
   const quotationFee = useRecoilValue(quotationFeeAtom)
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
 
+  const quotationTokenName = useTokenName(quotationTokenAddress)
+  const miningTokenName = useTokenName(miningTokenAddress)
+  const [priceTokenAddress, setPriceTokenAddress] = useState("")
   const { chainId } = useActiveWeb3React()
 
+  useEffect(()=>{
+    if (priceTokenName === "PETH") {
+      setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
+    } else if (priceTokenName === "PUSD") {
+      setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
+    } else {
+      setPriceTokenAddress("Invalid Token")
+    }
+  }, [chainId, priceTokenName])
+
   return (
-    <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'30px'} w={'680px'} spacing={'20px'}>
       <ConfirmDetail
-        title={'Price Token'}
-        value={priceToken === '' ? 'NaN' : priceToken}
-        link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)}
+        title={`Price Token (${priceTokenName})`}
+        value={priceTokenAddress}
+        link={getExplorerLink(chainId || 1, priceTokenName, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
-        title={'Quotation Token'}
-        value={quotationToken === '' ? 'NaN' : quotationToken}
-        link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)}
+        title={`Quotation Token (${quotationTokenName})`}
+        value={quotationTokenAddress === '' ? 'NaN' : quotationTokenAddress}
+        link={getExplorerLink(chainId || 1, quotationTokenAddress, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
-        title={'Mining Token'}
-        value={miningToken === '' ? 'NaN' : miningToken}
-        link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)}
+        title={`Mining Token (${miningTokenName})`}
+        value={miningTokenAddress === '' ? 'NaN' : miningTokenAddress}
+        link={getExplorerLink(chainId || 1, miningTokenAddress, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail title={'Price Token Unit'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
@@ -83,7 +98,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   }
 
   return (
-    <Stack direction={'row'} w={'full'}>
+    <Stack direction={'row'} w={'full'} spacing={"40px"}>
       <Text color={'secondary.500'} fontWeight={'600'}>
         {props.title}:
       </Text>

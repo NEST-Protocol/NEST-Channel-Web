@@ -12,7 +12,7 @@ export function useTokenName(validated: string): string {
         setName(res)
       })
       .catch(_ => {
-        setName("Error Token Address!")
+        setName("Error!")
       })
   }, [validated, tokenContract])
 

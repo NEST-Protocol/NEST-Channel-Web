@@ -2,20 +2,20 @@ import { atom } from 'recoil'
 
 // Step 1: Token Address
 // 报价代币，0表示eth，address
-export const quotationTokenAtom = atom({
-  key: 'quotationToken',
+export const quotationTokenAddressAtom = atom({
+  key: 'quotationTokenAddress',
   default: '',
 })
 
-// 计价代币，0表示eth，address
-export const priceTokenAtom = atom({
-  key: 'priceToken',
+// 计价代币
+export const priceTokenNameAtom = atom({
+  key: 'priceTokenName',
   default: '',
 })
 
 // 矿币地址，矿币地址如果和token0或者token1是一种币，可能导致挖矿资产被当成矿币挖走，address
-export const miningTokenAtom = atom({
-  key: 'miningToken',
+export const miningTokenAddressAtom = atom({
+  key: 'miningTokenAddress',
   default: '',
 })
 
@@ -47,12 +47,12 @@ export const attenuationFactorAtom = atom({
   default: '0',
 })
 
-export const isTokenAddressValidAtom = atom({
+export const invalidTokenAddressAtom = atom({
   key: 'isTokenAddressValid',
   default: false,
 })
 
-export const isConfigurationValidAtom = atom({
+export const invalidConfigurationAtom = atom({
   key: 'isConfigurationValid',
   default: false,
 })
