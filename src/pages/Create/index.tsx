@@ -78,12 +78,12 @@ const OpenChanel = () => {
           <Button
             w={'176px'}
             disabled={activeStep === steps.length - 1 ? isTokenAddressValid || isConfigurationValid : false}
-            onClick={() => {
+            onClick={async () => {
               const newStep = activeStep + 1
               setActiveStep(newStep)
 
               if (activeStep === steps.length - 1) {
-                create().then()
+                create()
               }
             }}
           >

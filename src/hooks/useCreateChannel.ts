@@ -16,6 +16,7 @@ import { isAddress } from '../utils'
 import {useNestOpenPlatformContract} from "./useContract";
 import {NEST_OPEN_PLATFORM} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
+import {parseToBigNumber} from "../utils/bignumberUtil";
 
 const useCreateChannel = () => {
   const quotationToken = useRecoilValue(quotationTokenAtom)
@@ -33,8 +34,6 @@ const useCreateChannel = () => {
   const { chainId } = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
-
-  console.log(nestOpenPlatform)
 
   useEffect(() => {
     if (isAddress(quotationToken) === false || isAddress(priceToken) === false || isAddress(miningToken) === false) {
@@ -58,28 +57,30 @@ const useCreateChannel = () => {
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setIsConfigurationValid, standardOutput])
 
-
   // Todo: create channel
   const create = async () => {
+    const args = {
+      // 计价代币地址 address
+      token0: priceToken,
+      // 计价单位 uint96
+      unit: parseToBigNumber(priceTokenUnit),
+      // 报价代币地址 address
+      token1: quotationToken,
+      // 标准出矿量 uint96
+      rewardPerBlock: parseToBigNumber(standardOutput),
+      // 出矿代币地址 address
+      reward: miningToken,
+      // post fee uint16
+      postFeeUnit: parseToBigNumber(quotationFee),
+      // singleFee uint16
+      singleFee: parseToBigNumber(priceCallingFee),
+      // 衰减系数 uint16，万分制
+      reductionRate: parseToBigNumber(attenuationFactor).multipliedBy(100),
+    }
+
     if (nestOpenPlatform) {
-      await nestOpenPlatform.open({
-        // 计价代币地址 address
-        token0: "",
-        // 计价单位 uint96
-        unit: "",
-        // 报价代币地址 address
-        token1: "",
-        // 标准出矿量 uint96
-        rewardPerBlock: "",
-        // 出矿代币地址 address
-        reward: "",
-        // post fee uint16
-        postFeeUnit: "",
-        // singleFee uint16
-        singleFee: "",
-        // 衰减系数 uint16，万分制
-        reductionRate: "",
-      })
+      // await nestOpenPlatform.open()
+      console.log(args)
     }
   }
 
