@@ -13,7 +13,7 @@ import {
 import {useRecoilState, useRecoilValue} from 'recoil'
 import { useEffect } from 'react'
 import { isAddress } from '../utils'
-import {useNestOpenPlatform} from "./useContract";
+import {useNestOpenPlatformContract} from "./useContract";
 import {NEST_OPEN_PLATFORM} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
 
@@ -32,7 +32,7 @@ const useCreateChannel = () => {
 
   const { chainId } = useActiveWeb3React()
 
-  const nestOpenPlatform = useNestOpenPlatform(NEST_OPEN_PLATFORM[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
 
   console.log(nestOpenPlatform)
 
@@ -61,9 +61,8 @@ const useCreateChannel = () => {
 
   // Todo: create channel
   const create = async () => {
-
     if (nestOpenPlatform) {
-      nestOpenPlatform.open({
+      await nestOpenPlatform.open({
         // 计价代币地址 address
         token0: "",
         // 计价单位 uint96
@@ -82,7 +81,6 @@ const useCreateChannel = () => {
         reductionRate: "",
       })
     }
-
   }
 
   return {

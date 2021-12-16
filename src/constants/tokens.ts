@@ -1,4 +1,4 @@
-import {Token} from "../api/token";
+import { Token } from "@uniswap/sdk-core"
 import {SupportedChainId} from "./chains";
 import {
   COFIX_ADDRESS,

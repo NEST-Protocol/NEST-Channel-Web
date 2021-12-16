@@ -48,19 +48,19 @@ export function useEIP2612Contract(tokenAddress?: string): Contract | null {
   return useContract(tokenAddress, EIP_2612, false)
 }
 
-export function useNestOpenPlatform(address: string, withSignerIfPossible?: boolean): Contract | null {
+export function useNestOpenPlatformContract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestOpenPlatform>(address, NestOpenPlatform_ABI, withSignerIfPossible)
 }
 
-export function useNestBatchPlatform2(address: string, withSignerIfPossible?: boolean): Contract | null {
+export function useNestBatchPlatform2Contract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestBatchPlatform2>(address, NestBatchPlatform2_ABI, withSignerIfPossible)
 }
 
-export function useNestLedger(address: string, withSignerIfPossible?: boolean): Contract | null {
+export function useNestLedgerContract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestLedger>(address, NestLedger_ABI, withSignerIfPossible)
 }
 
-export function useNestGovernance(address: string, withSignerIfPossible?: boolean): Contract | null {
+export function useNestGovernanceContract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestGovernance>(address, NestGovernance_ABI, withSignerIfPossible)
 }
 

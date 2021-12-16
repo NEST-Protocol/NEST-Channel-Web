@@ -30,37 +30,37 @@ const Confirm = () => {
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <ConfirmDetail
-        title={'Price Token:'}
+        title={'Price Token'}
         value={priceToken === '' ? 'NaN' : priceToken}
         link={getExplorerLink(chainId || 1, priceToken, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
-        title={'Quotation Token:'}
+        title={'Quotation Token'}
         value={quotationToken === '' ? 'NaN' : quotationToken}
         link={getExplorerLink(chainId || 1, quotationToken, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
-        title={'Mining Token:'}
+        title={'Mining Token'}
         value={miningToken === '' ? 'NaN' : miningToken}
         link={getExplorerLink(chainId || 1, miningToken, ExplorerDataType.TOKEN)}
         isToken
       />
-      <ConfirmDetail title={'Price Token Unit:'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
+      <ConfirmDetail title={'Price Token Unit'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={'ETH'} />
       <ConfirmDetail
-        title={'Standard Output:'}
+        title={'Standard Output'}
         value={standardOutput === '' ? 'NaN' : standardOutput}
         unit={'NEST/Block'}
       />
-      <ConfirmDetail title={'Quotation Fee:'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'ETH'} />
+      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'ETH'} />
       <ConfirmDetail
-        title={'Price Calling Fee:'}
+        title={'Price Calling Fee'}
         value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
         unit={'ETH'}
       />
       <ConfirmDetail
-        title={'Attenuation Factor:'}
+        title={'Attenuation Factor'}
         value={attenuationFactor === '' ? 'NaN' : attenuationFactor}
         unit={'%'}
       />
