@@ -1,6 +1,6 @@
 import {Button, Stack, Text} from '@chakra-ui/react'
 import {useRecoilState} from 'recoil'
-import {activeStepAtom} from '../../state/Create/activeStepAtom'
+import {activeStepAtom} from '../../state/Create'
 import {useNavigate} from 'react-router-dom'
 import useCreateChannel from "../../hooks/useCreateChannel";
 import {SUCCESS} from "../../constants/misc";

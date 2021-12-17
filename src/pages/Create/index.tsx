@@ -6,7 +6,7 @@ import Done from './Done'
 import Divider from '../../components/Divider'
 import {FC} from 'react'
 import {useRecoilState} from 'recoil'
-import {activeStepAtom} from '../../state/Create/activeStepAtom'
+import {activeStepAtom} from '../../state/Create'
 import useCreateChannel from '../../hooks/useCreateChannel'
 import {PROCESSING} from "../../constants/misc";
 import {useTokenContract} from "../../hooks/useContract";

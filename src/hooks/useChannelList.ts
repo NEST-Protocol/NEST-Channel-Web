@@ -30,6 +30,7 @@ export const useChannelList = () => {
         list.push(info)
       })
       setChannelList(list)
+
     } else {
       setChannelList([])
     }
