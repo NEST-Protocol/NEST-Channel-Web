@@ -78,11 +78,11 @@ const useCreateChannel = () => {
       // 计价代币地址 address
       token0: priceTokenAddress,
       // 计价单位 uint96
-      unit: parseToBigNumber(priceTokenUnit).toFixed(0),
+      unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
       // 报价代币地址 address
       token1: quotationTokenAddress,
       // 标准出矿量 uint96
-      rewardPerBlock: parseToBigNumber(standardOutput).toFixed(0),
+      rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
       // 出矿代币地址 address
       reward: miningTokenAddress,
       // postFee uint16
