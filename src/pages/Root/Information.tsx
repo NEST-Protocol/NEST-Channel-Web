@@ -2,37 +2,42 @@ import { Link, Spacer, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react'
 import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
+import useChannelInfo from "../../hooks/useChannelInfo";
+import {useRecoilValue} from "recoil";
+import {activeChannelIdAtom} from "../../state/Root";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
+  const activeChannelId = useRecoilValue(activeChannelIdAtom)
+  const info = useChannelInfo(activeChannelId)
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
       <Wrap justify={'space-between'}>
-        <InformationDetail title={'ChannelId'} value={1} />
-        <InformationDetail title={'Number of Quotes'} value={1} />
-        <InformationDetail title={'Fee Balance'} value={30} unit={'BNB'} />
-        <InformationDetail title={'Standard Output'} value={24} unit={'/Block'} />
-        <InformationDetail title={'Total Mining Token'} value={24000} unit={'LYK'} />
+        <InformationDetail title={'ChannelId'} value={info.channelId} />
+        <InformationDetail title={'Number of Quotes'} value={info.sheetCount} />
+        <InformationDetail title={'Fee Balance'} value={info.feeInfo} unit={'BNB'} />
+        <InformationDetail title={'Standard Output'} value={info.rewardPerBlock} unit={'/Block'} />
+        <InformationDetail title={'Total Mining Token'} value={info.vault} unit={'LYK'} />
         <InformationDetail
           title={'Mining Token'}
-          value={'0x2455...6784'}
-          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+          value={info.reward}
+          link={getExplorerLink(Number(chainId), info.reward, ExplorerDataType.TOKEN)}
         />
-        <InformationDetail title={'Initial Block'} value={3049581} />
+        <InformationDetail title={'Initial Block'} value={info.genesisBlock} />
         <InformationDetail title={'Quotation Fee'} value={0} />
         <InformationDetail
           title={'Price Token'}
-          value={'0x2455...6784'}
-          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+          value={info.token1}
+          link={getExplorerLink(Number(chainId), info.token1, ExplorerDataType.TOKEN)}
         />
-        <InformationDetail title={'Price Calling Fee'} value={0.005} unit={'BNB'} />
-        <InformationDetail title={'Attenuation Factor'} value={80} unit={'%'} />
+        <InformationDetail title={'Price Calling Fee'} value={info.singleFee} unit={'BNB'} />
+        <InformationDetail title={'Attenuation Factor'} value={info.reductionRate} unit={'%'} />
         <InformationDetail
           title={'Quotation Token'}
-          value={'0x2455...6784'}
-          link={getExplorerLink(Number(chainId), '0x2373238383', ExplorerDataType.TOKEN)}
+          value={info.token0}
+          link={getExplorerLink(Number(chainId), info.token0, ExplorerDataType.TOKEN)}
         />
       </Wrap>
     </Stack>
