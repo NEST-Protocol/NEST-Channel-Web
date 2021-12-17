@@ -89,6 +89,7 @@ const Configuration = () => {
         onChange={setQuotationFee}
         isNumber
         min={0}
+        max={1}
         unit={"BNB"}
         datalist={[
           { title: '0.1 BNB', data: '0.01' },
@@ -105,6 +106,7 @@ const Configuration = () => {
         onChange={setPriceCallingFee}
         isNumber
         min={0}
+        max={1}
         unit={"BNB"}
         datalist={[
           { title: '0.1 BNB', data: '0.1' },

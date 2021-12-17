@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import {IDLE} from "../../constants/misc";
 
 // Step 1: Token Address
 // 报价代币，0表示eth，address
@@ -55,4 +56,14 @@ export const invalidTokenAddressAtom = atom({
 export const invalidConfigurationAtom = atom({
   key: 'isConfigurationValid',
   default: false,
+})
+
+export const statusAtom = atom({
+  key: 'createPoolStatus',
+  default: IDLE,
+})
+
+export const txHashAtom = atom({
+  key: 'createPoolTxHash',
+  default: "",
 })

@@ -8,6 +8,7 @@ import { FC } from 'react'
 import { useRecoilState } from 'recoil'
 import { activeStepAtom } from '../../state/Create/activeStepAtom'
 import useCreateChannel from '../../hooks/useCreateChannel'
+import {PROCESSING} from "../../constants/misc";
 
 const steps = [
   { id: 0, label: 'Token Address', content: <TokenAddress /> },
@@ -28,7 +29,7 @@ type StepItemProps = {
 
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-  const { invalidTokenAddress, invalidConfiguration, create } = useCreateChannel()
+  const { invalidTokenAddress, invalidConfiguration, create, status } = useCreateChannel()
 
   const StepButton: FC<StepItemProps> = ({ ...props }) => {
     return (
@@ -77,14 +78,14 @@ const OpenChanel = () => {
         ) : (
           <Button
             w={'176px'}
+            isLoading={status === PROCESSING}
             disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
             onClick={async () => {
+              if (activeStep === steps.length - 1) {
+                await create()
+              }
               const newStep = activeStep + 1
               setActiveStep(newStep)
-
-              if (activeStep === steps.length - 1) {
-                create()
-              }
             }}
           >
             {activeStep === steps.length - 1 ? 'Create' : 'Next'}

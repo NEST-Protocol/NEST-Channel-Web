@@ -8,7 +8,7 @@ import {
   priceTokenUnitAtom,
   quotationFeeAtom,
   quotationTokenAddressAtom,
-  standardOutputAtom,
+  standardOutputAtom, statusAtom,
 } from '../state/Create/form'
 import {useRecoilState, useRecoilValue} from 'recoil'
 import {useEffect, useState} from 'react'
@@ -17,6 +17,7 @@ import {useNestOpenPlatformContract} from "./useContract";
 import {NEST_OPEN_PLATFORM, PETH_ADDRESS, PUSD_ADDRESS} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
 import {parseToBigNumber} from "../utils/bignumberUtil";
+import {ERROR, PROCESSING, SUCCESS} from "../constants/misc";
 
 const useCreateChannel = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
@@ -27,6 +28,7 @@ const useCreateChannel = () => {
   const quotationFee = useRecoilValue(quotationFeeAtom)
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
+  const [status, setStatus] = useRecoilState(statusAtom)
 
   const [invalidTokenAddress, setInvalidTokenAddress] = useRecoilState(invalidTokenAddressAtom)
   const [invalidConfiguration, setInvalidConfiguration] = useRecoilState(invalidConfigurationAtom)
@@ -34,17 +36,6 @@ const useCreateChannel = () => {
   const { chainId } = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
-
-  const [args, setArgs] = useState<{
-    token0: string
-    unit: string
-    token1: string
-    rewardPerBlock: string
-    reward: string
-    postFeeUnit: string
-    singleFee: string
-    reductionRate: string
-  }>()
 
   const [priceTokenAddress, setPriceTokenAddress] = useState("")
 
@@ -80,34 +71,46 @@ const useCreateChannel = () => {
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
 
-  const newArgs = {
-    // 计价代币地址 address
-    token0: priceTokenAddress,
-    // 计价单位 uint96
-    unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
-    // 报价代币地址 address
-    token1: quotationTokenAddress,
-    // 标准出矿量 uint96
-    rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
-    // 出矿代币地址 address
-    reward: miningTokenAddress,
-    // postFee uint16
-    postFeeUnit: parseToBigNumber(quotationFee).shiftedBy(6).toFixed(0),
-    // singleFee uint16
-    singleFee: parseToBigNumber(priceCallingFee).shiftedBy(6).toFixed(0),
-    // 衰减系数 uint16，万分制
-    reductionRate: parseToBigNumber(attenuationFactor).multipliedBy(100).toFixed(0),
-  }
-
-  if (JSON.stringify(newArgs) !== JSON.stringify(args)) {
-    setArgs(newArgs)
-  }
-
   // Todo: create channel
   const create = async () => {
-    if (nestOpenPlatform) {
-      const a = await nestOpenPlatform.open(args)
-      console.log(a)
+    setStatus(PROCESSING)
+    const args = {
+      // 计价代币地址 address
+      token0: priceTokenAddress,
+      // 计价单位 uint96
+      unit: parseToBigNumber(priceTokenUnit).toFixed(0),
+      // 报价代币地址 address
+      token1: quotationTokenAddress,
+      // 标准出矿量 uint96
+      rewardPerBlock: parseToBigNumber(standardOutput).toFixed(0),
+      // 出矿代币地址 address
+      reward: miningTokenAddress,
+      // postFee uint16
+      postFeeUnit: parseToBigNumber(quotationFee).shiftedBy(4).toFixed(0),
+      // singleFee uint16
+      singleFee: parseToBigNumber(priceCallingFee).shiftedBy(4).toFixed(0),
+      // 衰减系数 uint16，万分制
+      reductionRate: parseToBigNumber(attenuationFactor).shiftedBy(2).toFixed(0),
+    }
+
+    console.log(args)
+    try {
+      if (nestOpenPlatform) {
+        const tx = await nestOpenPlatform.open(args, {
+          gasLimit: 1000000,
+        })
+        const res = await tx.wait()
+        switch (res.status) {
+          case 0:
+            setStatus(ERROR)
+            break
+          case 1:
+            setStatus(SUCCESS)
+            break
+        }
+      }
+    }catch (e) {
+      setStatus(ERROR)
     }
   }
 
@@ -115,6 +118,7 @@ const useCreateChannel = () => {
     invalidTokenAddress,
     invalidConfiguration,
     create,
+    status,
   }
 }
 
