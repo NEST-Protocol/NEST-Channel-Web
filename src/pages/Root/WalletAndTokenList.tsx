@@ -40,7 +40,7 @@ const WalletAndTokenList = () => {
 }
 
 type ChannelListItemProps = {
-  channelId: number
+  channelId: string
   token0: string
   token1: string
 }

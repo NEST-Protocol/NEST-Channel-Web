@@ -2,11 +2,11 @@ import {atom} from "recoil";
 
 export const activeChannelIdAtom = atom({
   key: 'activeChannelId',
-  default: 0,
+  default: "0",
 })
 
 export type ChannelInfo = {
-  channelId: number,
+  channelId: string,
   token0: string,
   unit: string,
   token1: string,
