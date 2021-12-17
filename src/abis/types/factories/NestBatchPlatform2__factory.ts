@@ -183,9 +183,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint96",
+        internalType: "uint128",
         name: "vault",
-        type: "uint96",
+        type: "uint128",
       },
     ],
     name: "decrease",
@@ -348,11 +348,6 @@ const _abi = [
             type: "uint256",
           },
           {
-            internalType: "uint256",
-            name: "rewards",
-            type: "uint256",
-          },
-          {
             internalType: "address",
             name: "token0",
             type: "address",
@@ -363,19 +358,34 @@ const _abi = [
             type: "uint96",
           },
           {
-            internalType: "uint96",
-            name: "rewardPerBlock",
-            type: "uint96",
-          },
-          {
             internalType: "address",
             name: "reward",
             type: "address",
           },
           {
             internalType: "uint96",
-            name: "vault",
+            name: "rewardPerBlock",
             type: "uint96",
+          },
+          {
+            internalType: "uint128",
+            name: "vault",
+            type: "uint128",
+          },
+          {
+            internalType: "uint96",
+            name: "rewards",
+            type: "uint96",
+          },
+          {
+            internalType: "uint16",
+            name: "postFeeUnit",
+            type: "uint16",
+          },
+          {
+            internalType: "uint16",
+            name: "count",
+            type: "uint16",
           },
           {
             internalType: "address",
@@ -389,22 +399,12 @@ const _abi = [
           },
           {
             internalType: "uint16",
-            name: "postFeeUnit",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
             name: "singleFee",
             type: "uint16",
           },
           {
             internalType: "uint16",
             name: "reductionRate",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
-            name: "count",
             type: "uint16",
           },
           {
@@ -500,9 +500,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint96",
+        internalType: "uint128",
         name: "vault",
-        type: "uint96",
+        type: "uint128",
       },
     ],
     name: "increase",
@@ -700,64 +700,6 @@ const _abi = [
         name: "pairIndex",
         type: "uint256",
       },
-    ],
-    name: "latestPrice",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "blockNumber",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "price",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "channelId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256[]",
-        name: "pairIndices",
-        type: "uint256[]",
-      },
-      {
-        internalType: "address",
-        name: "payback",
-        type: "address",
-      },
-    ],
-    name: "latestPrice",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "prices",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "channelId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "pairIndex",
-        type: "uint256",
-      },
       {
         internalType: "uint256",
         name: "offset",
@@ -852,14 +794,14 @@ const _abi = [
             type: "uint96",
           },
           {
-            internalType: "uint96",
-            name: "rewardPerBlock",
-            type: "uint96",
-          },
-          {
             internalType: "address",
             name: "reward",
             type: "address",
+          },
+          {
+            internalType: "uint96",
+            name: "rewardPerBlock",
+            type: "uint96",
           },
           {
             internalType: "uint16",
@@ -929,7 +871,7 @@ const _abi = [
       },
       {
         internalType: "uint256[]",
-        name: "equivalent",
+        name: "equivalents",
         type: "uint256[]",
       },
     ],
@@ -976,9 +918,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "int256",
+        internalType: "uint256",
         name: "pairIndex",
-        type: "int256",
+        type: "uint256",
       },
       {
         internalType: "uint256",

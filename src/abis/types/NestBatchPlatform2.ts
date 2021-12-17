@@ -27,50 +27,50 @@ export type PairViewStructOutput = [string, BigNumber] & {
 
 export type PriceChannelViewStruct = {
   channelId: BigNumberish;
-  rewards: BigNumberish;
   token0: string;
   unit: BigNumberish;
-  rewardPerBlock: BigNumberish;
   reward: string;
+  rewardPerBlock: BigNumberish;
   vault: BigNumberish;
+  rewards: BigNumberish;
+  postFeeUnit: BigNumberish;
+  count: BigNumberish;
   governance: string;
   genesisBlock: BigNumberish;
-  postFeeUnit: BigNumberish;
   singleFee: BigNumberish;
   reductionRate: BigNumberish;
-  count: BigNumberish;
   pairs: PairViewStruct[];
 };
 
 export type PriceChannelViewStructOutput = [
   BigNumber,
-  BigNumber,
-  string,
-  BigNumber,
-  BigNumber,
   string,
   BigNumber,
   string,
+  BigNumber,
+  BigNumber,
+  BigNumber,
   number,
   number,
+  string,
   number,
   number,
   number,
   PairViewStructOutput[]
 ] & {
   channelId: BigNumber;
-  rewards: BigNumber;
   token0: string;
   unit: BigNumber;
-  rewardPerBlock: BigNumber;
   reward: string;
+  rewardPerBlock: BigNumber;
   vault: BigNumber;
+  rewards: BigNumber;
+  postFeeUnit: number;
+  count: number;
   governance: string;
   genesisBlock: number;
-  postFeeUnit: number;
   singleFee: number;
   reductionRate: number;
-  count: number;
   pairs: PairViewStructOutput[];
 };
 
@@ -126,8 +126,8 @@ export type PriceSheetViewStructOutput = [
 export type ChannelConfigStruct = {
   token0: string;
   unit: BigNumberish;
-  rewardPerBlock: BigNumberish;
   reward: string;
+  rewardPerBlock: BigNumberish;
   postFeeUnit: BigNumberish;
   singleFee: BigNumberish;
   reductionRate: BigNumberish;
@@ -137,8 +137,8 @@ export type ChannelConfigStruct = {
 export type ChannelConfigStructOutput = [
   string,
   BigNumber,
-  BigNumber,
   string,
+  BigNumber,
   number,
   number,
   number,
@@ -146,8 +146,8 @@ export type ChannelConfigStructOutput = [
 ] & {
   token0: string;
   unit: BigNumber;
-  rewardPerBlock: BigNumber;
   reward: string;
+  rewardPerBlock: BigNumber;
   postFeeUnit: number;
   singleFee: number;
   reductionRate: number;
@@ -161,7 +161,7 @@ export interface NestBatchPlatform2Interface extends utils.Interface {
     "balanceOf(address,address)": FunctionFragment;
     "changeGovernance(uint256,address)": FunctionFragment;
     "close(uint256,uint256[][])": FunctionFragment;
-    "decrease(uint256,uint96)": FunctionFragment;
+    "decrease(uint256,uint128)": FunctionFragment;
     "donate(uint256,uint256)": FunctionFragment;
     "estimate(uint256)": FunctionFragment;
     "findPrice(uint256,uint256[],uint256,address)": FunctionFragment;
@@ -170,18 +170,17 @@ export interface NestBatchPlatform2Interface extends utils.Interface {
     "getChannelInfo(uint256)": FunctionFragment;
     "getConfig()": FunctionFragment;
     "getMinedBlocks(uint256,uint256)": FunctionFragment;
-    "increase(uint256,uint96)": FunctionFragment;
+    "increase(uint256,uint128)": FunctionFragment;
     "indexAddress(uint256)": FunctionFragment;
     "initialize(address)": FunctionFragment;
     "lastPriceList(uint256,uint256[],uint256,address)": FunctionFragment;
     "lastPriceListAndTriggeredPriceInfo(uint256,uint256,uint256)": FunctionFragment;
-    "latestPrice(uint256,uint256)": FunctionFragment;
     "list(uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "open((address,uint96,uint96,address,uint16,uint16,uint16,address[]))": FunctionFragment;
+    "open((address,uint96,address,uint96,uint16,uint16,uint16,address[]))": FunctionFragment;
     "pay(uint256,address,uint256)": FunctionFragment;
     "post(uint256,uint256,uint256[])": FunctionFragment;
     "setConfig((uint8,uint16,uint16))": FunctionFragment;
-    "take(uint256,int256,uint256,uint256,uint256)": FunctionFragment;
+    "take(uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
     "totalETHRewards(uint256)": FunctionFragment;
     "triggeredPrice(uint256,uint256[],address)": FunctionFragment;
     "triggeredPriceInfo(uint256,uint256)": FunctionFragment;
@@ -258,10 +257,6 @@ export interface NestBatchPlatform2Interface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "lastPriceListAndTriggeredPriceInfo",
     values: [BigNumberish, BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "latestPrice",
-    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "list",
@@ -361,10 +356,6 @@ export interface NestBatchPlatform2Interface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "lastPriceListAndTriggeredPriceInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "latestPrice",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
@@ -584,21 +575,6 @@ export interface NestBatchPlatform2 extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "latestPrice(uint256,uint256)"(
-      channelId: BigNumberish,
-      pairIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
-    >;
-
-    "latestPrice(uint256,uint256[],address)"(
-      channelId: BigNumberish,
-      pairIndices: BigNumberish[],
-      payback: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     list(
       channelId: BigNumberish,
       pairIndex: BigNumberish,
@@ -623,7 +599,7 @@ export interface NestBatchPlatform2 extends BaseContract {
     post(
       channelId: BigNumberish,
       scale: BigNumberish,
-      equivalent: BigNumberish[],
+      equivalents: BigNumberish[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -823,21 +799,6 @@ export interface NestBatchPlatform2 extends BaseContract {
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "latestPrice(uint256,uint256)"(
-    channelId: BigNumberish,
-    pairIndex: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
-  >;
-
-  "latestPrice(uint256,uint256[],address)"(
-    channelId: BigNumberish,
-    pairIndices: BigNumberish[],
-    payback: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   list(
     channelId: BigNumberish,
     pairIndex: BigNumberish,
@@ -862,7 +823,7 @@ export interface NestBatchPlatform2 extends BaseContract {
   post(
     channelId: BigNumberish,
     scale: BigNumberish,
-    equivalent: BigNumberish[],
+    equivalents: BigNumberish[],
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1071,21 +1032,6 @@ export interface NestBatchPlatform2 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    "latestPrice(uint256,uint256)"(
-      channelId: BigNumberish,
-      pairIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
-    >;
-
-    "latestPrice(uint256,uint256[],address)"(
-      channelId: BigNumberish,
-      pairIndices: BigNumberish[],
-      payback: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
-
     list(
       channelId: BigNumberish,
       pairIndex: BigNumberish,
@@ -1107,7 +1053,7 @@ export interface NestBatchPlatform2 extends BaseContract {
     post(
       channelId: BigNumberish,
       scale: BigNumberish,
-      equivalent: BigNumberish[],
+      equivalents: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1331,19 +1277,6 @@ export interface NestBatchPlatform2 extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "latestPrice(uint256,uint256)"(
-      channelId: BigNumberish,
-      pairIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "latestPrice(uint256,uint256[],address)"(
-      channelId: BigNumberish,
-      pairIndices: BigNumberish[],
-      payback: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     list(
       channelId: BigNumberish,
       pairIndex: BigNumberish,
@@ -1368,7 +1301,7 @@ export interface NestBatchPlatform2 extends BaseContract {
     post(
       channelId: BigNumberish,
       scale: BigNumberish,
-      equivalent: BigNumberish[],
+      equivalents: BigNumberish[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1554,19 +1487,6 @@ export interface NestBatchPlatform2 extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "latestPrice(uint256,uint256)"(
-      channelId: BigNumberish,
-      pairIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "latestPrice(uint256,uint256[],address)"(
-      channelId: BigNumberish,
-      pairIndices: BigNumberish[],
-      payback: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     list(
       channelId: BigNumberish,
       pairIndex: BigNumberish,
@@ -1591,7 +1511,7 @@ export interface NestBatchPlatform2 extends BaseContract {
     post(
       channelId: BigNumberish,
       scale: BigNumberish,
-      equivalent: BigNumberish[],
+      equivalents: BigNumberish[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
