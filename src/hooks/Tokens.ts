@@ -1,26 +1,26 @@
 import {useTokenContract} from "./useContract";
 import {useEffect, useState} from "react";
 
-// 传入tokenAddress，输出Token Name
-export function useTokenName(validated: string): string {
+// 传入tokenAddress，输出Token Symbol
+export function useTokenSymbol(validated: string): string {
   const tokenContract = useTokenContract(validated, false)
-  const [name, setName] = useState("NaN")
+  const [symbol, setSymbol] = useState("NaN")
 
   useEffect(()=>{
     if (!validated){
-      setName("NaN")
+      setSymbol("NaN")
     }
 
-    tokenContract?.name()
+    tokenContract?.symbol()
       .then(res=>{
-        setName(res)
+        setSymbol(res)
       })
       .catch(_ => {
-        setName("Error!")
+        setSymbol("Error!")
       })
   }, [validated, tokenContract])
 
-  return name
+  return symbol
 }
 
 

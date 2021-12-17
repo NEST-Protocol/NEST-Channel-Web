@@ -14,7 +14,7 @@ import {
   quotationTokenAddressAtom,
   standardOutputAtom
 } from "../../state/Create/form";
-import {useTokenName} from "../../hooks/Tokens";
+import {useTokenSymbol} from "../../hooks/Tokens";
 import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
 
 const Confirm = () => {
@@ -27,8 +27,8 @@ const Confirm = () => {
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
 
-  const quotationTokenName = useTokenName(quotationTokenAddress)
-  const miningTokenName = useTokenName(miningTokenAddress)
+  const quotationTokenName = useTokenSymbol(quotationTokenAddress)
+  const miningTokenName = useTokenSymbol(miningTokenAddress)
   const [priceTokenAddress, setPriceTokenAddress] = useState("")
   const { chainId } = useActiveWeb3React()
 

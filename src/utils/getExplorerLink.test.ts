@@ -10,7 +10,7 @@ describe('#getExplorerLink', () => {
   it('correct for address', () => {
     expect(getExplorerLink(1, 'abc', ExplorerDataType.ADDRESS)).toEqual('https://etherscan.io/address/abc')
   })
-  it('unrecognized chain id defaults to mainnet', () => {
+  it('unrecognized chain channelId defaults to mainnet', () => {
     expect(getExplorerLink(2, 'abc', ExplorerDataType.ADDRESS)).toEqual('https://etherscan.io/address/abc')
   })
   it('rinkeby', () => {

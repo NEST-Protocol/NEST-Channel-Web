@@ -2,7 +2,7 @@ import {Input, Stack, Text} from '@chakra-ui/react'
 import {isAddress} from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
 import {useRecoilState} from "recoil";
-import { useTokenName } from "../../hooks/Tokens";
+import { useTokenSymbol } from "../../hooks/Tokens";
 import {
   miningTokenAddressAtom,
   priceTokenNameAtom, priceTokenUnitAtom,
@@ -15,8 +15,8 @@ const TokenAddress = () => {
   const [priceTokenName, setPriceTokenName] = useRecoilState(priceTokenNameAtom)
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
-  const quotationTokenName = useTokenName(quotationTokenAddress)
-  const miningTokenName = useTokenName(miningTokenAddress)
+  const quotationTokenName = useTokenSymbol(quotationTokenAddress)
+  const miningTokenName = useTokenSymbol(miningTokenAddress)
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
