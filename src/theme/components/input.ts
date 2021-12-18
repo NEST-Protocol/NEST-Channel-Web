@@ -1,10 +1,10 @@
 export const Input = {
   baseStyle: {
-    fontFamily: 'Montserrat',
   },
   variants: {
     filled: {
       field: {
+        fontFamily: 'Montserrat',
         borderRadius: '20px',
         bg: 'secondary.200',
         boxShadow: 'inset 0 0 10px 0 #EEEEEE',
@@ -25,6 +25,7 @@ export const Input = {
     },
     unstyled: {
       field: {
+        fontFamily: 'Montserrat',
         bg: 'white',
         height: '36px',
         fontSize: 'md',
