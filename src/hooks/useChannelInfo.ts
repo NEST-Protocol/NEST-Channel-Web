@@ -19,6 +19,7 @@ type ChannelInfo = {
   unit: string
   vault: string
   genesisBlock: string | number
+  governance: string
 }
 
 export const useChannelInfo = (channelId: string) => {
@@ -54,6 +55,7 @@ export const useChannelInfo = (channelId: string) => {
           unit: formatNumber(parseToBigNumber(res.unit).shiftedBy(-18)),
           vault: res.vault.toString(),
           genesisBlock: res.genesisBlock,
+          governance: res.governance,
         }
         setInfo(info)
         setTimeout(()=>{
