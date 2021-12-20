@@ -35,14 +35,14 @@ const Information = () => {
         <InformationDetail
           title={'Price Token'}
           value={info?.token0} loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.token1 ?? "NaN", ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info?.token0 ?? "NaN", ExplorerDataType.TOKEN)}
         />
         <InformationDetail title={'Price Calling Fee'} value={info?.singleFee} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} loading={status === PROCESSING}/>
         <InformationDetail title={'Attenuation Factor'} value={info?.reductionRate} unit={'%'} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Quotation Token'}
           value={info?.token1} loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.token0 ?? "NaN", ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info?.token1 ?? "NaN", ExplorerDataType.TOKEN)}
         />
       </Wrap>
     </Stack>
