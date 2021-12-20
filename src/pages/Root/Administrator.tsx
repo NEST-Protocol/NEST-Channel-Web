@@ -20,6 +20,8 @@ import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
 import {formatNumber, parseToBigNumber} from "../../utils/bignumberUtil";
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {formatWithUnit, parseToNumber} from "../../utils/unit";
+import {useETHBalance} from "../../hooks/useETHBalance";
+import {CHAIN_INFO} from "../../constants/chains";
 
 const Administrator = () => {
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
@@ -64,7 +66,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const fetch = async () => {
     if (!token) return
     const res = await token.balanceOf(account ?? "")
-    setBalance(parseToBigNumber(res).shiftedBy(-18).toFixed(0))
+    setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
   }
 
   const handleDeposit = async () => {
@@ -173,14 +175,57 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
 }
 
 const WithdrawPopover: FC<PopverProps> = ({...props}) => {
-  const {chainId} = useActiveWeb3React()
+  const {chainId, account} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const token = useTokenContract(props.tokenAddress)
   const [amount, setAmount] = useState('0')
+  const token = useTokenContract(props.tokenAddress)
+  const [balance, setBalance] = useState('0')
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
-  const [depositStatus, setDepositStatus] = useState(IDLE)
-  const {fetch} = useChannelInfo(activeChannelId)
+  const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
+  const {info, fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
+
+  const fetch = async () => {
+    if (!token) return
+    const res = await token.balanceOf(account ?? "")
+    setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+  }
+
+  useEffect(()=>{
+    fetch()
+  }, [token, account, chainId])
+  setImmediate(fetch, 3000)
+
+  const handleWithdraw = async () => {
+    if (!nestOpenPlatform) return
+    setWithdrawStatus(PROCESSING)
+    // try {
+      const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      console.log(tx)
+      const res = await tx.wait()
+      console.log(res)
+      switch (res.status) {
+        case 0:
+          setWithdrawStatus(ERROR)
+          setTimeout(()=>{
+            setWithdrawStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+        case 1:
+          setWithdrawStatus(SUCCESS)
+          await fetchChannelInfo()
+          setTimeout(()=>{
+            setWithdrawStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+      }
+    // } catch (e) {
+    //   setWithdrawStatus(ERROR)
+    //   setTimeout(()=>{
+    //     setWithdrawStatus(IDLE)
+    //   }, IDLE_DELAY)
+    // }
+  }
 
   return (
     <Popover>
@@ -197,7 +242,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
                 setAmount(parseToNumber(valueString, tokenSymbol))
               }}
               value={formatWithUnit(amount, tokenSymbol)}
-              max={100}
+              max={Number(info?.vault)}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
@@ -205,10 +250,12 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
             >
               <NumberInputField/>
             </NumberInput>
-            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
-              Balance (pool): {0} {tokenSymbol}
+            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={"center"}>
+              Balance (myself): {balance} {tokenSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth>
+            <Button variant={'outline'} isFullWidth onClick={handleWithdraw} loadingText={"Withdrawing"}
+                    disabled={amount === '0'}
+                    isLoading={withdrawStatus === PROCESSING}>
               Withdraw
             </Button>
           </Stack>
@@ -219,6 +266,13 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
 }
 
 const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
+  const {chainId, account} = useActiveWeb3React()
+  const activeChannelId = useRecoilValue(activeChannelIdAtom)
+  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const {info, fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const [amount, setAmount] = useState('0')
+  const {balance} = useETHBalance(account)
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -230,7 +284,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
             <Text fontWeight={'bold'}>Withdraw Fee</Text>
             <Input variant={'filled'} placeholder={'Input Quantity'}/>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
-              Balance (myself): 80
+              Balance (myself): {balance} {CHAIN_INFO[chainId ?? 1].nativeSymbol}
             </Text>
             <Button variant={'outline'} isFullWidth>
               Withdraw

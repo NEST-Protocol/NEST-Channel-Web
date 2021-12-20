@@ -1,38 +1,38 @@
-import { useActiveWeb3React } from './web3'
-import { isAddress } from '../utils'
-import { BigNumber, ethers } from 'ethers'
-import { useEffect, useState } from 'react'
-import { IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
+import {useActiveWeb3React} from './web3'
+import {isAddress} from '../utils'
+import {useEffect, useState} from 'react'
+import {ERROR, IDLE, IDLE_DELAY, PROCESSING} from '../constants/misc'
 import useInterval from '@use-it/interval'
+import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
 
 export const useETHBalance = (uncheckedAddresses: string | null | undefined) => {
-  const { library } = useActiveWeb3React()
-  const [balance, setBalance] = useState<{
-    value: BigNumber
-    amount: string
-  }>()
+  const {library} = useActiveWeb3React()
+  const [balance, setBalance] = useState('0')
   const [status, setStatus] = useState(IDLE)
 
   async function update() {
     if (!uncheckedAddresses || !isAddress(uncheckedAddresses)) {
-      return undefined
+      return
     }
 
     try {
       setStatus(PROCESSING)
-
-      library?.getBalance(uncheckedAddresses).then((balance) => {
-        const b = {
-          value: balance,
-          amount: ethers.utils.formatEther(balance),
-        }
-        setTimeout(function () {
+      const res = await library?.getBalance(uncheckedAddresses)
+      if (res === undefined) {
+        setBalance('NaN')
+      } else {
+        setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+        setStatus(IDLE)
+        setTimeout(() => {
           setStatus(IDLE)
-          setBalance(b)
         }, IDLE_DELAY)
-      })
+      }
     } catch (e) {
-      console.log(e)
+      setStatus(ERROR)
+      setBalance('NaN')
+      setTimeout(() => {
+        setStatus(IDLE)
+      }, IDLE_DELAY)
     }
   }
 
