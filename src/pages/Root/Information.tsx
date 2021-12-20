@@ -1,44 +1,45 @@
-import { Link, Spacer, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react'
-import { FC } from 'react'
+import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton } from '@chakra-ui/react'
+import {FC} from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
 import useChannelInfo from "../../hooks/useChannelInfo";
 import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
 import {shortenAddress} from "../../utils";
+import {PROCESSING} from "../../constants/misc";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const info = useChannelInfo(activeChannelId)
+  const {info, status} = useChannelInfo(activeChannelId)
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
       <Wrap justify={'space-between'}>
-        <InformationDetail title={'ChannelId'} value={info.channelId} />
-        <InformationDetail title={'Number of Quotes'} value={info.sheetCount} />
-        <InformationDetail title={'Fee Balance'} value={info.feeInfo} unit={'BNB'} />
-        <InformationDetail title={'Standard Output'} value={info.rewardPerBlock} unit={'/Block'} />
-        <InformationDetail title={'Total Mining Token'} value={info.vault} unit={'LYK'} />
+        <InformationDetail title={'ChannelId'} value={info?.channelId} loading={status === PROCESSING}/>
+        <InformationDetail title={'Number of Quotes'} value={info?.sheetCount} loading={status === PROCESSING}/>
+        <InformationDetail title={'Fee Balance'} value={info?.feeInfo} unit={'BNB'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Standard Output'} value={info?.rewardPerBlock} unit={'/Block'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Total Mining Token'} value={info?.vault} unit={'LYK'} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Mining Token'}
-          value={info.reward}
-          link={getExplorerLink(Number(chainId), info.reward, ExplorerDataType.TOKEN)}
+          value={info?.reward} loading={status === PROCESSING}
+          link={getExplorerLink(Number(chainId), info?.reward ?? "NaN", ExplorerDataType.TOKEN)}
         />
-        <InformationDetail title={'Initial Block'} value={info.genesisBlock} />
-        <InformationDetail title={'Quotation Fee'} value={0} />
+        <InformationDetail title={'Initial Block'} value={info?.genesisBlock} loading={status === PROCESSING}/>
+        <InformationDetail title={'Quotation Fee'} value={0} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Price Token'}
-          value={info.token1}
-          link={getExplorerLink(Number(chainId), info.token1, ExplorerDataType.TOKEN)}
+          value={info?.token1} loading={status === PROCESSING}
+          link={getExplorerLink(Number(chainId), info?.token1 ?? "NaN", ExplorerDataType.TOKEN)}
         />
-        <InformationDetail title={'Price Calling Fee'} value={info.singleFee} unit={'BNB'} />
-        <InformationDetail title={'Attenuation Factor'} value={info.reductionRate} unit={'%'} />
+        <InformationDetail title={'Price Calling Fee'} value={info?.singleFee} unit={'BNB'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Attenuation Factor'} value={info?.reductionRate} unit={'%'} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Quotation Token'}
-          value={info.token0}
-          link={getExplorerLink(Number(chainId), info.token0, ExplorerDataType.TOKEN)}
+          value={info?.token0} loading={status === PROCESSING}
+          link={getExplorerLink(Number(chainId), info?.token0 ?? "NaN", ExplorerDataType.TOKEN)}
         />
       </Wrap>
     </Stack>
@@ -47,12 +48,27 @@ const Information = () => {
 
 type InformationDetailProps = {
   title: string
-  value: string | number
+  value: string | number | undefined
   unit?: string
   link?: string
+  loading?: boolean
 }
 
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
+  if (props.value === undefined || props.loading) {
+    return (
+      <WrapItem>
+        <Stack direction={'row'} w={'300px'}>
+          <Text color={'secondary.500'} fontWeight={'600'}>
+            {props.title}
+          </Text>
+          <Spacer />
+          <Skeleton w={"100px"}/>
+        </Stack>
+      </WrapItem>
+    )
+  }
+
   return (
     <WrapItem>
       <Stack direction={'row'} w={'300px'}>
