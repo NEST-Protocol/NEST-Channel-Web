@@ -34,7 +34,8 @@ const Administrator = () => {
       <Stack direction={'row'} spacing={'44px'}>
         <DepositPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}
                         tokenAddress={info?.reward}/>
-        <WithdrawPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}/>
+        <WithdrawPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}
+                         tokenAddress={info?.reward}/>
         <WithdrawFeePopover isLoading={status === PROCESSING} disabled={info?.governance !== account}/>
       </Stack>
     </Stack>
@@ -51,7 +52,6 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const {chainId} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  //  function increase(uint channelId, uint96 vault) external payable;
   const token = useTokenContract(props.tokenAddress)
   const {account} = useActiveWeb3React()
   const [balance, setBalance] = useState('0')
@@ -71,6 +71,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
     if (!nestOpenPlatform) return
     setDepositStatus(PROCESSING)
     try {
+      //  function increase(uint channelId, uint96 vault) external payable;
       const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
@@ -115,7 +116,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
           }, IDLE_DELAY)
           break
       }
-    }catch (e){
+    } catch (e) {
       setApproveStatus(ERROR)
       setTimeout(() => {
         setApproveStatus(IDLE)
@@ -172,6 +173,15 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
 }
 
 const WithdrawPopover: FC<PopverProps> = ({...props}) => {
+  const {chainId} = useActiveWeb3React()
+  const activeChannelId = useRecoilValue(activeChannelIdAtom)
+  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const token = useTokenContract(props.tokenAddress)
+  const [amount, setAmount] = useState('0')
+  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
+  const [depositStatus, setDepositStatus] = useState(IDLE)
+  const {fetch} = useChannelInfo(activeChannelId)
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -181,9 +191,22 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw</Text>
-            <Input variant={'filled'} placeholder={'Input Quantity'}/>
+            <NumberInput
+              variant={'filled'}
+              onChange={(valueString) => {
+                setAmount(parseToNumber(valueString, tokenSymbol))
+              }}
+              value={formatWithUnit(amount, tokenSymbol)}
+              max={100}
+              min={0}
+              onFocus={(e) => {
+                e.target.setSelectionRange(0, amount.length)
+              }}
+            >
+              <NumberInputField/>
+            </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
-              Balance (myself): 80
+              Balance (pool): {0} {tokenSymbol}
             </Text>
             <Button variant={'outline'} isFullWidth>
               Withdraw
