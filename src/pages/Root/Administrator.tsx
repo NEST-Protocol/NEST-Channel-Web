@@ -1,6 +1,5 @@
 import {
   Button,
-  Input,
   NumberInput, NumberInputField,
   Popover,
   PopoverBody,
@@ -155,7 +154,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
               <NumberInputField/>
             </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={"center"}>
-              Balance (myself): {formatNumber(balance)} {tokenSymbol}
+              Balance (myself): {balance} {tokenSymbol}
             </Text>
             <Button variant={'outline'} isFullWidth onClick={handleApprove} isLoading={approveStatus === PROCESSING}
                     disabled={amount === '0'}
@@ -272,6 +271,36 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   const {info, fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
   const [amount, setAmount] = useState('0')
   const {balance} = useETHBalance(account)
+  const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)
+
+  const handleWithdrawFee = async () => {
+    if (!nestOpenPlatform) return
+    setWithdrawFeeStatus(PROCESSING)
+    try {
+      const tx = await nestOpenPlatform.pay(activeChannelId, 0, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const res = await tx.wait()
+      switch (res.status) {
+        case 0:
+          setWithdrawFeeStatus(ERROR)
+          setTimeout(()=>{
+            setWithdrawFeeStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+        case 1:
+          setWithdrawFeeStatus(SUCCESS)
+          await fetchChannelInfo()
+          setTimeout(()=>{
+            setWithdrawFeeStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+      }
+    }catch (e){
+      setWithdrawFeeStatus(ERROR)
+      setTimeout(()=>{
+        setWithdrawFeeStatus(IDLE)
+      }, IDLE_DELAY)
+    }
+  }
 
   return (
     <Popover>
@@ -282,11 +311,25 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw Fee</Text>
-            <Input variant={'filled'} placeholder={'Input Quantity'}/>
+            <NumberInput
+              variant={'filled'}
+              onChange={(valueString) => {
+                setAmount(parseToNumber(valueString, CHAIN_INFO[chainId ?? 1].nativeSymbol))
+              }}
+              value={formatWithUnit(amount, CHAIN_INFO[chainId ?? 1].nativeSymbol)}
+              max={Number(info?.feeInfo)}
+              min={0}
+              onFocus={(e) => {
+                e.target.setSelectionRange(0, amount.length)
+              }}
+            >
+              <NumberInputField/>
+            </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
               Balance (myself): {balance} {CHAIN_INFO[chainId ?? 1].nativeSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth>
+            <Button variant={'outline'} isFullWidth onClick={handleWithdrawFee} isLoading={withdrawFeeStatus === PROCESSING}
+                    loadingText={"Withdrawing"} disabled={amount === '0'}>
               Withdraw
             </Button>
           </Stack>
