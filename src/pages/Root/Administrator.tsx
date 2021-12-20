@@ -59,6 +59,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
+  const {fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
 
   const fetch = async () => {
     if (!token) return
@@ -69,41 +70,56 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const handleDeposit = async () => {
     if (!nestOpenPlatform) return
     setDepositStatus(PROCESSING)
-    const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
-    const res = await tx.wait()
-    switch (res.status) {
-      case 0:
-        setDepositStatus(ERROR)
-        setTimeout(() => {
-          setDepositStatus(IDLE)
-        }, IDLE_DELAY)
-        break
-      case 1:
-        setDepositStatus(SUCCESS)
-        setTimeout(() => {
-          setDepositStatus(IDLE)
-        }, IDLE_DELAY)
-        break
+    try {
+      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const res = await tx.wait()
+      switch (res.status) {
+        case 0:
+          setDepositStatus(ERROR)
+          setTimeout(() => {
+            setDepositStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+        case 1:
+          setDepositStatus(SUCCESS)
+          await fetchChannelInfo()
+          setTimeout(() => {
+            setDepositStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+      }
+    } catch (e) {
+      setDepositStatus(ERROR)
+      setTimeout(() => {
+        setDepositStatus(IDLE)
+      }, IDLE_DELAY)
     }
   }
 
   const handleApprove = async () => {
     if (!token) return
-    const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
-    const res = await tx.wait()
-    switch (res.status) {
-      case 0:
-        setApproveStatus(ERROR)
-        setTimeout(() => {
-          setApproveStatus(IDLE)
-        }, IDLE_DELAY)
-        break
-      case 1:
-        setApproveStatus(SUCCESS)
-        setTimeout(() => {
-          setApproveStatus(IDLE)
-        }, IDLE_DELAY)
-        break
+    try {
+      const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const res = await tx.wait()
+      switch (res.status) {
+        case 0:
+          setApproveStatus(ERROR)
+          setTimeout(() => {
+            setApproveStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+        case 1:
+          setApproveStatus(SUCCESS)
+          setTimeout(() => {
+            setApproveStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+      }
+    }catch (e){
+      setApproveStatus(ERROR)
+      setTimeout(() => {
+        setApproveStatus(IDLE)
+      }, IDLE_DELAY)
     }
   }
 
