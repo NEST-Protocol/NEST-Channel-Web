@@ -10,7 +10,7 @@ export type ChannelInfo = {
   token0: string,
   unit: string,
   token1: string,
-  reward: string
+  reward: string,
 }
 
 const defaultChannelList: ChannelInfo[] = []

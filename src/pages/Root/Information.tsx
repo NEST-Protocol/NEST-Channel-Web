@@ -5,6 +5,7 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import useChannelInfo from "../../hooks/useChannelInfo";
 import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
+import {shortenAddress} from "../../utils";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
@@ -61,7 +62,7 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
         <Spacer />
         {props.link ? (
           <Link href={props.link} isExternal color={'link.500'} fontWeight={'bold'}>
-            {props.value} {props.unit}
+            {shortenAddress(props.value.toString())} {props.unit}
           </Link>
         ) : (
           <Text fontWeight={'bold'}>
