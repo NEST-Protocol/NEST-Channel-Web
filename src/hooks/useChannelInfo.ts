@@ -53,7 +53,7 @@ export const useChannelInfo = (channelId: string) => {
           // quotation token
           token1: res.token1,
           unit: formatNumber(parseToBigNumber(res.unit).shiftedBy(-18)),
-          vault: formatNumber(res.vault),
+          vault: formatNumber(parseToBigNumber(res.vault).shiftedBy(-18)),
           genesisBlock: formatNumber(parseToBigNumber(res.genesisBlock)),
           governance: res.governance,
         }
