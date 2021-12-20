@@ -3,6 +3,7 @@ import {useRecoilState} from "recoil";
 import {useEffect} from "react";
 import Web3 from "web3"
 import {useActiveWeb3React} from "./web3";
+import {CHANNEL_OPEN_LOGS_FILTER} from "../constants/logs";
 
 export const useChannelList = () => {
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
@@ -11,12 +12,10 @@ export const useChannelList = () => {
 
   async function fetch() {
     const filter = {
-      address: "0x638461f3ae49ccc257ef49fe76cce5816a9234ef",
-      topics: [
-        "0xde1433d3525be2096f0e9653e6f408254f9a4b2975bbb4415d2afcd24182fb53"
-      ],
-      fromBlock: 9572136,
-      toBlock: "latest"
+      address: CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].address,
+      topics: CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].topics,
+      fromBlock: CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].fromBlock,
+      toBlock: CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].toBlock,
     }
 
     const logs = await library?.getLogs(filter)
