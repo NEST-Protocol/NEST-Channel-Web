@@ -15,7 +15,6 @@ const Information = () => {
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const {info, status} = useChannelInfo(activeChannelId)
   const miningTokenName = useTokenSymbol(info?.token1 ?? "")
-  const quotationTokenName = useTokenSymbol(info?.token0 ?? "")
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
@@ -32,7 +31,7 @@ const Information = () => {
           link={getExplorerLink(Number(chainId), info?.reward ?? "NaN", ExplorerDataType.TOKEN)}
         />
         <InformationDetail title={'Initial Block'} value={info?.genesisBlock} loading={status === PROCESSING}/>
-        <InformationDetail title={'Quotation Fee'} value={info?.postFeeUnit} unit={quotationTokenName} loading={status === PROCESSING}/>
+        <InformationDetail title={'Quotation Fee'} value={info?.postFeeUnit} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Price Token'}
           value={info?.token0} loading={status === PROCESSING}
