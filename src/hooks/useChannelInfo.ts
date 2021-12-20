@@ -45,7 +45,7 @@ export const useChannelInfo = (channelId: string) => {
           // standard output
           rewardPerBlock: formatNumber(parseToBigNumber(res.rewardPerBlock).shiftedBy(-18)),
           // number of quote
-          sheetCount: parseToBigNumber(res.sheetCount).toFixed(0),
+          sheetCount: formatNumber(parseToBigNumber(res.sheetCount)),
           // price calling fee
           singleFee: formatNumber(parseToBigNumber(res.singleFee).shiftedBy(-4)),
           // price token
@@ -53,8 +53,8 @@ export const useChannelInfo = (channelId: string) => {
           // quotation token
           token1: res.token1,
           unit: formatNumber(parseToBigNumber(res.unit).shiftedBy(-18)),
-          vault: res.vault.toString(),
-          genesisBlock: res.genesisBlock,
+          vault: formatNumber(res.vault),
+          genesisBlock: formatNumber(parseToBigNumber(res.genesisBlock)),
           governance: res.governance,
         }
         setInfo(info)
