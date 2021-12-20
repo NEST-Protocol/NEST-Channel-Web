@@ -62,8 +62,8 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
   if (props.value === undefined || props.loading) {
     return (
       <WrapItem>
-        <Stack direction={'row'} w={'300px'}>
-          <Text color={'secondary.500'} fontWeight={'600'}>
+        <Stack direction={'row'} w={"300px"}>
+          <Text color={'secondary.500'} fontWeight={'600'} whiteSpace={"nowrap"}>
             {props.title}
           </Text>
           <Spacer />
@@ -76,7 +76,7 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
   return (
     <WrapItem>
       <Stack direction={'row'} w={'300px'}>
-        <Text color={'secondary.500'} fontWeight={'600'}>
+        <Text color={'secondary.500'} fontWeight={'600'} whiteSpace={"nowrap"} overflow={"hidden"} textOverflow={"ellipsis"} w={"200px"}>
           {props.title}
         </Text>
         <Spacer />
@@ -85,7 +85,7 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
             {shortenAddress(props.value.toString())} {props.unit}
           </Link>
         ) : (
-          <Text fontWeight={'bold'}>
+          <Text fontWeight={'bold'} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
             {props.value} {props.unit}
           </Text>
         )}
