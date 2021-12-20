@@ -15,7 +15,7 @@ const Information = () => {
   const { chainId } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const {info, status} = useChannelInfo(activeChannelId)
-  const miningTokenName = useTokenSymbol(info?.token1 ?? "")
+  const miningTokenName = useTokenSymbol(info?.reward ?? "")
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
@@ -24,7 +24,7 @@ const Information = () => {
         <InformationDetail title={'ChannelId'} value={formatNumber(info?.channelId)} loading={status === PROCESSING}/>
         <InformationDetail title={'Number of Quotes'} value={formatNumber(info?.sheetCount)} loading={status === PROCESSING}/>
         <InformationDetail title={'Fee Balance'} value={formatNumber(info?.feeInfo)} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} loading={status === PROCESSING}/>
-        <InformationDetail title={'Standard Output'} value={formatNumber(info?.rewardPerBlock)} unit={'/Block'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Standard Output'} value={formatNumber(info?.rewardPerBlock)} unit={miningTokenName + '/Block'} loading={status === PROCESSING}/>
         <InformationDetail title={'Total Mining Token'} value={formatNumber(info?.vault)} unit={miningTokenName} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Mining Token'}
