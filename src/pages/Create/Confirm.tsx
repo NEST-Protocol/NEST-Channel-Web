@@ -16,6 +16,7 @@ import {
 } from "../../state/Create/form";
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
+import {CHAIN_INFO} from "../../constants/chains";
 
 const Confirm = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
@@ -70,11 +71,11 @@ const Confirm = () => {
         value={standardOutput === '' ? 'NaN' : standardOutput}
         unit={'NEST/Block'}
       />
-      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={'BNB'} />
+      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} />
       <ConfirmDetail
         title={'Price Calling Fee'}
         value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
-        unit={'BNB'}
+        unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
       />
       <ConfirmDetail
         title={'Attenuation Factor'}

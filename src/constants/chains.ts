@@ -57,6 +57,7 @@ interface L1ChainInfo {
   readonly explorer: string
   readonly infoLink: string
   readonly label: string
+  readonly nativeSymbol: string
 }
 export interface L2ChainInfo extends L1ChainInfo {
   readonly bridge: string
@@ -73,42 +74,49 @@ export const CHAIN_INFO: ChainInfo = {
     explorer: 'https://etherscan.io/',
     infoLink: 'https://nestprotocol.org/',
     label: 'Mainnet',
+    nativeSymbol: 'ETH',
   },
   [SupportedChainId.RINKEBY]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://rinkeby.etherscan.io/',
     infoLink: 'https://nestprotocol.org/',
     label: 'Rinkeby',
+    nativeSymbol: 'ETH',
   },
   // [SupportedChainId.ROPSTEN]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
   //   explorer: 'https://ropsten.etherscan.io/',
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Ropsten',
+  //   nativeSymbol: 'ETH',
   // },
   // [SupportedChainId.KOVAN]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
   //   explorer: 'https://kovan.etherscan.io/',
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Kovan',
+  //   nativeSymbol: 'ETH',
   // },
   // [SupportedChainId.GOERLI]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
   //   explorer: 'https://goerli.etherscan.io/',
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Görli',
+  //   nativeSymbol: 'ETH',
   // },
   [SupportedChainId.BSC]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
     label: 'Smart Chain',
+    nativeSymbol: 'BNB',
   },
   [SupportedChainId.BSCTestnet]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://testnet.bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
     label: 'Smart Chain - Testnet',
+    nativeSymbol: 'BNB',
   },
 
   // [SupportedChainId.ARBITRUM_ONE]: {
@@ -118,6 +126,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Arbitrum',
   //   logoUrl: arbitrumLogoUrl,
+  //   nativeSymbol: 'ETH',
   // },
   // [SupportedChainId.ARBITRUM_RINKEBY]: {
   //   bridge: 'https://bridge.arbitrum.io/',
@@ -126,6 +135,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Arbitrum Rinkeby',
   //   logoUrl: arbitrumLogoUrl,
+  //   nativeSymbol: 'ETH',
   // },
   // [SupportedChainId.OPTIMISM]: {
   //   bridge: 'https://gateway.optimism.io/',
@@ -134,6 +144,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Optimism',
   //   logoUrl: optimismLogoUrl,
+  //   nativeSymbol: 'ETH',
   // },
   // [SupportedChainId.OPTIMISTIC_KOVAN]: {
   //   bridge: 'https://gateway.optimism.io/',
@@ -142,5 +153,6 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Optimistic Kovan',
   //   logoUrl: optimismLogoUrl,
+  //   nativeSymbol: 'ETH',
   // },
 }

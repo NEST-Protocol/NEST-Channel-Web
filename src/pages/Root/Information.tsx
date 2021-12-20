@@ -7,11 +7,14 @@ import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
 import {shortenAddress} from "../../utils";
 import {PROCESSING} from "../../constants/misc";
+import {CHAIN_INFO} from "../../constants/chains";
+import {useTokenSymbol} from "../../hooks/Tokens";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const {info, status} = useChannelInfo(activeChannelId)
+  const miningTokenName = useTokenSymbol(info?.token1 ?? "")
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
@@ -19,9 +22,9 @@ const Information = () => {
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={info?.channelId} loading={status === PROCESSING}/>
         <InformationDetail title={'Number of Quotes'} value={info?.sheetCount} loading={status === PROCESSING}/>
-        <InformationDetail title={'Fee Balance'} value={info?.feeInfo} unit={'BNB'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Fee Balance'} value={info?.feeInfo} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} loading={status === PROCESSING}/>
         <InformationDetail title={'Standard Output'} value={info?.rewardPerBlock} unit={'/Block'} loading={status === PROCESSING}/>
-        <InformationDetail title={'Total Mining Token'} value={info?.vault} unit={'LYK'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Total Mining Token'} value={info?.vault} unit={miningTokenName} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Mining Token'}
           value={info?.reward} loading={status === PROCESSING}
@@ -31,14 +34,14 @@ const Information = () => {
         <InformationDetail title={'Quotation Fee'} value={0} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Price Token'}
-          value={info?.token1} loading={status === PROCESSING}
+          value={info?.token0} loading={status === PROCESSING}
           link={getExplorerLink(Number(chainId), info?.token1 ?? "NaN", ExplorerDataType.TOKEN)}
         />
-        <InformationDetail title={'Price Calling Fee'} value={info?.singleFee} unit={'BNB'} loading={status === PROCESSING}/>
+        <InformationDetail title={'Price Calling Fee'} value={info?.singleFee} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} loading={status === PROCESSING}/>
         <InformationDetail title={'Attenuation Factor'} value={info?.reductionRate} unit={'%'} loading={status === PROCESSING}/>
         <InformationDetail
           title={'Quotation Token'}
-          value={info?.token0} loading={status === PROCESSING}
+          value={info?.token1} loading={status === PROCESSING}
           link={getExplorerLink(Number(chainId), info?.token0 ?? "NaN", ExplorerDataType.TOKEN)}
         />
       </Wrap>

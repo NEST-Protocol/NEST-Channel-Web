@@ -9,6 +9,8 @@ import {
   quotationFeeAtom,
   standardOutputAtom
 } from "../../state/Create/form";
+import {CHAIN_INFO} from "../../constants/chains";
+import {useActiveWeb3React} from "../../hooks/web3";
 
 const Configuration = () => {
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
@@ -17,6 +19,7 @@ const Configuration = () => {
   const [priceCallingFee, setPriceCallingFee] = useRecoilState(priceCallingFeeAtom)
   const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
   const priceTokenName = useRecoilValue(priceTokenNameAtom)
+  const { chainId } = useActiveWeb3React()
 
   // 若没有输入，则不合法，返回真
   const handleInvalidInput = (value: string) => {
@@ -90,12 +93,12 @@ const Configuration = () => {
         isNumber
         min={0}
         max={1}
-        unit={"BNB"}
+        unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
         datalist={[
-          { title: '0.1 BNB', data: '0.01' },
-          { title: '0.01 BNB', data: '0.01' },
-          { title: '0.001 BNB', data: '0.001' },
-          { title: '0 BNB', data: '0' },
+          { title: '0.1 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.01' },
+          { title: '0.01 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.01' },
+          { title: '0.001 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.001' },
+          { title: '0 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0' },
         ]}
       />
 
@@ -107,12 +110,12 @@ const Configuration = () => {
         isNumber
         min={0}
         max={1}
-        unit={"BNB"}
+        unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
         datalist={[
-          { title: '0.1 BNB', data: '0.1' },
-          { title: '0.01 BNB', data: '0.01' },
-          { title: '0.001 BNB', data: '0.001' },
-          { title: '0 BNB', data: '0' },
+          { title: '0.1 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.1' },
+          { title: '0.01 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.01' },
+          { title: '0.001 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0.001' },
+          { title: '0 ' + CHAIN_INFO[chainId ?? 1].nativeSymbol, data: '0' },
         ]}
       />
 
