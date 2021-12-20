@@ -1,5 +1,5 @@
 import {useNestOpenPlatformContract} from "./useContract";
-import {NEST_OPEN_PLATFORM} from "../constants/addresses";
+import {NEST_OPEN_PLATFORM_ADDRESS} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
 import {useEffect, useState} from "react";
 import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
@@ -24,7 +24,7 @@ type ChannelInfo = {
 
 export const useChannelInfo = (channelId: string) => {
   const {chainId} = useActiveWeb3React()
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], false)
+  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], false)
   const [info, setInfo] = useState<ChannelInfo>()
   const [status, setStatus] = useState(IDLE)
 

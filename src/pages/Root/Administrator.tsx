@@ -16,7 +16,7 @@ import {useActiveWeb3React} from "../../hooks/web3";
 import {FC, useEffect, useState} from "react";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from "../../constants/misc";
 import {useNestOpenPlatformContract, useTokenContract} from "../../hooks/useContract";
-import {NEST_OPEN_PLATFORM} from "../../constants/addresses";
+import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
 import {formatNumber, parseToBigNumber} from "../../utils/bignumberUtil";
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {formatWithUnit, parseToNumber} from "../../utils/unit";
@@ -32,7 +32,8 @@ const Administrator = () => {
         Administrator
       </Text>
       <Stack direction={'row'} spacing={'44px'}>
-        <DepositPopover isLoading={status === PROCESSING} disabled={info?.governance !== account} tokenAddress={info?.reward}/>
+        <DepositPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}
+                        tokenAddress={info?.reward}/>
         <WithdrawPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}/>
         <WithdrawFeePopover isLoading={status === PROCESSING} disabled={info?.governance !== account}/>
       </Stack>
@@ -47,16 +48,17 @@ type PopverProps = {
 }
 
 const DepositPopover: FC<PopverProps> = ({...props}) => {
-  const { chainId } = useActiveWeb3React()
+  const {chainId} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   //  function increase(uint channelId, uint96 vault) external payable;
   const token = useTokenContract(props.tokenAddress)
   const {account} = useActiveWeb3React()
   const [balance, setBalance] = useState('0')
   const [amount, setAmount] = useState('0')
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
-  const [status, setStatus] = useState(IDLE)
+  const [depositStatus, setDepositStatus] = useState(IDLE)
+  const [approveStatus, setApproveStatus] = useState(IDLE)
 
   const fetch = async () => {
     if (!token) return
@@ -64,30 +66,51 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
     setBalance(parseToBigNumber(res).shiftedBy(-18).toFixed(0))
   }
 
-  const deposit = async () => {
+  const handleDeposit = async () => {
     if (!nestOpenPlatform) return
-    setStatus(PROCESSING)
+    setDepositStatus(PROCESSING)
     const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
     const res = await tx.wait()
     switch (res.status) {
       case 0:
-        setStatus(ERROR)
-        setTimeout(()=>{
-          setStatus(IDLE)
+        setDepositStatus(ERROR)
+        setTimeout(() => {
+          setDepositStatus(IDLE)
         }, IDLE_DELAY)
         break
       case 1:
-        setStatus(SUCCESS)
-        setTimeout(()=>{
-          setStatus(IDLE)
+        setDepositStatus(SUCCESS)
+        setTimeout(() => {
+          setDepositStatus(IDLE)
         }, IDLE_DELAY)
         break
     }
   }
 
-  useEffect(()=>{
+  const handleApprove = async () => {
+    if (!token) return
+    const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+    const res = await tx.wait()
+    switch (res.status) {
+      case 0:
+        setApproveStatus(ERROR)
+        setTimeout(() => {
+          setApproveStatus(IDLE)
+        }, IDLE_DELAY)
+        break
+      case 1:
+        setApproveStatus(SUCCESS)
+        setTimeout(() => {
+          setApproveStatus(IDLE)
+        }, IDLE_DELAY)
+        break
+    }
+  }
+
+  useEffect(() => {
     fetch()
   }, [chainId, account, props.tokenAddress])
+  setImmediate(fetch, 3000)
 
   return (
     <Popover>
@@ -110,12 +133,17 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
                 e.target.setSelectionRange(0, amount.length)
               }}
             >
-              <NumberInputField />
+              <NumberInputField/>
             </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={"center"}>
               Balance (myself): {formatNumber(balance)} {tokenSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth onClick={deposit} isLoading={status === PROCESSING}
+            <Button variant={'outline'} isFullWidth onClick={handleApprove} isLoading={approveStatus === PROCESSING}
+                    disabled={amount === '0'}
+                    loadingText={"Approving"}>
+              Approve
+            </Button>
+            <Button variant={'outline'} isFullWidth onClick={handleDeposit} isLoading={depositStatus === PROCESSING}
                     disabled={amount === '0'}
                     loadingText={"Depositing"}>
               Deposit
@@ -137,7 +165,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw</Text>
-            <Input variant={'filled'} placeholder={'Input Quantity'} />
+            <Input variant={'filled'} placeholder={'Input Quantity'}/>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
               Balance (myself): 80
             </Text>
@@ -161,7 +189,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw Fee</Text>
-            <Input variant={'filled'} placeholder={'Input Quantity'} />
+            <Input variant={'filled'} placeholder={'Input Quantity'}/>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
               Balance (myself): 80
             </Text>
