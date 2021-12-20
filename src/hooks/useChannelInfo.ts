@@ -33,16 +33,25 @@ export const useChannelInfo = (channelId: string) => {
       nestOpenPlatform.getChannelInfo(channelId).then((res: any)=>{
         const info: ChannelInfo = {
           channelId: channelId,
+          // fee balance
           feeInfo: formatNumber(parseToBigNumber(res.feeInfo).shiftedBy(-18)),
+          // quotation fee
           postFeeUnit: formatNumber(parseToBigNumber(res.postFeeUnit).shiftedBy(-4)),
+          // attenuation factor:
           reductionRate: formatNumber(parseToBigNumber(res.reductionRate).shiftedBy(-2)),
+          // mining token
           reward: res.reward,
+          // standard output
           rewardPerBlock: formatNumber(parseToBigNumber(res.rewardPerBlock).shiftedBy(-18)),
+          // number of quote
           sheetCount: parseToBigNumber(res.sheetCount).toFixed(0),
+          // price calling fee
           singleFee: formatNumber(parseToBigNumber(res.singleFee).shiftedBy(-4)),
+          // price token
           token0: res.token0,
+          // quotation token
           token1: res.token1,
-          unit: res.unit.toString(),
+          unit: formatNumber(parseToBigNumber(res.unit).shiftedBy(-18)),
           vault: res.vault.toString(),
           genesisBlock: res.genesisBlock,
         }
