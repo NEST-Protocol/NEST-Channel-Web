@@ -12,8 +12,6 @@ export const L2_DEADLINE_FROM_NOW = 60 * 5
 export const DEFAULT_TXN_DISMISS_MS = 25000
 export const L2_TXN_DISMISS_MS = 5000
 
-export const LOADING = 'LOADING'
-
 export const IDLE = 'IDLE'
 export const PROCESSING = 'PROCESSING'
 export const SUCCESS = 'SUCCESS'

@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js'
 export const parseToBigNumber = (n: BigNumberish | BigNumber) => {
   if (n === '') {
     return new BigNumber(0)
-
   }
 
   if (typeof n === 'undefined') {
