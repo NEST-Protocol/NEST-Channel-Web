@@ -37,26 +37,26 @@ export const useChannelInfo = (channelId: string) => {
       const info: ChannelInfo = {
         channelId: channelId,
         // fee balance
-        feeInfo: formatNumber(parseToBigNumber(res.feeInfo).shiftedBy(-18)),
+        feeInfo: parseToBigNumber(res.feeInfo).shiftedBy(-18).toFixed(0),
         // quotation fee
-        postFeeUnit: formatNumber(parseToBigNumber(res.postFeeUnit).shiftedBy(-4)),
+        postFeeUnit: parseToBigNumber(res.postFeeUnit).shiftedBy(-4).toFixed(0),
         // attenuation factor:
-        reductionRate: formatNumber(parseToBigNumber(res.reductionRate).shiftedBy(-2)),
+        reductionRate: parseToBigNumber(res.reductionRate).shiftedBy(-2).toFixed(0),
         // mining token
         reward: res.reward,
         // standard output
-        rewardPerBlock: formatNumber(parseToBigNumber(res.rewardPerBlock).shiftedBy(-18)),
+        rewardPerBlock: parseToBigNumber(res.rewardPerBlock).shiftedBy(-18).toFixed(0),
         // number of quote
-        sheetCount: formatNumber(parseToBigNumber(res.sheetCount)),
+        sheetCount: parseToBigNumber(res.sheetCount).toFixed(0),
         // price calling fee
-        singleFee: formatNumber(parseToBigNumber(res.singleFee).shiftedBy(-4)),
+        singleFee: parseToBigNumber(res.singleFee).shiftedBy(-4).toFixed(0),
         // price token
         token0: res.token0,
         // quotation token
         token1: res.token1,
-        unit: formatNumber(parseToBigNumber(res.unit).shiftedBy(-18)),
-        vault: formatNumber(parseToBigNumber(res.vault).shiftedBy(-18)),
-        genesisBlock: formatNumber(parseToBigNumber(res.genesisBlock)),
+        unit: parseToBigNumber(res.unit).shiftedBy(-18).toFixed(0),
+        vault: parseToBigNumber(res.vault).shiftedBy(-18).toFixed(0),
+        genesisBlock: parseToBigNumber(res.genesisBlock).toFixed(0),
         governance: res.governance,
       }
       setInfo(info)
