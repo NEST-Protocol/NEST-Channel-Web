@@ -1,4 +1,4 @@
-import {Stack, Button, Spacer, Input, Text, Divider} from '@chakra-ui/react'
+import {Stack, Button, Spacer, Input, Text, Divider, Skeleton} from '@chakra-ui/react'
 import {FC} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
@@ -52,15 +52,17 @@ const ChannelListItem: FC<ChannelListItemProps> = ({...props}) => {
 
   return (
     <Stack>
-      <Text color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'} fontWeight={'600'}
-            cursor={"pointer"}
-            onClick={() => {
-              setActiveChannelId(props.channelId)
-            }}
-      >
-        {props.channelId} : {token0} / {token1}
-      </Text>
-      <Divider color={'secondary.400'}/>
+      <Skeleton isLoaded={token0 !== "NaN" && token1 !== "NaN"}>
+        <Text color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'} fontWeight={'600'}
+              cursor={"pointer"}
+              onClick={() => {
+                setActiveChannelId(props.channelId)
+              }}
+        >
+          {props.channelId} : {token0} / {token1}
+        </Text>
+        <Divider color={'secondary.400'}/>
+      </Skeleton>
     </Stack>
   )
 }
