@@ -1,12 +1,12 @@
 import {useTokenContract} from "./useContract";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 // 传入tokenAddress，输出Token Symbol
 export function useTokenSymbol(validated: string): string {
   const tokenContract = useTokenContract(validated, false)
   const [symbol, setSymbol] = useState("NaN")
 
-  useEffect(()=>{
+  const refresh = useCallback(()=>{
     if (!validated){
       setSymbol("NaN")
     }
@@ -18,7 +18,11 @@ export function useTokenSymbol(validated: string): string {
       .catch(_ => {
         setSymbol("Error!")
       })
-  }, [validated, tokenContract])
+  }, [tokenContract, validated])
+
+  useEffect(()=>{
+    refresh()
+  }, [refresh, tokenContract, validated])
 
   return symbol
 }
