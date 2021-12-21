@@ -23,6 +23,8 @@ const TokenAddress = () => {
     return !address
   }
 
+  console.log(priceTokenUnit)
+
   const checkPriceToken = (value: string) => {
     return !(value === "PETH" || value === "PUSD")
   }
