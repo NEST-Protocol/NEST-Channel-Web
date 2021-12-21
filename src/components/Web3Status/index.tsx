@@ -148,7 +148,7 @@ export const WalletModal = () => {
                 <Text>{option.name}</Text>
                 <Spacer />
                 <IconWrapper>
-                  <img src={option.iconURL} alt={'Icon'} />
+                  <img src={option.iconURL} alt={'Icon'}/>
                 </IconWrapper>
               </Stack>
             </Button>
@@ -167,7 +167,6 @@ export const WalletModal = () => {
                 id={`connect-${key}`}
                 key={key}
                 isFullWidth={true}
-                size={'lg'}
                 variant={'outline'}
                 onClick={() => {
                   const w = window.open('about:blank')
@@ -204,7 +203,6 @@ export const WalletModal = () => {
         !option.mobileOnly && (
           <Button
             isFullWidth={true}
-            size={'lg'}
             id={`connect-${key}`}
             variant={'outline'}
             onClick={() => {
@@ -218,7 +216,7 @@ export const WalletModal = () => {
               <Text>{option.name}</Text>
               <Spacer />
               <IconWrapper>
-                <img src={option.iconURL} alt={'Icon'} />
+                <img src={option.iconURL} alt={'Icon'}/>
               </IconWrapper>
             </Stack>
           </Button>
@@ -279,7 +277,7 @@ export const WalletModal = () => {
   return (
     <>
       {getWeb3Status()}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         {getModalContent()}
       </Modal>
     </>
