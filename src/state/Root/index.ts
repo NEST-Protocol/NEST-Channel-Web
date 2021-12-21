@@ -1,5 +1,5 @@
 import {atom} from "recoil";
-import {ZERO_ADDRESS} from "../../constants/misc";
+import {PUSD_ADDRESS} from "../../constants/addresses";
 
 export const activeChannelIdAtom = atom({
   key: 'activeChannelId',
@@ -43,12 +43,12 @@ const defaultActiveChannelInfo: MoreChannelInfo = {
   feeInfo: 'NaN',
   postFeeUnit: 'NaN',
   reductionRate: 'NaN',
-  reward: ZERO_ADDRESS,
+  reward: PUSD_ADDRESS[1],
   rewardPerBlock: 'NaN',
   sheetCount: 'NaN',
   singleFee: 'NaN',
-  token0: ZERO_ADDRESS,
-  token1: ZERO_ADDRESS,
+  token0: PUSD_ADDRESS[1],
+  token1: PUSD_ADDRESS[1],
   unit: 'NaN',
   vault: 'NaN',
   genesisBlock: 'NaN',

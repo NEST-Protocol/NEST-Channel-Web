@@ -18,26 +18,29 @@ export const useChannelList = () => {
       toBlock: CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].toBlock,
     }
 
-    const logs = await library?.getLogs(filter)
-    let list: ChannelInfo[] = []
-    if (logs){
-      logs.forEach((res: any) => {
-        // open (uint256 channelId, address token0, uint256 unit, address token1, address reward)
-        const decodeParameters = web3.eth.abi.decodeParameters(['uint256', 'address', 'uint256', 'address', 'address'], res.data)
-        const info: ChannelInfo = {
-          channelId: decodeParameters[0],
-          token0: decodeParameters[1],
-          unit: decodeParameters[2],
-          token1: decodeParameters[3],
-          reward: decodeParameters[4],
-        }
-        list.push(info)
-      })
+    try {
+      const logs = await library?.getLogs(filter)
+      let list: ChannelInfo[] = []
+      if (logs){
+        logs.forEach((res: any) => {
+          // open (uint256 channelId, address token0, uint256 unit, address token1, address reward)
+          const decodeParameters = web3.eth.abi.decodeParameters(['uint256', 'address', 'uint256', 'address', 'address'], res.data)
+          const info: ChannelInfo = {
+            channelId: decodeParameters[0],
+            token0: decodeParameters[1],
+            unit: decodeParameters[2],
+            token1: decodeParameters[3],
+            reward: decodeParameters[4],
+          }
+          list.push(info)
+        })
+      }
+      console.log(list)
+      setChannelList(list)
+    }catch (e){
+      setChannelList([])
     }
-
-    setChannelList(list)
   }
-
 
   useEffect(() => {
     fetch()

@@ -13,7 +13,7 @@ import {activeChannelIdAtom} from "../../state/Root";
 import useChannelInfo from "../../hooks/useChannelInfo";
 import {useActiveWeb3React} from "../../hooks/web3";
 import {FC, useEffect, useState} from "react";
-import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from "../../constants/misc";
+import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from "../../constants/misc";
 import {useNestOpenPlatformContract, useTokenContract} from "../../hooks/useContract";
 import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
 import {formatNumber, parseToBigNumber} from "../../utils/bignumberUtil";
@@ -64,8 +64,12 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
 
   const fetch = async () => {
     if (!token) return
-    const res = await token.balanceOf(account ?? "")
-    setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+    try {
+      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
+      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+    }catch (e){
+      setBalance('NaN')
+    }
   }
 
   const handleDeposit = async () => {
@@ -186,8 +190,12 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
 
   const fetch = async () => {
     if (!token) return
-    const res = await token.balanceOf(account ?? "")
-    setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+    try {
+      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
+      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+    }catch (e){
+      setBalance('NaN')
+    }
   }
 
   useEffect(()=>{
