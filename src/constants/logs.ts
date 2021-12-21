@@ -24,13 +24,13 @@ export const CHANNEL_OPEN_LOGS_FILTER: {[chainId: number]: ChannelOpenLogsFilter
   [SupportedChainId.BSC]: {
     address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.BSC],
     topics: ["0xde1433d3525be2096f0e9653e6f408254f9a4b2975bbb4415d2afcd24182fb53"],
-    fromBlock: 0,
+    fromBlock: 13656797,
     toBlock: "latest"
   },
   [SupportedChainId.BSCTestnet]: {
     address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.BSCTestnet],
     topics: ["0xde1433d3525be2096f0e9653e6f408254f9a4b2975bbb4415d2afcd24182fb53"],
-    fromBlock: 14415944,
+    fromBlock: 0,
     toBlock: "latest"
   },
 }
