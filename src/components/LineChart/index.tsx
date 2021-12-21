@@ -1,26 +1,17 @@
 import { Line } from '@ant-design/charts'
-import React, { useState, useEffect } from 'react'
+import React, {FC} from 'react'
 
-const LineChart = () => {
-  const [data, setData] = useState([])
+type LineChartProps = {
+  data: any[],
+  xField: string,
+  yField: string,
+}
 
-  useEffect(() => {
-    asyncFetch()
-  }, [])
-
-  const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log('refresh data failed', error)
-      })
-  }
-
+const LineChart: FC<LineChartProps> = ({...props}) => {
   const config = {
-    data,
-    xField: 'Date',
-    yField: 'scales',
+    data: props.data,
+    xField: props.xField,
+    yField: props.yField,
     color: '#EAAA00',
     autoFit: true,
     point: {
