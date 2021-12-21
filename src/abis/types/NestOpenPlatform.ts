@@ -68,34 +68,12 @@ export type PriceChannelViewStructOutput = [
 };
 
 export type ConfigStruct = {
-  postEthUnit: BigNumberish;
-  postFeeUnit: BigNumberish;
-  minerNestReward: BigNumberish;
-  minerNTokenReward: BigNumberish;
-  doublePostThreshold: BigNumberish;
-  ntokenMinedBlockLimit: BigNumberish;
   maxBiteNestedLevel: BigNumberish;
   priceEffectSpan: BigNumberish;
   pledgeNest: BigNumberish;
 };
 
-export type ConfigStructOutput = [
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number
-] & {
-  postEthUnit: number;
-  postFeeUnit: number;
-  minerNestReward: number;
-  minerNTokenReward: number;
-  doublePostThreshold: number;
-  ntokenMinedBlockLimit: number;
+export type ConfigStructOutput = [number, number, number] & {
   maxBiteNestedLevel: number;
   priceEffectSpan: number;
   pledgeNest: number;
@@ -172,11 +150,11 @@ export type ChannelConfigStructOutput = [
 export interface NestOpenPlatformInterface extends utils.Interface {
   functions: {
     "_governance()": FunctionFragment;
-    "_indexAddress(uint256)": FunctionFragment;
     "balanceOf(address,address)": FunctionFragment;
     "changeGovernance(uint256,address)": FunctionFragment;
-    "close(uint256,uint256)": FunctionFragment;
-    "closeList(uint256,uint256[])": FunctionFragment;
+    "close(uint256,uint256[])": FunctionFragment;
+    "decrease(uint256,uint96)": FunctionFragment;
+    "donate(uint256,uint256)": FunctionFragment;
     "estimate(uint256)": FunctionFragment;
     "findPrice(uint256,uint256,address)": FunctionFragment;
     "getAccountCount()": FunctionFragment;
@@ -194,9 +172,9 @@ export interface NestOpenPlatformInterface extends utils.Interface {
     "list(uint256,uint256,uint256,uint256)": FunctionFragment;
     "migrate(address,uint256)": FunctionFragment;
     "open((address,uint96,address,uint96,address,uint16,uint16,uint16))": FunctionFragment;
-    "pay(uint256,address,address,uint256)": FunctionFragment;
+    "pay(uint256,address,uint256)": FunctionFragment;
     "post(uint256,uint256,uint256)": FunctionFragment;
-    "setConfig((uint32,uint16,uint16,uint16,uint32,uint16,uint8,uint16,uint16))": FunctionFragment;
+    "setConfig((uint8,uint16,uint16))": FunctionFragment;
     "stat(uint256)": FunctionFragment;
     "takeToken0(uint256,uint256,uint256,uint256)": FunctionFragment;
     "takeToken1(uint256,uint256,uint256,uint256)": FunctionFragment;
@@ -212,10 +190,6 @@ export interface NestOpenPlatformInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "_indexAddress",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "balanceOf",
     values: [string, string]
   ): string;
@@ -225,11 +199,15 @@ export interface NestOpenPlatformInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "close",
+    values: [BigNumberish, BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "decrease",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "closeList",
-    values: [BigNumberish, BigNumberish[]]
+    functionFragment: "donate",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "estimate",
@@ -295,7 +273,7 @@ export interface NestOpenPlatformInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "pay",
-    values: [BigNumberish, string, string, BigNumberish]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "post",
@@ -336,17 +314,14 @@ export interface NestOpenPlatformInterface extends utils.Interface {
     functionFragment: "_governance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "_indexAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "changeGovernance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "close", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "closeList", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decrease", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "estimate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "findPrice", data: BytesLike): Result;
   decodeFunctionResult(
@@ -476,11 +451,6 @@ export interface NestOpenPlatform extends BaseContract {
   functions: {
     _governance(overrides?: CallOverrides): Promise<[string]>;
 
-    _indexAddress(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     balanceOf(
       tokenAddress: string,
       addr: string,
@@ -495,13 +465,19 @@ export interface NestOpenPlatform extends BaseContract {
 
     close(
       channelId: BigNumberish,
-      index: BigNumberish,
+      indices: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    closeList(
+    decrease(
       channelId: BigNumberish,
-      indices: BigNumberish[],
+      vault: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    donate(
+      channelId: BigNumberish,
+      value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -654,7 +630,6 @@ export interface NestOpenPlatform extends BaseContract {
 
     pay(
       channelId: BigNumberish,
-      tokenAddress: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -743,11 +718,6 @@ export interface NestOpenPlatform extends BaseContract {
 
   _governance(overrides?: CallOverrides): Promise<string>;
 
-  _indexAddress(
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   balanceOf(
     tokenAddress: string,
     addr: string,
@@ -762,13 +732,19 @@ export interface NestOpenPlatform extends BaseContract {
 
   close(
     channelId: BigNumberish,
-    index: BigNumberish,
+    indices: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  closeList(
+  decrease(
     channelId: BigNumberish,
-    indices: BigNumberish[],
+    vault: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  donate(
+    channelId: BigNumberish,
+    value: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -912,7 +888,6 @@ export interface NestOpenPlatform extends BaseContract {
 
   pay(
     channelId: BigNumberish,
-    tokenAddress: string,
     to: string,
     value: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -1001,11 +976,6 @@ export interface NestOpenPlatform extends BaseContract {
   callStatic: {
     _governance(overrides?: CallOverrides): Promise<string>;
 
-    _indexAddress(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     balanceOf(
       tokenAddress: string,
       addr: string,
@@ -1020,13 +990,19 @@ export interface NestOpenPlatform extends BaseContract {
 
     close(
       channelId: BigNumberish,
-      index: BigNumberish,
+      indices: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    closeList(
+    decrease(
       channelId: BigNumberish,
-      indices: BigNumberish[],
+      vault: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    donate(
+      channelId: BigNumberish,
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1197,7 +1173,6 @@ export interface NestOpenPlatform extends BaseContract {
 
     pay(
       channelId: BigNumberish,
-      tokenAddress: string,
       to: string,
       value: BigNumberish,
       overrides?: CallOverrides
@@ -1322,11 +1297,6 @@ export interface NestOpenPlatform extends BaseContract {
   estimateGas: {
     _governance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _indexAddress(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     balanceOf(
       tokenAddress: string,
       addr: string,
@@ -1341,13 +1311,19 @@ export interface NestOpenPlatform extends BaseContract {
 
     close(
       channelId: BigNumberish,
-      index: BigNumberish,
+      indices: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    closeList(
+    decrease(
       channelId: BigNumberish,
-      indices: BigNumberish[],
+      vault: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    donate(
+      channelId: BigNumberish,
+      value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1474,7 +1450,6 @@ export interface NestOpenPlatform extends BaseContract {
 
     pay(
       channelId: BigNumberish,
-      tokenAddress: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1555,11 +1530,6 @@ export interface NestOpenPlatform extends BaseContract {
   populateTransaction: {
     _governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _indexAddress(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     balanceOf(
       tokenAddress: string,
       addr: string,
@@ -1574,13 +1544,19 @@ export interface NestOpenPlatform extends BaseContract {
 
     close(
       channelId: BigNumberish,
-      index: BigNumberish,
+      indices: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    closeList(
+    decrease(
       channelId: BigNumberish,
-      indices: BigNumberish[],
+      vault: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    donate(
+      channelId: BigNumberish,
+      value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1707,7 +1683,6 @@ export interface NestOpenPlatform extends BaseContract {
 
     pay(
       channelId: BigNumberish,
-      tokenAddress: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }

@@ -203,7 +203,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return
     setWithdrawStatus(PROCESSING)
-    // try {
+    try {
       const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       console.log(tx)
       const res = await tx.wait()
@@ -223,12 +223,12 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
           }, IDLE_DELAY)
           break
       }
-    // } catch (e) {
-    //   setWithdrawStatus(ERROR)
-    //   setTimeout(()=>{
-    //     setWithdrawStatus(IDLE)
-    //   }, IDLE_DELAY)
-    // }
+    } catch (e) {
+      setWithdrawStatus(ERROR)
+      setTimeout(()=>{
+        setWithdrawStatus(IDLE)
+      }, IDLE_DELAY)
+    }
   }
 
   return (

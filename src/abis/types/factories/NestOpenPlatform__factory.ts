@@ -100,25 +100,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "_indexAddress",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "tokenAddress",
         type: "address",
@@ -166,9 +147,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "uint256[]",
+        name: "indices",
+        type: "uint256[]",
       },
     ],
     name: "close",
@@ -184,12 +165,30 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256[]",
-        name: "indices",
-        type: "uint256[]",
+        internalType: "uint96",
+        name: "vault",
+        type: "uint96",
       },
     ],
-    name: "closeList",
+    name: "decrease",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "channelId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "donate",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -405,36 +404,6 @@ const _abi = [
     outputs: [
       {
         components: [
-          {
-            internalType: "uint32",
-            name: "postEthUnit",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "postFeeUnit",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
-            name: "minerNestReward",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
-            name: "minerNTokenReward",
-            type: "uint16",
-          },
-          {
-            internalType: "uint32",
-            name: "doublePostThreshold",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "ntokenMinedBlockLimit",
-            type: "uint16",
-          },
           {
             internalType: "uint8",
             name: "maxBiteNestedLevel",
@@ -998,11 +967,6 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "address",
         name: "to",
         type: "address",
       },
@@ -1044,36 +1008,6 @@ const _abi = [
     inputs: [
       {
         components: [
-          {
-            internalType: "uint32",
-            name: "postEthUnit",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "postFeeUnit",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
-            name: "minerNestReward",
-            type: "uint16",
-          },
-          {
-            internalType: "uint16",
-            name: "minerNTokenReward",
-            type: "uint16",
-          },
-          {
-            internalType: "uint32",
-            name: "doublePostThreshold",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "ntokenMinedBlockLimit",
-            type: "uint16",
-          },
           {
             internalType: "uint8",
             name: "maxBiteNestedLevel",
