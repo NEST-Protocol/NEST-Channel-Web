@@ -47,7 +47,7 @@ export const useChannelList = () => {
 
   useEffect(() => {
     refresh()
-  }, [chainId, library])
+  }, [chainId, library, refresh])
   // useInterval(refresh, 3000)
 
   return channelList

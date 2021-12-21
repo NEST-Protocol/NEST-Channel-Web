@@ -1,6 +1,6 @@
 import {useActiveWeb3React} from './web3'
 import {isAddress} from '../utils'
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING} from '../constants/misc'
 import useInterval from '@use-it/interval'
 import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
@@ -10,11 +10,10 @@ export const useETHBalance = (uncheckedAddresses: string | null | undefined) => 
   const [balance, setBalance] = useState('0')
   const [status, setStatus] = useState(IDLE)
 
-  async function update() {
-    if (!uncheckedAddresses || !isAddress(uncheckedAddresses)) {
+  const refresh = useCallback(async ()=>{
+    if (!uncheckedAddresses || !isAddress(uncheckedAddresses || !library)) {
       return
     }
-
     try {
       setStatus(PROCESSING)
       const res = await library?.getBalance(uncheckedAddresses)
@@ -34,14 +33,13 @@ export const useETHBalance = (uncheckedAddresses: string | null | undefined) => 
         setStatus(IDLE)
       }, IDLE_DELAY)
     }
-  }
+  }, [library, uncheckedAddresses])
+
 
   useEffect(() => {
-    if (library) {
-      update()
-    }
-  }, [library, uncheckedAddresses])
-  useInterval(update, 3000)
+    refresh()
+  }, [library, uncheckedAddresses, refresh])
+  useInterval(refresh, 3000)
 
   return {
     balance,
