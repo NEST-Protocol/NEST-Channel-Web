@@ -13,7 +13,7 @@ const LineChart = () => {
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
-        console.log('fetch data failed', error)
+        console.log('refresh data failed', error)
       })
   }
 

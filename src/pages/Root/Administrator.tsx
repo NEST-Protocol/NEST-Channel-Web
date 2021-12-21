@@ -60,9 +60,9 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
-  const {fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const {refresh: refreshChannelInfo} = useChannelInfo(activeChannelId)
 
-  const fetch = async () => {
+  const refresh = async () => {
     if (!token) return
     try {
       const res = await token.balanceOf(account ?? ZERO_ADDRESS)
@@ -88,7 +88,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
           break
         case 1:
           setDepositStatus(SUCCESS)
-          await fetchChannelInfo()
+          await refreshChannelInfo()
           setTimeout(() => {
             setDepositStatus(IDLE)
           }, IDLE_DELAY)
@@ -130,9 +130,9 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   }
 
   useEffect(() => {
-    fetch()
+    refresh()
   }, [chainId, account, props.tokenAddress])
-  setImmediate(fetch, 3000)
+  setImmediate(refresh, 3000)
 
   return (
     <Popover>
@@ -186,9 +186,9 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   const [balance, setBalance] = useState('0')
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const {info, fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useChannelInfo(activeChannelId)
 
-  const fetch = async () => {
+  const refresh = async () => {
     if (!token) return
     try {
       const res = await token.balanceOf(account ?? ZERO_ADDRESS)
@@ -199,9 +199,9 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   }
 
   useEffect(()=>{
-    fetch()
+    refresh()
   }, [token, account, chainId])
-  setImmediate(fetch, 3000)
+  setImmediate(refresh, 3000)
 
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return
@@ -276,7 +276,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   const {chainId, account} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const {info, fetch: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useChannelInfo(activeChannelId)
   const [amount, setAmount] = useState('0')
   const {balance} = useETHBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)

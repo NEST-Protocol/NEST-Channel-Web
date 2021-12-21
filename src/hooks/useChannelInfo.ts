@@ -30,7 +30,7 @@ export const useChannelInfo = (channelId: string) => {
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
   const [status, setStatus] = useState(IDLE)
 
-  const fetch = async () => {
+  const refresh = async () => {
     if (nestOpenPlatform) {
       setStatus(PROCESSING)
       const res = await nestOpenPlatform.getChannelInfo(channelId)
@@ -67,10 +67,10 @@ export const useChannelInfo = (channelId: string) => {
   }
 
   useEffect(()=>{
-    fetch()
+    refresh()
   }, [chainId, channelId])
 
-  return {info, status, fetch}
+  return {info, status, refresh}
 }
 
 export default useChannelInfo
