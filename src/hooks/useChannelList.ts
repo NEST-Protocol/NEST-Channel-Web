@@ -1,6 +1,6 @@
 import {ChannelInfo, channelListAtom} from "../state/Root";
 import {useRecoilState} from "recoil";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import Web3 from "web3"
 import {useActiveWeb3React} from "./web3";
 import {CHANNEL_OPEN_LOGS_FILTER} from "../constants/logs";
@@ -10,7 +10,7 @@ export const useChannelList = () => {
   const web3 = new Web3(Web3.givenProvider)
   const { chainId ,library } = useActiveWeb3React()
 
-  async function refresh() {
+  const refresh = useCallback( async ()=>{
     try {
       let list: ChannelInfo[] = []
       const request = await fetch(CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].hostname +
@@ -43,11 +43,12 @@ export const useChannelList = () => {
     }catch (e){
       setChannelList([])
     }
-  }
+  }, [chainId, setChannelList, web3.eth.abi])
 
   useEffect(() => {
     refresh()
   }, [chainId, library])
+  // useInterval(refresh, 3000)
 
   return channelList
 }

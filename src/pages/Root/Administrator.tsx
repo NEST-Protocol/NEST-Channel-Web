@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
-import useChannelInfo from "../../hooks/useChannelInfo";
+import useActiveChannelInfo from "../../hooks/useActiveChannelInfo";
 import {useActiveWeb3React} from "../../hooks/web3";
 import {FC, useCallback, useState} from "react";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from "../../constants/misc";
@@ -24,7 +24,7 @@ import {CHAIN_INFO} from "../../constants/chains";
 
 const Administrator = () => {
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const {info, status} = useChannelInfo(activeChannelId)
+  const {info, status} = useActiveChannelInfo(activeChannelId)
   const {account} = useActiveWeb3React()
 
   if (info?.governance !== account) {
@@ -64,7 +64,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
-  const {refresh: refreshChannelInfo} = useChannelInfo(activeChannelId)
+  const {refresh: refreshChannelInfo} = useActiveChannelInfo(activeChannelId)
 
   const refresh = useCallback(async () => {
     if (!token) return
@@ -186,7 +186,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   const [balance, setBalance] = useState('0')
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const {info, refresh: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
 
   const refresh = useCallback(async () => {
     if (!token) return
@@ -271,7 +271,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   const {chainId, account} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const {info, refresh: fetchChannelInfo} = useChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
   const [amount, setAmount] = useState('0')
   const {balance} = useETHBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)

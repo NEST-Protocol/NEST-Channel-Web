@@ -24,7 +24,7 @@ type ChannelInfo = {
   governance: string
 }
 
-export const useChannelInfo = (channelId: string) => {
+export const useActiveChannelInfo = (channelId: string) => {
   const {chainId} = useActiveWeb3React()
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], false)
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
@@ -73,4 +73,4 @@ export const useChannelInfo = (channelId: string) => {
   return {info, status, refresh}
 }
 
-export default useChannelInfo
+export default useActiveChannelInfo
