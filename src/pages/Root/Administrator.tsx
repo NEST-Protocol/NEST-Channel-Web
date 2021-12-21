@@ -205,9 +205,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
     setWithdrawStatus(PROCESSING)
     try {
       const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
-      console.log(tx)
       const res = await tx.wait()
-      console.log(res)
       switch (res.status) {
         case 0:
           setWithdrawStatus(ERROR)
@@ -282,7 +280,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
     if (!nestOpenPlatform) return
     setWithdrawFeeStatus(PROCESSING)
     try {
-      const tx = await nestOpenPlatform.pay(activeChannelId, 0, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const tx = await nestOpenPlatform.pay(activeChannelId, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
         case 0:
