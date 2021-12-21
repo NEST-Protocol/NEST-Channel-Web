@@ -1,15 +1,16 @@
-import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton } from '@chakra-ui/react'
+import {Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip} from '@chakra-ui/react'
 import {FC} from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
 import useChannelInfo from "../../hooks/useChannelInfo";
 import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
-import {shortenAddress} from "../../utils";
+import {isAddress, shortenAddress} from "../../utils";
 import {PROCESSING} from "../../constants/misc";
 import {CHAIN_INFO} from "../../constants/chains";
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {formatNumber} from "../../utils/bignumberUtil";
+import {PUSD_ADDRESS} from "../../constants/addresses";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
@@ -59,6 +60,8 @@ type InformationDetailProps = {
 }
 
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
+  const tokenName = useTokenSymbol( isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
+
   if (props.value === undefined || props.loading) {
     return (
       <WrapItem>
@@ -81,9 +84,11 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
         </Text>
         <Spacer />
         {props.link ? (
-          <Link href={props.link} isExternal color={'link.500'} fontWeight={'bold'}>
-            {shortenAddress(props.value.toString())} {props.unit}
-          </Link>
+          <Tooltip label={tokenName} bg={"white"} borderRadius={"full"} color={"black"}>
+            <Link href={props.link} isExternal color={'link.500'} fontWeight={'bold'}>
+              {shortenAddress(props.value.toString())} {props.unit}
+            </Link>
+          </Tooltip>
         ) : (
           <Text fontWeight={'bold'} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
             {props.value} {props.unit}

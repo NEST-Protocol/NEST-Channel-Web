@@ -38,11 +38,9 @@ export const useChannelList = () => {
             list.push(info)
           })
         }
-        console.log(list)
         setChannelList(list)
       }
     }catch (e){
-      console.log(e)
       setChannelList([])
     }
   }
