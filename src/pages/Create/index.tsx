@@ -9,9 +9,6 @@ import {useRecoilState} from 'recoil'
 import {activeStepAtom} from '../../state/Create'
 import useCreateChannel from '../../hooks/useCreateChannel'
 import {PROCESSING} from "../../constants/misc";
-import {useTokenContract} from "../../hooks/useContract";
-import {NEST_ADDRESS} from "../../constants/addresses";
-import {useActiveWeb3React} from "../../hooks/web3";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <TokenAddress/>},
@@ -33,8 +30,6 @@ type StepItemProps = {
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const {invalidTokenAddress, invalidConfiguration, create, status} = useCreateChannel()
-  const { chainId } = useActiveWeb3React()
-  const nestContract = useTokenContract(NEST_ADDRESS[chainId ?? 1], true)
 
   const StepButton: FC<StepItemProps> = ({...props}) => {
     return (
@@ -81,34 +76,20 @@ const OpenChanel = () => {
         {activeStep === 3 ? (
           <Done/>
         ) : (
-          <Stack direction={"row"}>
-            <Button variant={"outline"}
-              onClick={async () => {
-              if (nestContract) {
-                const tx = await nestContract.approve("0x638461F3Ae49CcC257ef49Fe76CCE5816A9234eF", "10000000000000000000000")
-                console.log(tx)
-                const res = await tx.wait()
-                console.log(res)
+          <Button
+            w={'176px'}
+            isLoading={status === PROCESSING}
+            disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
+            onClick={async () => {
+              if (activeStep === steps.length - 1) {
+                await create()
               }
-            }}>
-              Approve NEST(test)
-            </Button>
-            <Button
-              w={'176px'}
-              isLoading={status === PROCESSING}
-              disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
-              onClick={async () => {
-                if (activeStep === steps.length - 1) {
-                  await create()
-                }
-                const newStep = activeStep + 1
-                setActiveStep(newStep)
-              }}
-            >
-              {activeStep === steps.length - 1 ? 'Create' : 'Next'}
-            </Button>
-          </Stack>
-
+              const newStep = activeStep + 1
+              setActiveStep(newStep)
+            }}
+          >
+            {activeStep === steps.length - 1 ? 'Create' : 'Next'}
+          </Button>
         )}
       </Stack>
 
