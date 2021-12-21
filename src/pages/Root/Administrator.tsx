@@ -12,7 +12,7 @@ import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
 import useChannelInfo from "../../hooks/useChannelInfo";
 import {useActiveWeb3React} from "../../hooks/web3";
-import {FC, useEffect, useState} from "react";
+import {FC, useCallback, useState} from "react";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from "../../constants/misc";
 import {useNestOpenPlatformContract, useTokenContract} from "../../hooks/useContract";
 import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
@@ -27,24 +27,28 @@ const Administrator = () => {
   const {info, status} = useChannelInfo(activeChannelId)
   const {account} = useActiveWeb3React()
 
+  if (info?.governance !== account) {
+    return <></>
+  }
+
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'}>
+    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'}
+           direction={'row'}>
       <Text fontWeight={'bold'} mr={'88px'}>
         Administrator
       </Text>
       <Stack direction={'row'} spacing={'44px'}>
-        <DepositPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}
+        <DepositPopover isLoading={status === PROCESSING}
                         tokenAddress={info?.reward}/>
-        <WithdrawPopover isLoading={status === PROCESSING} disabled={info?.governance !== account}
+        <WithdrawPopover isLoading={status === PROCESSING}
                          tokenAddress={info?.reward}/>
-        <WithdrawFeePopover isLoading={status === PROCESSING} disabled={info?.governance !== account}/>
+        <WithdrawFeePopover isLoading={status === PROCESSING}/>
       </Stack>
     </Stack>
   )
 }
 
 type PopverProps = {
-  disabled: boolean
   isLoading: boolean
   tokenAddress?: string
 }
@@ -62,7 +66,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const {refresh: refreshChannelInfo} = useChannelInfo(activeChannelId)
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     if (!token) return
     try {
       const res = await token.balanceOf(account ?? ZERO_ADDRESS)
@@ -70,7 +74,8 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
     }catch (e){
       setBalance('NaN')
     }
-  }
+  }, [account, token])
+  setImmediate(refresh, 3000)
 
   const handleDeposit = async () => {
     if (!nestOpenPlatform) return
@@ -129,15 +134,10 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
     }
   }
 
-  useEffect(() => {
-    refresh()
-  }, [chainId, account, props.tokenAddress])
-  setImmediate(refresh, 3000)
-
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} disabled={props.disabled} isLoading={props.isLoading}>Deposit</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>Deposit</Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
@@ -188,7 +188,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
   const {info, refresh: fetchChannelInfo} = useChannelInfo(activeChannelId)
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     if (!token) return
     try {
       const res = await token.balanceOf(account ?? ZERO_ADDRESS)
@@ -196,11 +196,8 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
     }catch (e){
       setBalance('NaN')
     }
-  }
+  }, [token, account])
 
-  useEffect(()=>{
-    refresh()
-  }, [token, account, chainId])
   setImmediate(refresh, 3000)
 
   const handleWithdraw = async () => {
@@ -237,7 +234,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} disabled={props.disabled} isLoading={props.isLoading}>Withdraw</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>Withdraw</Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
@@ -313,7 +310,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} disabled={props.disabled} isLoading={props.isLoading}>Withdraw Fee</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>Withdraw Fee</Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>

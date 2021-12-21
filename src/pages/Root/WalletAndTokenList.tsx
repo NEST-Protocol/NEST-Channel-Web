@@ -6,6 +6,7 @@ import {useTokenSymbol} from "../../hooks/Tokens";
 import useChannelList from "../../hooks/useChannelList";
 import {useRecoilState} from "recoil";
 import {activeChannelIdAtom, ChannelInfo} from "../../state/Root";
+import {useActiveWeb3React} from "../../hooks/web3";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
@@ -13,6 +14,7 @@ const WalletAndTokenList = () => {
   // TODO: get from blockchain
   const channelList = useChannelList()
   const [searchText, setSearchText] = useState('')
+  const { account } = useActiveWeb3React()
 
   const handleSearch = (channel: ChannelInfo) => {
     return channel.token0.toLowerCase().includes(searchText) || channel.token1.toLowerCase().includes(searchText)
@@ -36,6 +38,7 @@ const WalletAndTokenList = () => {
       <Spacer/>
       <Button
         variant={'outline'}
+        disabled={!account}
         onClick={() => {
           navigate('/create')
         }}

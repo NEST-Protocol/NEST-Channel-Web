@@ -1,7 +1,7 @@
 import {useNestOpenPlatformContract} from "./useContract";
 import {NEST_OPEN_PLATFORM_ADDRESS} from "../constants/addresses";
 import {useActiveWeb3React} from "./web3";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {parseToBigNumber} from "../utils/bignumberUtil";
 import {IDLE, IDLE_DELAY, PROCESSING} from "../constants/misc";
 import {useRecoilState} from "recoil";
@@ -30,7 +30,7 @@ export const useChannelInfo = (channelId: string) => {
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
   const [status, setStatus] = useState(IDLE)
 
-  const refresh = async () => {
+  const refresh = useCallback(async ()=>{
     if (nestOpenPlatform) {
       setStatus(PROCESSING)
       const res = await nestOpenPlatform.getChannelInfo(channelId)
@@ -64,11 +64,11 @@ export const useChannelInfo = (channelId: string) => {
         setStatus(IDLE)
       }, IDLE_DELAY)
     }
-  }
+  }, [channelId, nestOpenPlatform, setInfo])
 
   useEffect(()=>{
     refresh()
-  }, [chainId, channelId])
+  }, [channelId, nestOpenPlatform, refresh, setInfo])
 
   return {info, status, refresh}
 }
