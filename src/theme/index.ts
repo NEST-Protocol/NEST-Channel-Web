@@ -7,7 +7,7 @@ import { Heading } from './components/heading'
 import { colors } from './foundations/colors'
 import { Input } from './components/input'
 import { Select } from './components/select'
-import {NumberInput} from "./components/numberInput";
+import { NumberInput } from './components/numberInput'
 
 const theme = extendTheme({
   colors,

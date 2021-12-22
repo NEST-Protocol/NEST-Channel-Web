@@ -8,16 +8,17 @@ import {
   priceTokenUnitAtom,
   quotationFeeAtom,
   quotationTokenAddressAtom,
-  standardOutputAtom, statusAtom,
+  standardOutputAtom,
+  statusAtom,
 } from '../state/Create/form'
-import {useRecoilState, useRecoilValue} from 'recoil'
-import {useEffect, useState} from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { useEffect, useState } from 'react'
 import { isAddress } from '../utils'
-import {useNestOpenPlatformContract} from "./useContract";
-import {NEST_OPEN_PLATFORM_ADDRESS, PETH_ADDRESS, PUSD_ADDRESS} from "../constants/addresses";
-import {useActiveWeb3React} from "./web3";
-import {parseToBigNumber} from "../utils/bignumberUtil";
-import {ERROR, PROCESSING, SUCCESS} from "../constants/misc";
+import { useNestOpenPlatformContract } from './useContract'
+import { NEST_OPEN_PLATFORM_ADDRESS, PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
+import { useActiveWeb3React } from './web3'
+import { parseToBigNumber } from '../utils/bignumberUtil'
+import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
 
 export const useCreateChannel = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
@@ -37,20 +38,24 @@ export const useCreateChannel = () => {
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
 
-  const [priceTokenAddress, setPriceTokenAddress] = useState("")
+  const [priceTokenAddress, setPriceTokenAddress] = useState('')
 
-  useEffect(()=>{
-    if (priceTokenName === "PETH") {
+  useEffect(() => {
+    if (priceTokenName === 'PETH') {
       setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
-    } else if (priceTokenName === "PUSD") {
+    } else if (priceTokenName === 'PUSD') {
       setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
     } else {
-      setPriceTokenAddress("Invalid Token")
+      setPriceTokenAddress('Invalid Token')
     }
   }, [chainId, priceTokenName])
 
   useEffect(() => {
-    if (isAddress(quotationTokenAddress) && isAddress(miningTokenAddress) && (priceTokenName === "PETH" || priceTokenName === "PUSD")) {
+    if (
+      isAddress(quotationTokenAddress) &&
+      isAddress(miningTokenAddress) &&
+      (priceTokenName === 'PETH' || priceTokenName === 'PUSD')
+    ) {
       setInvalidTokenAddress(false)
     } else {
       setInvalidTokenAddress(true)
@@ -108,7 +113,7 @@ export const useCreateChannel = () => {
             break
         }
       }
-    }catch (e) {
+    } catch (e) {
       setStatus(ERROR)
     }
   }

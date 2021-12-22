@@ -32,4 +32,3 @@ export const formatNumber = (n: BigNumber | BigNumberish, decimals = 18, formatP
     .replace(/(\.\d*?[1-9])0+$/, '$1')
     .replace(/\.0+$/, '')
 }
-

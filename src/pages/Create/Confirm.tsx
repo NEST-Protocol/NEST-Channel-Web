@@ -1,9 +1,9 @@
-import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
-import {FC, useEffect, useState} from 'react'
-import {isAddress} from '../../utils'
-import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
-import {useActiveWeb3React} from '../../hooks/web3'
-import {useRecoilValue} from "recoil";
+import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
+import { FC, useEffect, useState } from 'react'
+import { isAddress } from '../../utils'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { useRecoilValue } from 'recoil'
 import {
   attenuationFactorAtom,
   miningTokenAddressAtom,
@@ -12,11 +12,11 @@ import {
   priceTokenUnitAtom,
   quotationFeeAtom,
   quotationTokenAddressAtom,
-  standardOutputAtom
-} from "../../state/Create/form";
-import {useTokenSymbol} from "../../hooks/Tokens";
-import {PETH_ADDRESS, PUSD_ADDRESS} from "../../constants/addresses";
-import {CHAIN_INFO} from "../../constants/chains";
+  standardOutputAtom,
+} from '../../state/Create/form'
+import { useTokenSymbol } from '../../hooks/Tokens'
+import { PETH_ADDRESS, PUSD_ADDRESS } from '../../constants/addresses'
+import { CHAIN_INFO } from '../../constants/chains'
 
 const Confirm = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
@@ -30,25 +30,25 @@ const Confirm = () => {
 
   const quotationTokenName = useTokenSymbol(quotationTokenAddress)
   const miningTokenName = useTokenSymbol(miningTokenAddress)
-  const [priceTokenAddress, setPriceTokenAddress] = useState("")
+  const [priceTokenAddress, setPriceTokenAddress] = useState('')
   const { chainId } = useActiveWeb3React()
 
-  useEffect(()=>{
-    if (priceTokenName === "PETH") {
+  useEffect(() => {
+    if (priceTokenName === 'PETH') {
       setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
-    } else if (priceTokenName === "PUSD") {
+    } else if (priceTokenName === 'PUSD') {
       setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
-    } else if (priceTokenName === "") {
-      setPriceTokenAddress("NaN")
+    } else if (priceTokenName === '') {
+      setPriceTokenAddress('NaN')
     } else {
-      setPriceTokenAddress("Invalid Token")
+      setPriceTokenAddress('Invalid Token')
     }
   }, [chainId, priceTokenName])
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'680px'} spacing={'20px'}>
       <ConfirmDetail
-        title={`Price Token (${priceTokenName === "" ? "NaN" : priceTokenName})`}
+        title={`Price Token (${priceTokenName === '' ? 'NaN' : priceTokenName})`}
         value={priceTokenAddress}
         link={getExplorerLink(chainId || 1, priceTokenName, ExplorerDataType.TOKEN)}
         isToken
@@ -65,13 +65,21 @@ const Confirm = () => {
         link={getExplorerLink(chainId || 1, miningTokenAddress, ExplorerDataType.TOKEN)}
         isToken
       />
-      <ConfirmDetail title={'Price Token Unit'} value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit} unit={priceTokenName} />
+      <ConfirmDetail
+        title={'Price Token Unit'}
+        value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit}
+        unit={priceTokenName}
+      />
       <ConfirmDetail
         title={'Standard Output'}
         value={standardOutput === '' ? 'NaN' : standardOutput}
         unit={'NEST/Block'}
       />
-      <ConfirmDetail title={'Quotation Fee'} value={quotationFee === '' ? 'NaN' : quotationFee} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} />
+      <ConfirmDetail
+        title={'Quotation Fee'}
+        value={quotationFee === '' ? 'NaN' : quotationFee}
+        unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
+      />
       <ConfirmDetail
         title={'Price Calling Fee'}
         value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
@@ -101,7 +109,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   }
 
   return (
-    <Stack direction={'row'} w={'full'} spacing={"40px"}>
+    <Stack direction={'row'} w={'full'} spacing={'40px'}>
       <Text color={'secondary.500'} fontWeight={'600'}>
         {props.title}:
       </Text>

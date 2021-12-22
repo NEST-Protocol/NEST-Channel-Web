@@ -1,14 +1,15 @@
-import {Input, Stack, Text} from '@chakra-ui/react'
-import {isAddress} from '../../utils'
+import { Input, Stack, Text } from '@chakra-ui/react'
+import { isAddress } from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
-import {useRecoilState} from "recoil";
-import { useTokenSymbol } from "../../hooks/Tokens";
+import { useRecoilState } from 'recoil'
+import { useTokenSymbol } from '../../hooks/Tokens'
 import {
   miningTokenAddressAtom,
-  priceTokenNameAtom, priceTokenUnitAtom,
+  priceTokenNameAtom,
+  priceTokenUnitAtom,
   quotationTokenAddressAtom,
-} from "../../state/Create/form";
-import {useEffect} from "react";
+} from '../../state/Create/form'
+import { useEffect } from 'react'
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
@@ -26,11 +27,11 @@ const TokenAddress = () => {
   console.log(priceTokenUnit)
 
   const checkPriceToken = (value: string) => {
-    return !(value === "PETH" || value === "PUSD")
+    return !(value === 'PETH' || value === 'PUSD')
   }
 
-  useEffect(()=>{
-    setPriceTokenUnit("")
+  useEffect(() => {
+    setPriceTokenUnit('')
   }, [priceTokenName, setPriceTokenUnit])
 
   return (
@@ -57,8 +58,8 @@ const TokenAddress = () => {
         onCheck={() => checkPriceToken(priceTokenName)}
         onChange={setPriceTokenName}
         datalist={[
-          {title: 'PETH', data: 'PETH'},
-          {title: 'PUSD', data: 'PUSD'},
+          { title: 'PETH', data: 'PETH' },
+          { title: 'PUSD', data: 'PUSD' },
         ]}
       />
 
@@ -85,7 +86,7 @@ export const TokenAddressTip = () => {
   return (
     <Stack w={'764px'} spacing={'12px'}>
       <Text fontWeight={'bold'}>Instructions</Text>
-      <p/>
+      <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
         Price Token Address
       </Text>
@@ -93,7 +94,7 @@ export const TokenAddressTip = () => {
         The quoted pair is denominated in that Token, as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where PUSD and PETH are
         the denominated tokens.
       </Text>
-      <p/>
+      <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
         Quotation Token Address
       </Text>
@@ -101,7 +102,7 @@ export const TokenAddressTip = () => {
         The address of the quoted assets in the quotation pair, such as: 1PUSD = XXX Token, 1 PETH = 0.5 USDT, where
         Token and USDT are quoted tokens.
       </Text>
-      <p/>
+      <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
         Mining Token Address
       </Text>

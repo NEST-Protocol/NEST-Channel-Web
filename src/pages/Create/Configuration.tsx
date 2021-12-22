@@ -1,16 +1,16 @@
 import { Stack, Text } from '@chakra-ui/react'
 import InputWithSelect from '../../components/InputWithSelect'
-import {useRecoilState, useRecoilValue} from "recoil";
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   attenuationFactorAtom,
   priceCallingFeeAtom,
   priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
-  standardOutputAtom
-} from "../../state/Create/form";
-import {CHAIN_INFO} from "../../constants/chains";
-import {useActiveWeb3React} from "../../hooks/web3";
+  standardOutputAtom,
+} from '../../state/Create/form'
+import { CHAIN_INFO } from '../../constants/chains'
+import { useActiveWeb3React } from '../../hooks/web3'
 
 const Configuration = () => {
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
@@ -27,48 +27,46 @@ const Configuration = () => {
   }
 
   const handlePriceTokenUnitInvalidInput = (value: string) => {
-    if (priceTokenName === "PETH") {
-      return value !== "1" && value !== "2" && value !== "3"
+    if (priceTokenName === 'PETH') {
+      return value !== '1' && value !== '2' && value !== '3'
     } else {
-      return value !== "1000" && value !== "2000" && value !== "3000"
+      return value !== '1000' && value !== '2000' && value !== '3000'
     }
   }
 
   return (
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
-      {
-        priceTokenName === "PUSD" ? (
-          <InputWithSelect
-            title={'Price Token Unit'}
-            defaultValue={priceTokenUnit}
-            onCheck={handlePriceTokenUnitInvalidInput}
-            onChange={setPriceTokenUnit}
-            unit={"PUSD"}
-            isNumber
-            min={0}
-            datalist={[
-              { title: '1000 PUSD', data: '1000' },
-              { title: '2000 PUSD', data: '2000' },
-              { title: '3000 PUSD', data: '3000' },
-            ]}
-          />
-        ) : (
-          <InputWithSelect
-            title={'Price Token Unit'}
-            defaultValue={priceTokenUnit}
-            onCheck={handlePriceTokenUnitInvalidInput}
-            onChange={setPriceTokenUnit}
-            unit={"PETH"}
-            isNumber
-            min={0}
-            datalist={[
-              { title: '1 PETH', data: '1' },
-              { title: '2 PETH', data: '2' },
-              { title: '3 PETH', data: '3' },
-            ]}
-          />
-        )
-      }
+      {priceTokenName === 'PUSD' ? (
+        <InputWithSelect
+          title={'Price Token Unit'}
+          defaultValue={priceTokenUnit}
+          onCheck={handlePriceTokenUnitInvalidInput}
+          onChange={setPriceTokenUnit}
+          unit={'PUSD'}
+          isNumber
+          min={0}
+          datalist={[
+            { title: '1000 PUSD', data: '1000' },
+            { title: '2000 PUSD', data: '2000' },
+            { title: '3000 PUSD', data: '3000' },
+          ]}
+        />
+      ) : (
+        <InputWithSelect
+          title={'Price Token Unit'}
+          defaultValue={priceTokenUnit}
+          onCheck={handlePriceTokenUnitInvalidInput}
+          onChange={setPriceTokenUnit}
+          unit={'PETH'}
+          isNumber
+          min={0}
+          datalist={[
+            { title: '1 PETH', data: '1' },
+            { title: '2 PETH', data: '2' },
+            { title: '3 PETH', data: '3' },
+          ]}
+        />
+      )}
 
       <InputWithSelect
         title={'Standard Output'}
@@ -77,7 +75,7 @@ const Configuration = () => {
         onChange={setStandardOutput}
         isNumber
         min={0}
-        unit={"NEST/Block"}
+        unit={'NEST/Block'}
         datalist={[
           { title: '10 NEST/Block', data: '10' },
           { title: '5 NEST/Block', data: '5' },
@@ -127,7 +125,7 @@ const Configuration = () => {
         isNumber
         min={0}
         max={100}
-        unit={"%"}
+        unit={'%'}
         datalist={[
           { title: '80 %', data: '80' },
           { title: '70 %', data: '70' },

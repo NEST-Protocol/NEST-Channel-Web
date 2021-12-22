@@ -57,7 +57,7 @@ export default function PendingView({
                 <Text color={option.color}>{option.name}</Text>
                 <Spacer />
                 <IconWrapper>
-                  <img src={option.iconURL} alt={'Icon'}/>
+                  <img src={option.iconURL} alt={'Icon'} />
                 </IconWrapper>
               </Stack>
             </Button>
