@@ -16,11 +16,11 @@ const Done = () => {
   }
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={'600px'} h={'400px'} spacing={'20px'} alignItems={'center'}>
+    <Stack w={'600px'} h={'400px'} spacing={'20px'} alignItems={'center'} justifyContent={"center"}>
       {status === SUCCESS ? (
-        <Text>Done!</Text>
+        <Text fontWeight={"bold"}>Done!</Text>
       ) : (
-        <Text>Error!</Text>
+        <Text fontWeight={"bold"}>Error!</Text>
       )}
       <Button
         w={'176px'}
