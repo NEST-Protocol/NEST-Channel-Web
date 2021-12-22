@@ -26,3 +26,22 @@ Smart Chain - Testnet
 - chainid: 97
 - symbol: BNB
 - block explorer URL: https://testnet.bscscan.com
+
+### To developer
+
+1. Create environments file.
+    ```shell
+    cp .env.example .env
+    ```
+   
+2. Take your [REACT_APP_INFURA_KEY](https://infura.io/)、[REACT_APP_ETHERSCAN_KEY](https://etherscan.io/)、[REACT_APP_BSCSCAN_KEY](https://bscscan.com/).
+
+4. Install dependence.
+    ```shell
+    yarn
+    ```
+
+5. Run `yarn start` to serve the web.
+    ```shell
+    yarn start
+    ```
