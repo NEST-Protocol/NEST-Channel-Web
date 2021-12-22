@@ -10,7 +10,7 @@ import NetworkCard from '../components/NetworkCard'
 export const App = () => {
   return (
     <Web3ReactManager>
-      <Stack spacing={0} w={'full'} h={'full'} alignItems={'center'}>
+      <Stack spacing={0} w={'full'} h={'full'} alignItems={'center'} pb={'20px'}>
         <Header />
         <Content />
       </Stack>
@@ -45,8 +45,6 @@ const Content = () => {
       borderRadius={'20px'}
       w={'container.xl'}
       h={'full'}
-      mx={'20px'}
-      mb={'20px'}
     >
       <Routes>
         <Route path="/" element={<Root />} />
