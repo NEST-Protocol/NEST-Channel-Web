@@ -35,10 +35,14 @@ jobs:
          name: static
          path: build/
    
- deploy-main:
+ deploy:
    environment: main
    needs: build
    runs-on: ubuntu-latest
+   env:
+     REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
+     REACT_APP_ETHERSCAN_KEY: ${{ secrets.REACT_APP_ETHERSCAN_KEY }}
+     REACT_APP_BSCSCAN_KEY: ${{ secrets.REACT_APP_BSCSCAN_KEY }}
    steps:
      - name: download artifact
        uses: actions/download-artifact@v2
