@@ -4,6 +4,7 @@ import {useCallback, useEffect} from "react";
 import Web3 from "web3"
 import {useActiveWeb3React} from "./web3";
 import {CHANNEL_OPEN_LOGS_FILTER} from "../constants/logs";
+import useInterval from "@use-it/interval";
 
 export const useChannelList = () => {
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
@@ -48,7 +49,7 @@ export const useChannelList = () => {
   useEffect(() => {
     refresh()
   }, [chainId, library, refresh])
-  // useInterval(refresh, 3000)
+  useInterval(refresh, 3000)
 
   return channelList
 }
