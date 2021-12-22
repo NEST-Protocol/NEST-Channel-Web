@@ -41,7 +41,7 @@ Smart Chain - Testnet
     yarn
     ```
 
-5. Run `yarn start` to serve the web.
+5. Serve the web.
     ```shell
     yarn start
     ```
