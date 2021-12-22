@@ -20,7 +20,7 @@ export const useChannelList = () => {
         "&toBlock=" + CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].toBlock +
         "&address=" + CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].address +
         "&topic0=" + CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].topics[0] +
-        "&apikey=" + process.env.REACT_APP_BSCSCAN_KEY ?? "YourApiKeyToken"
+        "&apikey=" + CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].apikey
       )
       const data = await request.json()
       if (data.status === '1'){
@@ -49,7 +49,7 @@ export const useChannelList = () => {
   useEffect(() => {
     refresh()
   }, [chainId, library, refresh])
-  useInterval(refresh, 3000)
+  useInterval(refresh, 120000)
 
   return channelList
 }
