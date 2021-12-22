@@ -1,6 +1,5 @@
 export const NumberInput = {
-  baseStyle: {
-  },
+  baseStyle: {},
   variants: {
     filled: {
       field: {

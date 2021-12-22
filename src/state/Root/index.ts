@@ -1,17 +1,17 @@
-import {atom} from "recoil";
-import {PUSD_ADDRESS} from "../../constants/addresses";
+import { atom } from 'recoil'
+import { PUSD_ADDRESS } from '../../constants/addresses'
 
 export const activeChannelIdAtom = atom({
   key: 'activeChannelId',
-  default: "0",
+  default: '0',
 })
 
 export type ChannelInfo = {
-  channelId: string,
-  token0: string,
-  unit: string,
-  token1: string,
-  reward: string,
+  channelId: string
+  token0: string
+  unit: string
+  token1: string
+  reward: string
 }
 
 type MoreChannelInfo = {

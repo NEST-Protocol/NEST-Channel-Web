@@ -1,11 +1,11 @@
-import {useNestOpenPlatformContract} from "./useContract";
-import {NEST_OPEN_PLATFORM_ADDRESS} from "../constants/addresses";
-import {useActiveWeb3React} from "./web3";
-import {useCallback, useEffect, useState} from "react";
-import {parseToBigNumber} from "../utils/bignumberUtil";
-import {IDLE, IDLE_DELAY, PROCESSING} from "../constants/misc";
-import {useRecoilState} from "recoil";
-import {activeChannelInfoAtom} from "../state/Root";
+import { useNestOpenPlatformContract } from './useContract'
+import { NEST_OPEN_PLATFORM_ADDRESS } from '../constants/addresses'
+import { useActiveWeb3React } from './web3'
+import { useCallback, useEffect, useState } from 'react'
+import { parseToBigNumber } from '../utils/bignumberUtil'
+import { IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { activeChannelIdAtom, activeChannelInfoAtom } from '../state/Root'
 
 type ChannelInfo = {
   channelId: string
@@ -24,13 +24,14 @@ type ChannelInfo = {
   governance: string
 }
 
-export const useActiveChannelInfo = (channelId: string) => {
-  const {chainId} = useActiveWeb3React()
+export const useActiveChannelInfo = () => {
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const { chainId } = useActiveWeb3React()
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], false)
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
   const [status, setStatus] = useState(IDLE)
 
-  const refresh = useCallback(async ()=>{
+  const refresh = useCallback(async () => {
     if (nestOpenPlatform) {
       setStatus(PROCESSING)
       const res = await nestOpenPlatform.getChannelInfo(channelId)
@@ -60,17 +61,15 @@ export const useActiveChannelInfo = (channelId: string) => {
         governance: res.governance,
       }
       setInfo(info)
-      setTimeout(()=>{
+      setTimeout(() => {
         setStatus(IDLE)
       }, IDLE_DELAY)
     }
   }, [channelId, nestOpenPlatform, setInfo])
 
-  useEffect(()=>{
+  useEffect(() => {
     refresh()
   }, [channelId, nestOpenPlatform, refresh, setInfo])
 
-  return {info, status, refresh}
+  return { info, status, refresh }
 }
-
-export default useActiveChannelInfo

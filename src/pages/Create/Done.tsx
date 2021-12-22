@@ -1,13 +1,13 @@
-import {Button, Stack, Text} from '@chakra-ui/react'
-import {useRecoilState} from 'recoil'
-import {activeStepAtom} from '../../state/Create'
-import {useNavigate} from 'react-router-dom'
-import useCreateChannel from "../../hooks/useCreateChannel";
-import {SUCCESS} from "../../constants/misc";
+import { Button, Stack, Text } from '@chakra-ui/react'
+import { useRecoilState } from 'recoil'
+import { activeStepAtom } from '../../state/Create'
+import { useNavigate } from 'react-router-dom'
+import { useCreateChannel } from '../../hooks/useCreateChannel'
+import { SUCCESS } from '../../constants/misc'
 
 const Done = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-  const {status} = useCreateChannel()
+  const { status } = useCreateChannel()
 
   const navigate = useNavigate()
 
@@ -16,12 +16,8 @@ const Done = () => {
   }
 
   return (
-    <Stack w={'600px'} h={'400px'} spacing={'20px'} alignItems={'center'} justifyContent={"center"}>
-      {status === SUCCESS ? (
-        <Text fontWeight={"bold"}>Done!</Text>
-      ) : (
-        <Text fontWeight={"bold"}>Error!</Text>
-      )}
+    <Stack w={'600px'} h={'400px'} spacing={'20px'} alignItems={'center'} justifyContent={'center'}>
+      {status === SUCCESS ? <Text fontWeight={'bold'}>Done!</Text> : <Text fontWeight={'bold'}>Error!</Text>}
       <Button
         w={'176px'}
         onClick={() => {

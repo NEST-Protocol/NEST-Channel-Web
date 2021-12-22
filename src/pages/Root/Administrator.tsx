@@ -1,81 +1,67 @@
 import {
   Button,
-  NumberInput, NumberInputField,
+  NumberInput,
+  NumberInputField,
   Popover,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
   Stack,
-  Text
+  Text,
 } from '@chakra-ui/react'
-import {useRecoilValue} from "recoil";
-import {activeChannelIdAtom} from "../../state/Root";
-import useActiveChannelInfo from "../../hooks/useActiveChannelInfo";
-import {useActiveWeb3React} from "../../hooks/web3";
-import {FC, useCallback, useState} from "react";
-import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from "../../constants/misc";
-import {useNestOpenPlatformContract, useTokenContract} from "../../hooks/useContract";
-import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
-import {formatNumber, parseToBigNumber} from "../../utils/bignumberUtil";
-import {useTokenSymbol} from "../../hooks/Tokens";
-import {formatWithUnit, parseToNumber} from "../../utils/unit";
-import {useETHBalance} from "../../hooks/useETHBalance";
-import {CHAIN_INFO} from "../../constants/chains";
+import { useRecoilValue } from 'recoil'
+import { activeChannelIdAtom } from '../../state/Root'
+import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { FC, useState } from 'react'
+import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../../constants/misc'
+import { useNestOpenPlatformContract, useTokenContract } from '../../hooks/useContract'
+import { NEST_OPEN_PLATFORM_ADDRESS } from '../../constants/addresses'
+import { parseToBigNumber } from '../../utils/bignumberUtil'
+import { useTokenSymbol } from '../../hooks/Tokens'
+import { formatWithUnit, parseToNumber } from '../../utils/unit'
+import { useBalance } from '../../hooks/useBalance'
+import { CHAIN_INFO } from '../../constants/chains'
+import { useTokenBalance } from '../../hooks/useTokenBalance'
 
 const Administrator = () => {
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const {info, status} = useActiveChannelInfo(activeChannelId)
-  const {account} = useActiveWeb3React()
+  const { info, status } = useActiveChannelInfo()
+  const { account } = useActiveWeb3React()
 
   if (info?.governance !== account) {
     return <></>
   }
 
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'}
-           direction={'row'}>
+    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'}>
       <Text fontWeight={'bold'} mr={'88px'}>
         Administrator
       </Text>
       <Stack direction={'row'} spacing={'44px'}>
-        <DepositPopover isLoading={status === PROCESSING}
-                        tokenAddress={info?.reward}/>
-        <WithdrawPopover isLoading={status === PROCESSING}
-                         tokenAddress={info?.reward}/>
-        <WithdrawFeePopover isLoading={status === PROCESSING}/>
+        <DepositPopover isLoading={status === PROCESSING} tokenAddress={info?.reward} />
+        <WithdrawPopover isLoading={status === PROCESSING} tokenAddress={info?.reward} />
+        <WithdrawFeePopover isLoading={status === PROCESSING} />
       </Stack>
     </Stack>
   )
 }
 
-type PopverProps = {
+type PopoverProps = {
   isLoading: boolean
   tokenAddress?: string
 }
 
-const DepositPopover: FC<PopverProps> = ({...props}) => {
-  const {chainId} = useActiveWeb3React()
+const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
+  const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   const token = useTokenContract(props.tokenAddress)
-  const {account} = useActiveWeb3React()
-  const [balance, setBalance] = useState('0')
+  const balance = useTokenBalance(props.tokenAddress, account)
   const [amount, setAmount] = useState('0')
-  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
+  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? '')
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
-  const {refresh: refreshChannelInfo} = useActiveChannelInfo(activeChannelId)
-
-  const refresh = useCallback(async () => {
-    if (!token) return
-    try {
-      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
-      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
-    }catch (e){
-      setBalance('NaN')
-    }
-  }, [account, token])
-  setImmediate(refresh, 3000)
+  const { refresh: refreshChannelInfo } = useActiveChannelInfo()
 
   const handleDeposit = async () => {
     if (!nestOpenPlatform) return
@@ -111,9 +97,13 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
     if (!token) return
     try {
       setApproveStatus(PROCESSING)
-      const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0), {
-        gasLimit: "30000"
-      })
+      const tx = await token.approve(
+        NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1],
+        parseToBigNumber(amount).shiftedBy(18).toFixed(0),
+        {
+          gasLimit: '30000',
+        }
+      )
       const res = await tx.wait()
       switch (res.status) {
         case 0:
@@ -140,7 +130,9 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>Deposit</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>
+          Deposit
+        </Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
@@ -158,24 +150,34 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
                 e.target.setSelectionRange(0, amount.length)
               }}
             >
-              <NumberInputField/>
+              <NumberInputField />
             </NumberInput>
-            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={"center"}>
+            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={'center'}>
               Balance (myself): {balance} {tokenSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth onClick={handleApprove} isLoading={approveStatus === PROCESSING}
-                    disabled={amount === '0'}
-                    loadingText={"Approving"}>
+            <Button
+              variant={'outline'}
+              isFullWidth
+              onClick={handleApprove}
+              isLoading={approveStatus === PROCESSING}
+              disabled={amount === '0'}
+              loadingText={'Approving'}
+            >
               Approve
-              { approveStatus === SUCCESS && (<> Success</>) }
-              { approveStatus === ERROR && (<> Error</>) }
+              {approveStatus === SUCCESS && <> Success</>}
+              {approveStatus === ERROR && <> Error</>}
             </Button>
-            <Button variant={'outline'} isFullWidth onClick={handleDeposit} isLoading={depositStatus === PROCESSING}
-                    disabled={amount === '0'}
-                    loadingText={"Depositing"}>
+            <Button
+              variant={'outline'}
+              isFullWidth
+              onClick={handleDeposit}
+              isLoading={depositStatus === PROCESSING}
+              disabled={amount === '0'}
+              loadingText={'Depositing'}
+            >
               Deposit
-              { depositStatus === SUCCESS && (<> Success</>) }
-              { depositStatus === ERROR && (<> Error</>) }
+              {depositStatus === SUCCESS && <> Success</>}
+              {depositStatus === ERROR && <> Error</>}
             </Button>
           </Stack>
         </PopoverBody>
@@ -184,28 +186,15 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   )
 }
 
-const WithdrawPopover: FC<PopverProps> = ({...props}) => {
-  const {chainId, account} = useActiveWeb3React()
+const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
+  const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   const [amount, setAmount] = useState('0')
-  const token = useTokenContract(props.tokenAddress)
-  const [balance, setBalance] = useState('0')
-  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
+  const balance = useTokenBalance(props.tokenAddress, account)
+  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? '')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
-
-  const refresh = useCallback(async () => {
-    if (!token) return
-    try {
-      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
-      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
-    }catch (e){
-      setBalance('NaN')
-    }
-  }, [token, account])
-
-  setImmediate(refresh, 3000)
+  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
 
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return
@@ -216,21 +205,21 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
       switch (res.status) {
         case 0:
           setWithdrawStatus(ERROR)
-          setTimeout(()=>{
+          setTimeout(() => {
             setWithdrawStatus(IDLE)
           }, IDLE_DELAY)
           break
         case 1:
           setWithdrawStatus(SUCCESS)
           await fetchChannelInfo()
-          setTimeout(()=>{
+          setTimeout(() => {
             setWithdrawStatus(IDLE)
           }, IDLE_DELAY)
           break
       }
     } catch (e) {
       setWithdrawStatus(ERROR)
-      setTimeout(()=>{
+      setTimeout(() => {
         setWithdrawStatus(IDLE)
       }, IDLE_DELAY)
     }
@@ -239,7 +228,9 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>Withdraw</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>
+          Withdraw
+        </Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
@@ -257,17 +248,22 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
                 e.target.setSelectionRange(0, amount.length)
               }}
             >
-              <NumberInputField/>
+              <NumberInputField />
             </NumberInput>
-            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={"center"}>
+            <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={'center'}>
               Balance (myself): {balance} {tokenSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth onClick={handleWithdraw} loadingText={"Withdrawing"}
-                    disabled={amount === '0'}
-                    isLoading={withdrawStatus === PROCESSING}>
+            <Button
+              variant={'outline'}
+              isFullWidth
+              onClick={handleWithdraw}
+              loadingText={'Withdrawing'}
+              disabled={amount === '0'}
+              isLoading={withdrawStatus === PROCESSING}
+            >
               Withdraw
-              { withdrawStatus === SUCCESS && (<> Success</>) }
-              { withdrawStatus === ERROR && (<> Error</>) }
+              {withdrawStatus === SUCCESS && <> Success</>}
+              {withdrawStatus === ERROR && <> Error</>}
             </Button>
           </Stack>
         </PopoverBody>
@@ -276,13 +272,13 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   )
 }
 
-const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
-  const {chainId, account} = useActiveWeb3React()
+const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
+  const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
+  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
   const [amount, setAmount] = useState('0')
-  const {balance} = useETHBalance(account)
+  const { balance } = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)
 
   const handleWithdrawFee = async () => {
@@ -294,21 +290,21 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
       switch (res.status) {
         case 0:
           setWithdrawFeeStatus(ERROR)
-          setTimeout(()=>{
+          setTimeout(() => {
             setWithdrawFeeStatus(IDLE)
           }, IDLE_DELAY)
           break
         case 1:
           setWithdrawFeeStatus(SUCCESS)
           await fetchChannelInfo()
-          setTimeout(()=>{
+          setTimeout(() => {
             setWithdrawFeeStatus(IDLE)
           }, IDLE_DELAY)
           break
       }
-    }catch (e){
+    } catch (e) {
       setWithdrawFeeStatus(ERROR)
-      setTimeout(()=>{
+      setTimeout(() => {
         setWithdrawFeeStatus(IDLE)
       }, IDLE_DELAY)
     }
@@ -317,7 +313,9 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>Withdraw Fee</Button>
+        <Button variant={'outline'} isLoading={props.isLoading}>
+          Withdraw Fee
+        </Button>
       </PopoverTrigger>
       <PopoverContent borderRadius={'20px'} border={'none'}>
         <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
@@ -335,16 +333,22 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
                 e.target.setSelectionRange(0, amount.length)
               }}
             >
-              <NumberInputField/>
+              <NumberInputField />
             </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
               Balance (myself): {balance} {CHAIN_INFO[chainId ?? 1].nativeSymbol}
             </Text>
-            <Button variant={'outline'} isFullWidth onClick={handleWithdrawFee} isLoading={withdrawFeeStatus === PROCESSING}
-                    loadingText={"Withdrawing"} disabled={amount === '0'}>
+            <Button
+              variant={'outline'}
+              isFullWidth
+              onClick={handleWithdrawFee}
+              isLoading={withdrawFeeStatus === PROCESSING}
+              loadingText={'Withdrawing'}
+              disabled={amount === '0'}
+            >
               Withdraw
-              { withdrawFeeStatus === SUCCESS && (<> Success</>) }
-              { withdrawFeeStatus === ERROR && (<> Error</>) }
+              {withdrawFeeStatus === SUCCESS && <> Success</>}
+              {withdrawFeeStatus === ERROR && <> Error</>}
             </Button>
           </Stack>
         </PopoverBody>

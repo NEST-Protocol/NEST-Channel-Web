@@ -1,13 +1,13 @@
 import { Line } from '@ant-design/charts'
-import React, {FC} from 'react'
+import React, { FC } from 'react'
 
 type LineChartProps = {
-  data: any[],
-  xField: string,
-  yField: string,
+  data: any[]
+  xField: string
+  yField: string
 }
 
-const LineChart: FC<LineChartProps> = ({...props}) => {
+const LineChart: FC<LineChartProps> = ({ ...props }) => {
   const config = {
     data: props.data,
     xField: props.xField,

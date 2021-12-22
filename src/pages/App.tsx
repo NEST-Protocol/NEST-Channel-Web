@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Root from './Root'
-import {Button, Spacer, Stack} from '@chakra-ui/react'
+import { Button, Spacer, Stack } from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -10,7 +10,7 @@ import NetworkCard from '../components/NetworkCard'
 export const App = () => {
   return (
     <Web3ReactManager>
-      <Stack spacing={0} w={'full'} h={'full'} alignItems={"center"}>
+      <Stack spacing={0} w={'full'} h={'full'} alignItems={'center'}>
         <Header />
         <Content />
       </Stack>
@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <Stack w={'container.xl'} h={'60px'} direction={'row'} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
       <Button
-        position={"absolute"}
+        position={'absolute'}
         variant={'ghost'}
         onClick={() => {
           const w = window.open('about:blank')

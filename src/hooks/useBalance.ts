@@ -1,16 +1,16 @@
-import {useActiveWeb3React} from './web3'
-import {isAddress} from '../utils'
-import {useCallback, useEffect, useState} from 'react'
-import {ERROR, IDLE, IDLE_DELAY, PROCESSING} from '../constants/misc'
+import { useActiveWeb3React } from './web3'
+import { isAddress } from '../utils'
+import { useCallback, useEffect, useState } from 'react'
+import { ERROR, IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
 import useInterval from '@use-it/interval'
-import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
+import { formatNumber, parseToBigNumber } from '../utils/bignumberUtil'
 
-export const useETHBalance = (uncheckedAddresses: string | null | undefined) => {
-  const {library} = useActiveWeb3React()
+export const useBalance = (uncheckedAddresses: string | null | undefined) => {
+  const { library } = useActiveWeb3React()
   const [balance, setBalance] = useState('0')
   const [status, setStatus] = useState(IDLE)
 
-  const refresh = useCallback(async ()=>{
+  const refresh = useCallback(async () => {
     if (!uncheckedAddresses || !isAddress(uncheckedAddresses || !library)) {
       return
     }
@@ -34,7 +34,6 @@ export const useETHBalance = (uncheckedAddresses: string | null | undefined) => 
       }, IDLE_DELAY)
     }
   }, [library, uncheckedAddresses])
-
 
   useEffect(() => {
     refresh()

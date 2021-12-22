@@ -9,9 +9,9 @@ import NestLedger_ABI from '../abis/nestLedger.json'
 import NestGovernance_ABI from '../abis/nestGovernance.json'
 
 import { useActiveWeb3React } from './web3'
-import {getContract} from "../utils";
-import {useMemo} from "react";
-import {Erc20, NestOpenPlatform, NestBatchPlatform2, NestGovernance, NestLedger} from "../abis/types";
+import { getContract } from '../utils'
+import { useMemo } from 'react'
+import { Erc20, NestOpenPlatform, NestBatchPlatform2, NestGovernance, NestLedger } from '../abis/types'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -63,4 +63,3 @@ export function useNestLedgerContract(address: string, withSignerIfPossible?: bo
 export function useNestGovernanceContract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestGovernance>(address, NestGovernance_ABI, withSignerIfPossible)
 }
-

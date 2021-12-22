@@ -1,25 +1,25 @@
-import {Button, Stack, Text} from '@chakra-ui/react'
-import TokenAddress, {TokenAddressTip} from './TokenAddress'
-import Configuration, {ConfigurationTip} from './Configuration'
-import Confirm, {ConfirmTip} from './Confirm'
+import { Button, Stack, Text } from '@chakra-ui/react'
+import TokenAddress, { TokenAddressTip } from './TokenAddress'
+import Configuration, { ConfigurationTip } from './Configuration'
+import Confirm, { ConfirmTip } from './Confirm'
 import Done from './Done'
 import Divider from '../../components/Divider'
-import {FC} from 'react'
-import {useRecoilState} from 'recoil'
-import {activeStepAtom} from '../../state/Create'
-import useCreateChannel from '../../hooks/useCreateChannel'
-import {PROCESSING} from "../../constants/misc";
+import { FC } from 'react'
+import { useRecoilState } from 'recoil'
+import { activeStepAtom } from '../../state/Create'
+import { useCreateChannel } from '../../hooks/useCreateChannel'
+import { PROCESSING } from '../../constants/misc'
 
 const steps = [
-  {id: 0, label: 'Token Address', content: <TokenAddress/>},
-  {id: 1, label: 'Configuration', content: <Configuration/>},
-  {id: 2, label: 'Confirm', content: <Confirm/>},
+  { id: 0, label: 'Token Address', content: <TokenAddress /> },
+  { id: 1, label: 'Configuration', content: <Configuration /> },
+  { id: 2, label: 'Confirm', content: <Confirm /> },
 ]
 
 const tips = [
-  {id: 0, label: 'Token Address', content: <TokenAddressTip/>},
-  {id: 1, label: 'Configuration', content: <ConfigurationTip/>},
-  {id: 2, label: 'Confirm', content: <ConfirmTip/>},
+  { id: 0, label: 'Token Address', content: <TokenAddressTip /> },
+  { id: 1, label: 'Configuration', content: <ConfigurationTip /> },
+  { id: 2, label: 'Confirm', content: <ConfirmTip /> },
 ]
 
 type StepItemProps = {
@@ -29,9 +29,9 @@ type StepItemProps = {
 
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-  const {invalidTokenAddress, invalidConfiguration, create, status} = useCreateChannel()
+  const { invalidTokenAddress, invalidConfiguration, create, status } = useCreateChannel()
 
-  const StepButton: FC<StepItemProps> = ({...props}) => {
+  const StepButton: FC<StepItemProps> = ({ ...props }) => {
     return (
       <>
         <Button
@@ -62,11 +62,11 @@ const OpenChanel = () => {
           whiteSpace={'nowrap'}
           hidden={activeStep === 3}
         >
-          <StepButton id={0} title={'Token Address'}/>
-          <Divider active={activeStep >= 1}/>
-          <StepButton id={1} title={'Configuration'}/>
-          <Divider active={activeStep >= 2}/>
-          <StepButton id={2} title={'Confirm'}/>
+          <StepButton id={0} title={'Token Address'} />
+          <Divider active={activeStep >= 1} />
+          <StepButton id={1} title={'Configuration'} />
+          <Divider active={activeStep >= 2} />
+          <StepButton id={2} title={'Confirm'} />
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
@@ -74,7 +74,7 @@ const OpenChanel = () => {
           </Stack>
         ))}
         {activeStep === 3 ? (
-          <Done/>
+          <Done />
         ) : (
           <Button
             w={'176px'}

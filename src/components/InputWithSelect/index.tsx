@@ -1,7 +1,7 @@
-import {Box, Button, FormControl, Input, NumberInput, NumberInputField, Stack, Text} from '@chakra-ui/react'
+import { Box, Button, FormControl, Input, NumberInput, NumberInputField, Stack, Text } from '@chakra-ui/react'
 import Divider from '../Divider'
-import {FC, useState} from 'react'
-import {formatWithUnit, parseToNumber} from "../../utils/unit";
+import { FC, useState } from 'react'
+import { formatWithUnit, parseToNumber } from '../../utils/unit'
 
 type OptionInput = {
   title: string
@@ -38,7 +38,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         pos={showOption ? 'absolute' : 'static'}
         zIndex={showOption ? 10 : 0}
       >
-        { props.isNumber ? (
+        {props.isNumber ? (
           <NumberInput
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
@@ -62,7 +62,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
           </NumberInput>
         ) : (
           <Input
-            id={"amount"}
+            id={'amount'}
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
@@ -79,7 +79,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               setTimeout(() => setShowOption(false), 200)
             }}
           />
-        ) }
+        )}
 
         {props.datalist.length > 0 && (
           <Stack hidden={!showOption} pb={1} top={'72px'} spacing={0}>
