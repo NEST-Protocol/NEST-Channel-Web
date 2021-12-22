@@ -23,8 +23,7 @@ import {useBalance} from "../../hooks/useBalance";
 import {CHAIN_INFO} from "../../constants/chains";
 
 const Administrator = () => {
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const {info, status} = useActiveChannelInfo(activeChannelId)
+  const {info, status} = useActiveChannelInfo()
   const {account} = useActiveWeb3React()
 
   if (info?.governance !== account) {
@@ -64,7 +63,7 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
-  const {refresh: refreshChannelInfo} = useActiveChannelInfo(activeChannelId)
+  const {refresh: refreshChannelInfo} = useActiveChannelInfo()
 
   const refresh = useCallback(async () => {
     if (!token) return
@@ -193,7 +192,7 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
   const [balance, setBalance] = useState('0')
   const tokenSymbol = useTokenSymbol(props.tokenAddress ?? "")
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo()
 
   const refresh = useCallback(async () => {
     if (!token) return
@@ -280,7 +279,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   const {chainId, account} = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
+  const {info, refresh: fetchChannelInfo} = useActiveChannelInfo()
   const [amount, setAmount] = useState('0')
   const {balance} = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)

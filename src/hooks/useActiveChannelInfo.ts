@@ -4,8 +4,8 @@ import {useActiveWeb3React} from "./web3";
 import {useCallback, useEffect, useState} from "react";
 import {parseToBigNumber} from "../utils/bignumberUtil";
 import {IDLE, IDLE_DELAY, PROCESSING} from "../constants/misc";
-import {useRecoilState} from "recoil";
-import {activeChannelInfoAtom} from "../state/Root";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {activeChannelIdAtom, activeChannelInfoAtom} from "../state/Root";
 
 type ChannelInfo = {
   channelId: string
@@ -24,7 +24,8 @@ type ChannelInfo = {
   governance: string
 }
 
-export const useActiveChannelInfo = (channelId: string) => {
+export const useActiveChannelInfo = () => {
+  const channelId = useRecoilValue(activeChannelIdAtom)
   const {chainId} = useActiveWeb3React()
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], false)
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)

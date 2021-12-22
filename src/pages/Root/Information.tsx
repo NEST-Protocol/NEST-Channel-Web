@@ -3,8 +3,6 @@ import {FC} from 'react'
 import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
 import {useActiveWeb3React} from '../../hooks/web3'
 import {useActiveChannelInfo} from "../../hooks/useActiveChannelInfo";
-import {useRecoilValue} from "recoil";
-import {activeChannelIdAtom} from "../../state/Root";
 import {isAddress, shortenAddress} from "../../utils";
 import {PROCESSING} from "../../constants/misc";
 import {CHAIN_INFO} from "../../constants/chains";
@@ -14,8 +12,7 @@ import {PUSD_ADDRESS} from "../../constants/addresses";
 
 const Information = () => {
   const {chainId} = useActiveWeb3React()
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const {info, status} = useActiveChannelInfo(activeChannelId)
+  const {info, status} = useActiveChannelInfo()
   const miningTokenName = useTokenSymbol(info?.reward ?? "")
 
   return (

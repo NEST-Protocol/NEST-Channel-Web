@@ -4,17 +4,16 @@ import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {useActiveChannelList} from "../../hooks/useActiveChannelList";
-import {useRecoilState} from "recoil";
-import {activeChannelIdAtom, ChannelInfo} from "../../state/Root";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo} from "../../state/Root";
 import {useActiveWeb3React} from "../../hooks/web3";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
-
-  // TODO: get from blockchain
   const channelList = useActiveChannelList()
   const [searchText, setSearchText] = useState('')
   const { account } = useActiveWeb3React()
+  const activeChannelInfo = useRecoilValue(activeChannelInfoAtom)
 
   const handleSearch = (channel: ChannelInfo) => {
     return channel.token0.toLowerCase().includes(searchText) || channel.token1.toLowerCase().includes(searchText)
@@ -28,14 +27,13 @@ const WalletAndTokenList = () => {
         setSearchText(e.target.value)
       }}/>
 
-      <Stack>
+      <Stack overflow={"scroll"} h={activeChannelInfo.governance === account ? "490px" : "414px"}>
         {channelList.filter(handleSearch).map((channel) => (
           <ChannelListItem key={channel.channelId} channelId={channel.channelId} token0={channel.token0}
                            token1={channel.token1}/>
         ))}
       </Stack>
-
-      <Spacer/>
+      <Spacer />
       <Button
         variant={'outline'}
         disabled={!account}

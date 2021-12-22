@@ -71,7 +71,6 @@ export const useCreateChannel = () => {
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
 
-  // Todo: create channel
   const create = async () => {
     setStatus(PROCESSING)
     const args = {
