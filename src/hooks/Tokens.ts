@@ -1,7 +1,8 @@
 import { useTokenContract } from './useContract'
 import { useCallback, useEffect, useState } from 'react'
+import {ZERO_ADDRESS} from "../constants/misc";
+import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
 
-// 传入tokenAddress，输出Token Symbol
 export function useTokenSymbol(validated: string): string {
   const tokenContract = useTokenContract(validated, false)
   const [symbol, setSymbol] = useState('NaN')
@@ -27,3 +28,22 @@ export function useTokenSymbol(validated: string): string {
 
   return symbol
 }
+
+export const useTokenBalance = (tokenAddress: string | undefined, account: string | null | undefined) => {
+  const token = useTokenContract(tokenAddress)
+  const [balance, setBalance] = useState('0')
+
+  const refresh = useCallback(async () => {
+    if (!token) return
+    try {
+      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
+      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+    } catch (e) {
+      setBalance('NaN')
+    }
+  }, [account, token])
+  setImmediate(refresh, 3000)
+
+  return balance
+}
+

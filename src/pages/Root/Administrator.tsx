@@ -17,12 +17,11 @@ import { FC, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../../constants/misc'
 import { useNestOpenPlatformContract, useTokenContract } from '../../hooks/useContract'
 import { NEST_OPEN_PLATFORM_ADDRESS } from '../../constants/addresses'
-import { parseToBigNumber } from '../../utils/bignumberUtil'
-import { useTokenSymbol } from '../../hooks/Tokens'
+import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
+import { useTokenSymbol, useTokenBalance } from '../../hooks/Tokens'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { useBalance } from '../../hooks/useBalance'
 import { CHAIN_INFO } from '../../constants/chains'
-import { useTokenBalance } from '../../hooks/useTokenBalance'
 
 const Administrator = () => {
   const { info, status } = useActiveChannelInfo()
@@ -336,7 +335,7 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
               <NumberInputField />
             </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'}>
-              Balance (myself): {balance} {CHAIN_INFO[chainId ?? 1].nativeSymbol}
+              Balance (myself): {formatNumber(balance)} {CHAIN_INFO[chainId ?? 1].nativeSymbol}
             </Text>
             <Button
               variant={'outline'}

@@ -15,6 +15,7 @@ const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
   const [priceTokenName, setPriceTokenName] = useRecoilState(priceTokenNameAtom)
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
   const quotationTokenName = useTokenSymbol(quotationTokenAddress)
   const miningTokenName = useTokenSymbol(miningTokenAddress)
@@ -23,8 +24,6 @@ const TokenAddress = () => {
     const address = isAddress(value)
     return !address
   }
-
-  console.log(priceTokenUnit)
 
   const checkPriceToken = (value: string) => {
     return !(value === 'PETH' || value === 'PUSD')

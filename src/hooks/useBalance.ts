@@ -3,7 +3,7 @@ import { isAddress } from '../utils'
 import { useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
 import useInterval from '@use-it/interval'
-import { formatNumber, parseToBigNumber } from '../utils/bignumberUtil'
+import { parseToBigNumber } from '../utils/bignumberUtil'
 
 export const useBalance = (uncheckedAddresses: string | null | undefined) => {
   const { library } = useActiveWeb3React()
@@ -20,7 +20,7 @@ export const useBalance = (uncheckedAddresses: string | null | undefined) => {
       if (res === undefined) {
         setBalance('NaN')
       } else {
-        setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+        setBalance(parseToBigNumber(res).shiftedBy(-18).toString())
         setStatus(IDLE)
         setTimeout(() => {
           setStatus(IDLE)
