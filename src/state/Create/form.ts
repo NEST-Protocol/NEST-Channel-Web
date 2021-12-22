@@ -63,7 +63,3 @@ export const statusAtom = atom({
   default: IDLE,
 })
 
-export const txHashAtom = atom({
-  key: 'createPoolTxHash',
-  default: "",
-})
