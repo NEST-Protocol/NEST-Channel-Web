@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import {useRecoilValue} from "recoil";
 import {activeChannelIdAtom} from "../../state/Root";
-import useActiveChannelInfo from "../../hooks/useActiveChannelInfo";
+import {useActiveChannelInfo} from "../../hooks/useActiveChannelInfo";
 import {useActiveWeb3React} from "../../hooks/web3";
 import {FC, useCallback, useState} from "react";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from "../../constants/misc";
@@ -19,7 +19,7 @@ import {NEST_OPEN_PLATFORM_ADDRESS} from "../../constants/addresses";
 import {formatNumber, parseToBigNumber} from "../../utils/bignumberUtil";
 import {useTokenSymbol} from "../../hooks/Tokens";
 import {formatWithUnit, parseToNumber} from "../../utils/unit";
-import {useETHBalance} from "../../hooks/useETHBalance";
+import {useBalance} from "../../hooks/useBalance";
 import {CHAIN_INFO} from "../../constants/chains";
 
 const Administrator = () => {
@@ -282,7 +282,7 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   const {info, refresh: fetchChannelInfo} = useActiveChannelInfo(activeChannelId)
   const [amount, setAmount] = useState('0')
-  const {balance} = useETHBalance(account)
+  const {balance} = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)
 
   const handleWithdrawFee = async () => {

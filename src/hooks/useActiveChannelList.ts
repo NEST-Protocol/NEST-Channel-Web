@@ -6,7 +6,7 @@ import {useActiveWeb3React} from "./web3";
 import {CHANNEL_OPEN_LOGS_FILTER} from "../constants/logs";
 import useInterval from "@use-it/interval";
 
-export const useChannelList = () => {
+export const useActiveChannelList = () => {
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
   const web3 = new Web3(Web3.givenProvider)
   const { chainId ,library } = useActiveWeb3React()
@@ -53,5 +53,3 @@ export const useChannelList = () => {
 
   return channelList
 }
-
-export default useChannelList

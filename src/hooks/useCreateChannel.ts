@@ -19,7 +19,7 @@ import {useActiveWeb3React} from "./web3";
 import {parseToBigNumber} from "../utils/bignumberUtil";
 import {ERROR, PROCESSING, SUCCESS} from "../constants/misc";
 
-const useCreateChannel = () => {
+export const useCreateChannel = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
   const priceTokenName = useRecoilValue(priceTokenNameAtom)
   const miningTokenAddress = useRecoilValue(miningTokenAddressAtom)
@@ -121,5 +121,3 @@ const useCreateChannel = () => {
     status,
   }
 }
-
-export default useCreateChannel

@@ -3,7 +3,7 @@ import {FC, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
 import {useTokenSymbol} from "../../hooks/Tokens";
-import useChannelList from "../../hooks/useChannelList";
+import {useActiveChannelList} from "../../hooks/useActiveChannelList";
 import {useRecoilState} from "recoil";
 import {activeChannelIdAtom, ChannelInfo} from "../../state/Root";
 import {useActiveWeb3React} from "../../hooks/web3";
@@ -12,7 +12,7 @@ const WalletAndTokenList = () => {
   const navigate = useNavigate()
 
   // TODO: get from blockchain
-  const channelList = useChannelList()
+  const channelList = useActiveChannelList()
   const [searchText, setSearchText] = useState('')
   const { account } = useActiveWeb3React()
 

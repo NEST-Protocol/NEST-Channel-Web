@@ -72,5 +72,3 @@ export const useActiveChannelInfo = (channelId: string) => {
 
   return {info, status, refresh}
 }
-
-export default useActiveChannelInfo

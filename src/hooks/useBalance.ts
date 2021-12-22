@@ -5,7 +5,7 @@ import {ERROR, IDLE, IDLE_DELAY, PROCESSING} from '../constants/misc'
 import useInterval from '@use-it/interval'
 import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
 
-export const useETHBalance = (uncheckedAddresses: string | null | undefined) => {
+export const useBalance = (uncheckedAddresses: string | null | undefined) => {
   const {library} = useActiveWeb3React()
   const [balance, setBalance] = useState('0')
   const [status, setStatus] = useState(IDLE)
