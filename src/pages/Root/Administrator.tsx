@@ -110,7 +110,10 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
   const handleApprove = async () => {
     if (!token) return
     try {
-      const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      setApproveStatus(PROCESSING)
+      const tx = await token.approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0), {
+        gasLimit: "30000"
+      })
       const res = await tx.wait()
       switch (res.status) {
         case 0:
@@ -164,11 +167,15 @@ const DepositPopover: FC<PopverProps> = ({...props}) => {
                     disabled={amount === '0'}
                     loadingText={"Approving"}>
               Approve
+              { approveStatus === SUCCESS && (<> Success</>) }
+              { approveStatus === ERROR && (<> Error</>) }
             </Button>
             <Button variant={'outline'} isFullWidth onClick={handleDeposit} isLoading={depositStatus === PROCESSING}
                     disabled={amount === '0'}
                     loadingText={"Depositing"}>
               Deposit
+              { depositStatus === SUCCESS && (<> Success</>) }
+              { depositStatus === ERROR && (<> Error</>) }
             </Button>
           </Stack>
         </PopoverBody>
@@ -202,8 +209,8 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
 
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return
-    setWithdrawStatus(PROCESSING)
     try {
+      setWithdrawStatus(PROCESSING)
       const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
@@ -259,6 +266,8 @@ const WithdrawPopover: FC<PopverProps> = ({...props}) => {
                     disabled={amount === '0'}
                     isLoading={withdrawStatus === PROCESSING}>
               Withdraw
+              { withdrawStatus === SUCCESS && (<> Success</>) }
+              { withdrawStatus === ERROR && (<> Error</>) }
             </Button>
           </Stack>
         </PopoverBody>
@@ -278,8 +287,8 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
 
   const handleWithdrawFee = async () => {
     if (!nestOpenPlatform) return
-    setWithdrawFeeStatus(PROCESSING)
     try {
+      setWithdrawFeeStatus(PROCESSING)
       const tx = await nestOpenPlatform.pay(activeChannelId, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
@@ -334,6 +343,8 @@ const WithdrawFeePopover: FC<PopverProps> = ({...props}) => {
             <Button variant={'outline'} isFullWidth onClick={handleWithdrawFee} isLoading={withdrawFeeStatus === PROCESSING}
                     loadingText={"Withdrawing"} disabled={amount === '0'}>
               Withdraw
+              { withdrawFeeStatus === SUCCESS && (<> Success</>) }
+              { withdrawFeeStatus === ERROR && (<> Error</>) }
             </Button>
           </Stack>
         </PopoverBody>
