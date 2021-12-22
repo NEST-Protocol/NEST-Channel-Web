@@ -21,7 +21,7 @@ const WalletAndTokenList = () => {
   }
 
   return (
-    <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'2xl'} p={'20px'} spacing={'24px'}>
+    <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'20px'} p={'20px'} spacing={'24px'}>
       <Web3Status/>
 
       <Input variant="filled" placeholder="Token Address" onChange={(e)=> {
