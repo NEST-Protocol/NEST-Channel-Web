@@ -28,6 +28,10 @@ jobs:
 
      - name: build
        run: yarn build
+       env:
+         REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
+         REACT_APP_ETHERSCAN_KEY: ${{ secrets.REACT_APP_ETHERSCAN_KEY }}
+         REACT_APP_BSCSCAN_KEY: ${{ secrets.REACT_APP_BSCSCAN_KEY }}
 
      - name: upload artifact
        uses: actions/upload-artifact@v2
@@ -39,10 +43,6 @@ jobs:
    environment: main
    needs: build
    runs-on: ubuntu-latest
-   env:
-     REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
-     REACT_APP_ETHERSCAN_KEY: ${{ secrets.REACT_APP_ETHERSCAN_KEY }}
-     REACT_APP_BSCSCAN_KEY: ${{ secrets.REACT_APP_BSCSCAN_KEY }}
    steps:
      - name: download artifact
        uses: actions/download-artifact@v2
