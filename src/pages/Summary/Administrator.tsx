@@ -10,7 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useRecoilValue } from 'recoil'
-import { activeChannelIdAtom } from '../../state/Root'
+import { activeChannelIdAtom } from '../../state/Summary'
 import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { FC, useCallback, useEffect, useState } from 'react'

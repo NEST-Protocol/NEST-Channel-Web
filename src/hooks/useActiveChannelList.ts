@@ -1,4 +1,4 @@
-import { ChannelInfo, channelListAtom } from '../state/Root'
+import { ChannelInfo, channelListAtom } from '../state/Summary'
 import { useRecoilState } from 'recoil'
 import { useCallback, useEffect } from 'react'
 import Web3 from 'web3'

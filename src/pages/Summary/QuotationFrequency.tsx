@@ -3,7 +3,7 @@ import LineChart from '../../components/LineChart'
 import { useCallback, useEffect, useState } from 'react'
 import useInterval from '@use-it/interval'
 import { useRecoilValue } from 'recoil'
-import { activeChannelIdAtom } from '../../state/Root'
+import { activeChannelIdAtom } from '../../state/Summary'
 
 const QuotationFrequency = () => {
   const [data, setData] = useState([])

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Root from './Root'
+import Summary from './Summary'
 import { Button, Spacer, Stack } from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
@@ -42,7 +42,7 @@ const Content = () => {
   return (
     <Stack background={'rgba(255,255,255, 0.5)'} borderRadius={'20px'} w={'container.xl'} h={'full'}>
       <Routes>
-        <Route path="/" element={<Root />} />
+        <Route path="/" element={<Summary />} />
         <Route path="/create" element={<OpenChanel />} />
         <Route />
       </Routes>

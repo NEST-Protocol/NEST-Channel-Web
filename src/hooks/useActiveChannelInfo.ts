@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { activeChannelIdAtom, activeChannelInfoAtom } from '../state/Root'
+import { activeChannelIdAtom, activeChannelInfoAtom } from '../state/Summary'
 
 type ChannelInfo = {
   channelId: string

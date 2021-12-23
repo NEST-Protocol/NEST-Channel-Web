@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
 import { useActiveChannelList } from '../../hooks/useActiveChannelList'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo } from '../../state/Root'
+import { activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo } from '../../state/Summary'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useToken } from '../../hooks/Tokens'
 
