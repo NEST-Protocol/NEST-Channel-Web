@@ -15,7 +15,7 @@ import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../../constants/misc'
-import { useNestOpenPlatformContract, useTokenContract } from '../../hooks/useContract'
+import { useNestOpenPlatformContract } from '../../hooks/useContract'
 import { NEST_ADDRESS, NEST_OPEN_PLATFORM_ADDRESS } from '../../constants/addresses'
 import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
@@ -54,12 +54,10 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
-  const token = useTokenContract(props.tokenAddress)
   const [amount, setAmount] = useState('0')
   const [depositStatus, setDepositStatus] = useState(IDLE)
-  const [approveStatus, setApproveStatus] = useState(IDLE)
   const { refresh: refreshChannelInfo } = useActiveChannelInfo()
-  const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const { balanceOf, approve, approveStatus, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
 
   const refresh = useCallback(async () => {
@@ -101,37 +99,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   }
 
   const handleApprove = async () => {
-    if (!token) return
-    try {
-      setApproveStatus(PROCESSING)
-      const tx = await token.approve(
-        NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1],
-        parseToBigNumber(amount).shiftedBy(18).toFixed(0),
-        {
-          gasLimit: '30000',
-        }
-      )
-      const res = await tx.wait()
-      switch (res.status) {
-        case 0:
-          setApproveStatus(ERROR)
-          setTimeout(() => {
-            setApproveStatus(IDLE)
-          }, IDLE_DELAY)
-          break
-        case 1:
-          setApproveStatus(SUCCESS)
-          setTimeout(() => {
-            setApproveStatus(IDLE)
-          }, IDLE_DELAY)
-          break
-      }
-    } catch (e) {
-      setApproveStatus(ERROR)
-      setTimeout(() => {
-        setApproveStatus(IDLE)
-      }, IDLE_DELAY)
-    }
+    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toString())
   }
 
   return (

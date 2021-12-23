@@ -4,7 +4,7 @@ import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 
 export const useToken = (tokenAddress: string) => {
-  const contract = useTokenContract(tokenAddress, false)
+  const contract = useTokenContract(tokenAddress, true)
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('NaN')
 
@@ -54,6 +54,7 @@ export const useToken = (tokenAddress: string) => {
           break
       }
     } catch (e) {
+      console.log(e)
       setApproveStatus(ERROR)
       setTimeout(() => {
         setApproveStatus(IDLE)
