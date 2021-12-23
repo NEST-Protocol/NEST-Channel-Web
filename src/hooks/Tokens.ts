@@ -1,25 +1,35 @@
 import { useTokenContract } from './useContract'
-import { useState } from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 
 export const useToken = (tokenAddress: string) => {
   const contract = useTokenContract(tokenAddress, false)
   const [approveStatus, setApproveStatus] = useState(IDLE)
+  const [symbol, setSymbol] = useState('NaN')
 
-  const symbol = async () => {
+  const fetch = useCallback(async () => {
     try {
-      return (await contract?.symbol()) ?? 'NaN'
+      const res = await contract?.symbol()
+      if (res) {
+        setSymbol(res)
+      } else {
+        setSymbol('NaN')
+      }
     } catch (e) {
-      return 'NaN'
+      setSymbol('Error')
     }
-  }
+  }, [contract])
+
+  useEffect(() => {
+    fetch()
+  }, [fetch])
 
   const balanceOf = async (account: string) => {
     try {
       return parseToBigNumber((await contract?.balanceOf(account)) ?? 'NaN').shiftedBy(-18)
     } catch (e) {
-      return 'NaN'
+      return 'Error'
     }
   }
 

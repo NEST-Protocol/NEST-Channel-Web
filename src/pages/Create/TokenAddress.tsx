@@ -8,8 +8,8 @@ import {
   priceTokenUnitAtom,
   quotationTokenAddressAtom,
 } from '../../state/Create/form'
-import { useCallback, useEffect, useState } from 'react'
 import { useToken } from '../../hooks/Tokens'
+import {useEffect} from "react";
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
@@ -17,21 +17,11 @@ const TokenAddress = () => {
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
-  const { symbol: quotationSymbol } = useToken(quotationTokenAddress)
-  const { symbol: miningSymbol } = useToken(miningTokenAddress)
-  const [quotationTokenSymbol, setQuotationTokenSymbol] = useState('')
-  const [miningTokenSymbol, setMiningTokenSymbol] = useState('')
-  const refresh = useCallback(async () => {
-    setQuotationTokenSymbol(await quotationSymbol())
-    setMiningTokenSymbol(await miningSymbol())
-  }, [miningSymbol, quotationSymbol])
+  const { symbol: quotationTokenSymbol } = useToken(quotationTokenAddress)
+  const { symbol: miningTokenSymbol } = useToken(miningTokenAddress)
 
   // @typescript-eslint/no-unused-vars
   console.log(priceTokenUnit)
-
-  useEffect(() => {
-    refresh()
-  }, [refresh])
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)

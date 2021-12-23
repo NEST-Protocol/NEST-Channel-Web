@@ -1,5 +1,5 @@
 import { Stack, Button, Spacer, Input, Text, Divider, Skeleton } from '@chakra-ui/react'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
 import { useActiveChannelList } from '../../hooks/useActiveChannelList'
@@ -62,20 +62,9 @@ type ChannelListItemProps = {
 }
 
 const ChannelListItem: FC<ChannelListItemProps> = ({ ...props }) => {
-  const { symbol: token0Symbol } = useToken(props.token0)
-  const { symbol: token1Symbol } = useToken(props.token1)
-  const [token0, setToken0] = useState('NaN')
-  const [token1, setToken1] = useState('NaN')
+  const { symbol: token0 } = useToken(props.token0)
+  const { symbol: token1 } = useToken(props.token1)
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
-
-  const refresh = useCallback(async () => {
-    setToken0(await token0Symbol())
-    setToken1(await token1Symbol())
-  }, [token0Symbol, token1Symbol])
-
-  useEffect(() => {
-    refresh()
-  }, [refresh])
 
   return (
     <Stack>

@@ -59,14 +59,12 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const { refresh: refreshChannelInfo } = useActiveChannelInfo()
-  const { balanceOf, symbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
-  const [tokenSymbol, setTokenSymbol] = useState('')
 
   const refresh = useCallback(async () => {
     setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
-    setTokenSymbol(await symbol())
-  }, [account, balanceOf, symbol])
+  }, [account, balanceOf])
 
   useEffect(() => {
     refresh()
@@ -202,14 +200,12 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const [amount, setAmount] = useState('0')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
   const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
-  const { balanceOf, symbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
-  const [tokenSymbol, setTokenSymbol] = useState('')
 
   const refresh = useCallback(async () => {
     setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
-    setTokenSymbol(await symbol())
-  }, [account, balanceOf, symbol])
+  }, [account, balanceOf])
 
   useEffect(() => {
     refresh()

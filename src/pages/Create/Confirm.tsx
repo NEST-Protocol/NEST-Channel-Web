@@ -1,5 +1,5 @@
 import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { isAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -27,21 +27,10 @@ const Confirm = () => {
   const quotationFee = useRecoilValue(quotationFeeAtom)
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
-  const { symbol: quotationSymbol } = useToken(quotationTokenAddress)
-  const { symbol: miningSymbol } = useToken(miningTokenAddress)
-  const [quotationTokenSymbol, setQuotationTokenSymbol] = useState('')
-  const [miningTokenSymbol, setMiningTokenSymbol] = useState('')
+  const { symbol: quotationTokenSymbol } = useToken(quotationTokenAddress)
+  const { symbol: miningTokenSymbol } = useToken(miningTokenAddress)
   const [priceTokenAddress, setPriceTokenAddress] = useState('')
   const { chainId } = useActiveWeb3React()
-
-  const refresh = useCallback(async () => {
-    setQuotationTokenSymbol(await quotationSymbol())
-    setMiningTokenSymbol(await miningSymbol())
-  }, [miningSymbol, quotationSymbol])
-
-  useEffect(() => {
-    refresh()
-  }, [refresh])
 
   useEffect(() => {
     if (priceTokenName === 'PETH') {

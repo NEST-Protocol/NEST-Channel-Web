@@ -1,5 +1,5 @@
 import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip } from '@chakra-ui/react'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
@@ -13,16 +13,7 @@ import { useToken } from '../../hooks/Tokens'
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
-  const { symbol } = useToken(info?.reward)
-  const [miningTokenSymbol, setMiningTokenSymbol] = useState('NaN')
-
-  const refresh = useCallback(async () => {
-    setMiningTokenSymbol(await symbol())
-  }, [symbol])
-
-  useEffect(() => {
-    refresh()
-  }, [refresh])
+  const { symbol: miningTokenSymbol } = useToken(info?.reward)
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
@@ -107,16 +98,7 @@ type InformationDetailProps = {
 }
 
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
-  const { symbol } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
-  const [symbolName, setSymbolName] = useState('')
-
-  const refresh = useCallback(async () => {
-    setSymbolName(await symbol())
-  }, [symbol])
-
-  useEffect(() => {
-    refresh()
-  }, [refresh])
+  const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
 
   if (props.value === undefined || props.loading) {
     return (
