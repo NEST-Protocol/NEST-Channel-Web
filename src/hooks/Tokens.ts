@@ -1,5 +1,5 @@
 import { useTokenContract } from './useContract'
-import {useCallback, useEffect, useState} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 

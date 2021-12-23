@@ -9,7 +9,7 @@ import {
   quotationTokenAddressAtom,
 } from '../../state/Create/form'
 import { useToken } from '../../hooks/Tokens'
-import {useEffect} from "react";
+import { useEffect } from 'react'
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
