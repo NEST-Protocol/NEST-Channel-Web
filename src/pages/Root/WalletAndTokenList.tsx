@@ -1,12 +1,12 @@
 import { Stack, Button, Spacer, Input, Text, Divider, Skeleton } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
-import { useTokenSymbol } from '../../hooks/Tokens'
 import { useActiveChannelList } from '../../hooks/useActiveChannelList'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo } from '../../state/Root'
 import { useActiveWeb3React } from '../../hooks/web3'
+import { useToken } from '../../hooks/Tokens'
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
@@ -62,9 +62,20 @@ type ChannelListItemProps = {
 }
 
 const ChannelListItem: FC<ChannelListItemProps> = ({ ...props }) => {
-  const token0 = useTokenSymbol(props.token0)
-  const token1 = useTokenSymbol(props.token1)
+  const { symbol: token0Symbol } = useToken(props.token0)
+  const { symbol: token1Symbol } = useToken(props.token1)
+  const [token0, setToken0] = useState('NaN')
+  const [token1, setToken1] = useState('NaN')
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
+
+  const refresh = useCallback(async () => {
+    setToken0(await token0Symbol())
+    setToken1(await token1Symbol())
+  }, [token0Symbol, token1Symbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   return (
     <Stack>

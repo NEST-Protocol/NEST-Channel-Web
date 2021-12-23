@@ -13,15 +13,15 @@ import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Root'
 import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { FC, useState } from 'react'
-import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../../constants/misc'
+import { FC, useCallback, useEffect, useState } from 'react'
+import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../../constants/misc'
 import { useNestOpenPlatformContract, useTokenContract } from '../../hooks/useContract'
-import { NEST_OPEN_PLATFORM_ADDRESS } from '../../constants/addresses'
+import { NEST_ADDRESS, NEST_OPEN_PLATFORM_ADDRESS } from '../../constants/addresses'
 import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
-import { useTokenSymbol, useTokenBalance } from '../../hooks/Tokens'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { useBalance } from '../../hooks/useBalance'
 import { CHAIN_INFO } from '../../constants/chains'
+import { useToken } from '../../hooks/Tokens'
 
 const Administrator = () => {
   const { info, status } = useActiveChannelInfo()
@@ -55,12 +55,22 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   const token = useTokenContract(props.tokenAddress)
-  const balance = useTokenBalance(props.tokenAddress, account)
   const [amount, setAmount] = useState('0')
-  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? '')
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const { refresh: refreshChannelInfo } = useActiveChannelInfo()
+  const { balanceOf, symbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const [balance, setBalance] = useState('')
+  const [tokenSymbol, setTokenSymbol] = useState('')
+
+  const refresh = useCallback(async () => {
+    setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
+    setTokenSymbol(await symbol())
+  }, [account, balanceOf, symbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   const handleDeposit = async () => {
     if (!nestOpenPlatform) return
@@ -190,10 +200,20 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
   const [amount, setAmount] = useState('0')
-  const balance = useTokenBalance(props.tokenAddress, account)
-  const tokenSymbol = useTokenSymbol(props.tokenAddress ?? '')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
   const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
+  const { balanceOf, symbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const [balance, setBalance] = useState('')
+  const [tokenSymbol, setTokenSymbol] = useState('')
+
+  const refresh = useCallback(async () => {
+    setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
+    setTokenSymbol(await symbol())
+  }, [account, balanceOf, symbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return

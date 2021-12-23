@@ -2,14 +2,14 @@ import { Input, Stack, Text } from '@chakra-ui/react'
 import { isAddress } from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
 import { useRecoilState } from 'recoil'
-import { useTokenSymbol } from '../../hooks/Tokens'
 import {
   miningTokenAddressAtom,
   priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationTokenAddressAtom,
 } from '../../state/Create/form'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useToken } from '../../hooks/Tokens'
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
@@ -17,8 +17,21 @@ const TokenAddress = () => {
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
-  const quotationTokenName = useTokenSymbol(quotationTokenAddress)
-  const miningTokenName = useTokenSymbol(miningTokenAddress)
+  const { symbol: quotationSymbol } = useToken(quotationTokenAddress)
+  const { symbol: miningSymbol } = useToken(miningTokenAddress)
+  const [quotationTokenSymbol, setQuotationTokenSymbol] = useState('')
+  const [miningTokenSymbol, setMiningTokenSymbol] = useState('')
+  const refresh = useCallback(async () => {
+    setQuotationTokenSymbol(await quotationSymbol())
+    setMiningTokenSymbol(await miningSymbol())
+  }, [miningSymbol, quotationSymbol])
+
+  // @typescript-eslint/no-unused-vars
+  console.log(priceTokenUnit)
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   const checkAddress = (value: string) => {
     const address = isAddress(value)
@@ -37,7 +50,7 @@ const TokenAddress = () => {
     <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       <Stack id="quotation token address" spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
-          Quotation Token ({quotationTokenName}):
+          Quotation Token ({quotationTokenSymbol}):
         </Text>
         <Input
           variant={'filled'}
@@ -64,7 +77,7 @@ const TokenAddress = () => {
 
       <Stack spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
-          Mining Token ({miningTokenName}):
+          Mining Token ({miningTokenSymbol}):
         </Text>
         <Input
           variant={'filled'}

@@ -12,319 +12,173 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import { FunctionFragment, Result } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+} from 'ethers'
+import { FunctionFragment, Result } from '@ethersproject/abi'
+import { Listener, Provider } from '@ethersproject/providers'
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common'
 
 export interface NestGovernanceInterface extends utils.Interface {
   functions: {
-    "_governance()": FunctionFragment;
-    "checkAddress(string)": FunctionFragment;
-    "checkGovernance(address,uint256)": FunctionFragment;
-    "checkOwners(address)": FunctionFragment;
-    "getBuiltinAddress()": FunctionFragment;
-    "getGovernance(address)": FunctionFragment;
-    "getNTokenControllerAddress()": FunctionFragment;
-    "getNTokenMiningAddress()": FunctionFragment;
-    "getNestLedgerAddress()": FunctionFragment;
-    "getNestMiningAddress()": FunctionFragment;
-    "getNestNodeAddress()": FunctionFragment;
-    "getNestPriceFacadeAddress()": FunctionFragment;
-    "getNestQueryAddress()": FunctionFragment;
-    "getNestTokenAddress()": FunctionFragment;
-    "getNestVoteAddress()": FunctionFragment;
-    "getNnIncomeAddress()": FunctionFragment;
-    "initialize(address)": FunctionFragment;
-    "migrate(address,uint256)": FunctionFragment;
-    "registerAddress(string,address)": FunctionFragment;
-    "setBuiltinAddress(address,address,address,address,address,address,address,address,address,address)": FunctionFragment;
-    "setGovernance(address,uint256)": FunctionFragment;
-    "update(address)": FunctionFragment;
-  };
+    '_governance()': FunctionFragment
+    'checkAddress(string)': FunctionFragment
+    'checkGovernance(address,uint256)': FunctionFragment
+    'checkOwners(address)': FunctionFragment
+    'getBuiltinAddress()': FunctionFragment
+    'getGovernance(address)': FunctionFragment
+    'getNTokenControllerAddress()': FunctionFragment
+    'getNTokenMiningAddress()': FunctionFragment
+    'getNestLedgerAddress()': FunctionFragment
+    'getNestMiningAddress()': FunctionFragment
+    'getNestNodeAddress()': FunctionFragment
+    'getNestPriceFacadeAddress()': FunctionFragment
+    'getNestQueryAddress()': FunctionFragment
+    'getNestTokenAddress()': FunctionFragment
+    'getNestVoteAddress()': FunctionFragment
+    'getNnIncomeAddress()': FunctionFragment
+    'initialize(address)': FunctionFragment
+    'migrate(address,uint256)': FunctionFragment
+    'registerAddress(string,address)': FunctionFragment
+    'setBuiltinAddress(address,address,address,address,address,address,address,address,address,address)': FunctionFragment
+    'setGovernance(address,uint256)': FunctionFragment
+    'update(address)': FunctionFragment
+  }
 
+  encodeFunctionData(functionFragment: '_governance', values?: undefined): string
+  encodeFunctionData(functionFragment: 'checkAddress', values: [string]): string
+  encodeFunctionData(functionFragment: 'checkGovernance', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'checkOwners', values: [string]): string
+  encodeFunctionData(functionFragment: 'getBuiltinAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getGovernance', values: [string]): string
+  encodeFunctionData(functionFragment: 'getNTokenControllerAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNTokenMiningAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestLedgerAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestMiningAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestNodeAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestPriceFacadeAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestQueryAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestTokenAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNestVoteAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'getNnIncomeAddress', values?: undefined): string
+  encodeFunctionData(functionFragment: 'initialize', values: [string]): string
+  encodeFunctionData(functionFragment: 'migrate', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'registerAddress', values: [string, string]): string
   encodeFunctionData(
-    functionFragment: "_governance",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "checkAddress",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "checkGovernance",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "checkOwners", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "getBuiltinAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getGovernance",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNTokenControllerAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNTokenMiningAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestLedgerAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestMiningAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestNodeAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestPriceFacadeAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestQueryAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestTokenAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNestVoteAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNnIncomeAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "migrate",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registerAddress",
-    values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setBuiltinAddress",
-    values: [
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setGovernance",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "update", values: [string]): string;
+    functionFragment: 'setBuiltinAddress',
+    values: [string, string, string, string, string, string, string, string, string, string]
+  ): string
+  encodeFunctionData(functionFragment: 'setGovernance', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'update', values: [string]): string
 
-  decodeFunctionResult(
-    functionFragment: "_governance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkGovernance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkOwners",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBuiltinAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getGovernance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNTokenControllerAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNTokenMiningAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestLedgerAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestMiningAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestNodeAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestPriceFacadeAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestQueryAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestTokenAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNestVoteAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNnIncomeAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "migrate", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "registerAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBuiltinAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setGovernance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "update", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_governance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'checkAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'checkGovernance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'checkOwners', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getBuiltinAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getGovernance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNTokenControllerAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNTokenMiningAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestLedgerAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestMiningAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestNodeAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestPriceFacadeAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestQueryAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestTokenAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNestVoteAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getNnIncomeAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'migrate', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'registerAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setBuiltinAddress', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setGovernance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'update', data: BytesLike): Result
 
-  events: {};
+  events: {}
 }
 
 export interface NestGovernance extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this
+  attach(addressOrName: string): this
+  deployed(): Promise<this>
 
-  interface: NestGovernanceInterface;
+  interface: NestGovernanceInterface
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>;
+  ): Promise<Array<TEvent>>
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>
+  listeners(eventName?: string): Array<Listener>
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this
+  removeAllListeners(eventName?: string): this
+  off: OnEvent<this>
+  on: OnEvent<this>
+  once: OnEvent<this>
+  removeListener: OnEvent<this>
 
   functions: {
-    _governance(overrides?: CallOverrides): Promise<[string]>;
+    _governance(overrides?: CallOverrides): Promise<[string]>
 
-    checkAddress(key: string, overrides?: CallOverrides): Promise<[string]>;
+    checkAddress(key: string, overrides?: CallOverrides): Promise<[string]>
 
-    checkGovernance(
-      addr: string,
-      flag: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    checkGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>
 
-    checkOwners(addr: string, overrides?: CallOverrides): Promise<[boolean]>;
+    checkOwners(addr: string, overrides?: CallOverrides): Promise<[boolean]>
 
-    getBuiltinAddress(
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string
-      ] & {
-        nestTokenAddress: string;
-        nestNodeAddress: string;
-        nestLedgerAddress: string;
-        nestMiningAddress: string;
-        ntokenMiningAddress: string;
-        nestPriceFacadeAddress: string;
-        nestVoteAddress: string;
-        nestQueryAddress: string;
-        nnIncomeAddress: string;
-        nTokenControllerAddress: string;
+    getBuiltinAddress(overrides?: CallOverrides): Promise<
+      [string, string, string, string, string, string, string, string, string, string] & {
+        nestTokenAddress: string
+        nestNodeAddress: string
+        nestLedgerAddress: string
+        nestMiningAddress: string
+        ntokenMiningAddress: string
+        nestPriceFacadeAddress: string
+        nestVoteAddress: string
+        nestQueryAddress: string
+        nnIncomeAddress: string
+        nTokenControllerAddress: string
       }
-    >;
+    >
 
-    getGovernance(
-      addr: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getGovernance(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    getNTokenControllerAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNTokenControllerAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNTokenMiningAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNTokenMiningAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestLedgerAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestLedgerAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestMiningAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestMiningAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestNodeAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestNodeAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestQueryAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestQueryAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestTokenAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestTokenAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNestVoteAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNestVoteAddress(overrides?: CallOverrides): Promise<[string]>
 
-    getNnIncomeAddress(overrides?: CallOverrides): Promise<[string]>;
+    getNnIncomeAddress(overrides?: CallOverrides): Promise<[string]>
 
     initialize(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    ): Promise<ContractTransaction>
 
     migrate(
       tokenAddress: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    ): Promise<ContractTransaction>
 
     registerAddress(
       key: string,
       addr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    ): Promise<ContractTransaction>
 
     setBuiltinAddress(
       nestTokenAddress: string,
@@ -338,98 +192,81 @@ export interface NestGovernance extends BaseContract {
       nnIncomeAddress: string,
       nTokenControllerAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    ): Promise<ContractTransaction>
 
     setGovernance(
       addr: string,
       flag: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    ): Promise<ContractTransaction>
 
     update(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-  };
+    ): Promise<ContractTransaction>
+  }
 
-  _governance(overrides?: CallOverrides): Promise<string>;
+  _governance(overrides?: CallOverrides): Promise<string>
 
-  checkAddress(key: string, overrides?: CallOverrides): Promise<string>;
+  checkAddress(key: string, overrides?: CallOverrides): Promise<string>
 
-  checkGovernance(
-    addr: string,
-    flag: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  checkGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<boolean>
 
-  checkOwners(addr: string, overrides?: CallOverrides): Promise<boolean>;
+  checkOwners(addr: string, overrides?: CallOverrides): Promise<boolean>
 
-  getBuiltinAddress(
-    overrides?: CallOverrides
-  ): Promise<
-    [
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string
-    ] & {
-      nestTokenAddress: string;
-      nestNodeAddress: string;
-      nestLedgerAddress: string;
-      nestMiningAddress: string;
-      ntokenMiningAddress: string;
-      nestPriceFacadeAddress: string;
-      nestVoteAddress: string;
-      nestQueryAddress: string;
-      nnIncomeAddress: string;
-      nTokenControllerAddress: string;
+  getBuiltinAddress(overrides?: CallOverrides): Promise<
+    [string, string, string, string, string, string, string, string, string, string] & {
+      nestTokenAddress: string
+      nestNodeAddress: string
+      nestLedgerAddress: string
+      nestMiningAddress: string
+      ntokenMiningAddress: string
+      nestPriceFacadeAddress: string
+      nestVoteAddress: string
+      nestQueryAddress: string
+      nnIncomeAddress: string
+      nTokenControllerAddress: string
     }
-  >;
+  >
 
-  getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>
 
-  getNTokenControllerAddress(overrides?: CallOverrides): Promise<string>;
+  getNTokenControllerAddress(overrides?: CallOverrides): Promise<string>
 
-  getNTokenMiningAddress(overrides?: CallOverrides): Promise<string>;
+  getNTokenMiningAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestLedgerAddress(overrides?: CallOverrides): Promise<string>;
+  getNestLedgerAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestMiningAddress(overrides?: CallOverrides): Promise<string>;
+  getNestMiningAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestNodeAddress(overrides?: CallOverrides): Promise<string>;
+  getNestNodeAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<string>;
+  getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestQueryAddress(overrides?: CallOverrides): Promise<string>;
+  getNestQueryAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestTokenAddress(overrides?: CallOverrides): Promise<string>;
+  getNestTokenAddress(overrides?: CallOverrides): Promise<string>
 
-  getNestVoteAddress(overrides?: CallOverrides): Promise<string>;
+  getNestVoteAddress(overrides?: CallOverrides): Promise<string>
 
-  getNnIncomeAddress(overrides?: CallOverrides): Promise<string>;
+  getNnIncomeAddress(overrides?: CallOverrides): Promise<string>
 
   initialize(
     nestGovernanceAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   migrate(
     tokenAddress: string,
     value: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   registerAddress(
     key: string,
     addr: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   setBuiltinAddress(
     nestTokenAddress: string,
@@ -443,98 +280,70 @@ export interface NestGovernance extends BaseContract {
     nnIncomeAddress: string,
     nTokenControllerAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   setGovernance(
     addr: string,
     flag: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   update(
     nestGovernanceAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  ): Promise<ContractTransaction>
 
   callStatic: {
-    _governance(overrides?: CallOverrides): Promise<string>;
+    _governance(overrides?: CallOverrides): Promise<string>
 
-    checkAddress(key: string, overrides?: CallOverrides): Promise<string>;
+    checkAddress(key: string, overrides?: CallOverrides): Promise<string>
 
-    checkGovernance(
-      addr: string,
-      flag: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    checkGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<boolean>
 
-    checkOwners(addr: string, overrides?: CallOverrides): Promise<boolean>;
+    checkOwners(addr: string, overrides?: CallOverrides): Promise<boolean>
 
-    getBuiltinAddress(
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string
-      ] & {
-        nestTokenAddress: string;
-        nestNodeAddress: string;
-        nestLedgerAddress: string;
-        nestMiningAddress: string;
-        ntokenMiningAddress: string;
-        nestPriceFacadeAddress: string;
-        nestVoteAddress: string;
-        nestQueryAddress: string;
-        nnIncomeAddress: string;
-        nTokenControllerAddress: string;
+    getBuiltinAddress(overrides?: CallOverrides): Promise<
+      [string, string, string, string, string, string, string, string, string, string] & {
+        nestTokenAddress: string
+        nestNodeAddress: string
+        nestLedgerAddress: string
+        nestMiningAddress: string
+        ntokenMiningAddress: string
+        nestPriceFacadeAddress: string
+        nestVoteAddress: string
+        nestQueryAddress: string
+        nnIncomeAddress: string
+        nTokenControllerAddress: string
       }
-    >;
+    >
 
-    getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getNTokenControllerAddress(overrides?: CallOverrides): Promise<string>;
+    getNTokenControllerAddress(overrides?: CallOverrides): Promise<string>
 
-    getNTokenMiningAddress(overrides?: CallOverrides): Promise<string>;
+    getNTokenMiningAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestLedgerAddress(overrides?: CallOverrides): Promise<string>;
+    getNestLedgerAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestMiningAddress(overrides?: CallOverrides): Promise<string>;
+    getNestMiningAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestNodeAddress(overrides?: CallOverrides): Promise<string>;
+    getNestNodeAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<string>;
+    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestQueryAddress(overrides?: CallOverrides): Promise<string>;
+    getNestQueryAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestTokenAddress(overrides?: CallOverrides): Promise<string>;
+    getNestTokenAddress(overrides?: CallOverrides): Promise<string>
 
-    getNestVoteAddress(overrides?: CallOverrides): Promise<string>;
+    getNestVoteAddress(overrides?: CallOverrides): Promise<string>
 
-    getNnIncomeAddress(overrides?: CallOverrides): Promise<string>;
+    getNnIncomeAddress(overrides?: CallOverrides): Promise<string>
 
-    initialize(
-      nestGovernanceAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    initialize(nestGovernanceAddress: string, overrides?: CallOverrides): Promise<void>
 
-    migrate(
-      tokenAddress: string,
-      value: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    migrate(tokenAddress: string, value: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    registerAddress(
-      key: string,
-      addr: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    registerAddress(key: string, addr: string, overrides?: CallOverrides): Promise<void>
 
     setBuiltinAddress(
       nestTokenAddress: string,
@@ -548,75 +357,64 @@ export interface NestGovernance extends BaseContract {
       nnIncomeAddress: string,
       nTokenControllerAddress: string,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    setGovernance(
-      addr: string,
-      flag: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    update(
-      nestGovernanceAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-  };
+    update(nestGovernanceAddress: string, overrides?: CallOverrides): Promise<void>
+  }
 
-  filters: {};
+  filters: {}
 
   estimateGas: {
-    _governance(overrides?: CallOverrides): Promise<BigNumber>;
+    _governance(overrides?: CallOverrides): Promise<BigNumber>
 
-    checkAddress(key: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkAddress(key: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    checkGovernance(
-      addr: string,
-      flag: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    checkGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    checkOwners(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkOwners(addr: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getBuiltinAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getBuiltinAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getGovernance(addr: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getNTokenControllerAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNTokenControllerAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNTokenMiningAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNTokenMiningAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestLedgerAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestLedgerAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestMiningAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestMiningAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestNodeAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestNodeAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestQueryAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestQueryAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestTokenAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestTokenAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNestVoteAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNestVoteAddress(overrides?: CallOverrides): Promise<BigNumber>
 
-    getNnIncomeAddress(overrides?: CallOverrides): Promise<BigNumber>;
+    getNnIncomeAddress(overrides?: CallOverrides): Promise<BigNumber>
 
     initialize(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
     migrate(
       tokenAddress: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
     registerAddress(
       key: string,
       addr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
     setBuiltinAddress(
       nestTokenAddress: string,
@@ -630,102 +428,69 @@ export interface NestGovernance extends BaseContract {
       nnIncomeAddress: string,
       nTokenControllerAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
     setGovernance(
       addr: string,
       flag: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
     update(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-  };
+    ): Promise<BigNumber>
+  }
 
   populateTransaction: {
-    _governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    _governance(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    checkAddress(
-      key: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    checkAddress(key: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    checkGovernance(
-      addr: string,
-      flag: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    checkGovernance(addr: string, flag: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    checkOwners(
-      addr: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    checkOwners(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getBuiltinAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBuiltinAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getGovernance(
-      addr: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getGovernance(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNTokenControllerAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNTokenControllerAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNTokenMiningAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNTokenMiningAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestLedgerAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestLedgerAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestMiningAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestMiningAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestNodeAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestNodeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestPriceFacadeAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestPriceFacadeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestQueryAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestQueryAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestTokenAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestTokenAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNestVoteAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNestVoteAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getNnIncomeAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getNnIncomeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     initialize(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    ): Promise<PopulatedTransaction>
 
     migrate(
       tokenAddress: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    ): Promise<PopulatedTransaction>
 
     registerAddress(
       key: string,
       addr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    ): Promise<PopulatedTransaction>
 
     setBuiltinAddress(
       nestTokenAddress: string,
@@ -739,17 +504,17 @@ export interface NestGovernance extends BaseContract {
       nnIncomeAddress: string,
       nTokenControllerAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    ): Promise<PopulatedTransaction>
 
     setGovernance(
       addr: string,
       flag: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    ): Promise<PopulatedTransaction>
 
     update(
       nestGovernanceAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-  };
+    ): Promise<PopulatedTransaction>
+  }
 }

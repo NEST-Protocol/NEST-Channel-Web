@@ -1,5 +1,5 @@
 import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { isAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -14,9 +14,9 @@ import {
   quotationTokenAddressAtom,
   standardOutputAtom,
 } from '../../state/Create/form'
-import { useTokenSymbol } from '../../hooks/Tokens'
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../../constants/addresses'
 import { CHAIN_INFO } from '../../constants/chains'
+import { useToken } from '../../hooks/Tokens'
 
 const Confirm = () => {
   const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
@@ -27,11 +27,21 @@ const Confirm = () => {
   const quotationFee = useRecoilValue(quotationFeeAtom)
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
-
-  const quotationTokenName = useTokenSymbol(quotationTokenAddress)
-  const miningTokenName = useTokenSymbol(miningTokenAddress)
+  const { symbol: quotationSymbol } = useToken(quotationTokenAddress)
+  const { symbol: miningSymbol } = useToken(miningTokenAddress)
+  const [quotationTokenSymbol, setQuotationTokenSymbol] = useState('')
+  const [miningTokenSymbol, setMiningTokenSymbol] = useState('')
   const [priceTokenAddress, setPriceTokenAddress] = useState('')
   const { chainId } = useActiveWeb3React()
+
+  const refresh = useCallback(async () => {
+    setQuotationTokenSymbol(await quotationSymbol())
+    setMiningTokenSymbol(await miningSymbol())
+  }, [miningSymbol, quotationSymbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   useEffect(() => {
     if (priceTokenName === 'PETH') {
@@ -54,13 +64,13 @@ const Confirm = () => {
         isToken
       />
       <ConfirmDetail
-        title={`Quotation Token (${quotationTokenName})`}
+        title={`Quotation Token (${quotationTokenSymbol})`}
         value={quotationTokenAddress === '' ? 'NaN' : quotationTokenAddress}
         link={getExplorerLink(chainId || 1, quotationTokenAddress, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
-        title={`Mining Token (${miningTokenName})`}
+        title={`Mining Token (${miningTokenSymbol})`}
         value={miningTokenAddress === '' ? 'NaN' : miningTokenAddress}
         link={getExplorerLink(chainId || 1, miningTokenAddress, ExplorerDataType.TOKEN)}
         isToken

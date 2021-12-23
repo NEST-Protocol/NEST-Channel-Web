@@ -40,12 +40,7 @@ const Header = () => {
 
 const Content = () => {
   return (
-    <Stack
-      background={'rgba(255,255,255, 0.5)'}
-      borderRadius={'20px'}
-      w={'container.xl'}
-      h={'full'}
-    >
+    <Stack background={'rgba(255,255,255, 0.5)'} borderRadius={'20px'} w={'container.xl'} h={'full'}>
       <Routes>
         <Route path="/" element={<Root />} />
         <Route path="/create" element={<OpenChanel />} />

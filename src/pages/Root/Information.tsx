@@ -1,19 +1,28 @@
 import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
 import { isAddress, shortenAddress } from '../../utils'
 import { PROCESSING } from '../../constants/misc'
 import { CHAIN_INFO } from '../../constants/chains'
-import { useTokenSymbol } from '../../hooks/Tokens'
 import { formatNumber } from '../../utils/bignumberUtil'
 import { PUSD_ADDRESS } from '../../constants/addresses'
+import { useToken } from '../../hooks/Tokens'
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
-  const miningTokenName = useTokenSymbol(info?.reward ?? '')
+  const { symbol } = useToken(info?.reward)
+  const [miningTokenSymbol, setMiningTokenSymbol] = useState('NaN')
+
+  const refresh = useCallback(async () => {
+    setMiningTokenSymbol(await symbol())
+  }, [symbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
@@ -34,13 +43,13 @@ const Information = () => {
         <InformationDetail
           title={'Standard Output'}
           value={formatNumber(info?.rewardPerBlock)}
-          unit={miningTokenName + '/Block'}
+          unit={miningTokenSymbol + '/Block'}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Total Mining Token'}
           value={formatNumber(info?.vault)}
-          unit={miningTokenName}
+          unit={miningTokenSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail
@@ -98,7 +107,16 @@ type InformationDetailProps = {
 }
 
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
-  const tokenName = useTokenSymbol(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
+  const { symbol } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
+  const [symbolName, setSymbolName] = useState('')
+
+  const refresh = useCallback(async () => {
+    setSymbolName(await symbol())
+  }, [symbol])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
 
   if (props.value === undefined || props.loading) {
     return (
@@ -129,7 +147,7 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
         </Text>
         <Spacer />
         {props.link ? (
-          <Tooltip label={tokenName} bg={'white'} borderRadius={'full'} color={'black'}>
+          <Tooltip label={symbolName} bg={'white'} borderRadius={'full'} color={'black'}>
             <Link href={props.link} isExternal color={'link.500'} fontWeight={'bold'}>
               {shortenAddress(props.value.toString())} {props.unit}
             </Link>

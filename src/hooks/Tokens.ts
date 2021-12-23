@@ -1,49 +1,60 @@
 import { useTokenContract } from './useContract'
-import { useCallback, useEffect, useState } from 'react'
-import {ZERO_ADDRESS} from "../constants/misc";
-import {formatNumber, parseToBigNumber} from "../utils/bignumberUtil";
+import { useState } from 'react'
+import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../constants/misc'
+import { parseToBigNumber } from '../utils/bignumberUtil'
 
-export function useTokenSymbol(validated: string): string {
-  const tokenContract = useTokenContract(validated, false)
-  const [symbol, setSymbol] = useState('NaN')
+export const useToken = (tokenAddress: string) => {
+  const contract = useTokenContract(tokenAddress, false)
+  const [approveStatus, setApproveStatus] = useState(IDLE)
 
-  const refresh = useCallback(() => {
-    if (!validated) {
-      setSymbol('NaN')
-    }
-
-    tokenContract
-      ?.symbol()
-      .then((res) => {
-        setSymbol(res)
-      })
-      .catch((_) => {
-        setSymbol('Error!')
-      })
-  }, [tokenContract, validated])
-
-  useEffect(() => {
-    refresh()
-  }, [refresh, tokenContract, validated])
-
-  return symbol
-}
-
-export const useTokenBalance = (tokenAddress: string | undefined, account: string | null | undefined) => {
-  const token = useTokenContract(tokenAddress)
-  const [balance, setBalance] = useState('0')
-
-  const refresh = useCallback(async () => {
-    if (!token) return
+  const symbol = async () => {
     try {
-      const res = await token.balanceOf(account ?? ZERO_ADDRESS)
-      setBalance(formatNumber(parseToBigNumber(res).shiftedBy(-18)))
+      return (await contract?.symbol()) ?? 'NaN'
     } catch (e) {
-      setBalance('NaN')
+      return 'NaN'
     }
-  }, [account, token])
-  setImmediate(refresh, 3000)
+  }
 
-  return balance
+  const balanceOf = async (account: string) => {
+    try {
+      return parseToBigNumber((await contract?.balanceOf(account)) ?? 'NaN').shiftedBy(-18)
+    } catch (e) {
+      return 'NaN'
+    }
+  }
+
+  const approve = async (spender: string, value: string) => {
+    try {
+      setApproveStatus(PROCESSING)
+      const tx = await contract?.approve(spender, value)
+      if (!tx) return
+      const res = await tx.wait()
+      switch (res.status) {
+        case 0:
+          setApproveStatus(ERROR)
+          setTimeout(() => {
+            setApproveStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+        case 1:
+          setApproveStatus(SUCCESS)
+          setTimeout(() => {
+            setApproveStatus(IDLE)
+          }, IDLE_DELAY)
+          break
+      }
+    } catch (e) {
+      setApproveStatus(ERROR)
+      setTimeout(() => {
+        setApproveStatus(IDLE)
+      }, IDLE_DELAY)
+    }
+  }
+
+  return {
+    symbol,
+    balanceOf,
+    approve,
+    approveStatus,
+  }
 }
-
