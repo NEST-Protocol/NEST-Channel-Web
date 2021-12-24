@@ -22,6 +22,7 @@ import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { useBalance } from '../../hooks/useBalance'
 import { CHAIN_INFO } from '../../constants/chains'
 import { useToken } from '../../hooks/Tokens'
+import BigNumber from "bignumber.js";
 
 const Administrator = () => {
   const { info, status } = useActiveChannelInfo()
@@ -76,8 +77,14 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
     if (!nestOpenPlatform) return
     setDepositStatus(PROCESSING)
     try {
+      let value = new BigNumber(0)
+      if (props.tokenAddress === ZERO_ADDRESS) {
+        value = parseToBigNumber(amount).shiftedBy(18)
+      }
       //  function increase(uint channelId, uint96 vault) external payable;
-      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0), {
+        value: value.toFixed(0)
+      })
       const res = await tx.wait()
       switch (res.status) {
         case 0:
