@@ -4,8 +4,10 @@ import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from '../con
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import {CHAIN_INFO} from "../constants/chains";
 import {useActiveWeb3React} from "./web3";
+import BigNumber from "bignumber.js";
 
 export const useToken = (tokenAddress: string) => {
+  const { library } = useActiveWeb3React()
   const contract = useTokenContract(tokenAddress, true)
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('NaN')
@@ -33,6 +35,10 @@ export const useToken = (tokenAddress: string) => {
   }, [fetch])
 
   const balanceOf = async (account: string) => {
+    if (tokenAddress === ZERO_ADDRESS) {
+      return parseToBigNumber(await library?.getBalance(account) ?? (new BigNumber(NaN))).shiftedBy(-18)
+    }
+
     try {
       return parseToBigNumber((await contract?.balanceOf(account)) ?? 'NaN').shiftedBy(-18)
     } catch (e) {

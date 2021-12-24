@@ -135,18 +135,20 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={'center'}>
               Balance (myself): {balance} {tokenSymbol}
             </Text>
-            <Button
-              variant={'outline'}
-              isFullWidth
-              onClick={handleApprove}
-              isLoading={approveStatus === PROCESSING}
-              disabled={amount === '0'}
-              loadingText={'Approving'}
-            >
-              Approve
-              {approveStatus === SUCCESS && <> Success</>}
-              {approveStatus === ERROR && <> Error</>}
-            </Button>
+            { props.tokenAddress !== ZERO_ADDRESS && (
+              <Button
+                variant={'outline'}
+                isFullWidth
+                onClick={handleApprove}
+                isLoading={approveStatus === PROCESSING}
+                disabled={amount === '0'}
+                loadingText={'Approving'}
+              >
+                Approve
+                {approveStatus === SUCCESS && <> Success</>}
+                {approveStatus === ERROR && <> Error</>}
+              </Button>
+            ) }
             <Button
               variant={'outline'}
               isFullWidth
