@@ -1,6 +1,6 @@
 import { useTokenContract } from './useContract'
 import { useCallback, useEffect, useState } from 'react'
-import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS } from '../constants/misc'
+import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 
 export const useToken = (tokenAddress: string) => {
@@ -9,6 +9,10 @@ export const useToken = (tokenAddress: string) => {
   const [symbol, setSymbol] = useState('NaN')
 
   const fetch = useCallback(async () => {
+    if (tokenAddress === ZERO_ADDRESS) {
+      setSymbol('ETH')
+      return
+    }
     try {
       const res = await contract?.symbol()
       if (res) {
@@ -19,7 +23,7 @@ export const useToken = (tokenAddress: string) => {
     } catch (e) {
       setSymbol('Error')
     }
-  }, [contract])
+  }, [contract, tokenAddress])
 
   useEffect(() => {
     fetch()
