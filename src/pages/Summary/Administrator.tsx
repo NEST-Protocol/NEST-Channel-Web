@@ -99,7 +99,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   }
 
   const handleApprove = async () => {
-    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toString())
+    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
   }
 
   return (
