@@ -79,17 +79,9 @@ export const useCreateChannel = () => {
 
   const create = async () => {
     setStatus(PROCESSING)
-    const args = {
-      // 计价代币地址 address
-      token0: priceTokenAddress,
-      // 计价单位 uint96
-      unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
-      // 报价代币地址 address
-      token1: quotationTokenAddress,
+    const config = {
       // 标准出矿量 uint96
       rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
-      // 出矿代币地址 address
-      reward: miningTokenAddress,
       // postFee uint16
       postFeeUnit: parseToBigNumber(quotationFee).shiftedBy(4).toFixed(0),
       // singleFee uint16
@@ -98,12 +90,20 @@ export const useCreateChannel = () => {
       reductionRate: parseToBigNumber(attenuationFactor).shiftedBy(2).toFixed(0),
     }
 
-    console.log(args)
+    const args = {
+      // 计价代币地址 address
+      token0: priceTokenAddress,
+      // 计价单位 uint96
+      unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
+      // 出矿代币地址 address
+      reward: miningTokenAddress,
+      // 报价代币地址 address
+      token1: quotationTokenAddress,
+    }
+
     try {
       if (nestOpenPlatform) {
-        const tx = await nestOpenPlatform.open(args, {
-          gasLimit: 1000000,
-        })
+        const tx = await nestOpenPlatform.open(args.token0, args.unit, args.reward, args.token1, config)
         const res = await tx.wait()
         switch (res.status) {
           case 0:

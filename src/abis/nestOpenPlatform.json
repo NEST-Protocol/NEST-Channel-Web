@@ -701,99 +701,6 @@
         "internalType": "uint256",
         "name": "channelId",
         "type": "uint256"
-      }
-    ],
-    "name": "latestPriceAndTriggeredPriceInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "latestPriceBlockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latestPriceValue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceBlockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceValue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredAvgPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredSigmaSQ",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "payback",
-        "type": "address"
-      }
-    ],
-    "name": "latestPriceAndTriggeredPriceInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "latestPriceBlockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latestPriceValue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceBlockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceValue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredAvgPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredSigmaSQ",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
-        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -877,17 +784,39 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "channelId",
+        "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint96",
+            "name": "rewardPerBlock",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint16",
+            "name": "postFeeUnit",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "singleFee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reductionRate",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct INestOpenMining.ChannelConfig",
+        "name": "config",
+        "type": "tuple"
       }
     ],
-    "name": "migrate",
+    "name": "modify",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -895,31 +824,31 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "token0",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "unit",
+        "type": "uint96"
+      },
+      {
+        "internalType": "address",
+        "name": "reward",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token1",
+        "type": "address"
+      },
+      {
         "components": [
-          {
-            "internalType": "address",
-            "name": "token0",
-            "type": "address"
-          },
-          {
-            "internalType": "uint96",
-            "name": "unit",
-            "type": "uint96"
-          },
-          {
-            "internalType": "address",
-            "name": "token1",
-            "type": "address"
-          },
           {
             "internalType": "uint96",
             "name": "rewardPerBlock",
             "type": "uint96"
-          },
-          {
-            "internalType": "address",
-            "name": "reward",
-            "type": "address"
           },
           {
             "internalType": "uint16",
