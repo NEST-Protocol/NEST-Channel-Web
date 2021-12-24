@@ -10,6 +10,7 @@ import {
 } from '../../state/Create/form'
 import { useToken } from '../../hooks/Tokens'
 import { useEffect } from 'react'
+import {useCreateChannel} from "../../hooks/useCreateChannel";
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
@@ -19,6 +20,7 @@ const TokenAddress = () => {
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)
   const { symbol: quotationTokenSymbol } = useToken(quotationTokenAddress)
   const { symbol: miningTokenSymbol } = useToken(miningTokenAddress)
+  const { priceTokenAddress  } = useCreateChannel()
 
   // @typescript-eslint/no-unused-vars
   console.log(priceTokenUnit)
@@ -29,7 +31,7 @@ const TokenAddress = () => {
   }
 
   const checkPriceToken = (value: string) => {
-    return !(value === 'PETH' || value === 'PUSD')
+    return !(value === 'PETH' || value === 'PUSD') || priceTokenAddress === quotationTokenAddress
   }
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const TokenAddress = () => {
         <Input
           variant={'filled'}
           placeholder={'Input Token Address'}
-          isInvalid={checkAddress(quotationTokenAddress)}
+          isInvalid={checkAddress(quotationTokenAddress) || quotationTokenAddress === priceTokenAddress}
           onChange={(event) => setQuotationTokenAddress(event.target.value)}
           defaultValue={quotationTokenAddress}
           onFocus={(e) => {

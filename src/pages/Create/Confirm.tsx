@@ -49,11 +49,13 @@ const Confirm = () => {
       <ConfirmDetail
         title={`Price Token (${priceTokenName === '' ? 'NaN' : priceTokenName})`}
         value={priceTokenAddress}
+        invalid={priceTokenAddress === quotationTokenAddress}
         link={getExplorerLink(chainId || 1, priceTokenName, ExplorerDataType.TOKEN)}
         isToken
       />
       <ConfirmDetail
         title={`Quotation Token (${quotationTokenSymbol})`}
+        invalid={priceTokenAddress === quotationTokenAddress}
         value={quotationTokenAddress === '' ? 'NaN' : quotationTokenAddress}
         link={getExplorerLink(chainId || 1, quotationTokenAddress, ExplorerDataType.TOKEN)}
         isToken
@@ -99,12 +101,13 @@ type ConfirmDetailProps = {
   unit?: string
   link?: string
   isToken?: boolean
+  invalid?: boolean
 }
 
 const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   const addressValid = (value: string) => {
     const address = isAddress(value)
-    return !address
+    return !address || props.invalid
   }
 
   return (

@@ -62,3 +62,8 @@ export const statusAtom = atom({
   key: 'createPoolStatus',
   default: IDLE,
 })
+
+export const priceTokenAddressAtom = atom({
+  key: 'priceTokenAddress',
+  default: ''
+})

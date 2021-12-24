@@ -3,7 +3,7 @@ import {
   invalidConfigurationAtom,
   invalidTokenAddressAtom,
   miningTokenAddressAtom,
-  priceCallingFeeAtom,
+  priceCallingFeeAtom, priceTokenAddressAtom,
   priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
@@ -12,7 +12,7 @@ import {
   statusAtom,
 } from '../state/Create/form'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { isAddress } from '../utils'
 import { useNestOpenPlatformContract } from './useContract'
 import { NEST_OPEN_PLATFORM_ADDRESS, PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
@@ -38,7 +38,7 @@ export const useCreateChannel = () => {
 
   const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
 
-  const [priceTokenAddress, setPriceTokenAddress] = useState('')
+  const [priceTokenAddress, setPriceTokenAddress] = useRecoilState(priceTokenAddressAtom)
 
   useEffect(() => {
     if (priceTokenName === 'PETH') {
@@ -48,19 +48,20 @@ export const useCreateChannel = () => {
     } else {
       setPriceTokenAddress('Invalid Token')
     }
-  }, [chainId, priceTokenName])
+  }, [chainId, priceTokenName, setPriceTokenAddress])
 
   useEffect(() => {
     if (
       isAddress(quotationTokenAddress) &&
       isAddress(miningTokenAddress) &&
-      (priceTokenName === 'PETH' || priceTokenName === 'PUSD')
+      (priceTokenName === 'PETH' || priceTokenName === 'PUSD') &&
+      quotationTokenAddress !== priceTokenAddress
     ) {
       setInvalidTokenAddress(false)
     } else {
       setInvalidTokenAddress(true)
     }
-  }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress])
+  }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
 
   useEffect(() => {
     if (
@@ -123,5 +124,6 @@ export const useCreateChannel = () => {
     invalidConfiguration,
     create,
     status,
+    priceTokenAddress
   }
 }
