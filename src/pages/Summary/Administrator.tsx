@@ -148,7 +148,6 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
                 isFullWidth
                 onClick={handleApprove}
                 isLoading={approveStatus === PROCESSING}
-                disabled={amount === '0'}
                 loadingText={'Approving'}
               >
                 Approve
