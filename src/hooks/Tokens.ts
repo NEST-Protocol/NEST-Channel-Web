@@ -2,15 +2,18 @@ import { useTokenContract } from './useContract'
 import { useCallback, useEffect, useState } from 'react'
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
+import {CHAIN_INFO} from "../constants/chains";
+import {useActiveWeb3React} from "./web3";
 
 export const useToken = (tokenAddress: string) => {
   const contract = useTokenContract(tokenAddress, true)
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('NaN')
+  const { chainId } = useActiveWeb3React()
 
   const fetch = useCallback(async () => {
     if (tokenAddress === ZERO_ADDRESS) {
-      setSymbol('ETH')
+      setSymbol(CHAIN_INFO[chainId ?? 1].nativeSymbol)
       return
     }
     try {
@@ -23,7 +26,7 @@ export const useToken = (tokenAddress: string) => {
     } catch (e) {
       setSymbol('Error')
     }
-  }, [contract, tokenAddress])
+  }, [chainId, contract, tokenAddress])
 
   useEffect(() => {
     fetch()
