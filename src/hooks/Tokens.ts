@@ -40,7 +40,7 @@ export const useToken = (tokenAddress: string) => {
     }
 
     try {
-      return parseToBigNumber((await contract?.balanceOf(account)) ?? 'NaN').shiftedBy(-18)
+      return parseToBigNumber((await contract?.balanceOf(account)) ?? (new BigNumber(NaN))).shiftedBy(-18)
     } catch (e) {
       return 'Error'
     }
