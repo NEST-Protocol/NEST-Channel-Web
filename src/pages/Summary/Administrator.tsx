@@ -61,7 +61,11 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const [balance, setBalance] = useState('')
 
   const refresh = useCallback(async () => {
-    setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
+    if (!account) {
+      setBalance('NaN')
+      return
+    }
+    setBalance(formatNumber(parseToBigNumber(await balanceOf(account))))
   }, [account, balanceOf])
 
   useEffect(() => {
@@ -99,7 +103,8 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   }
 
   const handleApprove = async () => {
-    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+    if (!chainId) { return }
+    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
   }
 
   return (

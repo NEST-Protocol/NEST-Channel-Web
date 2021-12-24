@@ -4,10 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
 import useInterval from '@use-it/interval'
 import { parseToBigNumber } from '../utils/bignumberUtil'
+import BigNumber from "bignumber.js";
 
 export const useBalance = (uncheckedAddresses: string | null | undefined) => {
   const { library } = useActiveWeb3React()
-  const [balance, setBalance] = useState('0')
+  const [balance, setBalance] = useState(new BigNumber(0))
   const [status, setStatus] = useState(IDLE)
 
   const refresh = useCallback(async () => {
@@ -18,9 +19,9 @@ export const useBalance = (uncheckedAddresses: string | null | undefined) => {
       setStatus(PROCESSING)
       const res = await library?.getBalance(uncheckedAddresses)
       if (res === undefined) {
-        setBalance('NaN')
+        setBalance(new BigNumber(NaN))
       } else {
-        setBalance(parseToBigNumber(res).shiftedBy(-18).toString())
+        setBalance(parseToBigNumber(res).shiftedBy(-18))
         setStatus(IDLE)
         setTimeout(() => {
           setStatus(IDLE)
@@ -28,7 +29,7 @@ export const useBalance = (uncheckedAddresses: string | null | undefined) => {
       }
     } catch (e) {
       setStatus(ERROR)
-      setBalance('NaN')
+      setBalance(new BigNumber(NaN))
       setTimeout(() => {
         setStatus(IDLE)
       }, IDLE_DELAY)
