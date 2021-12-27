@@ -17,8 +17,6 @@ import { NetworkContextName } from './constants/misc'
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Montserrat", serif;
-    overflow-x: hidden;
-    overflow-y: hidden;
   }
 
   .js-focus-visible :focus:not([data-focus-visible-added]) {

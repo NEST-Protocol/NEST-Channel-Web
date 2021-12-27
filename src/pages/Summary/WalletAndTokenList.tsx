@@ -31,7 +31,7 @@ const WalletAndTokenList = () => {
         }}
       />
 
-      <Stack overflow={'scroll'} overflowY={"hidden"} overflowX={"hidden"} h={activeChannelInfo.governance === account ? '490px' : '414px'}>
+      <Stack overflow={'scroll'} h={activeChannelInfo.governance === account ? '490px' : '414px'}>
         {channelList.filter(handleSearch).map((channel) => (
           <ChannelListItem
             key={channel.channelId}
