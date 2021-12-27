@@ -12,6 +12,26 @@ const LineChart: FC<LineChartProps> = ({ ...props }) => {
     data: props.data,
     xField: props.xField,
     yField: props.yField,
+    yAxis: {
+      title: {
+        text: "Interval from last quotation",
+      },
+      label: {
+        formatter: (text: string) => {
+          return text + "s"
+        }
+      }
+    },
+    xAxis: {
+      label: {
+        formatter: (text: string) => {
+          return "Latest " + (21 - Number(text))
+        }
+      }
+    },
+    tooltip: {
+      showTitle: false
+    },
     color: '#EAAA00',
     autoFit: true,
     point: {

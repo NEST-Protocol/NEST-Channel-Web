@@ -40,7 +40,7 @@ const Information = () => {
         <InformationDetail
           title={'Total Mining Token'}
           value={formatNumber(info?.vault)}
-          unit={miningTokenSymbol}
+          // unit={miningTokenSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail

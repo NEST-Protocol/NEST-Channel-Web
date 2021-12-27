@@ -25,7 +25,7 @@ const QuotationFrequency = () => {
 
   return (
     <Stack bg={'white'} w={'full'} h={'460px'} borderRadius={'20px'} p={'20px'}>
-      <Text fontWeight={'bold'}>Quotation Frequency</Text>
+      <Text fontWeight={'bold'}>Quotation Frequency (Last 20 quotes)</Text>
       <Stack p={'20px'} h={'full'} w={'full'}>
         <LineChart data={data} xField={'index'} yField={'second'} />
       </Stack>
