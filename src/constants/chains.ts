@@ -108,14 +108,14 @@ export const CHAIN_INFO: ChainInfo = {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
-    label: 'Smart Chain',
+    label: 'Binance Smart Chain',
     nativeSymbol: 'BNB',
   },
   [SupportedChainId.BSCTestnet]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://testnet.bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
-    label: 'Smart Chain - Testnet',
+    label: 'Binance Smart Chain - Testnet',
     nativeSymbol: 'BNB',
   },
 
