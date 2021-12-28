@@ -1,4 +1,4 @@
-import { Stack, Button, Spacer, Input, Text, Divider, Skeleton } from '@chakra-ui/react'
+import { Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
@@ -14,6 +14,7 @@ const WalletAndTokenList = () => {
   const [searchText, setSearchText] = useState('')
   const { account } = useActiveWeb3React()
   const activeChannelInfo = useRecoilValue(activeChannelInfoAtom)
+  const toast = useToast()
 
   const handleSearch = (channel: ChannelInfo) => {
     return channel.token0.toLowerCase().includes(searchText) || channel.token1.toLowerCase().includes(searchText)
@@ -44,9 +45,15 @@ const WalletAndTokenList = () => {
       <Spacer />
       <Button
         variant={'outline'}
-        disabled={!account}
         onClick={() => {
-          navigate('/create')
+          if (account) {
+            navigate('/create')
+          } else {
+            toast({
+              title: 'Connect wallet first!',
+              status: 'warning',
+            })
+          }
         }}
       >
         Create
