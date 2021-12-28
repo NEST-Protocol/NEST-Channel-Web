@@ -1,4 +1,4 @@
-import { Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast } from '@chakra-ui/react'
+import {Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box} from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
@@ -50,8 +50,12 @@ const WalletAndTokenList = () => {
             navigate('/create')
           } else {
             toast({
-              title: 'Connect wallet first!',
-              status: 'warning',
+              position: "top",
+              render: () => (
+                <Box color='white' p={3} px={6} bg='primary.500' fontWeight={"bold"} borderRadius={"full"}>
+                  Connect wallet first!
+                </Box>
+              ),
             })
           }
         }}
