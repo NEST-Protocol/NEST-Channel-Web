@@ -27,6 +27,7 @@ const WalletAndTokenList = () => {
       <Input
         variant="filled"
         placeholder="Token Address"
+        fontSize={searchText === "" ? "15px" : "17px"}
         onChange={(e) => {
           setSearchText(e.target.value)
         }}

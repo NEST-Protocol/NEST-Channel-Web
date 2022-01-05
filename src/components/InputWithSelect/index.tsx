@@ -1,7 +1,19 @@
-import { Box, Button, FormControl, Input, NumberInput, NumberInputField, Stack, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  InputGroup,
+  InputRightElement,
+  NumberInput,
+  NumberInputField,
+  Stack,
+  Text
+} from '@chakra-ui/react'
 import Divider from '../Divider'
 import { FC, useState } from 'react'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
+import {BiChevronDownCircle} from "react-icons/all";
 
 type OptionInput = {
   title: string
@@ -31,7 +43,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
       </Text>
       <FormControl
         bg={'white'}
-        width={'600px'}
+        width={'680px'}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '2px' : '0'}
         borderColor={'primary.500'}
@@ -60,27 +72,31 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             }}
           >
             <NumberInputField />
+            <InputRightElement children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
           </NumberInput>
         ) : (
-          <Input
-            id={'amount'}
-            variant={showOption ? 'unstyled' : 'filled'}
-            placeholder={'Input Price Token Unit'}
-            errorBorderColor={"primary.500"}
-            isInvalid={props.onCheck(value)}
-            onChange={(event) => {
-              setValue(parseToNumber(event.target.value, props.unit))
-              props.onChange(parseToNumber(event.target.value, props.unit))
-            }}
-            value={formatWithUnit(value, props.unit)}
-            onFocus={(e) => {
-              e.target.setSelectionRange(0, value.length)
-              setShowOption(true)
-            }}
-            onBlur={() => {
-              setTimeout(() => setShowOption(false), 200)
-            }}
-          />
+          <InputGroup>
+            <Input
+              id={'amount'}
+              variant={showOption ? 'unstyled' : 'filled'}
+              placeholder={'Input Price Token Unit'}
+              errorBorderColor={"primary.500"}
+              isInvalid={props.onCheck(value)}
+              onChange={(event) => {
+                setValue(parseToNumber(event.target.value, props.unit))
+                props.onChange(parseToNumber(event.target.value, props.unit))
+              }}
+              value={formatWithUnit(value, props.unit)}
+              onFocus={(e) => {
+                e.target.setSelectionRange(0, value.length)
+                setShowOption(true)
+              }}
+              onBlur={() => {
+                setTimeout(() => setShowOption(false), 200)
+              }}
+            />
+            <InputRightElement children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
+          </InputGroup>
         )}
 
         {props.datalist.length > 0 && (

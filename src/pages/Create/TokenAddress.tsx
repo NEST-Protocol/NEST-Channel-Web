@@ -40,13 +40,14 @@ const TokenAddress = () => {
   }, [priceTokenName, setPriceTokenUnit])
 
   return (
-    <Stack pt={'60px'} pb={'36px'} w={'600px'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'36px'} w={'680px'} spacing={'20px'}>
       <Stack id="quotation token address" spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
           Quotation Token ({quotationTokenSymbol}):
         </Text>
         <Input
           variant={'filled'}
+          fontSize={quotationTokenAddress === "" ? "15px" : "17px"}
           placeholder={'Input Token Address'}
           isInvalid={checkAddress(quotationTokenAddress) || quotationTokenAddress === priceTokenAddress}
           errorBorderColor={"primary.500"}
@@ -69,7 +70,7 @@ const TokenAddress = () => {
         ]}
       />
 
-      <Divider />
+      <Divider dashed={true}/>
 
       <Stack spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
@@ -77,6 +78,7 @@ const TokenAddress = () => {
         </Text>
         <Input
           variant={'filled'}
+          fontSize={miningTokenAddress === "" ? "15px" : "17px"}
           isInvalid={checkAddress(miningTokenAddress)}
           errorBorderColor={"primary.500"}
           placeholder={'Input Token Address'}
