@@ -43,6 +43,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
+            errorBorderColor={"primary.500"}
             onChange={(valueString) => {
               setValue(parseToNumber(valueString, props.unit))
               props.onChange(parseToNumber(valueString, props.unit))
@@ -65,6 +66,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             id={'amount'}
             variant={showOption ? 'unstyled' : 'filled'}
             placeholder={'Input Price Token Unit'}
+            errorBorderColor={"primary.500"}
             isInvalid={props.onCheck(value)}
             onChange={(event) => {
               setValue(parseToNumber(event.target.value, props.unit))

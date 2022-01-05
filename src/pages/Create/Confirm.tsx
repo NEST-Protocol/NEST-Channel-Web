@@ -120,13 +120,13 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
         <Link
           href={props.link}
           isExternal
-          color={props.isToken ? (addressValid(props.value) ? 'red' : 'link.500') : 'link.500'}
+          color={props.isToken ? (addressValid(props.value) ? 'primary.500' : 'link.500') : 'link.500'}
           fontWeight={'bold'}
         >
           {props.value}
         </Link>
       ) : (
-        <Text fontWeight={'bold'} color={props.value === 'NaN' ? 'red' : 'black'}>
+        <Text fontWeight={'bold'} color={props.value === 'NaN' ? 'primary.500' : 'black'}>
           {props.value} {props.unit}
         </Text>
       )}

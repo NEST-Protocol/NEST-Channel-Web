@@ -11,7 +11,7 @@ export const quotationTokenAddressAtom = atom({
 // 计价代币
 export const priceTokenNameAtom = atom({
   key: 'priceTokenName',
-  default: '',
+  default: 'PUSD',
 })
 
 // 矿币地址，矿币地址如果和token0或者token1是一种币，可能导致挖矿资产被当成矿币挖走，address

@@ -52,7 +52,7 @@ const OpenChanel = () => {
 
   return (
     <Stack p={'20px'} spacing={'20px'}>
-      <Stack bg={'white'} px={'190px'} py={'60px'} borderRadius={'20px'} alignItems={'center'} spacing={'0'}>
+      <Stack bg={'white'} px={'190px'} pt={'68px'} pb={"36px"} borderRadius={'20px'} alignItems={'center'} spacing={'0'}>
         <Stack
           direction={'row'}
           w={'800px'}

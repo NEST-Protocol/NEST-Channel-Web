@@ -1,4 +1,4 @@
-import { Input, Stack, Text } from '@chakra-ui/react'
+import {Input, Stack, Text} from '@chakra-ui/react'
 import { isAddress } from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
 import { useRecoilState } from 'recoil'
@@ -11,6 +11,7 @@ import {
 import { useToken } from '../../hooks/Tokens'
 import { useEffect } from 'react'
 import {useCreateChannel} from "../../hooks/useCreateChannel";
+import Divider from "../../components/Divider";
 
 const TokenAddress = () => {
   const [quotationTokenAddress, setQuotationTokenAddress] = useRecoilState(quotationTokenAddressAtom)
@@ -39,7 +40,7 @@ const TokenAddress = () => {
   }, [priceTokenName, setPriceTokenUnit])
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'36px'} w={'600px'} spacing={'20px'}>
       <Stack id="quotation token address" spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
           Quotation Token ({quotationTokenSymbol}):
@@ -48,6 +49,7 @@ const TokenAddress = () => {
           variant={'filled'}
           placeholder={'Input Token Address'}
           isInvalid={checkAddress(quotationTokenAddress) || quotationTokenAddress === priceTokenAddress}
+          errorBorderColor={"primary.500"}
           onChange={(event) => setQuotationTokenAddress(event.target.value)}
           defaultValue={quotationTokenAddress}
           onFocus={(e) => {
@@ -67,16 +69,19 @@ const TokenAddress = () => {
         ]}
       />
 
+      <Divider />
+
       <Stack spacing={'16px'}>
         <Text fontWeight={'600'} mx={'16px'}>
           Mining Token ({miningTokenSymbol}):
         </Text>
         <Input
           variant={'filled'}
+          isInvalid={checkAddress(miningTokenAddress)}
+          errorBorderColor={"primary.500"}
           placeholder={'Input Token Address'}
           onChange={(event) => setMiningTokenAddress(event.target.value)}
           defaultValue={miningTokenAddress}
-          isInvalid={checkAddress(miningTokenAddress)}
           onFocus={(e) => {
             e.target.setSelectionRange(0, miningTokenAddress.length)
           }}
