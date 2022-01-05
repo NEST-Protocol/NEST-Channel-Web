@@ -11,7 +11,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import Divider from '../Divider'
-import { FC, useState } from 'react'
+import {FC, useRef, useState} from 'react'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import {BiChevronDownCircle} from "react-icons/all";
 
@@ -35,6 +35,7 @@ type item = {
 const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [showOption, setShowOption] = useState(false)
   const [value, setValue] = useState(props.defaultValue)
+  const inputRef = useRef(null);
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
@@ -71,13 +72,18 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               setTimeout(() => setShowOption(false), 200)
             }}
           >
-            <NumberInputField />
-            <InputRightElement children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
+            <NumberInputField ref={inputRef} />
+            <InputRightElement onClick={()=>
+              // @ts-ignore
+              inputRef.current.focus()
+            }
+              children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>} />
           </NumberInput>
         ) : (
           <InputGroup>
             <Input
               id={'amount'}
+              ref={inputRef}
               variant={showOption ? 'unstyled' : 'filled'}
               placeholder={'Input Price Token Unit'}
               errorBorderColor={"primary.500"}
@@ -95,7 +101,11 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 setTimeout(() => setShowOption(false), 200)
               }}
             />
-            <InputRightElement children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
+            <InputRightElement onClick={()=>
+              // @ts-ignore
+              inputRef.current.focus()
+            }
+              children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
           </InputGroup>
         )}
 
