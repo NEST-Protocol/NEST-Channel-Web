@@ -46,7 +46,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         bg={'white'}
         width={'680px'}
         borderRadius={showOption ? '10px' : '0'}
-        border={showOption ? '2px' : '0'}
+        border={showOption ? '1px' : '0'}
         borderColor={'primary.500'}
         pos={showOption ? 'absolute' : 'static'}
         zIndex={showOption ? 10 : 0}

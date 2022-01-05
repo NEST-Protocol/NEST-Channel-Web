@@ -8,10 +8,10 @@ export const Input = {
         bg: 'secondary.200',
         boxShadow: 'inset 0 0 10px 0 #EEEEEE',
         height: '40px',
+        borderWidth: '1px',
         fontSize: '17px',
         fontWeight: '600',
         _focus: {
-          borderSize: "1px",
           borderColor: 'primary.500',
           bg: 'white',
           boxShadow: 'none',

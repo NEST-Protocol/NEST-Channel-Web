@@ -9,6 +9,7 @@ export const NumberInput = {
         boxShadow: 'inset 0 0 10px 0 #EEEEEE',
         height: '40px',
         fontSize: '17px',
+        borderWidth: '1px',
         fontWeight: '600',
         _focus: {
           borderColor: 'primary.500',
