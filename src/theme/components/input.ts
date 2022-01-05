@@ -10,7 +10,7 @@ export const Input = {
         height: '40px',
         borderWidth: '1px',
         fontSize: '17px',
-        fontWeight: '600',
+        fontWeight: '500',
         _focus: {
           borderColor: 'primary.500',
           bg: 'white',
@@ -27,9 +27,9 @@ export const Input = {
       field: {
         fontFamily: 'Montserrat',
         bg: 'white',
-        height: '36px',
+        height: '38px',
         fontSize: '17px',
-        fontWeight: '600',
+        fontWeight: '500',
         px: '16px',
         borderRadius: '20px',
       },

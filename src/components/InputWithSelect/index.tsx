@@ -54,7 +54,6 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         {props.isNumber ? (
           <NumberInput
             variant={showOption ? 'unstyled' : 'filled'}
-            placeholder={'Input Price Token Unit'}
             isInvalid={props.onCheck(value)}
             errorBorderColor={"primary.500"}
             onChange={(valueString) => {
@@ -85,7 +84,6 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               id={'amount'}
               ref={inputRef}
               variant={showOption ? 'unstyled' : 'filled'}
-              placeholder={'Input Price Token Unit'}
               errorBorderColor={"primary.500"}
               isInvalid={props.onCheck(value)}
               onChange={(event) => {
@@ -117,6 +115,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 variant={'ghost'}
                 justifyContent={'flex-start'}
                 fontWeight={'500'}
+                fontSize={"17px"}
                 borderRadius={0}
                 key={item.title}
                 onClick={() => {
