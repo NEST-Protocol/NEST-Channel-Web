@@ -39,12 +39,12 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
-      <Text fontWeight={'600'} mb={'16px'} mx={'16px'}>
+      <Text fontWeight={'600'} mb={'16px'} mx={'16px'} color={"secondary.500"}>
         {props.title}:
       </Text>
       <FormControl
         bg={'white'}
-        width={'680px'}
+        width={'600px'}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '1px' : '0'}
         borderColor={'primary.500'}
@@ -114,7 +114,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               <Button
                 variant={'ghost'}
                 justifyContent={'flex-start'}
-                fontWeight={'500'}
+                fontWeight={'600'}
                 fontSize={"17px"}
                 borderRadius={0}
                 key={item.title}

@@ -35,7 +35,7 @@ const Configuration = () => {
   }
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={'680px'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'30px'} w={'600px'} spacing={'20px'}>
       {priceTokenName === 'PUSD' ? (
         <InputWithSelect
           title={'Price Token Unit'}

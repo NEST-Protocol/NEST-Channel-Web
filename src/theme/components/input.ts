@@ -10,7 +10,7 @@ export const Input = {
         height: '40px',
         borderWidth: '1px',
         fontSize: '17px',
-        fontWeight: '500',
+        fontWeight: '600',
         _focus: {
           borderColor: 'primary.500',
           bg: 'white',
@@ -29,7 +29,7 @@ export const Input = {
         bg: 'white',
         height: '38px',
         fontSize: '17px',
-        fontWeight: '500',
+        fontWeight: '600',
         px: '16px',
         borderRadius: '20px',
       },
