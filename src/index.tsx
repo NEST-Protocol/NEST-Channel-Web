@@ -13,6 +13,7 @@ import Index from './components/Background'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary'
 import { NetworkContextName } from './constants/misc'
+import GA4React from 'ga-4-react'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -27,29 +28,34 @@ const GlobalStyle = createGlobalStyle`
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
+const ga4 = new GA4React('G-63N6Q4E6NL')
+
 const Updaters = () => {
   return <></>
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <HashRouter>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Web3ProviderNetwork getLibrary={getLibrary}>
-            <ChakraProvider theme={theme}>
-              <GlobalStyle />
-              <Updaters />
-              <Index />
-              <App />
-            </ChakraProvider>
-          </Web3ProviderNetwork>
-        </Web3ReactProvider>
-      </HashRouter>
-    </RecoilRoot>
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+;(async () => {
+  await ga4.initialize()
+  ReactDOM.render(
+    <React.StrictMode>
+      <RecoilRoot>
+        <HashRouter>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Web3ProviderNetwork getLibrary={getLibrary}>
+              <ChakraProvider theme={theme}>
+                <GlobalStyle />
+                <Updaters />
+                <Index />
+                <App />
+              </ChakraProvider>
+            </Web3ProviderNetwork>
+          </Web3ReactProvider>
+        </HashRouter>
+      </RecoilRoot>
+    </React.StrictMode>,
+    document.getElementById('root')
+  )
+})()
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

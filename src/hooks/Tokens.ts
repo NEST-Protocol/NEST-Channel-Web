@@ -1,10 +1,10 @@
 import { useTokenContract } from './useContract'
 import { useCallback, useEffect, useState } from 'react'
-import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS} from '../constants/misc'
+import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
-import {CHAIN_INFO} from "../constants/chains";
-import {useActiveWeb3React} from "./web3";
-import BigNumber from "bignumber.js";
+import { CHAIN_INFO } from '../constants/chains'
+import { useActiveWeb3React } from './web3'
+import BigNumber from 'bignumber.js'
 
 export const useToken = (tokenAddress: string) => {
   const { library } = useActiveWeb3React()
@@ -36,11 +36,11 @@ export const useToken = (tokenAddress: string) => {
 
   const balanceOf = async (account: string) => {
     if (tokenAddress === ZERO_ADDRESS) {
-      return parseToBigNumber(await library?.getBalance(account) ?? (new BigNumber(NaN))).shiftedBy(-18)
+      return parseToBigNumber((await library?.getBalance(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
     }
 
     try {
-      return parseToBigNumber((await contract?.balanceOf(account)) ?? (new BigNumber(NaN))).shiftedBy(-18)
+      return parseToBigNumber((await contract?.balanceOf(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
     } catch (e) {
       return 'Error'
     }

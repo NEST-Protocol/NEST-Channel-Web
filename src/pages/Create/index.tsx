@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil'
 import { activeStepAtom } from '../../state/Create'
 import { useCreateChannel } from '../../hooks/useCreateChannel'
 import { PROCESSING } from '../../constants/misc'
+import { useGA4React } from 'ga-4-react'
 
 const steps = [
   { id: 0, label: 'Token Address', content: <TokenAddress /> },
@@ -30,6 +31,7 @@ type StepItemProps = {
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const { invalidTokenAddress, invalidConfiguration, create, status } = useCreateChannel()
+  const ga4React = useGA4React()
 
   const StepButton: FC<StepItemProps> = ({ ...props }) => {
     return (
@@ -38,6 +40,9 @@ const OpenChanel = () => {
           w={'40px'}
           variant={activeStep >= props.id ? 'solid' : 'outline'}
           onClick={() => {
+            if (ga4React) {
+              ga4React.event('click', 'next', '')
+            }
             setActiveStep(props.id)
           }}
           color={activeStep >= props.id ? 'white' : 'secondary.500'}
@@ -52,7 +57,15 @@ const OpenChanel = () => {
 
   return (
     <Stack p={'20px'} spacing={'20px'}>
-      <Stack bg={'white'} px={'190px'} pt={'68px'} pb={"36px"} borderRadius={'20px'} alignItems={'center'} spacing={'0'}>
+      <Stack
+        bg={'white'}
+        px={'190px'}
+        pt={'68px'}
+        pb={'36px'}
+        borderRadius={'20px'}
+        alignItems={'center'}
+        spacing={'0'}
+      >
         <Stack
           direction={'row'}
           w={'800px'}
@@ -81,6 +94,9 @@ const OpenChanel = () => {
             isLoading={status === PROCESSING}
             disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
             onClick={async () => {
+              if (ga4React) {
+                ga4React.event('click', 'create', '')
+              }
               if (activeStep === steps.length - 1) {
                 await create()
               }

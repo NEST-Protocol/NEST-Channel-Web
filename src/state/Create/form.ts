@@ -65,5 +65,5 @@ export const statusAtom = atom({
 
 export const priceTokenAddressAtom = atom({
   key: 'priceTokenAddress',
-  default: ''
+  default: '',
 })

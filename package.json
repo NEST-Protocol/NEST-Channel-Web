@@ -57,6 +57,7 @@
     "ethers": "^5.5.2",
     "focus-visible": "^5.2.0",
     "framer-motion": "^4.0.0",
+    "ga-4-react": "^0.1.281",
     "lodash": "^4.17.21",
     "ms.macro": "^2.0.0",
     "prettier": "^2.5.1",

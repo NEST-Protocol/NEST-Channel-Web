@@ -1,4 +1,4 @@
-import {Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box} from '@chakra-ui/react'
+import { Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
@@ -27,7 +27,7 @@ const WalletAndTokenList = () => {
       <Input
         variant="filled"
         placeholder="Token Address"
-        fontSize={searchText === "" ? "15px" : "17px"}
+        fontSize={searchText === '' ? '15px' : '17px'}
         onChange={(e) => {
           setSearchText(e.target.value)
         }}
@@ -51,9 +51,17 @@ const WalletAndTokenList = () => {
             navigate('/create')
           } else {
             toast({
-              position: "top",
+              position: 'top',
               render: () => (
-                <Box color='white' p={3} px={6} bg='primary.500' textAlign={"center"} fontWeight={"bold"} borderRadius={"full"}>
+                <Box
+                  color="white"
+                  p={3}
+                  px={6}
+                  bg="primary.500"
+                  textAlign={'center'}
+                  fontWeight={'bold'}
+                  borderRadius={'full'}
+                >
                   Connect wallet first!
                 </Box>
               ),

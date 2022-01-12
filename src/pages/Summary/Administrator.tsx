@@ -22,7 +22,8 @@ import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { useBalance } from '../../hooks/useBalance'
 import { CHAIN_INFO } from '../../constants/chains'
 import { useToken } from '../../hooks/Tokens'
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js'
+import { useGA4React } from 'ga-4-react'
 
 const Administrator = () => {
   const { info, status } = useActiveChannelInfo()
@@ -60,6 +61,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const { refresh: refreshChannelInfo } = useActiveChannelInfo()
   const { balanceOf, approve, approveStatus, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
+  const ga4React = useGA4React()
 
   const refresh = useCallback(async () => {
     if (!account) {
@@ -76,6 +78,9 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const handleDeposit = async () => {
     if (!nestOpenPlatform) return
     setDepositStatus(PROCESSING)
+    if (ga4React) {
+      ga4React.event('click', 'deposit', '')
+    }
     try {
       let value = new BigNumber(0)
       if (props.tokenAddress === ZERO_ADDRESS) {
@@ -83,7 +88,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
       }
       //  function increase(uint channelId, uint96 vault) external payable;
       const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0), {
-        value: value.toFixed(0)
+        value: value.toFixed(0),
       })
       const res = await tx.wait()
       switch (res.status) {
@@ -110,14 +115,27 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   }
 
   const handleApprove = async () => {
-    if (!chainId) { return }
+    if (!chainId) {
+      return
+    }
+    if (ga4React) {
+      ga4React.event('click', 'approve', '')
+    }
     await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
   }
 
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>
+        <Button
+          variant={'outline'}
+          isLoading={props.isLoading}
+          onClick={() => {
+            if (ga4React) {
+              ga4React.event('click', 'deposit popover', '')
+            }
+          }}
+        >
           Deposit
         </Button>
       </PopoverTrigger>
@@ -142,7 +160,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={'center'}>
               Balance (myself): {balance} {tokenSymbol}
             </Text>
-            { props.tokenAddress !== ZERO_ADDRESS && (
+            {props.tokenAddress !== ZERO_ADDRESS && (
               <Button
                 variant={'outline'}
                 isFullWidth
@@ -154,7 +172,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
                 {approveStatus === SUCCESS && <> Success</>}
                 {approveStatus === ERROR && <> Error</>}
               </Button>
-            ) }
+            )}
             <Button
               variant={'outline'}
               isFullWidth
@@ -183,6 +201,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
   const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
+  const ga4React = useGA4React()
 
   const refresh = useCallback(async () => {
     setBalance(formatNumber(parseToBigNumber(await balanceOf(account ?? ZERO_ADDRESS))))
@@ -194,6 +213,9 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
 
   const handleWithdraw = async () => {
     if (!nestOpenPlatform) return
+    if (ga4React) {
+      ga4React.event('click', 'withdraw', '')
+    }
     try {
       setWithdrawStatus(PROCESSING)
       const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
@@ -224,7 +246,15 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>
+        <Button
+          variant={'outline'}
+          isLoading={props.isLoading}
+          onClick={() => {
+            if (ga4React) {
+              ga4React.event('click', 'withdraw popover', '')
+            }
+          }}
+        >
           Withdraw
         </Button>
       </PopoverTrigger>
@@ -276,9 +306,13 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   const [amount, setAmount] = useState('0')
   const { balance } = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)
+  const ga4React = useGA4React()
 
   const handleWithdrawFee = async () => {
     if (!nestOpenPlatform) return
+    if (ga4React) {
+      ga4React.event('click', 'withdrawFee', '')
+    }
     try {
       setWithdrawFeeStatus(PROCESSING)
       const tx = await nestOpenPlatform.pay(activeChannelId, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
@@ -309,7 +343,15 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant={'outline'} isLoading={props.isLoading}>
+        <Button
+          variant={'outline'}
+          isLoading={props.isLoading}
+          onClick={() => {
+            if (ga4React) {
+              ga4React.event('click', 'withdraw fee popover', '')
+            }
+          }}
+        >
           Withdraw Fee
         </Button>
       </PopoverTrigger>

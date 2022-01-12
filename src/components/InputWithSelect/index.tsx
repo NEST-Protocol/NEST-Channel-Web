@@ -8,12 +8,12 @@ import {
   NumberInput,
   NumberInputField,
   Stack,
-  Text
+  Text,
 } from '@chakra-ui/react'
 import Divider from '../Divider'
-import {FC, useRef, useState} from 'react'
+import { FC, useRef, useState } from 'react'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
-import {BiChevronDownCircle} from "react-icons/all";
+import { BiChevronDownCircle } from 'react-icons/all'
 
 type OptionInput = {
   title: string
@@ -35,11 +35,11 @@ type item = {
 const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [showOption, setShowOption] = useState(false)
   const [value, setValue] = useState(props.defaultValue)
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
-      <Text fontWeight={'600'} mb={'16px'} mx={'16px'} color={"secondary.500"}>
+      <Text fontWeight={'600'} mb={'16px'} mx={'16px'} color={'secondary.500'}>
         {props.title}:
       </Text>
       <FormControl
@@ -55,7 +55,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
           <NumberInput
             variant={showOption ? 'unstyled' : 'filled'}
             isInvalid={props.onCheck(value)}
-            errorBorderColor={"primary.500"}
+            errorBorderColor={'primary.500'}
             onChange={(valueString) => {
               setValue(parseToNumber(valueString, props.unit))
               props.onChange(parseToNumber(valueString, props.unit))
@@ -72,11 +72,17 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             }}
           >
             <NumberInputField ref={inputRef} />
-            <InputRightElement onClick={()=>
-              // @ts-ignore
-              inputRef.current.focus()
-            }
-              children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>} />
+            <InputRightElement
+              onClick={() =>
+                // @ts-ignore
+                inputRef.current.focus()
+              }
+              children={
+                <Stack pr={'12px'}>
+                  <BiChevronDownCircle size={'22px'} color={'#878787'} />
+                </Stack>
+              }
+            />
           </NumberInput>
         ) : (
           <InputGroup>
@@ -84,7 +90,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               id={'amount'}
               ref={inputRef}
               variant={showOption ? 'unstyled' : 'filled'}
-              errorBorderColor={"primary.500"}
+              errorBorderColor={'primary.500'}
               isInvalid={props.onCheck(value)}
               onChange={(event) => {
                 setValue(parseToNumber(event.target.value, props.unit))
@@ -99,11 +105,17 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 setTimeout(() => setShowOption(false), 200)
               }}
             />
-            <InputRightElement onClick={()=>
-              // @ts-ignore
-              inputRef.current.focus()
-            }
-              children={<Stack pr={"12px"}><BiChevronDownCircle size={"22px"} color={"#878787"}/></Stack>}/>
+            <InputRightElement
+              onClick={() =>
+                // @ts-ignore
+                inputRef.current.focus()
+              }
+              children={
+                <Stack pr={'12px'}>
+                  <BiChevronDownCircle size={'22px'} color={'#878787'} />
+                </Stack>
+              }
+            />
           </InputGroup>
         )}
 
@@ -115,7 +127,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 variant={'ghost'}
                 justifyContent={'flex-start'}
                 fontWeight={'600'}
-                fontSize={"17px"}
+                fontSize={'17px'}
                 borderRadius={0}
                 key={item.title}
                 onClick={() => {

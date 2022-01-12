@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
 import useInterval from '@use-it/interval'
 import { parseToBigNumber } from '../utils/bignumberUtil'
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js'
 
 export const useBalance = (uncheckedAddresses: string | null | undefined) => {
   const { library } = useActiveWeb3React()

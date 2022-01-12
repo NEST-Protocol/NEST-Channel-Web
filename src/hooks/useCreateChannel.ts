@@ -3,7 +3,8 @@ import {
   invalidConfigurationAtom,
   invalidTokenAddressAtom,
   miningTokenAddressAtom,
-  priceCallingFeeAtom, priceTokenAddressAtom,
+  priceCallingFeeAtom,
+  priceTokenAddressAtom,
   priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
@@ -124,6 +125,6 @@ export const useCreateChannel = () => {
     invalidConfiguration,
     create,
     status,
-    priceTokenAddress
+    priceTokenAddress,
   }
 }

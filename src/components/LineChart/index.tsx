@@ -14,23 +14,23 @@ const LineChart: FC<LineChartProps> = ({ ...props }) => {
     yField: props.yField,
     yAxis: {
       title: {
-        text: "Interval from last quotation",
+        text: 'Interval from last quotation',
       },
       label: {
         formatter: (text: string) => {
-          return text + "s"
-        }
-      }
+          return text + 's'
+        },
+      },
     },
     xAxis: {
       label: {
         formatter: (text: string) => {
-          return "Latest " + (21 - Number(text))
-        }
-      }
+          return 'Latest ' + (21 - Number(text))
+        },
+      },
     },
     tooltip: {
-      showTitle: false
+      showTitle: false,
     },
     color: '#EAAA00',
     autoFit: true,
