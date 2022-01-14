@@ -16,7 +16,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
 import { isAddress } from '../utils'
 import { useNestOpenPlatformContract } from './useContract'
-import { NEST_OPEN_PLATFORM_ADDRESS, PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
+import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { useActiveWeb3React } from './web3'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
@@ -37,7 +37,7 @@ export const useCreateChannel = () => {
 
   const { chainId } = useActiveWeb3React()
 
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(true)
 
   const [priceTokenAddress, setPriceTokenAddress] = useRecoilState(priceTokenAddressAtom)
 

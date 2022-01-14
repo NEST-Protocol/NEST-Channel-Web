@@ -1,6 +1,4 @@
 import { useNestOpenPlatformContract } from './useContract'
-import { NEST_OPEN_PLATFORM_ADDRESS } from '../constants/addresses'
-import { useActiveWeb3React } from './web3'
 import { useCallback, useEffect, useState } from 'react'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
@@ -26,8 +24,7 @@ type ChannelInfo = {
 
 export const useActiveChannelInfo = () => {
   const channelId = useRecoilValue(activeChannelIdAtom)
-  const { chainId } = useActiveWeb3React()
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], false)
+  const nestOpenPlatform = useNestOpenPlatformContract(false)
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
   const [status, setStatus] = useState(IDLE)
 

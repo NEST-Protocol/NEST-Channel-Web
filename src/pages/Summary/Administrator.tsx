@@ -55,7 +55,7 @@ type PopoverProps = {
 const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const { refresh: refreshChannelInfo } = useActiveChannelInfo()
@@ -193,9 +193,9 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
 }
 
 const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
-  const { chainId, account } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
   const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
@@ -301,7 +301,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
 const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
-  const nestOpenPlatform = useNestOpenPlatformContract(NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1], true)
+  const nestOpenPlatform = useNestOpenPlatformContract(true)
   const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
   const [amount, setAmount] = useState('0')
   const { balance } = useBalance(account)

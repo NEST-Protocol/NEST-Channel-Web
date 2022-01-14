@@ -7,6 +7,7 @@ import { useActiveWeb3React } from './web3'
 import { getContract } from '../utils'
 import { useMemo } from 'react'
 import { Erc20, NestOpenPlatform } from '../abis/types'
+import { NEST_OPEN_PLATFORM_ADDRESS } from '../constants/addresses'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -35,6 +36,11 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
-export function useNestOpenPlatformContract(address: string, withSignerIfPossible?: boolean): Contract | null {
-  return useContract<NestOpenPlatform>(address, NestOpenPlatform_ABI, withSignerIfPossible)
+export function useNestOpenPlatformContract(withSignerIfPossible?: boolean): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract<NestOpenPlatform>(
+    NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 1],
+    NestOpenPlatform_ABI,
+    withSignerIfPossible
+  )
 }
