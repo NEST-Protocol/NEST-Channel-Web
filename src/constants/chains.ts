@@ -2,7 +2,7 @@
 // import optimismLogoUrl from 'assets/svg/optimism_logo.svg'
 
 export enum SupportedChainId {
-  MAINNET = 1,
+  // MAINNET = 1,
   // ROPSTEN = 3,
   RINKEBY = 4,
   // GOERLI = 5,
@@ -17,7 +17,7 @@ export enum SupportedChainId {
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
-  SupportedChainId.MAINNET,
+  // SupportedChainId.MAINNET,
   // SupportedChainId.ROPSTEN,
   SupportedChainId.RINKEBY,
   // SupportedChainId.GOERLI,
@@ -32,7 +32,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
 ]
 
 export const L1_CHAIN_IDS = [
-  SupportedChainId.MAINNET,
+  // SupportedChainId.MAINNET,
   // SupportedChainId.ROPSTEN,
   SupportedChainId.RINKEBY,
   // SupportedChainId.GOERLI,
@@ -69,13 +69,13 @@ type ChainInfo = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & {
 } & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
 
 export const CHAIN_INFO: ChainInfo = {
-  [SupportedChainId.MAINNET]: {
-    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
-    explorer: 'https://etherscan.io/',
-    infoLink: 'https://nestprotocol.org/',
-    label: 'Mainnet',
-    nativeSymbol: 'ETH',
-  },
+  // [SupportedChainId.MAINNET]: {
+  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+  //   explorer: 'https://etherscan.io/',
+  //   infoLink: 'https://nestprotocol.org/',
+  //   label: 'Mainnet',
+  //   nativeSymbol: 'ETH',
+  // },
   [SupportedChainId.RINKEBY]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://rinkeby.etherscan.io/',
