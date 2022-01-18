@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ead203;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="tips_icon" class="cls-1" d="M2494,46a14,14,0,1,1-14,14A14,14,0,0,1,2494,46Zm0,19a2,2,0,1,1-2,2A2,2,0,0,1,2494,65Zm0-14a2,2,0,0,1,2,2v8a2,2,0,0,1-4,0V53A2,2,0,0,1,2494,51Z" transform="translate(-2480 -46)"/>
+</svg>
