@@ -14,7 +14,7 @@ import {BigNumberish} from "@ethersproject/bignumber";
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
-  const { symbol: miningTokenSymbol } = useToken(info.pairs[1].target)
+  const { symbol: miningTokenSymbol } = useToken(info.pairs[1]?.target)
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
@@ -26,7 +26,7 @@ const Information = () => {
         />
         <InformationDetail
           title={'Number of Quotes'}
-          value={formatNumber(info.pairs[1].sheetCount)}
+          value={formatNumber(info.pairs[1]?.sheetCount)}
           loading={status === PROCESSING}
         />
         <InformationDetail
@@ -49,9 +49,9 @@ const Information = () => {
         />
         <InformationDetail
           title={'Mining Token'}
-          value={info.pairs[1].target}
+          value={info.pairs[1]?.target}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info.pairs[1].target, ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info.pairs[1]?.target, ExplorerDataType.TOKEN)}
         />
         <InformationDetail
           title={'Initial Block'}
@@ -84,9 +84,9 @@ const Information = () => {
         />
         <InformationDetail
           title={'Quotation Token'}
-          value={info.pairs[1].target}
+          value={info.pairs[1]?.target}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info.pairs[1].target ?? 'NaN', ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info.pairs[1]?.target ?? 'NaN', ExplorerDataType.TOKEN)}
         />
       </Wrap>
     </Stack>
