@@ -1,5 +1,6 @@
 import { atom } from 'recoil'
 import {PriceChannelViewStruct} from "../../abis/types/NestOpenPlatform";
+import {PUSD_ADDRESS} from "../../constants/addresses";
 
 export const activeChannelIdAtom = atom({
   key: 'activeChannelId',
@@ -23,7 +24,7 @@ export const channelListAtom = atom({
 
 const defaultActiveChannelInfo: PriceChannelViewStruct = {
   channelId: "NaN",
-  token0: "NaN",
+  token0: PUSD_ADDRESS[0],
   unit: "NaN",
   reward: "NaN",
   rewardPerBlock: "NaN",
@@ -35,7 +36,9 @@ const defaultActiveChannelInfo: PriceChannelViewStruct = {
   genesisBlock: "NaN",
   singleFee: "NaN",
   reductionRate: "NaN",
-  pairs: [],
+  pairs: [
+    {target: PUSD_ADDRESS[0], sheetCount: "NaN"}
+  ],
 }
 
 export const activeChannelInfoAtom = atom({

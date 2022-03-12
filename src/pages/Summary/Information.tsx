@@ -14,7 +14,7 @@ import {BigNumberish} from "@ethersproject/bignumber";
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
-  const { symbol: miningTokenSymbol } = useToken(info?.pairs[0].target)
+  const { symbol: miningTokenSymbol } = useToken(info.pairs[0].target)
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
@@ -68,7 +68,7 @@ const Information = () => {
           title={'Price Token'}
           value={info.token0}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.token0, ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info.token0, ExplorerDataType.TOKEN)}
         />
         <InformationDetail
           title={'Price Calling Fee'}
