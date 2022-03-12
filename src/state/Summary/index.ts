@@ -37,6 +37,7 @@ const defaultActiveChannelInfo: PriceChannelViewStruct = {
   singleFee: "NaN",
   reductionRate: "NaN",
   pairs: [
+    {target: PUSD_ADDRESS[0], sheetCount: "NaN"},
     {target: PUSD_ADDRESS[0], sheetCount: "NaN"}
   ],
 }
