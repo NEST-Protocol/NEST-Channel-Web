@@ -6,83 +6,87 @@ import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
 import { isAddress, shortenAddress } from '../../utils'
 import { PROCESSING } from '../../constants/misc'
 import { CHAIN_INFO } from '../../constants/chains'
-import { formatNumber } from '../../utils/bignumberUtil'
+import {formatNumber, parseToBigNumber} from '../../utils/bignumberUtil'
 import { PUSD_ADDRESS } from '../../constants/addresses'
 import { useToken } from '../../hooks/Tokens'
+import {BigNumberish} from "@ethersproject/bignumber";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
-  const { symbol: miningTokenSymbol } = useToken(info?.reward)
-
+  const { symbol: miningTokenSymbol } = useToken(info?.pairs[0].target)
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
       <Wrap justify={'space-between'}>
-        <InformationDetail title={'ChannelId'} value={formatNumber(info?.channelId)} loading={status === PROCESSING} />
+        <InformationDetail
+          title={'ChannelId'}
+          value={formatNumber(info.channelId)}
+          loading={status === PROCESSING}
+        />
         <InformationDetail
           title={'Number of Quotes'}
-          value={formatNumber(info?.sheetCount)}
+          value={formatNumber(info.pairs[0].sheetCount)}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Fee Balance'}
-          value={formatNumber(info?.feeInfo)}
+          value={formatNumber(parseToBigNumber(info.rewards).shiftedBy(-18))}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Standard Output'}
-          value={formatNumber(info?.rewardPerBlock)}
+          value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
           unit={miningTokenSymbol + '/Block'}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Total Mining Token'}
-          value={formatNumber(info?.vault)}
+          value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-18))}
           // unit={miningTokenSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Mining Token'}
-          value={info?.reward}
+          value={info.pairs[0].target}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.reward ?? 'NaN', ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info.pairs[0].target, ExplorerDataType.TOKEN)}
         />
         <InformationDetail
           title={'Initial Block'}
-          value={formatNumber(info?.genesisBlock)}
+          value={formatNumber(info.genesisBlock)}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Quotation Fee'}
-          value={formatNumber(info?.postFeeUnit)}
+          value={formatNumber(info.postFeeUnit)}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Price Token'}
-          value={info?.token0}
+          value={info.token0}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.token0 ?? 'NaN', ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info?.token0, ExplorerDataType.TOKEN)}
         />
         <InformationDetail
           title={'Price Calling Fee'}
-          value={formatNumber(info?.singleFee)}
+          value={formatNumber(parseToBigNumber(info.singleFee).shiftedBy(-4))}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Attenuation Factor'}
-          value={formatNumber(info?.reductionRate)}
+          value={formatNumber(parseToBigNumber(info.reductionRate).shiftedBy(-2))}
           unit={'%'}
           loading={status === PROCESSING}
         />
         <InformationDetail
           title={'Quotation Token'}
-          value={info?.token1}
+          value={info.pairs[0].target}
           loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info?.token1 ?? 'NaN', ExplorerDataType.TOKEN)}
+          link={getExplorerLink(Number(chainId), info.pairs[0].target ?? 'NaN', ExplorerDataType.TOKEN)}
         />
       </Wrap>
     </Stack>
@@ -91,7 +95,7 @@ const Information = () => {
 
 type InformationDetailProps = {
   title: string
-  value: string | number | undefined
+  value: string | number | undefined | BigNumberish
   unit?: string
   link?: string
   loading?: boolean

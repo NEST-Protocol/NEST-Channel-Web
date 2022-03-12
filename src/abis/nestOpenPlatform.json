@@ -23,12 +23,6 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "token1",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "reward",
         "type": "address"
       }
@@ -43,6 +37,12 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -89,6 +89,24 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "addPair",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "tokenAddress",
         "type": "address"
@@ -119,11 +137,11 @@
       },
       {
         "internalType": "address",
-        "name": "newGovernance",
+        "name": "newOpener",
         "type": "address"
       }
     ],
-    "name": "changeGovernance",
+    "name": "changeOpener",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -136,9 +154,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256[]",
+        "internalType": "uint256[][]",
         "name": "indices",
-        "type": "uint256[]"
+        "type": "uint256[][]"
       }
     ],
     "name": "close",
@@ -154,9 +172,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint96",
+        "internalType": "uint128",
         "name": "vault",
-        "type": "uint96"
+        "type": "uint128"
       }
     ],
     "name": "decrease",
@@ -209,6 +227,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256[]",
+        "name": "pairIndices",
+        "type": "uint256[]"
+      },
+      {
         "internalType": "uint256",
         "name": "height",
         "type": "uint256"
@@ -222,14 +245,9 @@
     "name": "findPrice",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "blockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "payable",
@@ -240,6 +258,11 @@
       {
         "internalType": "uint256",
         "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -314,16 +337,6 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "sheetCount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "feeInfo",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "token0",
             "type": "address"
@@ -335,7 +348,7 @@
           },
           {
             "internalType": "address",
-            "name": "token1",
+            "name": "reward",
             "type": "address"
           },
           {
@@ -344,29 +357,34 @@
             "type": "uint96"
           },
           {
-            "internalType": "address",
-            "name": "reward",
-            "type": "address"
+            "internalType": "uint128",
+            "name": "vault",
+            "type": "uint128"
           },
           {
             "internalType": "uint96",
-            "name": "vault",
+            "name": "rewards",
             "type": "uint96"
           },
           {
+            "internalType": "uint16",
+            "name": "postFeeUnit",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "count",
+            "type": "uint16"
+          },
+          {
             "internalType": "address",
-            "name": "governance",
+            "name": "opener",
             "type": "address"
           },
           {
             "internalType": "uint32",
             "name": "genesisBlock",
             "type": "uint32"
-          },
-          {
-            "internalType": "uint16",
-            "name": "postFeeUnit",
-            "type": "uint16"
           },
           {
             "internalType": "uint16",
@@ -377,9 +395,26 @@
             "internalType": "uint16",
             "name": "reductionRate",
             "type": "uint16"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "target",
+                "type": "address"
+              },
+              {
+                "internalType": "uint96",
+                "name": "sheetCount",
+                "type": "uint96"
+              }
+            ],
+            "internalType": "struct INestBatchMining.PairView[]",
+            "name": "pairs",
+            "type": "tuple[]"
           }
         ],
-        "internalType": "struct INestOpenMining.PriceChannelView",
+        "internalType": "struct INestBatchMining.PriceChannelView",
         "name": "",
         "type": "tuple"
       }
@@ -409,7 +444,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct INestOpenMining.Config",
+        "internalType": "struct INestBatchMining.Config",
         "name": "",
         "type": "tuple"
       }
@@ -454,9 +489,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint96",
+        "internalType": "uint128",
         "name": "vault",
-        "type": "uint96"
+        "type": "uint128"
       }
     ],
     "name": "increase",
@@ -487,7 +522,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "nestGovernanceAddress",
+        "name": "governance",
         "type": "address"
       }
     ],
@@ -504,6 +539,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256[]",
+        "name": "pairIndices",
+        "type": "uint256[]"
+      },
+      {
         "internalType": "uint256",
         "name": "count",
         "type": "uint256"
@@ -518,7 +558,7 @@
     "outputs": [
       {
         "internalType": "uint256[]",
-        "name": "",
+        "name": "prices",
         "type": "uint256[]"
       }
     ],
@@ -530,6 +570,11 @@
       {
         "internalType": "uint256",
         "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -558,51 +603,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "count",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "payback",
-        "type": "address"
-      }
-    ],
-    "name": "lastPriceListAndTriggeredPriceInfo",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "prices",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceBlockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredPriceValue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredAvgPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "triggeredSigmaSQ",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -648,29 +649,15 @@
         "internalType": "uint256",
         "name": "channelId",
         "type": "uint256"
-      }
-    ],
-    "name": "latestPrice",
-    "outputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "blockNumber",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "pairIndices",
+        "type": "uint256[]"
       },
       {
         "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
+        "name": "count",
         "type": "uint256"
       },
       {
@@ -679,17 +666,12 @@
         "type": "address"
       }
     ],
-    "name": "latestPrice",
+    "name": "lastPriceListAndTriggeredPriceInfo",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "blockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "payable",
@@ -700,6 +682,11 @@
       {
         "internalType": "uint256",
         "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -773,7 +760,7 @@
             "type": "uint152"
           }
         ],
-        "internalType": "struct INestOpenMining.PriceSheetView[]",
+        "internalType": "struct INestBatchMining.PriceSheetView[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -811,7 +798,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct INestOpenMining.ChannelConfig",
+        "internalType": "struct INestBatchMining.ChannelConfig",
         "name": "config",
         "type": "tuple"
       }
@@ -839,9 +826,9 @@
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "token1",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "tokens",
+        "type": "address[]"
       },
       {
         "components": [
@@ -866,7 +853,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct INestOpenMining.ChannelConfig",
+        "internalType": "struct INestBatchMining.ChannelConfig",
         "name": "config",
         "type": "tuple"
       }
@@ -912,9 +899,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "equivalent",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "equivalents",
+        "type": "uint256[]"
       }
     ],
     "name": "post",
@@ -942,7 +929,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct INestOpenMining.Config",
+        "internalType": "struct INestBatchMining.Config",
         "name": "config",
         "type": "tuple"
       }
@@ -958,18 +945,10 @@
         "internalType": "uint256",
         "name": "channelId",
         "type": "uint256"
-      }
-    ],
-    "name": "stat",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
         "internalType": "uint256",
-        "name": "channelId",
+        "name": "pairIndex",
         "type": "uint256"
       },
       {
@@ -988,35 +967,7 @@
         "type": "uint256"
       }
     ],
-    "name": "takeToken0",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "takeNum",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newEquivalent",
-        "type": "uint256"
-      }
-    ],
-    "name": "takeToken1",
+    "name": "take",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -1046,6 +997,40 @@
         "internalType": "uint256",
         "name": "channelId",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "pairIndices",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address",
+        "name": "payback",
+        "type": "address"
+      }
+    ],
+    "name": "triggeredPrice",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pairIndex",
+        "type": "uint256"
       }
     ],
     "name": "triggeredPrice",
@@ -1072,71 +1057,8 @@
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "payback",
-        "type": "address"
-      }
-    ],
-    "name": "triggeredPrice",
-    "outputs": [
-      {
         "internalType": "uint256",
-        "name": "blockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "payback",
-        "type": "address"
-      }
-    ],
-    "name": "triggeredPriceInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "blockNumber",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "avgPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "sigmaSQ",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "channelId",
+        "name": "pairIndex",
         "type": "uint256"
       }
     ],
@@ -1169,8 +1091,37 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "channelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "pairIndices",
+        "type": "uint256[]"
+      },
+      {
         "internalType": "address",
-        "name": "nestGovernanceAddress",
+        "name": "payback",
+        "type": "address"
+      }
+    ],
+    "name": "triggeredPriceInfo",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newGovernance",
         "type": "address"
       }
     ],

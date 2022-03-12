@@ -48,7 +48,7 @@ export const useActiveChannelList = () => {
             list.push(info)
           })
         }
-        setChannelList(list)
+        setChannelList([list[0]])
       }
     } catch (e) {
       setChannelList([])

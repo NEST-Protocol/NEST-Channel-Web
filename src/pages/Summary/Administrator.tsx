@@ -29,7 +29,7 @@ const Administrator = () => {
   const { info, status } = useActiveChannelInfo()
   const { account } = useActiveWeb3React()
 
-  if (info?.governance !== account) {
+  if (info.opener !== account) {
     return <></>
   }
 
@@ -39,8 +39,8 @@ const Administrator = () => {
         Administrator
       </Text>
       <Stack direction={'row'} spacing={'44px'}>
-        <DepositPopover isLoading={status === PROCESSING} tokenAddress={info?.reward} />
-        <WithdrawPopover isLoading={status === PROCESSING} tokenAddress={info?.reward} />
+        <DepositPopover isLoading={status === PROCESSING} tokenAddress={info.pairs[0].target} />
+        <WithdrawPopover isLoading={status === PROCESSING} tokenAddress={info.pairs[0].target} />
         <WithdrawFeePopover isLoading={status === PROCESSING} />
       </Stack>
     </Stack>
@@ -365,7 +365,7 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
                 setAmount(parseToNumber(valueString, CHAIN_INFO[chainId ?? 1].nativeSymbol))
               }}
               value={formatWithUnit(amount, CHAIN_INFO[chainId ?? 1].nativeSymbol)}
-              max={Number(info?.feeInfo)}
+              max={parseToBigNumber(info.rewards).toNumber()}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
