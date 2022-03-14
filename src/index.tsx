@@ -24,6 +24,18 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     box-shadow: none;
   }
+
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+  }
 `
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
