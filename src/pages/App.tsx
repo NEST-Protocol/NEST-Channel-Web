@@ -6,7 +6,6 @@ import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
 import NetworkCard from '../components/NetworkCard'
-import { GoogleAnalyticsReporter } from '../components/analytics/GoogleAnalyticsReporter'
 
 export const App = () => {
   return (
@@ -43,7 +42,6 @@ const Content = () => {
   return (
     <Stack background={'rgba(255,255,255, 0.5)'} borderRadius={'20px'} w={'container.xl'} h={'full'}>
       <Routes>
-        <Route element={<GoogleAnalyticsReporter />} />
         <Route path="/" element={<Summary />} />
         <Route path="/create" element={<OpenChanel />} />
         <Route />
