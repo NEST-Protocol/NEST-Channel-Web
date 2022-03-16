@@ -13,7 +13,6 @@ import Index from './components/Background'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary'
 import { NetworkContextName } from './constants/misc'
-import GA4React from 'ga-4-react'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -39,10 +38,6 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
-
-const ga4 = new GA4React('G-63N6Q4E6NL')
-
-ga4.initialize()
 
 const Updaters = () => {
   return <></>
