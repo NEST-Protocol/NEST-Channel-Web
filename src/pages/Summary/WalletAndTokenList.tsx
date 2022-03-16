@@ -1,18 +1,18 @@
-import { Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box } from '@chakra-ui/react'
-import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box} from '@chakra-ui/react'
+import {FC, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
-import { useActiveChannelList } from '../../hooks/useActiveChannelList'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo } from '../../state/Summary'
-import { useActiveWeb3React } from '../../hooks/web3'
-import { useToken } from '../../hooks/Tokens'
+import {useActiveChannelList} from '../../hooks/useActiveChannelList'
+import {useRecoilState, useRecoilValue} from 'recoil'
+import {activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo} from '../../state/Summary'
+import {useActiveWeb3React} from '../../hooks/web3'
+import {useToken} from '../../hooks/Tokens'
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
   const channelList = useActiveChannelList()
   const [searchText, setSearchText] = useState('')
-  const { account } = useActiveWeb3React()
+  const {account} = useActiveWeb3React()
   const activeChannelInfo = useRecoilValue(activeChannelInfoAtom)
   const toast = useToast()
 
@@ -22,7 +22,7 @@ const WalletAndTokenList = () => {
 
   return (
     <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'20px'} p={'20px'} spacing={'24px'}>
-      <Web3Status />
+      <Web3Status/>
 
       <Input
         variant="filled"
@@ -34,6 +34,14 @@ const WalletAndTokenList = () => {
       />
 
       <Stack overflow={'scroll'} h={activeChannelInfo.opener === account ? '490px' : '414px'}>
+        <Stack direction={"row"} fontWeight={'bold'} fontSize={"sm"}>
+          <Text>Channel</Text>
+          <Divider orientation={"vertical"}/>
+          <Text>Price</Text>
+          <Divider orientation={"vertical"}/>
+          <Text>Quote</Text>
+        </Stack>
+        <Divider/>
         {channelList.filter(handleSearch).map((channel) => (
           <ChannelListItem
             key={channel.channelId}
@@ -43,7 +51,7 @@ const WalletAndTokenList = () => {
           />
         ))}
       </Stack>
-      <Spacer />
+      <Spacer/>
       <Button
         variant={'outline'}
         onClick={() => {
@@ -81,9 +89,9 @@ type ChannelListItemProps = {
   token1: string
 }
 
-const ChannelListItem: FC<ChannelListItemProps> = ({ ...props }) => {
-  const { symbol: token0 } = useToken(props.token0)
-  const { symbol: token1 } = useToken(props.token1)
+const ChannelListItem: FC<ChannelListItemProps> = ({...props}) => {
+  const {symbol: token0} = useToken(props.token0)
+  const {symbol: token1} = useToken(props.token1)
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
 
   return (
@@ -99,7 +107,7 @@ const ChannelListItem: FC<ChannelListItemProps> = ({ ...props }) => {
         >
           {props.channelId} : {token0} / {token1}
         </Text>
-        <Divider color={'secondary.400'} />
+        <Divider color={'secondary.400'}/>
       </Skeleton>
     </Stack>
   )
