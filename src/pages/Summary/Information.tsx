@@ -15,6 +15,7 @@ const Information = () => {
   const { chainId } = useActiveWeb3React()
   const { info, status } = useActiveChannelInfo()
   const { symbol: miningTokenSymbol } = useToken(info.pairs[1]?.target)
+  const { symbol: priceTokenSymbol } = useToken(info.token0)
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
@@ -32,8 +33,9 @@ const Information = () => {
         />
         <InformationDetail
             title={'Price Token Unit'}
-            value={""}
+            value={formatNumber(parseToBigNumber(info.unit).shiftedBy(-18))}
             loading={status === PROCESSING}
+            unit={priceTokenSymbol}
         />
         <InformationDetail
             title={'Mining Token'}
