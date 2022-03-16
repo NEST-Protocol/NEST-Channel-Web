@@ -25,61 +25,66 @@ const Information = () => {
           loading={status === PROCESSING}
         />
         <InformationDetail
+            title={'Price Token'}
+            value={info.token0}
+            loading={status === PROCESSING}
+            link={getExplorerLink(Number(chainId), info.token0, ExplorerDataType.TOKEN)}
+        />
+        <InformationDetail
+            title={'Price Token Unit'}
+            value={""}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
+            title={'Mining Token'}
+            value={info.pairs[1]?.target}
+            loading={status === PROCESSING}
+            link={getExplorerLink(Number(chainId), info.pairs[1]?.target, ExplorerDataType.TOKEN)}
+        />
+        <InformationDetail
+            title={'Standard Output'}
+            value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
+            unit={miningTokenSymbol + '/Block'}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
+            title={'Attenuation Factor'}
+            value={formatNumber(parseToBigNumber(info.reductionRate).shiftedBy(-2))}
+            unit={'%'}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
+            title={'Initial Block'}
+            value={formatNumber(info.genesisBlock)}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
           title={'Number of Quotes'}
           value={formatNumber(info.pairs[1]?.sheetCount)}
           loading={status === PROCESSING}
         />
         <InformationDetail
+            title={'Total Mining Token'}
+            value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-18))}
+            // unit={miningTokenSymbol}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
+            title={'Quotation Fee'}
+            value={formatNumber(info.postFeeUnit)}
+            unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
+            title={'Price Calling Fee'}
+            value={formatNumber(parseToBigNumber(info.singleFee).shiftedBy(-4))}
+            unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
+            loading={status === PROCESSING}
+        />
+        <InformationDetail
           title={'Fee Balance'}
           value={formatNumber(parseToBigNumber(info.rewards).shiftedBy(-18))}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Standard Output'}
-          value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
-          unit={miningTokenSymbol + '/Block'}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Total Mining Token'}
-          value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-18))}
-          // unit={miningTokenSymbol}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Mining Token'}
-          value={info.pairs[1]?.target}
-          loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info.pairs[1]?.target, ExplorerDataType.TOKEN)}
-        />
-        <InformationDetail
-          title={'Initial Block'}
-          value={formatNumber(info.genesisBlock)}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Quotation Fee'}
-          value={formatNumber(info.postFeeUnit)}
-          unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Price Token'}
-          value={info.token0}
-          loading={status === PROCESSING}
-          link={getExplorerLink(Number(chainId), info.token0, ExplorerDataType.TOKEN)}
-        />
-        <InformationDetail
-          title={'Price Calling Fee'}
-          value={formatNumber(parseToBigNumber(info.singleFee).shiftedBy(-4))}
-          unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Attenuation Factor'}
-          value={formatNumber(parseToBigNumber(info.reductionRate).shiftedBy(-2))}
-          unit={'%'}
           loading={status === PROCESSING}
         />
         <InformationDetail
@@ -133,9 +138,9 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
         </Text>
         <Spacer />
         {props.link ? (
-          <Tooltip label={symbolName} bg={'white'} borderRadius={'full'} color={'black'}>
+          <Tooltip label={shortenAddress(String(props.value))} bg={'white'} borderRadius={'full'} color={'link.500'} whiteSpace={"nowrap"}>
             <Link href={props.link} isExternal color={'link.500'} fontWeight={'bold'}>
-              {shortenAddress(props.value.toString())} {props.unit}
+              {symbolName}
             </Link>
           </Tooltip>
         ) : (
