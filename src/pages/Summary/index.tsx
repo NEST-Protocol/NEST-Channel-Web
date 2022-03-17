@@ -8,7 +8,7 @@ const Root = () => {
   return (
     <Stack p={'20px'} spacing={'20px'} direction={'row'}>
       <WalletAndTokenList />
-      <Stack spacing={'20px'}>
+      <Stack spacing={'20px'} maxW={'996px'}>
         <Information />
         <Administrator />
         <QuotationFrequency />

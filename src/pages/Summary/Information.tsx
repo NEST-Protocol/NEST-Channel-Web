@@ -164,7 +164,7 @@ type QuotationTokenItemProps = {
 const QuotationTokenItem: FC<QuotationTokenItemProps> = ({...props}) => {
   const {symbol: symbolName} = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   return (
-    <Stack direction={"row"} alignItems={"center"}>
+    <Stack direction={"row"} alignItems={"center"} minW={'80px'}>
       <TokenIcon symbol={symbolName}/>
       <Text>{symbolName}</Text>
     </Stack>
@@ -201,13 +201,14 @@ const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
         whiteSpace={'nowrap'}
         overflow={'hidden'}
         textOverflow={'ellipsis'}
-        w={'200px'}
+        minW={'180px'}
       >
         Quotation Token
       </Text>
-      <Stack spacing={'20px'} direction={"row"}>
+      <Stack spacing={'20px'} direction={"row"} overflowX={"scroll"}>
         {props.value.map((item, index) => (
-          <Tooltip key={index} label={shortenAddress(String(item.target))} bg={'white'} borderRadius={'full'} color={'link.500'}
+          <Tooltip key={index} label={shortenAddress(String(item.target))} bg={'white'} borderRadius={'full'}
+                   color={'link.500'}
                    whiteSpace={"nowrap"}>
             <Link href={getExplorerLink(Number(chainId), item.target ?? 'NaN', ExplorerDataType.TOKEN)} isExternal
                   color={'link.600'} fontWeight={'bold'}>
