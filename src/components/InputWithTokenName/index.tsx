@@ -6,10 +6,10 @@ import {PUSD_ADDRESS} from "../../constants/addresses";
 import {PROCESSING} from "../../constants/misc";
 import {quotationTokenListAtom} from "../../state/Create/form";
 import {useRecoilState} from "recoil";
+import Delete from '../../assets/svg/delete.svg'
 
 type InputWithTokenNameProps = {
   address?: string
-  index?: number
   isReadOnly?: boolean
 }
 
@@ -17,6 +17,11 @@ type InputWithTokenNameProps = {
 const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
   const [address, setAddress] = useState(props.address || '')
   const [quotationTokenList, setQuotationTokenList] = useRecoilState(quotationTokenListAtom)
+
+  const deleteToken = () => {
+    const filtered = quotationTokenList.filter((address) => address !== props.address)
+    setQuotationTokenList(filtered)
+  }
 
   return (
     <Stack direction={"row"} spacing={0}>
@@ -51,8 +56,10 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
             }/>
         </InputGroup>
       </FormControl>
-      <Stack w={100}>
-
+      <Stack w={100} justifyContent={"center"} pl={'12px'}>
+        { props.isReadOnly && (
+          <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteToken}/>
+        ) }
       </Stack>
     </Stack>
   )

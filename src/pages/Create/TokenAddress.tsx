@@ -23,8 +23,8 @@ const TokenAddress = () => {
         <Text fontWeight={'600'} ml={'116px'} color={'secondary.500'}>
           Quotation Token:
         </Text>
-        { quotationTokenList.map((item: string, index) => (
-          <InputWithTokenName address={item} index={index} isReadOnly={true}/>
+        { quotationTokenList.map((address: string) => (
+          <InputWithTokenName key={address} address={address} isReadOnly={true}/>
         )) }
         <InputWithTokenName />
       </Stack>

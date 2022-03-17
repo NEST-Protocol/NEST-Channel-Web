@@ -120,10 +120,9 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
       {props.tokens && (
         <Stack spacing={'20px'}>
           { props.tokens.map((address, index)=> (
-            <Stack direction={"row"} w={'220px'} justifyContent={"space-between"}>
+            <Stack key={index} direction={"row"} w={'220px'} justifyContent={"space-between"}>
               <TokenName address={address} hasParentheses color={'secondary.500'}/>
               <Link
-                key={index}
                 href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                 isExternal
                 color={!isAddress(address) ? 'primary.500' : 'link.500'}
