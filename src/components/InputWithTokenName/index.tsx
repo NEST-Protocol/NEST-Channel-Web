@@ -13,12 +13,12 @@ type InputWithTokenNameProps = {
   isReadOnly?: boolean
 }
 
-
 const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
   const [address, setAddress] = useState(props.address || '')
   const [quotationTokenList, setQuotationTokenList] = useRecoilState(quotationTokenListAtom)
+  const [valid, setValid] = useState(true)
 
-  const deleteToken = () => {
+  const deleteItem = () => {
     const filtered = quotationTokenList.filter((address) => address !== props.address)
     setQuotationTokenList(filtered)
   }
@@ -35,15 +35,23 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
             variant={'filled'}
             fontSize={address === '' ? '15px' : '17px'}
             placeholder={'Input Token Address'}
+            isInvalid={!valid}
             errorBorderColor={'primary.500'}
             onChange={(event) => {
               setAddress(event.target.value)
               if (isAddress(event.target.value)){
                 const searchIndex = quotationTokenList.indexOf(event.target.value)
                 if (searchIndex === -1) {
+                  setValid(true)
                   setQuotationTokenList([...quotationTokenList, event.target.value])
                   setAddress('')
+                } else {
+                  setValid(false)
                 }
+              } else if (event.target.value === '') {
+                setValid(true)
+              } else {
+                setValid(false)
               }
             }}
             value={address}
@@ -58,7 +66,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
       </FormControl>
       <Stack w={100} justifyContent={"center"} pl={'12px'}>
         { props.isReadOnly && (
-          <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteToken}/>
+          <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem}/>
         ) }
       </Stack>
     </Stack>
