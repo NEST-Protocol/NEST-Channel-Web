@@ -105,7 +105,7 @@ const ChannelListItem: FC<ChannelListItemProps> = ({...props}) => {
             setActiveChannelId(props.channelId)
           }}
         >
-          {props.channelId} : {token0} / {token1}
+          {props.channelId} / {token0} / {token1}
         </Text>
         <Divider color={'secondary.400'}/>
       </Skeleton>
