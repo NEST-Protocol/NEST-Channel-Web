@@ -10,8 +10,10 @@ export const useToken = (tokenAddress: string) => {
   const { library } = useActiveWeb3React()
   const contract = useTokenContract(tokenAddress, true)
   const [approveStatus, setApproveStatus] = useState(IDLE)
-  const [symbol, setSymbol] = useState('NaN')
+  const [fetchStatus, setFetchStatus] = useState(IDLE)
+  const [symbol, setSymbol] = useState('')
   const { chainId } = useActiveWeb3React()
+
 
   const fetch = useCallback(async () => {
     if (tokenAddress === ZERO_ADDRESS) {
@@ -19,14 +21,27 @@ export const useToken = (tokenAddress: string) => {
       return
     }
     try {
+      setFetchStatus(PROCESSING)
       const res = await contract?.symbol()
       if (res) {
         setSymbol(res)
+        setFetchStatus(SUCCESS)
+        setTimeout(() => {
+          setFetchStatus(IDLE)
+        }, IDLE_DELAY)
       } else {
-        setSymbol('NaN')
+        setSymbol('')
+        setFetchStatus(ERROR)
+        setTimeout(() => {
+          setFetchStatus(IDLE)
+        }, IDLE_DELAY)
       }
     } catch (e) {
       setSymbol('Error')
+      setFetchStatus(ERROR)
+      setTimeout(() => {
+        setFetchStatus(IDLE)
+      }, IDLE_DELAY)
     }
   }, [chainId, contract, tokenAddress])
 
@@ -80,5 +95,6 @@ export const useToken = (tokenAddress: string) => {
     balanceOf,
     approve,
     approveStatus,
+    fetchStatus,
   }
 }

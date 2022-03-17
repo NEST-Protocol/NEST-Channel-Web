@@ -8,13 +8,12 @@ import {
   priceTokenNameAtom,
   priceTokenUnitAtom,
   quotationFeeAtom,
-  quotationTokenAddressAtom,
+  quotationTokenListAtom,
   standardOutputAtom,
   statusAtom,
 } from '../state/Create/form'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
-import { isAddress } from '../utils'
 import { useNestOpenPlatformContract } from './useContract'
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { useActiveWeb3React } from './web3'
@@ -22,7 +21,7 @@ import { parseToBigNumber } from '../utils/bignumberUtil'
 import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
 
 export const useCreateChannel = () => {
-  const quotationTokenAddress = useRecoilValue(quotationTokenAddressAtom)
+  const quotationTokenList = useRecoilValue(quotationTokenListAtom)
   const priceTokenName = useRecoilValue(priceTokenNameAtom)
   const miningTokenAddress = useRecoilValue(miningTokenAddressAtom)
   const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
@@ -51,18 +50,18 @@ export const useCreateChannel = () => {
     }
   }, [chainId, priceTokenName, setPriceTokenAddress])
 
-  useEffect(() => {
-    if (
-      isAddress(quotationTokenAddress) &&
-      isAddress(miningTokenAddress) &&
-      (priceTokenName === 'PETH' || priceTokenName === 'PUSD') &&
-      quotationTokenAddress !== priceTokenAddress
-    ) {
-      setInvalidTokenAddress(false)
-    } else {
-      setInvalidTokenAddress(true)
-    }
-  }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
+  // useEffect(() => {
+  //   if (
+  //     isAddress(quotationTokenList) &&
+  //     isAddress(miningTokenAddress) &&
+  //     (priceTokenName === 'PETH' || priceTokenName === 'PUSD') &&
+  //     quotationTokenList !== priceTokenAddress
+  //   ) {
+  //     setInvalidTokenAddress(false)
+  //   } else {
+  //     setInvalidTokenAddress(true)
+  //   }
+  // }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
 
   useEffect(() => {
     if (
@@ -99,7 +98,7 @@ export const useCreateChannel = () => {
       // 出矿代币地址 address
       reward: miningTokenAddress,
       // 报价代币地址 address
-      token1: quotationTokenAddress,
+      token1: quotationTokenList,
     }
 
     try {

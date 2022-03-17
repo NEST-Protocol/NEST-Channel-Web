@@ -3,9 +3,11 @@ import { IDLE } from '../../constants/misc'
 
 // Step 1: Token Address
 // 报价代币，0表示eth，address
-export const quotationTokenAddressAtom = atom({
-  key: 'quotationTokenAddress',
-  default: '',
+const defaultQuotationTokenList: string[] = []
+
+export const quotationTokenListAtom = atom({
+  key: 'quotationTokenList',
+  default: defaultQuotationTokenList,
 })
 
 // 计价代币
