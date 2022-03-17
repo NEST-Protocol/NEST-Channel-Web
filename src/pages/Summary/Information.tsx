@@ -10,6 +10,7 @@ import {formatNumber, parseToBigNumber} from '../../utils/bignumberUtil'
 import {PUSD_ADDRESS} from '../../constants/addresses'
 import {useToken} from '../../hooks/Tokens'
 import {BigNumberish} from "@ethersproject/bignumber";
+import TokenIcon from "../../components/TokenIcon";
 
 const Information = () => {
   const {chainId} = useActiveWeb3React()
@@ -29,7 +30,7 @@ const Information = () => {
           title={'Price Token'}
           value={info.token0}
           loading={status === PROCESSING}
-          link
+          isToken
         />
         <InformationDetail
           title={'Price Token Unit'}
@@ -41,7 +42,7 @@ const Information = () => {
           title={'Mining Token'}
           value={info.pairs[1]?.target}
           loading={status === PROCESSING}
-          link
+          isToken
         />
         <InformationDetail
           title={'Standard Output'}
@@ -100,7 +101,7 @@ type InformationDetailProps = {
   value: string | number | undefined | BigNumberish
   unit?: string
   loading?: boolean
-  link?: boolean
+  isToken?: boolean
 }
 
 const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
@@ -134,12 +135,15 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
           {props.title}
         </Text>
         <Spacer/>
-        {props.link ? (
+        {props.isToken ? (
           <Tooltip label={shortenAddress(String(props.value))} bg={'white'} borderRadius={'full'} color={'link.500'}
                    whiteSpace={"nowrap"}>
             <Link href={getExplorerLink(Number(chainId), String(props.value), ExplorerDataType.TOKEN)} isExternal
-                  color={'link.500'} fontWeight={'bold'}>
-              {symbolName}
+                  color={'link.600'} fontWeight={'bold'}>
+              <Stack direction={"row"} alignItems={"center"}>
+                <TokenIcon symbol={symbolName}/>
+                <Text>{symbolName}</Text>
+              </Stack>
             </Link>
           </Tooltip>
         ) : (
@@ -160,7 +164,10 @@ type QuotationTokenItemProps = {
 const QuotationTokenItem: FC<QuotationTokenItemProps> = ({...props}) => {
   const {symbol: symbolName} = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   return (
-    <Text>{symbolName}</Text>
+    <Stack direction={"row"} alignItems={"center"}>
+      <TokenIcon symbol={symbolName}/>
+      <Text>{symbolName}</Text>
+    </Stack>
   )
 }
 
@@ -198,15 +205,17 @@ const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
       >
         Quotation Token
       </Text>
-      {props.value.map((item, index) => (
-        <Tooltip key={index} label={shortenAddress(String(item.target))} bg={'white'} borderRadius={'full'} color={'link.500'}
-                 whiteSpace={"nowrap"}>
-          <Link href={getExplorerLink(Number(chainId), item.target ?? 'NaN', ExplorerDataType.TOKEN)} isExternal
-                color={'link.500'} fontWeight={'bold'}>
-            <QuotationTokenItem value={item.target}/>
-          </Link>
-        </Tooltip>
-      ))}
+      <Stack spacing={'20px'} direction={"row"}>
+        {props.value.map((item, index) => (
+          <Tooltip key={index} label={shortenAddress(String(item.target))} bg={'white'} borderRadius={'full'} color={'link.500'}
+                   whiteSpace={"nowrap"}>
+            <Link href={getExplorerLink(Number(chainId), item.target ?? 'NaN', ExplorerDataType.TOKEN)} isExternal
+                  color={'link.600'} fontWeight={'bold'}>
+              <QuotationTokenItem value={item.target}/>
+            </Link>
+          </Tooltip>
+        ))}
+      </Stack>
     </Stack>
   )
 }

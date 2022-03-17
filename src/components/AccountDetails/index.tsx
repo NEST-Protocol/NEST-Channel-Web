@@ -3,10 +3,10 @@ import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import { Button, Link, Spacer, Stack, Text } from '@chakra-ui/react'
 import { useActiveWeb3React } from '../../hooks/web3'
 import styled from 'styled-components'
-import WalletConnectIcon from '../../assets/image/walletConnectIcon.svg'
+import WalletConnectIcon from '../../assets/svg/walletConnectIcon.svg'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { shortenAddress } from '../../utils'
-import MetamaskIcon from '../../assets/image/metamask.png'
+import MetamaskIcon from '../../assets/svg/metamask.svg'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};

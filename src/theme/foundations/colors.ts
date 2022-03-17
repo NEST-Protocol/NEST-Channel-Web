@@ -10,5 +10,6 @@ export const colors = {
   },
   link: {
     500: '#00B7EE',
+    600: '#0047BB',
   },
 }
