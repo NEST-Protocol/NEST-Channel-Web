@@ -113,6 +113,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   useEffect(()=>{
     const lists = [...channelList]
     setChannelList(lists.map((pair)=> pair.channelId === props.channelId ? {...pair, pairs: info.pairs.map(({target})=> target)} : pair))
+    // eslint-disable-next-line
   }, [info.pairs, props.channelId, setChannelList])
 
   return (
