@@ -39,8 +39,8 @@ const Administrator = () => {
         Administrator
       </Text>
       <Stack direction={'row'} spacing={'44px'}>
-        <DepositPopover isLoading={status === PROCESSING} tokenAddress={info.pairs[0].target} />
-        <WithdrawPopover isLoading={status === PROCESSING} tokenAddress={info.pairs[0].target} />
+        <DepositPopover isLoading={status === PROCESSING} tokenAddress={info.reward} />
+        <WithdrawPopover isLoading={status === PROCESSING} tokenAddress={info.reward} />
         <WithdrawFeePopover isLoading={status === PROCESSING} />
       </Stack>
     </Stack>
@@ -61,16 +61,16 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { refresh: refreshChannelInfo } = useChannelInfo(channelId)
   const { balanceOf, approve, approveStatus, symbol: tokenSymbol, allowance } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
-  const [balance, setBalance] = useState('')
+  const [balance, setBalance] = useState(0)
   const [allowanceAmount, setAllowanceAmount] = useState(0)
 
   const refresh = useCallback(async () => {
     if (!account) {
-      setBalance('NaN')
+      setBalance(0)
       return
     }
     setAllowanceAmount(parseToBigNumber(await allowance(account, NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 56])).toNumber())
-    setBalance(formatNumber(parseToBigNumber(await balanceOf(account))))
+    setBalance(parseToBigNumber(await balanceOf(account)).toNumber())
   }, [account, allowance, balanceOf, chainId])
 
   useEffect(() => {
@@ -140,7 +140,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
                 setAmount(parseToNumber(valueString, tokenSymbol))
               }}
               value={formatWithUnit(amount, tokenSymbol)}
-              max={Number(balance)}
+              max={balance}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
@@ -149,7 +149,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
               <NumberInputField />
             </NumberInput>
             <Text fontWeight={'bold'} fontSize={'sm'} color={'secondary'} textAlign={'center'}>
-              Balance (myself): {balance} {tokenSymbol}
+              Balance (myself): {formatNumber(balance)} {tokenSymbol}
             </Text>
             {props.tokenAddress !== ZERO_ADDRESS && (
               <Button
