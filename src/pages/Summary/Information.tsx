@@ -217,6 +217,12 @@ const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
           </Tooltip>
         ))}
       </Stack>
+      <Spacer/>
+      <Stack>
+        { props.value.length >= 8 && (
+          <Text>...</Text>
+        ) }
+      </Stack>
     </Stack>
   )
 }
