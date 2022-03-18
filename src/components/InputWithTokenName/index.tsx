@@ -68,22 +68,6 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
                 setValid(true)
               } else {
                 setValid(false)
-                toast({
-                  position: 'top',
-                  render: () => (
-                    <Box
-                      color="white"
-                      p={3}
-                      px={6}
-                      bg="primary.500"
-                      textAlign={'center'}
-                      fontWeight={'bold'}
-                      borderRadius={'full'}
-                    >
-                      Error Token!
-                    </Box>
-                  ),
-                })
               }
             }}
             value={address}
