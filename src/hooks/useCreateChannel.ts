@@ -11,13 +11,13 @@ import {
   standardOutputAtom,
   statusAtom,
 } from '../state/Create/form'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { useEffect } from 'react'
-import { useNestOpenPlatformContract } from './useContract'
-import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
-import { useActiveWeb3React } from './web3'
-import { parseToBigNumber } from '../utils/bignumberUtil'
-import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
+import {useRecoilState, useRecoilValue} from 'recoil'
+import {useEffect} from 'react'
+import {useNestOpenPlatformContract} from './useContract'
+import {PETH_ADDRESS, PUSD_ADDRESS} from '../constants/addresses'
+import {useActiveWeb3React} from './web3'
+import {parseToBigNumber} from '../utils/bignumberUtil'
+import {ERROR, PROCESSING, SUCCESS} from '../constants/misc'
 import {isAddress} from "../utils";
 
 export const useCreateChannel = () => {
@@ -34,7 +34,7 @@ export const useCreateChannel = () => {
   const [invalidTokenAddress, setInvalidTokenAddress] = useRecoilState(invalidTokenAddressAtom)
   const [invalidConfiguration, setInvalidConfiguration] = useRecoilState(invalidConfigurationAtom)
 
-  const { chainId } = useActiveWeb3React()
+  const {chainId} = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(true)
 
@@ -63,16 +63,12 @@ export const useCreateChannel = () => {
   }, [quotationTokenList, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
 
   useEffect(() => {
-    if (
-      priceTokenUnit === '1000' ||
-      priceTokenUnit === '2000' ||
-      priceTokenUnit === '3000'
-    ) {
-      setInvalidConfiguration(false)
-    } else {
+    if (priceTokenUnit === '0') {
       setInvalidConfiguration(true)
+    } else {
+      setInvalidConfiguration(false)
     }
-  }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
+  }, [priceTokenUnit, setInvalidConfiguration])
 
   const create = async () => {
     setStatus(PROCESSING)

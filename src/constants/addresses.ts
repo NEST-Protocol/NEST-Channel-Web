@@ -57,3 +57,4 @@ export const COFIX_ADDRESS: AddressMap = {
   [SupportedChainId.BSC]: '0x61EA050b28Ccca539F0faf79Fd26F6Df31b9f15B',
   [SupportedChainId.BSCTestnet]: '0x61EA050b28Ccca539F0faf79Fd26F6Df31b9f15B',
 }
+

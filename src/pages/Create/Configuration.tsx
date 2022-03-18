@@ -43,6 +43,7 @@ const Configuration = () => {
           onCheck={handlePriceTokenUnitInvalidInput}
           onChange={setPriceTokenUnit}
           unit={'PUSD'}
+          readonly={true}
           isNumber
           min={0}
           datalist={[

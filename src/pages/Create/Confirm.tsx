@@ -35,10 +35,8 @@ const Confirm = () => {
       setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
     } else if (priceTokenName === 'PUSD') {
       setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
-    } else if (priceTokenName === '') {
-      setPriceTokenAddress('NaN')
     } else {
-      setPriceTokenAddress('Invalid Token')
+      setPriceTokenAddress('Error')
     }
   }, [chainId, priceTokenName])
 

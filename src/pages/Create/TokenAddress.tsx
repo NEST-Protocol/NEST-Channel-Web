@@ -7,15 +7,13 @@ import {
   priceTokenNameAtom,
   quotationTokenListAtom,
 } from '../../state/Create/form'
-import { useToken } from '../../hooks/Tokens'
 import Divider from '../../components/Divider'
-import InputWithTokenName from "../../components/InputWithTokenName";
+import InputWithTokenName, {TokenName} from "../../components/InputWithTokenName";
 
 const TokenAddress = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
   const [priceTokenName, setPriceTokenName] = useRecoilState(priceTokenNameAtom)
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
-  const { symbol: miningTokenSymbol } = useToken(miningTokenAddress)
 
   return (
     <Stack pt={'60px'} pb={'36px'} spacing={'20px'} w={800}>
@@ -38,7 +36,6 @@ const TokenAddress = () => {
         datalist={[
           { title: 'PETH', data: 'PETH' },
           { title: 'PUSD', data: 'PUSD' },
-          { title: 'PBTC', data: 'PBTC' },
         ]}
       />
 
@@ -66,7 +63,7 @@ const TokenAddress = () => {
                   e.target.setSelectionRange(0, miningTokenAddress.length)
                 }}
               />
-              <InputRightElement pr={'36px'} children={<Text fontWeight={'bold'} color={'primary.500'}>{miningTokenSymbol}</Text>} />
+              <InputRightElement pr={'36px'} children={<TokenName address={miningTokenAddress} />} />
             </InputGroup>
           </FormControl>
         </Stack>
