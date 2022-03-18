@@ -25,6 +25,7 @@ type OptionInput = {
   isNumber?: boolean
   max?: number
   min?: number
+  readonly?: boolean
 }
 
 type item = {
@@ -46,6 +47,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         bg={'white'}
         width={600}
         ml={100}
+        isReadOnly={props.readonly}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '1px' : '0'}
         borderColor={'primary.500'}

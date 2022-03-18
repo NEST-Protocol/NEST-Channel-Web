@@ -1,5 +1,5 @@
 import {FC, useState} from "react";
-import {FormControl, Input, InputGroup, InputRightElement, Spinner, Stack, Text} from "@chakra-ui/react";
+import {Box, FormControl, Input, InputGroup, InputRightElement, Spinner, Stack, Text, useToast} from "@chakra-ui/react";
 import {useToken} from "../../hooks/Tokens";
 import {isAddress} from "../../utils";
 import {PUSD_ADDRESS} from "../../constants/addresses";
@@ -21,6 +21,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
     const filtered = quotationTokenList.filter((address) => address !== props.address)
     setQuotationTokenList(filtered)
   }
+  const toast = useToast()
 
   return (
     <Stack direction={"row"} spacing={0}>
@@ -46,11 +47,43 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
                   setAddress('')
                 } else {
                   setValid(false)
+                  toast({
+                    position: 'top',
+                    render: () => (
+                      <Box
+                        color="white"
+                        p={3}
+                        px={6}
+                        bg="primary.500"
+                        textAlign={'center'}
+                        fontWeight={'bold'}
+                        borderRadius={'full'}
+                      >
+                        Duplicate Token Address!
+                      </Box>
+                    ),
+                  })
                 }
               } else if (event.target.value === '') {
                 setValid(true)
               } else {
                 setValid(false)
+                toast({
+                  position: 'top',
+                  render: () => (
+                    <Box
+                      color="white"
+                      p={3}
+                      px={6}
+                      bg="primary.500"
+                      textAlign={'center'}
+                      fontWeight={'bold'}
+                      borderRadius={'full'}
+                    >
+                      Error Token!
+                    </Box>
+                  ),
+                })
               }
             }}
             value={address}

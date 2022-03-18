@@ -33,6 +33,7 @@ const TokenAddress = () => {
         title={'Price Token'}
         defaultValue={priceTokenName}
         onCheck={() => false}
+        readonly={true}
         onChange={setPriceTokenName}
         datalist={[
           { title: 'PETH', data: 'PETH' },
