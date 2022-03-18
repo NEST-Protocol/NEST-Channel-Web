@@ -1,11 +1,10 @@
 import { useNestOpenPlatformContract } from './useContract'
 import { useCallback, useEffect, useState } from 'react'
 import { IDLE, IDLE_DELAY, PROCESSING } from '../constants/misc'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { activeChannelIdAtom, activeChannelInfoAtom } from '../state/Summary'
+import { useRecoilState } from 'recoil'
+import { activeChannelInfoAtom } from '../state/Summary'
 
-export const useActiveChannelInfo = () => {
-  const channelId = useRecoilValue(activeChannelIdAtom)
+export const useChannelInfo = (channelId: string) => {
   const nestOpenPlatform = useNestOpenPlatformContract(false)
   const [info, setInfo] = useRecoilState(activeChannelInfoAtom)
   const [status, setStatus] = useState(IDLE)

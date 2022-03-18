@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Summary'
-import { useActiveChannelInfo } from '../../hooks/useActiveChannelInfo'
+import { useChannelInfo } from '../../hooks/useChannelInfo'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../../constants/misc'
@@ -25,7 +25,8 @@ import { useToken } from '../../hooks/Tokens'
 import BigNumber from 'bignumber.js'
 
 const Administrator = () => {
-  const { info, status } = useActiveChannelInfo()
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const { info, status } = useChannelInfo(channelId)
   const { account } = useActiveWeb3React()
 
   if (info.opener !== account) {
@@ -57,7 +58,8 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [depositStatus, setDepositStatus] = useState(IDLE)
-  const { refresh: refreshChannelInfo } = useActiveChannelInfo()
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const { refresh: refreshChannelInfo } = useChannelInfo(channelId)
   const { balanceOf, approve, approveStatus, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
 
@@ -185,7 +187,8 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const { info, refresh: fetchChannelInfo } = useChannelInfo(channelId)
   const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
 
@@ -280,7 +283,8 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
   const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
-  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const { info, refresh: fetchChannelInfo } = useChannelInfo(channelId)
   const [amount, setAmount] = useState('0')
   const { balance } = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)

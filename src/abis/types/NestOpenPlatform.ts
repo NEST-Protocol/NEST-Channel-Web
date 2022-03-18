@@ -148,6 +148,7 @@ export interface NestOpenPlatformInterface extends utils.Interface {
     "donate(uint256,uint256)": FunctionFragment;
     "estimate(uint256)": FunctionFragment;
     "findPrice(uint256,uint256[],uint256,address)": FunctionFragment;
+    "findPriceOld(uint256,uint256,uint256)": FunctionFragment;
     "getAccountCount()": FunctionFragment;
     "getAccountIndex(address)": FunctionFragment;
     "getChannelInfo(uint256)": FunctionFragment;
@@ -207,6 +208,10 @@ export interface NestOpenPlatformInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "findPrice",
     values: [BigNumberish, BigNumberish[], BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "findPriceOld",
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getAccountCount",
@@ -315,6 +320,10 @@ export interface NestOpenPlatformInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "estimate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "findPrice", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "findPriceOld",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getAccountCount",
     data: BytesLike
@@ -480,6 +489,15 @@ export interface NestOpenPlatform extends BaseContract {
       channelId: BigNumberish,
       pairIndex: BigNumberish,
       height: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
+    >;
+
+    findPriceOld(
+      channelId: BigNumberish,
+      height: BigNumberish,
+      pairIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
@@ -728,6 +746,15 @@ export interface NestOpenPlatform extends BaseContract {
     [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
   >;
 
+  findPriceOld(
+    channelId: BigNumberish,
+    height: BigNumberish,
+    pairIndex: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
+  >;
+
   getAccountCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   getAccountIndex(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -957,6 +984,15 @@ export interface NestOpenPlatform extends BaseContract {
       channelId: BigNumberish,
       pairIndex: BigNumberish,
       height: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
+    >;
+
+    findPriceOld(
+      channelId: BigNumberish,
+      height: BigNumberish,
+      pairIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & { blockNumber: BigNumber; price: BigNumber }
@@ -1227,6 +1263,13 @@ export interface NestOpenPlatform extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    findPriceOld(
+      channelId: BigNumberish,
+      height: BigNumberish,
+      pairIndex: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getAccountCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAccountIndex(
@@ -1444,6 +1487,13 @@ export interface NestOpenPlatform extends BaseContract {
       channelId: BigNumberish,
       pairIndex: BigNumberish,
       height: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    findPriceOld(
+      channelId: BigNumberish,
+      height: BigNumberish,
+      pairIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

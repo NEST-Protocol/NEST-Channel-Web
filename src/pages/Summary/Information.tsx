@@ -2,7 +2,7 @@ import {Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip} from '@cha
 import {FC} from 'react'
 import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
 import {useActiveWeb3React} from '../../hooks/web3'
-import {useActiveChannelInfo} from '../../hooks/useActiveChannelInfo'
+import {useChannelInfo} from '../../hooks/useChannelInfo'
 import {isAddress, shortenAddress} from '../../utils'
 import {PROCESSING} from '../../constants/misc'
 import {CHAIN_INFO} from '../../constants/chains'
@@ -11,10 +11,13 @@ import {PUSD_ADDRESS} from '../../constants/addresses'
 import {useToken} from '../../hooks/Tokens'
 import {BigNumberish} from "@ethersproject/bignumber";
 import TokenIcon from "../../components/TokenIcon";
+import {useRecoilValue} from "recoil";
+import {activeChannelIdAtom} from "../../state/Summary";
 
 const Information = () => {
   const {chainId} = useActiveWeb3React()
-  const {info, status} = useActiveChannelInfo()
+  const channelId = useRecoilValue(activeChannelIdAtom)
+  const {info, status} = useChannelInfo(channelId)
   const {symbol: miningTokenSymbol} = useToken(info.pairs[1]?.target)
   const {symbol: priceTokenSymbol} = useToken(info.token0)
   return (

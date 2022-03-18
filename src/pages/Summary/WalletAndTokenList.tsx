@@ -1,4 +1,14 @@
-import {Stack, Button, Spacer, Input, Text, Divider, Skeleton, useToast, Box} from '@chakra-ui/react'
+import {
+  Stack,
+  Button,
+  Spacer,
+  Input,
+  Text,
+  Divider,
+  Skeleton,
+  useToast,
+  Box,
+} from '@chakra-ui/react'
 import {FC, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
@@ -7,6 +17,8 @@ import {useRecoilState, useRecoilValue} from 'recoil'
 import {activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo} from '../../state/Summary'
 import {useActiveWeb3React} from '../../hooks/web3'
 import {useToken} from '../../hooks/Tokens'
+import {IDLE} from "../../constants/misc";
+import {useChannelInfo} from "../../hooks/useChannelInfo";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
@@ -17,7 +29,7 @@ const WalletAndTokenList = () => {
   const toast = useToast()
 
   const handleSearch = (channel: ChannelInfo) => {
-    return channel.token0.toLowerCase().includes(searchText) || channel.token1.toLowerCase().includes(searchText)
+    return channel.token0.toLowerCase().includes(searchText.toLowerCase()) || channel.reward.toLowerCase().includes(searchText.toLowerCase())
   }
 
   return (
@@ -34,7 +46,7 @@ const WalletAndTokenList = () => {
       />
 
       <Stack overflow={'scroll'} h={activeChannelInfo.opener === account ? '490px' : '414px'}>
-        <Stack direction={"row"} fontWeight={'bold'} fontSize={"sm"}>
+        <Stack direction={"row"} fontWeight={'bold'} fontSize={"xs"}>
           <Text>Channel</Text>
           <Divider orientation={"vertical"}/>
           <Text>Price</Text>
@@ -42,12 +54,13 @@ const WalletAndTokenList = () => {
           <Text>Quote</Text>
         </Stack>
         <Divider/>
-        {channelList.filter(handleSearch).map((channel) => (
+        {channelList.filter(handleSearch).map(({channelId, token0, reward,quoteTokens}) => (
           <ChannelListItem
-            key={channel.channelId}
-            channelId={channel.channelId}
-            token0={channel.token0}
-            token1={channel.token1}
+            key={channelId}
+            channelId={channelId}
+            token0={token0}
+            reward={reward}
+            quoteTokens={quoteTokens}
           />
         ))}
       </Stack>
@@ -83,20 +96,16 @@ const WalletAndTokenList = () => {
   )
 }
 
-type ChannelListItemProps = {
-  channelId: string
-  token0: string
-  token1: string
-}
-
-const ChannelListItem: FC<ChannelListItemProps> = ({...props}) => {
-  const {symbol: token0} = useToken(props.token0)
-  const {symbol: token1} = useToken(props.token1)
+const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
+  const { symbol: priceTokenSymbol, fetchStatus: priceStatus } = useToken(props.token0)
+  // const { symbol: rewardTokenSymbol, fetchStatus: rewardStatus } = useToken(props.reward)
+  const { info } = useChannelInfo(props.channelId)
+  const { symbol: quoteTokenSymbol, fetchStatus: quoteStatus } = useToken(info.pairs[0].target)
 
   return (
     <Stack>
-      <Skeleton isLoaded={token0 !== 'NaN' && token1 !== 'NaN'}>
+      <Skeleton isLoaded={priceStatus === IDLE && quoteStatus === IDLE}>
         <Text
           color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
           fontWeight={'600'}
@@ -105,7 +114,7 @@ const ChannelListItem: FC<ChannelListItemProps> = ({...props}) => {
             setActiveChannelId(props.channelId)
           }}
         >
-          {props.channelId} / {token0} / {token1}
+          { props.channelId } / { priceTokenSymbol } / { quoteTokenSymbol }{info.pairs.length >1 && '...'}
         </Text>
         <Divider color={'secondary.400'}/>
       </Skeleton>
