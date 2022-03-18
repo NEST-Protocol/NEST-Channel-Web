@@ -17,7 +17,6 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
   const [address, setAddress] = useState(props.address || '')
   const [quotationTokenList, setQuotationTokenList] = useRecoilState(quotationTokenListAtom)
   const [valid, setValid] = useState(true)
-
   const deleteItem = () => {
     const filtered = quotationTokenList.filter((address) => address !== props.address)
     setQuotationTokenList(filtered)

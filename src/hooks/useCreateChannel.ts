@@ -1,7 +1,6 @@
 import {
   attenuationFactorAtom,
-  invalidConfigurationAtom,
-  invalidTokenAddressAtom,
+  invalidConfigurationAtom, invalidTokenAddressAtom,
   miningTokenAddressAtom,
   priceCallingFeeAtom,
   priceTokenAddressAtom,
@@ -19,6 +18,7 @@ import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { useActiveWeb3React } from './web3'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
+import {isAddress} from "../utils";
 
 export const useCreateChannel = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
@@ -50,30 +50,27 @@ export const useCreateChannel = () => {
     }
   }, [chainId, priceTokenName, setPriceTokenAddress])
 
-  // useEffect(() => {
-  //   if (
-  //     isAddress(quotationTokenList) &&
-  //     isAddress(miningTokenAddress) &&
-  //     (priceTokenName === 'PETH' || priceTokenName === 'PUSD') &&
-  //     quotationTokenList !== priceTokenAddress
-  //   ) {
-  //     setInvalidTokenAddress(false)
-  //   } else {
-  //     setInvalidTokenAddress(true)
-  //   }
-  // }, [quotationTokenAddress, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
+  useEffect(() => {
+    if (
+      isAddress(miningTokenAddress) &&
+      (priceTokenName === 'PETH' || priceTokenName === 'PUSD' || priceTokenName === 'PBTC') &&
+      quotationTokenList.length > 0
+    ) {
+      setInvalidTokenAddress(false)
+    } else {
+      setInvalidTokenAddress(true)
+    }
+  }, [quotationTokenList, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
 
   useEffect(() => {
     if (
-      priceTokenUnit === '' ||
-      standardOutput === '' ||
-      quotationFee === '' ||
-      priceCallingFee === '' ||
-      attenuationFactor === ''
+      priceTokenUnit === '1000' ||
+      priceTokenUnit === '2000' ||
+      priceTokenUnit === '3000'
     ) {
-      setInvalidConfiguration(true)
-    } else {
       setInvalidConfiguration(false)
+    } else {
+      setInvalidConfiguration(true)
     }
   }, [attenuationFactor, priceCallingFee, priceTokenUnit, quotationFee, setInvalidConfiguration, standardOutput])
 
@@ -98,12 +95,12 @@ export const useCreateChannel = () => {
       // 出矿代币地址 address
       reward: miningTokenAddress,
       // 报价代币地址 address
-      token1: quotationTokenList,
+      tokens: quotationTokenList,
     }
 
     try {
       if (nestOpenPlatform) {
-        const tx = await nestOpenPlatform.open(args.token0, args.unit, args.reward, args.token1, config)
+        const tx = await nestOpenPlatform.open(args.token0, args.unit, args.reward, args.tokens, config)
         const res = await tx.wait()
         switch (res.status) {
           case 0:

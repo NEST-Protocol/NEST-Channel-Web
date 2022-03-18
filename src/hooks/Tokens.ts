@@ -14,7 +14,6 @@ export const useToken = (tokenAddress: string) => {
   const [symbol, setSymbol] = useState('')
   const { chainId } = useActiveWeb3React()
 
-
   const fetch = useCallback(async () => {
     if (tokenAddress === ZERO_ADDRESS) {
       setSymbol(CHAIN_INFO[chainId ?? 1].nativeSymbol)
