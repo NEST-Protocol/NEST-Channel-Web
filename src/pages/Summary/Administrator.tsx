@@ -60,16 +60,18 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { refresh: refreshChannelInfo } = useChannelInfo(channelId)
-  const { balanceOf, approve, approveStatus, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const { balanceOf, approve, approveStatus, symbol: tokenSymbol, allowance } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
+  const [allowanceAmount, setAllowanceAmount] = useState(0)
 
   const refresh = useCallback(async () => {
     if (!account) {
       setBalance('NaN')
       return
     }
+    setAllowanceAmount(parseToBigNumber(await allowance(account, NEST_OPEN_PLATFORM_ADDRESS[chainId ?? 56])).toNumber())
     setBalance(formatNumber(parseToBigNumber(await balanceOf(account))))
-  }, [account, balanceOf])
+  }, [account, allowance, balanceOf, chainId])
 
   useEffect(() => {
     refresh()
@@ -115,7 +117,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
     if (!chainId) {
       return
     }
-    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+    await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(10).shiftedBy(36).toFixed(0))
   }
 
   return (
@@ -154,6 +156,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
                 variant={'outline'}
                 isFullWidth
                 onClick={handleApprove}
+                hidden={allowanceAmount >= Number(amount)}
                 isLoading={approveStatus === PROCESSING}
                 loadingText={'Approving'}
               >
@@ -167,7 +170,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
               isFullWidth
               onClick={handleDeposit}
               isLoading={depositStatus === PROCESSING}
-              disabled={amount === '0'}
+              disabled={amount === '0' || allowanceAmount < Number(amount)}
               loadingText={'Depositing'}
             >
               Deposit

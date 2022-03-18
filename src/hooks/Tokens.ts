@@ -56,7 +56,15 @@ export const useToken = (tokenAddress: string) => {
     try {
       return parseToBigNumber((await contract?.balanceOf(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
     } catch (e) {
-      return 'Error'
+      return new BigNumber(0)
+    }
+  }
+
+  const allowance = async (owner: string, spender: string) => {
+    try {
+      return parseToBigNumber(await contract?.allowance(owner, spender) ?? new BigNumber(NaN)).shiftedBy(-18)
+    } catch (e) {
+      return new BigNumber(0)
     }
   }
 
@@ -91,6 +99,7 @@ export const useToken = (tokenAddress: string) => {
 
   return {
     symbol,
+    allowance,
     balanceOf,
     approve,
     approveStatus,
