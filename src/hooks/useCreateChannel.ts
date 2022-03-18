@@ -65,10 +65,12 @@ export const useCreateChannel = () => {
   useEffect(() => {
     if (priceTokenUnit === '0') {
       setInvalidConfiguration(true)
-    } else {
-      setInvalidConfiguration(false)
+    } else if (priceTokenName === 'PETH')  {
+      setInvalidConfiguration(priceTokenUnit !== '1' && priceTokenUnit !== '2' && priceTokenUnit !== '3')
+    } else if (priceTokenName === 'PUSD') {
+      setInvalidConfiguration(priceTokenUnit !== '1000' && priceTokenUnit !== '2000' && priceTokenUnit !== '3000')
     }
-  }, [priceTokenUnit, setInvalidConfiguration])
+  }, [priceTokenName, priceTokenUnit, setInvalidConfiguration])
 
   const create = async () => {
     setStatus(PROCESSING)
