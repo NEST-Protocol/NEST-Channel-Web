@@ -47,7 +47,6 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
         bg={'white'}
         width={600}
         ml={100}
-        isReadOnly={props.readonly}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '1px' : '0'}
         borderColor={'primary.500'}
@@ -74,7 +73,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               setTimeout(() => setShowOption(false), 200)
             }}
           >
-            <NumberInputField ref={inputRef} />
+            <NumberInputField ref={inputRef} readOnly={props.readonly} />
             <InputRightElement
               onClick={() =>
                 // @ts-ignore
@@ -94,6 +93,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               ref={inputRef}
               variant={showOption ? 'unstyled' : 'filled'}
               errorBorderColor={'primary.500'}
+              readOnly={props.readonly}
               isInvalid={props.onCheck(value)}
               onChange={(event) => {
                 setValue(parseToNumber(event.target.value, props.unit))

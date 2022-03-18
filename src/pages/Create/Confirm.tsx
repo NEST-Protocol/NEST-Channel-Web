@@ -48,30 +48,33 @@ const Confirm = () => {
       />
       <ConfirmDetail
         title={`Quotation Token`}
-        tokens={quotationTokenList}
+        tokens={quotationTokenList.length === 0 ? ['NaN'] : quotationTokenList}
+        invalid={quotationTokenList.length === 0}
       />
       <ConfirmDetail
         title={`Mining Token`}
-        token={miningTokenAddress}
+        token={miningTokenAddress === '' ? 'NaN' : miningTokenAddress}
+        invalid={miningTokenAddress === ''}
       />
       <ConfirmDetail
         title={'Price Token Unit'}
-        value={priceTokenUnit === '' ? 'NaN' : priceTokenUnit}
+        value={priceTokenUnit}
         unit={priceTokenName}
+        invalid={true}
       />
       <ConfirmDetail
         title={'Standard Output'}
-        value={standardOutput === '' ? 'NaN' : standardOutput}
+        value={standardOutput}
         unit={'NEST/Block'}
       />
       <ConfirmDetail
         title={'Quotation Fee'}
-        value={quotationFee === '' ? 'NaN' : quotationFee}
+        value={quotationFee}
         unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
       />
       <ConfirmDetail
         title={'Price Calling Fee'}
-        value={priceCallingFee === '' ? 'NaN' : priceCallingFee}
+        value={priceCallingFee}
         unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
       />
       <ConfirmDetail
@@ -89,6 +92,7 @@ type ConfirmDetailProps = {
   token?: string
   tokens?: string[]
   unit?: string
+  invalid?: boolean
 }
 
 const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
@@ -103,11 +107,11 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
       {props.token && (
         <Stack direction={"row"} w={'220px'} justifyContent={"space-between"}>
-          <TokenName address={props.token} hasParentheses color={'secondary.500'}/>
+          <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'}/>
           <Link
             href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
             isExternal
-            color={!isAddress(props.token) ? 'primary.500' : 'link.500'}
+            color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
             fontWeight={'bold'}
           >
             {shortenAddress(props.token, 6)}
@@ -119,23 +123,22 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
         <Stack spacing={'20px'}>
           { props.tokens.map((address, index)=> (
             <Stack key={index} direction={"row"} w={'220px'} justifyContent={"space-between"}>
-              <TokenName address={address} hasParentheses color={'secondary.500'}/>
+              <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'}/>
               <Link
                 href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                 isExternal
-                color={!isAddress(address) ? 'primary.500' : 'link.500'}
+                color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
                 fontWeight={'bold'}
               >
                 {shortenAddress(address, 6)}
               </Link>
             </Stack>
           )) }
-
         </Stack>
       )}
 
       { props.value && (
-        <Text fontWeight={'bold'} color={props.value === 'NaN' ? 'primary.500' : 'black'}>
+        <Text fontWeight={'bold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
           {props.value} {props.unit}
         </Text>
       ) }
