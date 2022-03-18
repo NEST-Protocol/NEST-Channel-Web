@@ -7,7 +7,7 @@ export const activeChannelIdAtom = atom({
   default: '0',
 })
 
-export type ChannelInfo = { channelId: string, token0: string, reward: string, quoteTokens: string[] }
+export type ChannelInfo = { channelId: string, token0: string, pairs: string[] }
 
 const defaultChannelList: ChannelInfo[] = []
 

@@ -41,8 +41,7 @@ export const useActiveChannelList = () => {
             const info: ChannelInfo = {
               channelId: decodeParameters[0],
               token0: decodeParameters[1],
-              reward: decodeParameters[3],
-              quoteTokens: []
+              pairs: []
             }
             list.push(info)
           })
