@@ -1,9 +1,9 @@
-import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
-import { FC, useEffect, useState } from 'react'
+import {Link, Spacer, Stack, Text} from '@chakra-ui/react'
+import {FC, useEffect, useState} from 'react'
 import {isAddress, shortenAddress} from '../../utils'
-import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { useActiveWeb3React } from '../../hooks/web3'
-import { useRecoilValue } from 'recoil'
+import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
+import {useActiveWeb3React} from '../../hooks/web3'
+import {useRecoilValue} from 'recoil'
 import {
   attenuationFactorAtom,
   miningTokenAddressAtom,
@@ -14,8 +14,8 @@ import {
   quotationTokenListAtom,
   standardOutputAtom,
 } from '../../state/Create/form'
-import { PETH_ADDRESS, PUSD_ADDRESS } from '../../constants/addresses'
-import { CHAIN_INFO } from '../../constants/chains'
+import {PETH_ADDRESS, PUSD_ADDRESS} from '../../constants/addresses'
+import {CHAIN_INFO} from '../../constants/chains'
 import {TokenName} from "../../components/InputWithTokenName";
 
 const Confirm = () => {
@@ -28,7 +28,7 @@ const Confirm = () => {
   const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
   const [priceTokenAddress, setPriceTokenAddress] = useState('')
-  const { chainId } = useActiveWeb3React()
+  const {chainId} = useActiveWeb3React()
 
   useEffect(() => {
     if (priceTokenName === 'PETH') {
@@ -60,7 +60,10 @@ const Confirm = () => {
         title={'Price Token Unit'}
         value={priceTokenUnit}
         unit={priceTokenName}
-        invalid={true}
+        invalid={priceTokenName === 'PETH'
+          ? (priceTokenUnit !== '1' && priceTokenUnit !== '2' && priceTokenUnit !== '3')
+          : (priceTokenUnit !== '1000' && priceTokenUnit !== '2000' && priceTokenUnit !== '3000')
+        }
       />
       <ConfirmDetail
         title={'Standard Output'}
@@ -95,15 +98,15 @@ type ConfirmDetailProps = {
   invalid?: boolean
 }
 
-const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
-  const { chainId } = useActiveWeb3React()
+const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
+  const {chainId} = useActiveWeb3React()
 
   return (
     <Stack direction={'row'} w={'full'}>
       <Text color={'secondary.500'} fontWeight={'600'}>
         {props.title}:
       </Text>
-      <Spacer />
+      <Spacer/>
 
       {props.token && (
         <Stack direction={"row"} w={'220px'} justifyContent={"space-between"}>
@@ -121,7 +124,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
       {props.tokens && (
         <Stack spacing={'20px'}>
-          { props.tokens.map((address, index)=> (
+          {props.tokens.map((address, index) => (
             <Stack key={index} direction={"row"} w={'220px'} justifyContent={"space-between"}>
               <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'}/>
               <Link
@@ -133,15 +136,15 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
                 {shortenAddress(address, 6)}
               </Link>
             </Stack>
-          )) }
+          ))}
         </Stack>
       )}
 
-      { props.value && (
+      {props.value && (
         <Text fontWeight={'bold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
           {props.value} {props.unit}
         </Text>
-      ) }
+      )}
     </Stack>
   )
 }
