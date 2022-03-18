@@ -19,6 +19,7 @@ import {useActiveWeb3React} from '../../hooks/web3'
 import {useToken} from '../../hooks/Tokens'
 import {IDLE} from "../../constants/misc";
 import {useChannelInfo} from "../../hooks/useChannelInfo";
+import {TokenName} from "../../components/InputWithTokenName";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
@@ -30,8 +31,8 @@ const WalletAndTokenList = () => {
 
   const handleSearch = (channel: ChannelInfo) => {
     let isQuoteToken = false
-    channel.pairs.forEach((item)=> {
-      if (item !== undefined && item.toLowerCase().includes(searchText.toLowerCase())){
+    channel.pairs.forEach((item) => {
+      if (item !== undefined && item.toLowerCase().includes(searchText.toLowerCase())) {
         isQuoteToken = true
       }
     })
@@ -61,7 +62,7 @@ const WalletAndTokenList = () => {
           <Text>Quote</Text>
         </Stack>
         <Divider/>
-        {channelList.filter(handleSearch).map(({channelId, token0,pairs}) => (
+        {channelList.filter(handleSearch).map(({channelId, token0, pairs}) => (
           <ChannelListItem
             key={channelId}
             channelId={channelId}
@@ -104,34 +105,48 @@ const WalletAndTokenList = () => {
 
 const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
-  const { symbol: priceTokenSymbol, fetchStatus: priceStatus } = useToken(props.token0)
-  const { info } = useChannelInfo(props.channelId)
-  const { symbol: quoteTokenSymbol, fetchStatus: quoteStatus } = useToken(info.pairs[0].target)
+  const {symbol: priceTokenSymbol, fetchStatus: priceStatus} = useToken(props.token0)
+  const {info} = useChannelInfo(props.channelId)
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const lists = [...channelList]
-    setChannelList(lists.map((pair)=> pair.channelId === props.channelId ? {...pair, pairs: info.pairs.map(({target})=> target)} : pair))
+    setChannelList(lists.map((pair) => pair.channelId === props.channelId ? {
+      ...pair,
+      pairs: info.pairs.map(({target}) => target)
+    } : pair))
     // eslint-disable-next-line
   }, [info.pairs, props.channelId, setChannelList])
 
   return (
-    <Stack>
-      <Skeleton isLoaded={priceStatus === IDLE && quoteStatus === IDLE}>
+    <Skeleton isLoaded={priceStatus === IDLE}>
+      <Stack direction={"row"}
+             alignItems={"center"}
+             spacing={1}
+             cursor={'pointer'}
+             onClick={() => {
+               setActiveChannelId(props.channelId)
+             }}>
         <Text
           color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
-          fontWeight={'600'}
-          cursor={'pointer'}
-          onClick={() => {
-            setActiveChannelId(props.channelId)
-          }}
+          fontWeight={600}
+          whiteSpace={"nowrap"}
+          fontSize={"sm"}
         >
-          { props.channelId } / { priceTokenSymbol } / { quoteTokenSymbol }{info.pairs.length >1 && '...'}
+          {props.channelId} / {priceTokenSymbol} /
         </Text>
-        <Divider color={'secondary.400'}/>
-      </Skeleton>
-    </Stack>
+        <Stack direction={"row"} w={'full'} spacing={1} overflow={"scroll"} alignItems={"center"}>
+          {info.pairs.slice(0, 2).map((item) => (
+            <TokenName address={item.target} fontSize={"sm"}
+                       color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}/>
+          ))}
+          { info.pairs.length >2 && (
+            <Text color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}>...</Text>
+          ) }
+        </Stack>
+      </Stack>
+      <Divider color={'secondary.400'}/>
+    </Skeleton>
   )
 }
 

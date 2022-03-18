@@ -92,6 +92,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
 type TokenNameProps = {
   address: string
   color?: string
+  fontSize?: string
   hasParentheses?: boolean
 }
 
@@ -102,7 +103,9 @@ export const TokenName: FC<TokenNameProps> = ({...props}) => {
       { fetchStatus === PROCESSING ? (
         <Spinner size={"sm"}/>
       ) : (
-        <Text color={symbol === 'Error' ? 'red' : (props.color || 'primary.500')} fontWeight={'600'}>{props.hasParentheses ? `(${symbol})` : symbol }</Text>
+        <Text color={symbol === 'Error' ? 'red' : (props.color || 'primary.500')}
+              fontSize={props.fontSize ?? 'md'}
+              fontWeight={'600'}>{props.hasParentheses ? `(${symbol})` : symbol }</Text>
       ) }
     </>
   )
