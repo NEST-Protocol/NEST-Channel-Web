@@ -18,8 +18,9 @@ const Information = () => {
   const {chainId} = useActiveWeb3React()
   const channelId = useRecoilValue(activeChannelIdAtom)
   const {info, status} = useChannelInfo(channelId)
-  const {symbol: miningTokenSymbol} = useToken(info.pairs[1]?.target)
+  const {symbol: miningTokenSymbol} = useToken(info.reward)
   const {symbol: priceTokenSymbol} = useToken(info.token0)
+
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
@@ -43,7 +44,7 @@ const Information = () => {
         />
         <InformationDetail
           title={'Mining Token'}
-          value={info.pairs[1]?.target}
+          value={info.reward}
           loading={status === PROCESSING}
           isToken
         />
@@ -66,7 +67,7 @@ const Information = () => {
         />
         <InformationDetail
           title={'Number of Quotes'}
-          value={formatNumber(info.pairs[1]?.sheetCount)}
+          value={formatNumber(info.pairs.reduce((prev, next) => prev + parseToBigNumber(next.sheetCount).toNumber(), 0))}
           loading={status === PROCESSING}
         />
         <InformationDetail
