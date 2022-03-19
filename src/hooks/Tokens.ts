@@ -62,7 +62,7 @@ export const useToken = (tokenAddress: string) => {
 
   const allowance = async (owner: string, spender: string) => {
     try {
-      return parseToBigNumber(await contract?.allowance(owner, spender) ?? new BigNumber(NaN)).shiftedBy(-18)
+      return parseToBigNumber((await contract?.allowance(owner, spender)) ?? new BigNumber(NaN)).shiftedBy(-18)
     } catch (e) {
       return new BigNumber(0)
     }

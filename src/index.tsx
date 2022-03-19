@@ -50,10 +50,10 @@ ReactDOM.render(
         <Web3ReactProvider getLibrary={getLibrary}>
           <Web3ProviderNetwork getLibrary={getLibrary}>
             <ChakraProvider theme={theme}>
-              <GlobalStyle/>
-              <Updaters/>
-              <Index/>
-              <App/>
+              <GlobalStyle />
+              <Updaters />
+              <Index />
+              <App />
             </ChakraProvider>
           </Web3ProviderNetwork>
         </Web3ReactProvider>

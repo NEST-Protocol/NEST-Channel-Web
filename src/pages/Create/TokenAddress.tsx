@@ -1,14 +1,10 @@
-import {FormControl, Input, InputGroup, InputRightElement, Stack, Text} from '@chakra-ui/react'
+import { FormControl, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react'
 import { isAddress } from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
-import {useRecoilState, useRecoilValue} from 'recoil'
-import {
-  miningTokenAddressAtom,
-  priceTokenNameAtom,
-  quotationTokenListAtom,
-} from '../../state/Create/form'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { miningTokenAddressAtom, priceTokenNameAtom, quotationTokenListAtom } from '../../state/Create/form'
 import Divider from '../../components/Divider'
-import InputWithTokenName, {TokenName} from "../../components/InputWithTokenName";
+import InputWithTokenName, { TokenName } from '../../components/InputWithTokenName'
 
 const TokenAddress = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
@@ -21,9 +17,9 @@ const TokenAddress = () => {
         <Text fontWeight={'600'} ml={'116px'} color={'secondary.500'}>
           Quotation Token:
         </Text>
-        { quotationTokenList.map((address: string) => (
-          <InputWithTokenName key={address} address={address} isReadOnly={true}/>
-        )) }
+        {quotationTokenList.map((address: string) => (
+          <InputWithTokenName key={address} address={address} isReadOnly={true} />
+        ))}
         <InputWithTokenName />
       </Stack>
 
@@ -45,11 +41,8 @@ const TokenAddress = () => {
         <Text fontWeight={'600'} ml={116} color={'secondary.500'}>
           Mining Token:
         </Text>
-        <Stack direction={"row"} spacing={0}>
-          <FormControl
-            w={600}
-            mx={100}
-          >
+        <Stack direction={'row'} spacing={0}>
+          <FormControl w={600} mx={100}>
             <InputGroup>
               <Input
                 variant={'filled'}

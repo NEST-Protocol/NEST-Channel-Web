@@ -1,6 +1,7 @@
 import {
   attenuationFactorAtom,
-  invalidConfigurationAtom, invalidTokenAddressAtom,
+  invalidConfigurationAtom,
+  invalidTokenAddressAtom,
   miningTokenAddressAtom,
   priceCallingFeeAtom,
   priceTokenAddressAtom,
@@ -11,14 +12,14 @@ import {
   standardOutputAtom,
   statusAtom,
 } from '../state/Create/form'
-import {useRecoilState, useRecoilValue} from 'recoil'
-import {useEffect} from 'react'
-import {useNestOpenPlatformContract} from './useContract'
-import {PETH_ADDRESS, PUSD_ADDRESS} from '../constants/addresses'
-import {useActiveWeb3React} from './web3'
-import {parseToBigNumber} from '../utils/bignumberUtil'
-import {ERROR, PROCESSING, SUCCESS} from '../constants/misc'
-import {isAddress} from "../utils";
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { useEffect } from 'react'
+import { useNestOpenPlatformContract } from './useContract'
+import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
+import { useActiveWeb3React } from './web3'
+import { parseToBigNumber } from '../utils/bignumberUtil'
+import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
+import { isAddress } from '../utils'
 
 export const useCreateChannel = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
@@ -34,7 +35,7 @@ export const useCreateChannel = () => {
   const [invalidTokenAddress, setInvalidTokenAddress] = useRecoilState(invalidTokenAddressAtom)
   const [invalidConfiguration, setInvalidConfiguration] = useRecoilState(invalidConfigurationAtom)
 
-  const {chainId} = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
 
   const nestOpenPlatform = useNestOpenPlatformContract(true)
 
@@ -65,7 +66,7 @@ export const useCreateChannel = () => {
   useEffect(() => {
     if (priceTokenUnit === '0') {
       setInvalidConfiguration(true)
-    } else if (priceTokenName === 'PETH')  {
+    } else if (priceTokenName === 'PETH') {
       setInvalidConfiguration(priceTokenUnit !== '1' && priceTokenUnit !== '2' && priceTokenUnit !== '3')
     } else if (priceTokenName === 'PUSD') {
       setInvalidConfiguration(priceTokenUnit !== '1000' && priceTokenUnit !== '2000' && priceTokenUnit !== '3000')

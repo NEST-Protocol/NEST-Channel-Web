@@ -1,11 +1,21 @@
-import {FC, useState} from "react";
-import {Box, FormControl, Input, InputGroup, InputRightElement, Spinner, Stack, Text, useToast} from "@chakra-ui/react";
-import {useToken} from "../../hooks/Tokens";
-import {isAddress} from "../../utils";
-import {PUSD_ADDRESS} from "../../constants/addresses";
-import {PROCESSING} from "../../constants/misc";
-import {quotationTokenListAtom} from "../../state/Create/form";
-import {useRecoilState} from "recoil";
+import { FC, useState } from 'react'
+import {
+  Box,
+  FormControl,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Spinner,
+  Stack,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
+import { useToken } from '../../hooks/Tokens'
+import { isAddress } from '../../utils'
+import { PUSD_ADDRESS } from '../../constants/addresses'
+import { PROCESSING } from '../../constants/misc'
+import { quotationTokenListAtom } from '../../state/Create/form'
+import { useRecoilState } from 'recoil'
 import Delete from '../../assets/svg/delete.svg'
 
 type InputWithTokenNameProps = {
@@ -13,7 +23,7 @@ type InputWithTokenNameProps = {
   isReadOnly?: boolean
 }
 
-const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
+const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
   const [address, setAddress] = useState(props.address || '')
   const [quotationTokenList, setQuotationTokenList] = useRecoilState(quotationTokenListAtom)
   const [valid, setValid] = useState(true)
@@ -24,12 +34,8 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
   const toast = useToast()
 
   return (
-    <Stack direction={"row"} spacing={0}>
-      <FormControl
-        w={600}
-        ml={100}
-        isReadOnly={props.isReadOnly}
-      >
+    <Stack direction={'row'} spacing={0}>
+      <FormControl w={600} ml={100} isReadOnly={props.isReadOnly}>
         <InputGroup>
           <Input
             variant={'filled'}
@@ -39,7 +45,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
             errorBorderColor={'primary.500'}
             onChange={(event) => {
               setAddress(event.target.value)
-              if (isAddress(event.target.value)){
+              if (isAddress(event.target.value)) {
                 const searchIndex = quotationTokenList.indexOf(event.target.value)
                 if (searchIndex === -1) {
                   setValid(true)
@@ -77,13 +83,12 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({...props}) => {
               <Stack pr={'36px'}>
                 <TokenName address={address} />
               </Stack>
-            }/>
+            }
+          />
         </InputGroup>
       </FormControl>
-      <Stack w={100} justifyContent={"center"} pl={'12px'}>
-        { props.isReadOnly && (
-          <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem}/>
-        ) }
+      <Stack w={100} justifyContent={'center'} pl={'12px'}>
+        {props.isReadOnly && <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem} />}
       </Stack>
     </Stack>
   )
@@ -96,17 +101,23 @@ type TokenNameProps = {
   hasParentheses?: boolean
 }
 
-export const TokenName: FC<TokenNameProps> = ({...props}) => {
-  const {symbol, fetchStatus} = useToken(isAddress(props.address) ? String(isAddress(props.address)) : PUSD_ADDRESS[1])
+export const TokenName: FC<TokenNameProps> = ({ ...props }) => {
+  const { symbol, fetchStatus } = useToken(
+    isAddress(props.address) ? String(isAddress(props.address)) : PUSD_ADDRESS[1]
+  )
   return (
     <>
-      { fetchStatus === PROCESSING ? (
-        <Spinner size={"sm"}/>
+      {fetchStatus === PROCESSING ? (
+        <Spinner size={'sm'} />
       ) : (
-        <Text color={symbol === 'Error' ? 'red' : (props.color || 'primary.500')}
-              fontSize={props.fontSize ?? 'md'}
-              fontWeight={'600'}>{props.hasParentheses ? `(${symbol})` : symbol }</Text>
-      ) }
+        <Text
+          color={symbol === 'Error' ? 'red' : props.color || 'primary.500'}
+          fontSize={props.fontSize ?? 'md'}
+          fontWeight={'600'}
+        >
+          {props.hasParentheses ? `(${symbol})` : symbol}
+        </Text>
+      )}
     </>
   )
 }

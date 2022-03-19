@@ -60,7 +60,13 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const [depositStatus, setDepositStatus] = useState(IDLE)
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { refresh: refreshChannelInfo } = useChannelInfo(channelId)
-  const { balanceOf, approve, approveStatus, symbol: tokenSymbol, allowance } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const {
+    balanceOf,
+    approve,
+    approveStatus,
+    symbol: tokenSymbol,
+    allowance,
+  } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState(0)
   const [allowanceAmount, setAllowanceAmount] = useState(0)
 
@@ -123,10 +129,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button
-          variant={'outline'}
-          isLoading={props.isLoading}
-        >
+        <Button variant={'outline'} isLoading={props.isLoading}>
           Deposit
         </Button>
       </PopoverTrigger>
@@ -235,10 +238,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button
-          variant={'outline'}
-          isLoading={props.isLoading}
-        >
+        <Button variant={'outline'} isLoading={props.isLoading}>
           Withdraw
         </Button>
       </PopoverTrigger>
@@ -324,10 +324,7 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button
-          variant={'outline'}
-          isLoading={props.isLoading}
-        >
+        <Button variant={'outline'} isLoading={props.isLoading}>
           Withdraw Fee
         </Button>
       </PopoverTrigger>

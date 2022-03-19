@@ -1,53 +1,39 @@
-import {Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip} from '@chakra-ui/react'
-import {FC} from 'react'
-import {ExplorerDataType, getExplorerLink} from '../../utils/getExplorerLink'
-import {useActiveWeb3React} from '../../hooks/web3'
-import {useChannelInfo} from '../../hooks/useChannelInfo'
-import {isAddress, shortenAddress} from '../../utils'
-import {PROCESSING} from '../../constants/misc'
-import {CHAIN_INFO} from '../../constants/chains'
-import {formatNumber, parseToBigNumber} from '../../utils/bignumberUtil'
-import {PUSD_ADDRESS} from '../../constants/addresses'
-import {useToken} from '../../hooks/Tokens'
-import {BigNumberish} from "@ethersproject/bignumber";
-import TokenIcon from "../../components/TokenIcon";
-import {useRecoilValue} from "recoil";
-import {activeChannelIdAtom} from "../../state/Summary";
+import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip } from '@chakra-ui/react'
+import { FC } from 'react'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { useChannelInfo } from '../../hooks/useChannelInfo'
+import { isAddress, shortenAddress } from '../../utils'
+import { PROCESSING } from '../../constants/misc'
+import { CHAIN_INFO } from '../../constants/chains'
+import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
+import { PUSD_ADDRESS } from '../../constants/addresses'
+import { useToken } from '../../hooks/Tokens'
+import { BigNumberish } from '@ethersproject/bignumber'
+import TokenIcon from '../../components/TokenIcon'
+import { useRecoilValue } from 'recoil'
+import { activeChannelIdAtom } from '../../state/Summary'
 
 const Information = () => {
-  const {chainId} = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   const channelId = useRecoilValue(activeChannelIdAtom)
-  const {info, status} = useChannelInfo(channelId)
-  const {symbol: miningTokenSymbol} = useToken(info.reward)
-  const {symbol: priceTokenSymbol} = useToken(info.token0)
+  const { info, status } = useChannelInfo(channelId)
+  const { symbol: miningTokenSymbol } = useToken(info.reward)
+  const { symbol: priceTokenSymbol } = useToken(info.token0)
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
       <Text fontWeight={'bold'}>Information</Text>
       <Wrap justify={'space-between'}>
-        <InformationDetail
-          title={'ChannelId'}
-          value={formatNumber(info.channelId)}
-          loading={status === PROCESSING}
-        />
-        <InformationDetail
-          title={'Price Token'}
-          value={info.token0}
-          loading={status === PROCESSING}
-          isToken
-        />
+        <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />
+        <InformationDetail title={'Price Token'} value={info.token0} loading={status === PROCESSING} isToken />
         <InformationDetail
           title={'Price Token Unit'}
           value={formatNumber(parseToBigNumber(info.unit).shiftedBy(-18))}
           loading={status === PROCESSING}
           unit={priceTokenSymbol}
         />
-        <InformationDetail
-          title={'Mining Token'}
-          value={info.reward}
-          loading={status === PROCESSING}
-          isToken
-        />
+        <InformationDetail title={'Mining Token'} value={info.reward} loading={status === PROCESSING} isToken />
         <InformationDetail
           title={'Standard Output'}
           value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
@@ -67,7 +53,9 @@ const Information = () => {
         />
         <InformationDetail
           title={'Number of Quotes'}
-          value={formatNumber(info.pairs.reduce((prev, next) => prev + parseToBigNumber(next.sheetCount).toNumber(), 0))}
+          value={formatNumber(
+            info.pairs.reduce((prev, next) => prev + parseToBigNumber(next.sheetCount).toNumber(), 0)
+          )}
           loading={status === PROCESSING}
         />
         <InformationDetail
@@ -94,7 +82,7 @@ const Information = () => {
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
-        <QuotationTokenList value={info.pairs} loading={status === PROCESSING}/>
+        <QuotationTokenList value={info.pairs} loading={status === PROCESSING} />
       </Wrap>
     </Stack>
   )
@@ -108,9 +96,9 @@ type InformationDetailProps = {
   isToken?: boolean
 }
 
-const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
-  const {symbol: symbolName} = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
-  const {chainId} = useActiveWeb3React()
+const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
+  const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
+  const { chainId } = useActiveWeb3React()
   if (props.value === undefined || props.loading) {
     return (
       <WrapItem>
@@ -118,8 +106,8 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
           <Text color={'secondary.500'} fontWeight={'600'} whiteSpace={'nowrap'}>
             {props.title}
           </Text>
-          <Spacer/>
-          <Skeleton w={'100px'}/>
+          <Spacer />
+          <Skeleton w={'100px'} />
         </Stack>
       </WrapItem>
     )
@@ -138,14 +126,23 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
         >
           {props.title}
         </Text>
-        <Spacer/>
+        <Spacer />
         {props.isToken ? (
-          <Tooltip label={shortenAddress(String(props.value))} bg={'white'} borderRadius={'full'} color={'link.500'}
-                   whiteSpace={"nowrap"}>
-            <Link href={getExplorerLink(Number(chainId), String(props.value), ExplorerDataType.TOKEN)} isExternal
-                  color={'link.600'} fontWeight={'bold'}>
-              <Stack direction={"row"} alignItems={"center"}>
-                <TokenIcon symbol={symbolName}/>
+          <Tooltip
+            label={shortenAddress(String(props.value))}
+            bg={'white'}
+            borderRadius={'full'}
+            color={'link.500'}
+            whiteSpace={'nowrap'}
+          >
+            <Link
+              href={getExplorerLink(Number(chainId), String(props.value), ExplorerDataType.TOKEN)}
+              isExternal
+              color={'link.600'}
+              fontWeight={'bold'}
+            >
+              <Stack direction={'row'} alignItems={'center'}>
+                <TokenIcon symbol={symbolName} />
                 <Text>{symbolName}</Text>
               </Stack>
             </Link>
@@ -160,16 +157,15 @@ const InformationDetail: FC<InformationDetailProps> = ({...props}) => {
   )
 }
 
-
 type QuotationTokenItemProps = {
   value: string
 }
 
-const QuotationTokenItem: FC<QuotationTokenItemProps> = ({...props}) => {
-  const {symbol: symbolName} = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
+const QuotationTokenItem: FC<QuotationTokenItemProps> = ({ ...props }) => {
+  const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   return (
-    <Stack direction={"row"} alignItems={"center"} minW={'80px'}>
-      <TokenIcon symbol={symbolName}/>
+    <Stack direction={'row'} alignItems={'center'} minW={'80px'}>
+      <TokenIcon symbol={symbolName} />
       <Text>{symbolName}</Text>
     </Stack>
   )
@@ -180,8 +176,8 @@ type QuotationTokenListProps = {
   value: any[]
 }
 
-const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
-  const {chainId} = useActiveWeb3React()
+const QuotationTokenList: FC<QuotationTokenListProps> = ({ ...props }) => {
+  const { chainId } = useActiveWeb3React()
 
   if (props.value === undefined || props.loading) {
     return (
@@ -190,8 +186,8 @@ const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
           <Text color={'secondary.500'} fontWeight={'600'} whiteSpace={'nowrap'}>
             Quotation Token
           </Text>
-          <Spacer/>
-          <Skeleton w={'100px'}/>
+          <Spacer />
+          <Skeleton w={'100px'} />
         </Stack>
       </WrapItem>
     )
@@ -209,24 +205,29 @@ const QuotationTokenList: FC<QuotationTokenListProps> = ({...props}) => {
       >
         Quotation Token
       </Text>
-      <Stack spacing={'20px'} direction={"row"} overflowX={"scroll"}>
+      <Stack spacing={'20px'} direction={'row'} overflowX={'scroll'}>
         {props.value.map((item, index) => (
-          <Tooltip key={index} label={shortenAddress(String(item.target))} bg={'white'} borderRadius={'full'}
-                   color={'link.500'}
-                   whiteSpace={"nowrap"}>
-            <Link href={getExplorerLink(Number(chainId), item.target ?? 'NaN', ExplorerDataType.TOKEN)} isExternal
-                  color={'link.600'} fontWeight={'bold'}>
-              <QuotationTokenItem value={item.target}/>
+          <Tooltip
+            key={index}
+            label={shortenAddress(String(item.target))}
+            bg={'white'}
+            borderRadius={'full'}
+            color={'link.500'}
+            whiteSpace={'nowrap'}
+          >
+            <Link
+              href={getExplorerLink(Number(chainId), item.target ?? 'NaN', ExplorerDataType.TOKEN)}
+              isExternal
+              color={'link.600'}
+              fontWeight={'bold'}
+            >
+              <QuotationTokenItem value={item.target} />
             </Link>
           </Tooltip>
         ))}
       </Stack>
-      <Spacer/>
-      <Stack>
-        { props.value.length >= 8 && (
-          <Text>...</Text>
-        ) }
-      </Stack>
+      <Spacer />
+      <Stack>{props.value.length >= 8 && <Text>...</Text>}</Stack>
     </Stack>
   )
 }
