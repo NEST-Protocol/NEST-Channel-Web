@@ -1,7 +1,7 @@
 export const Button = {
   baseStyle: {
-    borderRadius: '20px',
-    fontWeight: 'bold',
+    borderRadius: 'full',
+    fontWeight: 'semibold',
     height: '40px',
   },
   variants: {
@@ -9,7 +9,7 @@ export const Button = {
       bg: 'white',
       color: 'black',
       border: '2px',
-      borderRadius: '20px',
+      borderRadius: 'full',
       borderColor: 'primary.500',
       _hover: {
         bg: 'primary.500',
@@ -34,6 +34,7 @@ export const Button = {
       },
       fontWeight: '800',
       fontFamily: 'Montserrat',
+      borderRadius: 'full',
     },
     ghost: {
       _hover: {

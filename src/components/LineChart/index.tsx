@@ -13,9 +13,6 @@ const LineChart: FC<LineChartProps> = ({ ...props }) => {
     xField: props.xField,
     yField: props.yField,
     yAxis: {
-      title: {
-        text: 'Interval from last quotation',
-      },
       label: {
         formatter: (text: string) => {
           return text + 's'

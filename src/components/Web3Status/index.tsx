@@ -112,7 +112,7 @@ export const WalletModal = () => {
     if (account) {
       return (
         <Button onClick={onOpen} h={isLargerThan1024 ? '40px' : '44px'}>
-          <Text>{shortenAddress(account)}</Text>
+          <Text fontWeight={'semibold'}>{shortenAddress(account)}</Text>
         </Button>
       )
     }

@@ -1,4 +1,4 @@
-import {Stack, Text, useMediaQuery} from '@chakra-ui/react'
+import {Box, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import LineChart from '../../components/LineChart'
 import { useCallback, useEffect, useState } from 'react'
 import useInterval from '@use-it/interval'
@@ -25,10 +25,13 @@ const QuotationFrequency = () => {
   useInterval(() => asyncFetch(), 120000)
 
   return (
-    <Stack bg={'white'} w={'full'} h={isLargerThan1024 ? '460px' : '320px'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"#EEEEEE"}>
+    <Stack bg={'white'} w={'full'} h={isLargerThan1024 ? '460px' : '320px'} spacing={0} borderRadius={'20px'} p={isLargerThan1024 ? '20px' : '0'} border={"1px solid"} borderColor={"#EEEEEE"}>
       <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Quotation Frequency (Last 20 quotes)</Text>
-      <Stack p={'20px'} h={'full'} w={'full'}>
-        <LineChart data={data} xField={'index'} yField={'second'} />
+      <Stack p={'20px'} h={'full'} w={'full'} alignItems={"center"}>
+        <Text fontSize={'xs'} fontWeight={'medium'} pb={'10px'}>Interval from last quotation</Text>
+        <Box w={'full'} h={'full'}>
+          <LineChart data={data} xField={'index'} yField={'second'} />
+        </Box>
       </Stack>
     </Stack>
   )

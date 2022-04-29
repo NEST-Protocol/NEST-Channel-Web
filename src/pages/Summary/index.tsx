@@ -22,9 +22,11 @@ const Root = () => {
         ) : (
           <Stack px={"24px"} spacing={'24px'}>
             <WalletAndTokenList />
-            <Text >Information</Text>
+            <Text fontWeight={'semibold'}>Information</Text>
             <Information />
-            <Administrator />
+            {/*<Text fontWeight={'semibold'}>Administrator</Text>*/}
+            {/*<Administrator />*/}
+            <Text fontWeight={'semibold'}>Quotation Frequency</Text>
             <QuotationFrequency />
           </Stack>
         )
