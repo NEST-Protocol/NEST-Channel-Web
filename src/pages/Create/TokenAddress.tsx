@@ -1,20 +1,22 @@
-import { FormControl, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react'
+import {FormControl, Input, InputGroup, InputRightElement, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import { isAddress } from '../../utils'
 import InputWithSelect from '../../components/InputWithSelect'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { miningTokenAddressAtom, priceTokenNameAtom, quotationTokenListAtom } from '../../state/Create/form'
 import Divider from '../../components/Divider'
 import InputWithTokenName, { TokenName } from '../../components/InputWithTokenName'
+import {is} from "@react-three/fiber/dist/declarations/src/core/is";
 
 const TokenAddress = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
   const [priceTokenName, setPriceTokenName] = useRecoilState(priceTokenNameAtom)
   const [miningTokenAddress, setMiningTokenAddress] = useRecoilState(miningTokenAddressAtom)
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack pt={'60px'} pb={'36px'} spacing={'20px'} w={800}>
-      <Stack id="quotation token address" spacing={'16px'}>
-        <Text fontWeight={'600'} ml={'116px'} color={'secondary.500'}>
+    <Stack pt={isLargerThan1024 ? '60px' : '24px'} pb={isLargerThan1024 ? '36px' : '24px'} spacing={'20px'} w={isLargerThan1024 ? 800 : 'full'}>
+      <Stack id="quotation token address" spacing={'16px'} w={'full'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : ''} color={'secondary.500'}>
           Quotation Token:
         </Text>
         {quotationTokenList.map((address: string) => (
@@ -38,11 +40,11 @@ const TokenAddress = () => {
       <Divider dashed={true} />
 
       <Stack spacing={'16px'}>
-        <Text fontWeight={'600'} ml={116} color={'secondary.500'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? 116 : ''} color={'secondary.500'}>
           Mining Token:
         </Text>
         <Stack direction={'row'} spacing={0}>
-          <FormControl w={600} mx={100}>
+          <FormControl w={isLargerThan1024 ? 600 : 'full'} mx={isLargerThan1024 ? 100 : 0}>
             <InputGroup>
               <Input
                 variant={'filled'}
@@ -66,8 +68,10 @@ const TokenAddress = () => {
 }
 
 export const TokenAddressTip = () => {
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
+
   return (
-    <Stack w={'764px'} spacing={'12px'}>
+    <Stack w={isLargerThan1024 ? '764px' : 'full'} spacing={'12px'}>
       <Text fontWeight={'bold'}>Instructions</Text>
       <p />
       <Text fontSize={'sm'} fontWeight={'600'}>

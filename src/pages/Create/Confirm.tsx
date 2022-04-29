@@ -1,4 +1,4 @@
-import { Link, Spacer, Stack, Text } from '@chakra-ui/react'
+import {Link, Spacer, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { isAddress, shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
@@ -29,6 +29,7 @@ const Confirm = () => {
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
   const [priceTokenAddress, setPriceTokenAddress] = useState('')
   const { chainId } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     if (priceTokenName === 'PETH') {
@@ -41,7 +42,7 @@ const Confirm = () => {
   }, [chainId, priceTokenName])
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={'680px'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'30px'} w={isLargerThan1024 ? '680px' : 'full'} spacing={'20px'}>
       <ConfirmDetail title={`Price Token`} token={priceTokenAddress} />
       <ConfirmDetail
         title={`Quotation Token`}

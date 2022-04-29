@@ -7,7 +7,7 @@ import {
   InputRightElement,
   Spinner,
   Stack,
-  Text,
+  Text, useMediaQuery,
   useToast,
 } from '@chakra-ui/react'
 import { useToken } from '../../hooks/Tokens'
@@ -32,10 +32,11 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
     setQuotationTokenList(filtered)
   }
   const toast = useToast()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
     <Stack direction={'row'} spacing={0}>
-      <FormControl w={600} ml={100} isReadOnly={props.isReadOnly}>
+      <FormControl w={isLargerThan1024 ? 600 : 'full'} ml={isLargerThan1024 ? 100 : 0} isReadOnly={props.isReadOnly}>
         <InputGroup>
           <Input
             variant={'filled'}
@@ -87,9 +88,13 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
           />
         </InputGroup>
       </FormControl>
-      <Stack w={100} justifyContent={'center'} pl={'12px'}>
-        {props.isReadOnly && <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem} />}
-      </Stack>
+      {
+        props.isReadOnly && (
+          <Stack w={isLargerThan1024 ? 100 : 30} justifyContent={'center'} pl={'12px'}>
+            <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem} />
+          </Stack>
+        )
+      }
     </Stack>
   )
 }

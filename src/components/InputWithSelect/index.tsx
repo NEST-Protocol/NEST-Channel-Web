@@ -8,7 +8,7 @@ import {
   NumberInput,
   NumberInputField,
   Stack,
-  Text,
+  Text, useMediaQuery,
 } from '@chakra-ui/react'
 import Divider from '../Divider'
 import { FC, useRef, useState } from 'react'
@@ -37,16 +37,17 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [showOption, setShowOption] = useState(false)
   const [value, setValue] = useState(props.defaultValue)
   const inputRef = useRef(null)
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
     <Box pb={showOption ? '40px' : '0'}>
-      <Text fontWeight={'600'} mb={'16px'} ml={116} color={'secondary.500'}>
+      <Text fontWeight={'600'} mb={'16px'} ml={isLargerThan1024 ? 116 : 0} color={'secondary.500'}>
         {props.title}:
       </Text>
       <FormControl
         bg={'white'}
-        width={600}
-        ml={100}
+        width={isLargerThan1024 ? 600 : 'full'}
+        ml={isLargerThan1024 ? 100 : 0}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '1px' : '0'}
         borderColor={'primary.500'}

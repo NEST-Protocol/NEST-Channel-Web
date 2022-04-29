@@ -1,4 +1,4 @@
-import { Button, Stack, Text } from '@chakra-ui/react'
+import {Button, HStack, Stack, Text, useMediaQuery, VStack} from '@chakra-ui/react'
 import TokenAddress, { TokenAddressTip } from './TokenAddress'
 import Configuration, { ConfigurationTip } from './Configuration'
 import Confirm, { ConfirmTip } from './Confirm'
@@ -30,33 +30,53 @@ type StepItemProps = {
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
   const { invalidTokenAddress, invalidConfiguration, create, status } = useCreateChannel()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   const StepButton: FC<StepItemProps> = ({ ...props }) => {
-    return (
-      <>
-        <Button
-          w={'40px'}
-          variant={activeStep >= props.id ? 'solid' : 'outline'}
-          onClick={() => {
-            setActiveStep(props.id)
-          }}
-          color={activeStep >= props.id ? 'white' : 'secondary.500'}
-          borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
-        >
-          {props.id + 1}
-        </Button>
-        <Text color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
-      </>
-    )
+    if (isLargerThan1024) {
+      return (
+        <HStack spacing={'20px'}>
+          <Button
+            w={'40px'}
+            variant={activeStep >= props.id ? 'solid' : 'outline'}
+            onClick={() => {
+              setActiveStep(props.id)
+            }}
+            color={activeStep >= props.id ? 'white' : 'secondary.500'}
+            borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
+          >
+            {props.id + 1}
+          </Button>
+          <Text color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
+        </HStack>
+      )
+    } else {
+      return (
+        <VStack>
+          <Button
+            w={'40px'}
+            variant={activeStep >= props.id ? 'solid' : 'outline'}
+            onClick={() => {
+              setActiveStep(props.id)
+            }}
+            color={activeStep >= props.id ? 'white' : 'secondary.500'}
+            borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
+          >
+            {props.id + 1}
+          </Button>
+          <Text color={activeStep >= props.id ? 'black' : 'secondary.500'} fontSize={'10px'}>{props.title}</Text>
+        </VStack>
+      )
+    }
   }
 
   return (
     <Stack p={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
-        px={'190px'}
-        pt={'68px'}
-        pb={'36px'}
+        px={isLargerThan1024 ? '190px' : '24px'}
+        pt={isLargerThan1024 ? '68px' : '24px'}
+        pb={ '36px'}
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}
@@ -64,10 +84,10 @@ const OpenChanel = () => {
       >
         <Stack
           direction={'row'}
-          w={'800px'}
+          w={isLargerThan1024 ? '800px' : 'full'}
           alignItems={'center'}
           fontWeight={'bold'}
-          spacing={'20px'}
+          spacing={isLargerThan1024 ? '20px' : '8px'}
           whiteSpace={'nowrap'}
           hidden={activeStep === 3}
         >
@@ -86,7 +106,7 @@ const OpenChanel = () => {
           <Done />
         ) : (
           <Button
-            w={'176px'}
+            w={isLargerThan1024 ? '176px' : '80%'}
             isLoading={status === PROCESSING}
             disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
             onClick={async () => {
@@ -104,8 +124,8 @@ const OpenChanel = () => {
 
       <Stack
         bg={'white'}
-        px={'190px'}
-        py={'60px'}
+        px={isLargerThan1024 ? '190px' : '24px'}
+        py={isLargerThan1024 ? '60px' : '24px'}
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}

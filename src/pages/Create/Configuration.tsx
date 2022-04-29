@@ -1,4 +1,4 @@
-import { Stack, Text } from '@chakra-ui/react'
+import {Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import InputWithSelect from '../../components/InputWithSelect'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
@@ -20,6 +20,7 @@ const Configuration = () => {
   const [attenuationFactor, setAttenuationFactor] = useRecoilState(attenuationFactorAtom)
   const priceTokenName = useRecoilValue(priceTokenNameAtom)
   const { chainId } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   // 若没有输入，则不合法，返回真
   const handleInvalidInput = (value: string) => {
@@ -35,7 +36,7 @@ const Configuration = () => {
   }
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={800} spacing={'20px'}>
+    <Stack pt={isLargerThan1024 ? '60px' : '24px'} pb={isLargerThan1024 ? '30px' : '24px'} w={isLargerThan1024 ? 800 : 'full'} spacing={'20px'}>
       {priceTokenName === 'PUSD' ? (
         <InputWithSelect
           title={'Price Token Unit'}
@@ -138,8 +139,10 @@ const Configuration = () => {
 }
 
 export const ConfigurationTip = () => {
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
+
   return (
-    <Stack w={'764px'} spacing={'12px'}>
+    <Stack w={isLargerThan1024 ? '764px' : 'full'} spacing={'12px'}>
       <Text fontWeight={'bold'}>Instructions</Text>
       <p />
       <Text fontSize={'sm'} fontWeight={'600'}>
