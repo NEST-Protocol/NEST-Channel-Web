@@ -24,7 +24,7 @@ const QuotationFrequency = () => {
   useInterval(() => asyncFetch(), 120000)
 
   return (
-    <Stack bg={'white'} w={'full'} h={'460px'} borderRadius={'20px'} p={'20px'}>
+    <Stack bg={'white'} w={'full'} h={'460px'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"#EEEEEE"}>
       <Text fontWeight={'bold'}>Quotation Frequency (Last 20 quotes)</Text>
       <Stack p={'20px'} h={'full'} w={'full'}>
         <LineChart data={data} xField={'index'} yField={'second'} />

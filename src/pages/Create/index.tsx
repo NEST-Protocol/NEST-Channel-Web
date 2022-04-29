@@ -60,6 +60,7 @@ const OpenChanel = () => {
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}
+        border={"1px solid"} borderColor={"#EEEEEE"}
       >
         <Stack
           direction={'row'}
@@ -109,6 +110,7 @@ const OpenChanel = () => {
         alignItems={'center'}
         spacing={'0'}
         hidden={activeStep === 2 || activeStep === 3}
+        border={"1px solid"} borderColor={"#EEEEEE"}
       >
         {tips.map((tip) => {
           return (

@@ -22,12 +22,11 @@ export const NetworkCard = () => {
       placement="bottom-end"
       p={'24px'}
       bg={'white'}
-      color={'secondary.500'}
       borderRadius={'20px'}
     >
       <Stack direction={'row'} alignItems={'center'} spacing={0}>
         <chakra.img src={tips} w={'16px'} h={'16px'} hidden={chainId === SupportedChainId.BSC} />
-        <Badge color={'white'} variant={'ghost'}>
+        <Badge variant={'ghost'}>
           {info.label}
         </Badge>
       </Stack>

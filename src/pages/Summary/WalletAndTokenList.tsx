@@ -31,7 +31,7 @@ const WalletAndTokenList = () => {
   }
 
   return (
-    <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'20px'} p={'20px'} spacing={'24px'}>
+    <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'20px'} p={'20px'} spacing={'24px'} border={"1px solid"} borderColor={"#EEEEEE"}>
       <Web3Status />
 
       <Input
@@ -44,7 +44,7 @@ const WalletAndTokenList = () => {
       />
 
       <Stack overflow={'scroll'} h={activeChannelInfo.opener === account ? '490px' : '414px'}>
-        <Stack direction={'row'} fontWeight={'bold'} fontSize={'xs'}>
+        <Stack direction={'row'} fontSize={'13px'} fontWeight={'semibold'}>
           <Text>Channel</Text>
           <Divider orientation={'vertical'} />
           <Text>Price</Text>

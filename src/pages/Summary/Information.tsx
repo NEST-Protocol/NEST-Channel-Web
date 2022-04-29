@@ -22,7 +22,7 @@ const Information = () => {
   const { symbol: priceTokenSymbol } = useToken(info.token0)
 
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'}>
+    <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"#EEEEEE"}>
       <Text fontWeight={'bold'}>Information</Text>
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />

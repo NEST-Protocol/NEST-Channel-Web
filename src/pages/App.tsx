@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Summary from './Summary'
-import { Button, Spacer, Stack } from '@chakra-ui/react'
+import { Button, Stack } from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -20,9 +20,8 @@ export const App = () => {
 
 const Header = () => {
   return (
-    <Stack w={'container.xl'} h={'60px'} direction={'row'} justifyContent={'center'} alignItems={'center'} mb={'6px'}>
+    <Stack w={'container.xl'} h={'60px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'} mb={'6px'}>
       <Button
-        position={'absolute'}
         variant={'ghost'}
         onClick={() => {
           const w = window.open('about:blank')
@@ -32,7 +31,6 @@ const Header = () => {
       >
         <Logo w={'88px'} h={'28px'} />
       </Button>
-      <Spacer />
       <NetworkCard />
     </Stack>
   )

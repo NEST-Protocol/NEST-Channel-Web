@@ -7,7 +7,7 @@ export const Button = {
   variants: {
     outline: {
       bg: 'white',
-      color: 'primary.500',
+      color: 'black',
       border: '2px',
       borderRadius: '20px',
       borderColor: 'primary.500',
@@ -24,7 +24,7 @@ export const Button = {
     },
     solid: {
       bg: 'primary.500',
-      color: 'white',
+      color: 'black',
       _hover: {
         bg: 'primary.500',
       },
