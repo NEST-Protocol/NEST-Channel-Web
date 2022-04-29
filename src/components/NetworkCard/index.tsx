@@ -22,6 +22,7 @@ export const NetworkCard = () => {
       placement="bottom-end"
       p={'24px'}
       bg={'white'}
+      color={"black"}
       borderRadius={'20px'}
     >
       <Stack direction={'row'} alignItems={'center'} spacing={0}>
