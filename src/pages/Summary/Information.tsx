@@ -1,4 +1,4 @@
-import { Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip } from '@chakra-ui/react'
+import {Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip, useMediaQuery} from '@chakra-ui/react'
 import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -20,10 +20,11 @@ const Information = () => {
   const { info, status } = useChannelInfo(channelId)
   const { symbol: miningTokenSymbol } = useToken(info.reward)
   const { symbol: priceTokenSymbol } = useToken(info.token0)
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"#EEEEEE"}>
-      <Text fontWeight={'bold'}>Information</Text>
+      <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Information</Text>
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />
         <InformationDetail title={'Price Token'} value={info.token0} loading={status === PROCESSING} isToken />
@@ -99,6 +100,7 @@ type InformationDetailProps = {
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
   const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   const { chainId } = useActiveWeb3React()
+
   if (props.value === undefined || props.loading) {
     return (
       <WrapItem>

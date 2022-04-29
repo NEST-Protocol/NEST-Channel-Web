@@ -9,7 +9,7 @@ import {
   Spacer,
   Stack,
   Text,
-  useDisclosure,
+  useDisclosure, useMediaQuery,
 } from '@chakra-ui/react'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { isMobile } from 'react-device-detect'
@@ -58,6 +58,7 @@ export const WalletModal = () => {
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
   const [pendingError, setPendingError] = useState<boolean>()
   const previousAccount = usePrevious(account)
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     if (account && !previousAccount && isOpen) {
@@ -110,7 +111,7 @@ export const WalletModal = () => {
   const getWeb3Status = () => {
     if (account) {
       return (
-        <Button onClick={onOpen}>
+        <Button onClick={onOpen} h={isLargerThan1024 ? '40px' : '44px'}>
           <Text>{shortenAddress(account)}</Text>
         </Button>
       )

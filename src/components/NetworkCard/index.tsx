@@ -1,12 +1,12 @@
-import { Badge, chakra, Stack, Tooltip } from '@chakra-ui/react'
+import {Text, Stack, Tooltip, useMediaQuery} from '@chakra-ui/react'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
-import tips from '../../assets/svg/tips_icon.svg'
 import * as React from 'react'
 
 export const NetworkCard = () => {
   const { chainId, library } = useActiveWeb3React()
   const info = chainId ? CHAIN_INFO[chainId] : undefined
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   if (!chainId || !info || !library) {
     return null
@@ -26,10 +26,9 @@ export const NetworkCard = () => {
       borderRadius={'20px'}
     >
       <Stack direction={'row'} alignItems={'center'} spacing={0}>
-        <chakra.img src={tips} w={'16px'} h={'16px'} hidden={chainId === SupportedChainId.BSC} />
-        <Badge variant={'ghost'}>
+        <Text variant={'ghost'} fontSize={isLargerThan1024 ? 'md' : 'xs'} fontWeight={'medium'}>
           {info.label}
-        </Badge>
+        </Text>
       </Stack>
     </Tooltip>
   )

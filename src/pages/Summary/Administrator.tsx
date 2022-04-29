@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Stack,
-  Text,
+  Text, useMediaQuery,
 } from '@chakra-ui/react'
 import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Summary'
@@ -28,6 +28,7 @@ const Administrator = () => {
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { info, status } = useChannelInfo(channelId)
   const { account } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   if (info.opener !== account) {
     return <></>
