@@ -32,7 +32,7 @@ export const HBTC_ADDRESS: AddressMap = {
 
 export const NEST_OPEN_PLATFORM_ADDRESS: AddressMap = {
   // [SupportedChainId.MAINNET]: '',
-  [SupportedChainId.RINKEBY]: '0x638461F3Ae49CcC257ef49Fe76CCE5816A9234eF',
+  [SupportedChainId.RINKEBY]: '0xc08E6A853241B9a08225EECf93F3b279FA7A1bE7',
   [SupportedChainId.BSC]: '0x09CE0e021195BA2c1CDE62A8B187abf810951540',
   [SupportedChainId.BSCTestnet]: '0xF2f9E62f52389EF223f5Fa8b9926e95386935277',
 }
