@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { miningTokenAddressAtom, priceTokenNameAtom, quotationTokenListAtom } from '../../state/Create/form'
 import Divider from '../../components/Divider'
 import InputWithTokenName, { TokenName } from '../../components/InputWithTokenName'
-import {is} from "@react-three/fiber/dist/declarations/src/core/is";
 
 const TokenAddress = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)
