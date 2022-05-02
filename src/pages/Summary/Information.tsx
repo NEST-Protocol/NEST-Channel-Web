@@ -1,4 +1,15 @@
-import {Link, Spacer, Stack, Text, Wrap, WrapItem, Skeleton, Tooltip, useMediaQuery} from '@chakra-ui/react'
+import {
+  Link,
+  Spacer,
+  Stack,
+  Text,
+  Wrap,
+  WrapItem,
+  Skeleton,
+  Tooltip,
+  useMediaQuery,
+  Divider,
+} from '@chakra-ui/react'
 import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -27,31 +38,52 @@ const Information = () => {
       <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Information</Text>
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail title={'Price Token'} value={info.token0} loading={status === PROCESSING} isToken />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Price Token Unit'}
           value={formatNumber(parseToBigNumber(info.unit).shiftedBy(-18))}
           loading={status === PROCESSING}
           unit={priceTokenSymbol}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail title={'Mining Token'} value={info.reward} loading={status === PROCESSING} isToken />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Standard Output'}
           value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
           unit={miningTokenSymbol + '/Block'}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Attenuation Factor'}
           value={formatNumber(parseToBigNumber(info.reductionRate).shiftedBy(-2))}
           unit={'%'}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Initial Block'}
           value={formatNumber(info.genesisBlock)}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Number of Quotes'}
           value={formatNumber(
@@ -59,30 +91,45 @@ const Information = () => {
           )}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Total Mining Token'}
           value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-18))}
           // unit={miningTokenSymbol}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Quotation Fee'}
           value={formatNumber(info.postFeeUnit)}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Price Calling Fee'}
           value={formatNumber(parseToBigNumber(info.singleFee).shiftedBy(-4))}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <InformationDetail
           title={'Fee Balance'}
           value={formatNumber(parseToBigNumber(info.rewards).shiftedBy(-18))}
           unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}
           loading={status === PROCESSING}
         />
+        { !isLargerThan1024 && (
+          <Divider />
+        ) }
         <QuotationTokenList value={info.pairs} loading={status === PROCESSING} />
       </Wrap>
     </Stack>

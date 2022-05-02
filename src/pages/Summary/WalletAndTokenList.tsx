@@ -145,7 +145,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           {info.pairs.slice(0, 2).map((item) => (
             <TokenName
               address={item.target}
-              fontSize={isLargerThan1024 ? 'sm' : 'md'}
+              fontSize={isLargerThan1024 ? 'xs' : 'md'}
               color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
             />
           ))}
