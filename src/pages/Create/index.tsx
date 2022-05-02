@@ -80,11 +80,13 @@ const OpenChanel = () => {
           <Divider active={activeStep >= 2}/>
           <StepButton id={2} title={'Confirm'} hiddenText={!isLargerThan1024}/>
         </Stack>
-        <Stack direction={"row"} w={'full'} justifyContent={"space-around"} pt={1}>
-          <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=0 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Token Address</Text>
-          <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=1 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Configuration</Text>
-          <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=2 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Confirm</Text>
-        </Stack>
+        { !isLargerThan1024 && (
+          <Stack direction={"row"} w={'full'} justifyContent={"space-around"} pt={1}>
+            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=0 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Token Address</Text>
+            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=1 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Configuration</Text>
+            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=2 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Confirm</Text>
+          </Stack>
+        ) }
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
             {step.content}
