@@ -24,7 +24,6 @@ const TokenAddress = () => {
         ))}
         <InputWithTokenName />
       </Stack>
-
       <InputWithSelect
         title={'Price Token'}
         defaultValue={priceTokenName}
@@ -72,9 +71,9 @@ export const TokenAddressTip = () => {
 
   return (
     <Stack w={isLargerThan1024 ? '764px' : 'full'} spacing={'12px'}>
-      <Text fontWeight={'bold'}>Instructions</Text>
+      <Text fontWeight={isLargerThan1024 ? 'bold' : 'semibold'} fontSize={isLargerThan1024 ? 'md' : 'xl'}>Instructions</Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Price Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
@@ -82,7 +81,7 @@ export const TokenAddressTip = () => {
         the denominated tokens.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Quotation Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
@@ -90,7 +89,7 @@ export const TokenAddressTip = () => {
         Token and USDT are quoted tokens.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Mining Token Address
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>

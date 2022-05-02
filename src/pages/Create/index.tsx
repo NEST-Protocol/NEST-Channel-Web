@@ -1,82 +1,64 @@
-import {Button, HStack, Stack, Text, useMediaQuery, VStack} from '@chakra-ui/react'
-import TokenAddress, { TokenAddressTip } from './TokenAddress'
-import Configuration, { ConfigurationTip } from './Configuration'
-import Confirm, { ConfirmTip } from './Confirm'
+import {Box, Button, HStack, Stack, Text, useMediaQuery, VStack} from '@chakra-ui/react'
+import TokenAddress, {TokenAddressTip} from './TokenAddress'
+import Configuration, {ConfigurationTip} from './Configuration'
+import Confirm, {ConfirmTip} from './Confirm'
 import Done from './Done'
 import Divider from '../../components/Divider'
-import { FC } from 'react'
-import { useRecoilState } from 'recoil'
-import { activeStepAtom } from '../../state/Create'
-import { useCreateChannel } from '../../hooks/useCreateChannel'
-import { PROCESSING } from '../../constants/misc'
+import {FC} from 'react'
+import {useRecoilState} from 'recoil'
+import {activeStepAtom} from '../../state/Create'
+import {useCreateChannel} from '../../hooks/useCreateChannel'
+import {PROCESSING} from '../../constants/misc'
 
 const steps = [
-  { id: 0, label: 'Token Address', content: <TokenAddress /> },
-  { id: 1, label: 'Configuration', content: <Configuration /> },
-  { id: 2, label: 'Confirm', content: <Confirm /> },
+  {id: 0, label: 'Token Address', content: <TokenAddress/>},
+  {id: 1, label: 'Configuration', content: <Configuration/>},
+  {id: 2, label: 'Confirm', content: <Confirm/>},
 ]
 
 const tips = [
-  { id: 0, label: 'Token Address', content: <TokenAddressTip /> },
-  { id: 1, label: 'Configuration', content: <ConfigurationTip /> },
-  { id: 2, label: 'Confirm', content: <ConfirmTip /> },
+  {id: 0, label: 'Token Address', content: <TokenAddressTip/>},
+  {id: 1, label: 'Configuration', content: <ConfigurationTip/>},
+  {id: 2, label: 'Confirm', content: <ConfirmTip/>},
 ]
 
 type StepItemProps = {
   title: string
   id: number
+  hiddenText?: boolean
 }
 
 const OpenChanel = () => {
   const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-  const { invalidTokenAddress, invalidConfiguration, create, status } = useCreateChannel()
+  const {invalidTokenAddress, invalidConfiguration, create, status} = useCreateChannel()
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
-  const StepButton: FC<StepItemProps> = ({ ...props }) => {
-    if (isLargerThan1024) {
-      return (
-        <HStack spacing={'20px'}>
-          <Button
-            w={'40px'}
-            variant={activeStep >= props.id ? 'solid' : 'outline'}
-            onClick={() => {
-              setActiveStep(props.id)
-            }}
-            color={activeStep >= props.id ? 'white' : 'secondary.500'}
-            borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
-          >
-            {props.id + 1}
-          </Button>
-          <Text color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
-        </HStack>
-      )
-    } else {
-      return (
-        <VStack>
-          <Button
-            w={'40px'}
-            variant={activeStep >= props.id ? 'solid' : 'outline'}
-            onClick={() => {
-              setActiveStep(props.id)
-            }}
-            color={activeStep >= props.id ? 'white' : 'secondary.500'}
-            borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
-          >
-            {props.id + 1}
-          </Button>
-          <Text color={activeStep >= props.id ? 'black' : 'secondary.500'} fontSize={'10px'}>{props.title}</Text>
-        </VStack>
-      )
-    }
+  const StepButton: FC<StepItemProps> = ({...props}) => {
+    return (
+      <HStack spacing={'20px'} minW={isLargerThan1024 ? '' : '60px'} justifyContent={"center"}>
+        <Button
+          w={'40px'}
+          variant={activeStep >= props.id ? 'solid' : 'outline'}
+          onClick={() => {
+            setActiveStep(props.id)
+          }}
+          color={activeStep >= props.id ? 'white' : 'secondary.500'}
+          borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
+        >
+          {props.id + 1}
+        </Button>
+        <Text hidden={props.hiddenText} color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
+      </HStack>
+    )
   }
 
   return (
-    <Stack p={'20px'} spacing={'20px'}>
+    <Stack px={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
-        px={isLargerThan1024 ? '190px' : '24px'}
+        px={isLargerThan1024 ? '190px' : '12px'}
         pt={isLargerThan1024 ? '68px' : '24px'}
-        pb={ '36px'}
+        pb={'36px'}
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}
@@ -84,6 +66,7 @@ const OpenChanel = () => {
       >
         <Stack
           direction={'row'}
+          px={isLargerThan1024 ? '' : '20px'}
           w={isLargerThan1024 ? '800px' : 'full'}
           alignItems={'center'}
           fontWeight={'bold'}
@@ -91,11 +74,16 @@ const OpenChanel = () => {
           whiteSpace={'nowrap'}
           hidden={activeStep === 3}
         >
-          <StepButton id={0} title={'Token Address'} />
-          <Divider active={activeStep >= 1} />
-          <StepButton id={1} title={'Configuration'} />
-          <Divider active={activeStep >= 2} />
-          <StepButton id={2} title={'Confirm'} />
+          <StepButton id={0} title={'Token Address'} hiddenText={!isLargerThan1024}/>
+          <Divider active={activeStep >= 1}/>
+          <StepButton id={1} title={'Configuration'} hiddenText={!isLargerThan1024}/>
+          <Divider active={activeStep >= 2}/>
+          <StepButton id={2} title={'Confirm'} hiddenText={!isLargerThan1024}/>
+        </Stack>
+        <Stack direction={"row"} w={'full'} justifyContent={"space-around"} pt={1}>
+          <Text fontSize={'xs'} fontWeight={'bold'} w={'100px'} textAlign={"center"}>Token Address</Text>
+          <Text fontSize={'xs'} fontWeight={'bold'} w={'100px'} textAlign={"center"}>Configuration</Text>
+          <Text fontSize={'xs'} fontWeight={'bold'} w={'100px'} textAlign={"center"}>Confirm</Text>
         </Stack>
         {steps.map((step) => (
           <Stack hidden={activeStep !== step.id} key={step.id}>
@@ -103,10 +91,11 @@ const OpenChanel = () => {
           </Stack>
         ))}
         {activeStep === 3 ? (
-          <Done />
+          <Done/>
         ) : (
           <Button
             w={isLargerThan1024 ? '176px' : '80%'}
+            minH={isLargerThan1024 ? '40px' : '44px'}
             isLoading={status === PROCESSING}
             disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
             onClick={async () => {

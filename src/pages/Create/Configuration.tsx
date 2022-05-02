@@ -143,16 +143,16 @@ export const ConfigurationTip = () => {
 
   return (
     <Stack w={isLargerThan1024 ? '764px' : 'full'} spacing={'12px'}>
-      <Text fontWeight={'bold'}>Instructions</Text>
+      <Text fontWeight={isLargerThan1024 ? 'bold' : 'semibold'} fontSize={isLargerThan1024 ? 'md' : 'xl'}>Instructions</Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Price Token Uint
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
         The number of pricing token when quoting.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Standard Output
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
@@ -160,7 +160,7 @@ export const ConfigurationTip = () => {
         offer per block in the absence of decay.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Quotation Fee
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
@@ -169,7 +169,7 @@ export const ConfigurationTip = () => {
         the fee.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Price Calling Fee
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
@@ -177,7 +177,7 @@ export const ConfigurationTip = () => {
         channel manager.
       </Text>
       <p />
-      <Text fontSize={'sm'} fontWeight={'600'}>
+      <Text fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'600'}>
         Attenuation Factor
       </Text>
       <Text fontSize={'sm'} color={'secondary.500'} fontWeight={'600'}>
