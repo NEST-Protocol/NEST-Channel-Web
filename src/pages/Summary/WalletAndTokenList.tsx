@@ -51,9 +51,13 @@ const WalletAndTokenList = () => {
       <Stack overflow={'scroll'} h={isLargerThan1024 ? (activeChannelInfo.opener === account ? '490px' : '414px') : ''} w={'full'}>
         <Stack direction={'row'} fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'semibold'} w={'full'} justifyContent={"space-around"}>
           <Text>Channel</Text>
-          <Divider orientation={'vertical'}/>
+          <Box>
+            <Divider orientation={'vertical'}/>
+          </Box>
           <Text>Price</Text>
-          <Divider orientation={'vertical'}/>
+          <Box>
+            <Divider orientation={'vertical'}/>
+          </Box>
           <Text>Quote</Text>
         </Stack>
         <Divider/>
@@ -133,7 +137,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
           fontWeight={600}
           whiteSpace={'nowrap'}
-          fontSize={isLargerThan1024 ? 'sm' : 'md'}
+          fontSize={isLargerThan1024 ? 'xs' : 'md'}
         >
           {props.channelId} / {priceTokenSymbol} /
         </Text>

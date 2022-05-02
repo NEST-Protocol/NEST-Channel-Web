@@ -32,7 +32,6 @@ export const Button = {
         bg: 'primary.500',
         opacity: 0.5,
       },
-      fontWeight: '800',
       fontFamily: 'Montserrat',
       borderRadius: 'full',
     },

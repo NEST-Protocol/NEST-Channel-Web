@@ -35,6 +35,13 @@ const GlobalStyle = createGlobalStyle`
   * {
     -ms-overflow-style: none;
   }
+  
+  div,a,img {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 `
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
