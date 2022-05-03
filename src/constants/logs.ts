@@ -43,4 +43,12 @@ export const CHANNEL_OPEN_LOGS_FILTER: { [chainId: number]: ChannelOpenLogsFilte
     toBlock: 'latest',
     apikey: process.env.REACT_APP_BSCSCAN_KEY ?? 'YourApiKey',
   },
+  [SupportedChainId.KCC]: {
+    hostname: 'https://scan.kcc.io',
+    address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.KCC],
+    topics: ['0xd5d675c43c23a6c1e3ad060a603f30590f57c52d5e4a71994bf009848e8fe9e1'],
+    fromBlock: 9155349,
+    toBlock: 'latest',
+    apikey: process.env.REACT_APP_KCCSCAN_KEY ?? 'YourApiKey',
+  },
 }

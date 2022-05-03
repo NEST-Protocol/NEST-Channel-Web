@@ -1,5 +1,6 @@
 // import arbitrumLogoUrl from 'assets/svg/arbitrum_logo.svg'
 // import optimismLogoUrl from 'assets/svg/optimism_logo.svg'
+import kccLogoUrl from '../assets/svg/KCC.svg'
 
 export enum SupportedChainId {
   // MAINNET = 1,
@@ -9,6 +10,7 @@ export enum SupportedChainId {
   // KOVAN = 42,
   BSC = 56,
   BSCTestnet = 97,
+  KCC = 321,
 
   // ARBITRUM_ONE = 42161,
   // ARBITRUM_RINKEBY = 421611,
@@ -24,6 +26,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   // SupportedChainId.KOVAN,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
+  SupportedChainId.KCC,
 
   // SupportedChainId.ARBITRUM_ONE,
   // SupportedChainId.ARBITRUM_RINKEBY,
@@ -44,6 +47,7 @@ export const L1_CHAIN_IDS = [
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
 
 export const L2_CHAIN_IDS = [
+  SupportedChainId.KCC,
   // SupportedChainId.ARBITRUM_ONE,
   // SupportedChainId.ARBITRUM_RINKEBY,
   // SupportedChainId.OPTIMISM,
@@ -118,16 +122,15 @@ export const CHAIN_INFO: ChainInfo = {
     label: 'BNB Smart Chain - Testnet',
     nativeSymbol: 'BNB',
   },
-
-  // [SupportedChainId.ARBITRUM_ONE]: {
-  //   bridge: 'https://bridge.arbitrum.io/',
-  //   docs: 'https://offchainlabs.com/',
-  //   explorer: 'https://arbiscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Arbitrum',
-  //   logoUrl: arbitrumLogoUrl,
-  //   nativeSymbol: 'ETH',
-  // },
+  [SupportedChainId.KCC]: {
+    bridge: '',
+    docs: 'https://offchainlabs.com/',
+    explorer: 'https://scan.kcc.io/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'KCC',
+    logoUrl: kccLogoUrl,
+    nativeSymbol: 'KCS',
+  },
   // [SupportedChainId.ARBITRUM_RINKEBY]: {
   //   bridge: 'https://bridge.arbitrum.io/',
   //   docs: 'https://offchainlabs.com/',

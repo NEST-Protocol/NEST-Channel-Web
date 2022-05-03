@@ -108,9 +108,9 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
-    const lists = [...channelList]
+    const list = [...channelList]
     setChannelList(
-      lists.map((pair) =>
+      list.map((pair) =>
         pair.channelId === props.channelId
           ? {
             ...pair,
@@ -137,7 +137,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
           fontWeight={600}
           whiteSpace={'nowrap'}
-          fontSize={isLargerThan1024 ? 'xs' : 'md'}
+          fontSize={isLargerThan1024 ? 'md' : 'xs'}
         >
           {props.channelId} / {priceTokenSymbol} /
         </Text>
@@ -145,7 +145,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           {info.pairs.slice(0, 2).map((item) => (
             <TokenName
               address={item.target}
-              fontSize={isLargerThan1024 ? 'xs' : 'md'}
+              fontSize={isLargerThan1024 ? 'md' : 'xs'}
               color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
             />
           ))}

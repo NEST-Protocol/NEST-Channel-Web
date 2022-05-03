@@ -53,7 +53,7 @@ const OpenChanel = () => {
   }
 
   return (
-    <Stack px={'20px'} spacing={'20px'}>
+    <Stack p={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
         px={isLargerThan1024 ? '190px' : '12px'}
@@ -88,7 +88,7 @@ const OpenChanel = () => {
           </Stack>
         ) }
         {steps.map((step) => (
-          <Stack hidden={activeStep !== step.id} key={step.id}>
+          <Stack hidden={activeStep !== step.id} key={step.id} w={'full'} alignItems={"center"}>
             {step.content}
           </Stack>
         ))}
