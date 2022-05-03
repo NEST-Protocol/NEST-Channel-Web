@@ -1,6 +1,6 @@
-import {Text, Stack, Tooltip, useMediaQuery} from '@chakra-ui/react'
+import {Text, Stack, useMediaQuery} from '@chakra-ui/react'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
+import { CHAIN_INFO } from '../../constants/chains'
 import * as React from 'react'
 
 export const NetworkCard = () => {
@@ -13,24 +13,11 @@ export const NetworkCard = () => {
   }
 
   return (
-    <Tooltip
-      label="This network is not supported, please switch the wallet network to The BSC Mainnet."
-      fontSize={'sm'}
-      fontWeight={600}
-      boxShadow={'0px 0px 60px 0px #BFBFBF'}
-      isDisabled={chainId === SupportedChainId.BSC}
-      placement="bottom-end"
-      p={'24px'}
-      bg={'white'}
-      color={"black"}
-      borderRadius={'20px'}
-    >
-      <Stack direction={'row'} alignItems={'center'} spacing={0}>
-        <Text variant={'ghost'} fontSize={isLargerThan1024 ? 'md' : 'xs'} fontWeight={'medium'}>
-          {info.label}
-        </Text>
-      </Stack>
-    </Tooltip>
+    <Stack direction={'row'} alignItems={'center'} spacing={0}>
+      <Text variant={'ghost'} fontSize={isLargerThan1024 ? 'md' : 'xs'} fontWeight={'medium'}>
+        {info.label}
+      </Text>
+    </Stack>
   )
 }
 
