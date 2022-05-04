@@ -1,4 +1,4 @@
-import {Divider, Link, Spacer, Stack, Text, useMediaQuery} from '@chakra-ui/react'
+import {Divider, Link, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { isAddress, shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
@@ -91,38 +91,43 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
   return (
     <>
-      <Stack direction={'row'} w={'full'}>
+      <Stack direction={'row'} w={'full'} justifyContent={'space-between'}>
         <Text color={'secondary.500'} fontWeight={'semibold'} whiteSpace={"nowrap"}>
           {props.title}:
         </Text>
-        <Spacer />
 
         {props.token && (
-          <Stack direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'space-between'}>
+          <Stack direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'end'}>
             <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />
             <Link
               href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
               isExternal
               color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
               fontWeight={'semibold'}
+              textAlign={"end"}
+              minW={'100px'}
+              whiteSpace={"nowrap"}
             >
-              {shortenAddress(props.token, isLargerThan1024 ? 6 : 4)}
+              {shortenAddress(props.token, isLargerThan1024 ? 6 : 3)}
             </Link>
           </Stack>
         )}
 
         {props.tokens && (
-          <Stack spacing={isLargerThan1024 ? '20px' : '10px'}>
+          <Stack spacing={isLargerThan1024 ? '20px' : '10px'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={"end"}>
             {props.tokens.map((address, index) => (
-              <Stack key={index} direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'space-between'}>
+              <Stack key={index} direction={'row'} w={'full'} justifyContent={'end'}>
                 <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'} />
                 <Link
                   href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                   isExternal
                   color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
                   fontWeight={'semibold'}
+                  minW={'100px'}
+                  textAlign={"end"}
+                  whiteSpace={"nowrap"}
                 >
-                  {shortenAddress(address, isLargerThan1024 ? 6 : 4)}
+                  {shortenAddress(address, isLargerThan1024 ? 6 : 3)}
                 </Link>
               </Stack>
             ))}

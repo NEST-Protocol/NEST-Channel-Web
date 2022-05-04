@@ -46,6 +46,7 @@ const TokenAddress = () => {
             <InputGroup>
               <Input
                 variant={'filled'}
+                pr={'80px'}
                 minH={isLargerThan1024 ? '40px' : '44px'}
                 fontSize={miningTokenAddress === '' ? '15px' : '17px'}
                 isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
@@ -57,7 +58,7 @@ const TokenAddress = () => {
                   e.target.setSelectionRange(0, miningTokenAddress.length)
                 }}
               />
-              <InputRightElement pr={'36px'} children={<TokenName address={miningTokenAddress} />} />
+              <InputRightElement pr={'36px'} h={'full'} children={<TokenName address={miningTokenAddress} />} />
             </InputGroup>
           </FormControl>
         </Stack>

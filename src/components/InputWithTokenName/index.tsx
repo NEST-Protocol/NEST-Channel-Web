@@ -11,7 +11,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { useToken } from '../../hooks/Tokens'
-import { isAddress } from '../../utils'
+import {isAddress} from '../../utils'
 import { PUSD_ADDRESS } from '../../constants/addresses'
 import { PROCESSING } from '../../constants/misc'
 import { quotationTokenListAtom } from '../../state/Create/form'
@@ -40,6 +40,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
         <InputGroup>
           <Input
             variant={'filled'}
+            pr={props.isReadOnly ? '80px' : ''}
             minH={isLargerThan1024 ? '40px' : '44px'}
             fontSize={address === '' ? '15px' : '17px'}
             placeholder={'Input Token Address'}
@@ -80,13 +81,16 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
             }}
             value={address}
           />
-          <InputRightElement
-            children={
-              <Stack pr={'36px'}>
-                <TokenName address={address} />
-              </Stack>
-            }
-          />
+          { props.isReadOnly && (
+            <InputRightElement
+              h={'full'}
+              children={
+                <Stack pr={'36px'} >
+                  <TokenName address={address} />
+                </Stack>
+              }
+            />
+          ) }
         </InputGroup>
       </FormControl>
       {
