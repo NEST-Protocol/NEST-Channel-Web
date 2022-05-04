@@ -14,8 +14,8 @@ const TokenAddress = () => {
 
   return (
     <Stack pt={isLargerThan1024 ? '60px' : '24px'} pb={isLargerThan1024 ? '36px' : '24px'} spacing={'20px'} w={isLargerThan1024 ? 800 : 'full'}>
-      <Stack id="quotation token address" spacing={'16px'} w={'full'}>
-        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : ''} color={'secondary.500'}>
+      <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} w={'full'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} color={'secondary.500'}>
           Quotation Token:
         </Text>
         {quotationTokenList.map((address: string) => (
@@ -37,8 +37,8 @@ const TokenAddress = () => {
 
       <Divider dashed={true} />
 
-      <Stack spacing={'16px'}>
-        <Text fontWeight={'600'} ml={isLargerThan1024 ? 116 : ''} color={'secondary.500'}>
+      <Stack spacing={isLargerThan1024 ? '16px' : '10px'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} color={'secondary.500'}>
           Mining Token:
         </Text>
         <Stack direction={'row'} spacing={0}>

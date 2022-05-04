@@ -1,4 +1,4 @@
-import {Link, Spacer, Stack, Text, useMediaQuery} from '@chakra-ui/react'
+import {Divider, Link, Spacer, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { isAddress, shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
@@ -42,7 +42,7 @@ const Confirm = () => {
   }, [chainId, priceTokenName])
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={isLargerThan1024 ? '680px' : 'full'} spacing={'20px'}>
+    <Stack pt={'60px'} pb={'30px'} w={isLargerThan1024 ? '680px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
       <ConfirmDetail title={`Price Token`} token={priceTokenAddress} />
       <ConfirmDetail
         title={`Quotation Token`}
@@ -87,52 +87,58 @@ type ConfirmDetailProps = {
 
 const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
   const { chainId } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack direction={'row'} w={'full'}>
-      <Text color={'secondary.500'} fontWeight={'600'}>
-        {props.title}:
-      </Text>
-      <Spacer />
-
-      {props.token && (
-        <Stack direction={'row'} w={'220px'} justifyContent={'space-between'}>
-          <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />
-          <Link
-            href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
-            isExternal
-            color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
-            fontWeight={'bold'}
-          >
-            {shortenAddress(props.token, 6)}
-          </Link>
-        </Stack>
-      )}
-
-      {props.tokens && (
-        <Stack spacing={'20px'}>
-          {props.tokens.map((address, index) => (
-            <Stack key={index} direction={'row'} w={'220px'} justifyContent={'space-between'}>
-              <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'} />
-              <Link
-                href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
-                isExternal
-                color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
-                fontWeight={'bold'}
-              >
-                {shortenAddress(address, 6)}
-              </Link>
-            </Stack>
-          ))}
-        </Stack>
-      )}
-
-      {props.value && (
-        <Text fontWeight={'bold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
-          {props.value} {props.unit}
+    <>
+      <Stack direction={'row'} w={'full'}>
+        <Text color={'secondary.500'} fontWeight={'semibold'} whiteSpace={"nowrap"}>
+          {props.title}:
         </Text>
-      )}
-    </Stack>
+        <Spacer />
+
+        {props.token && (
+          <Stack direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'space-between'}>
+            <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />
+            <Link
+              href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
+              isExternal
+              color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
+              fontWeight={'semibold'}
+            >
+              {shortenAddress(props.token, isLargerThan1024 ? 6 : 4)}
+            </Link>
+          </Stack>
+        )}
+
+        {props.tokens && (
+          <Stack spacing={isLargerThan1024 ? '20px' : '10px'}>
+            {props.tokens.map((address, index) => (
+              <Stack key={index} direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'space-between'}>
+                <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'} />
+                <Link
+                  href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
+                  isExternal
+                  color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
+                  fontWeight={'semibold'}
+                >
+                  {shortenAddress(address, isLargerThan1024 ? 6 : 4)}
+                </Link>
+              </Stack>
+            ))}
+          </Stack>
+        )}
+
+        {props.value && (
+          <Text fontWeight={'semibold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
+            {props.value} {props.unit}
+          </Text>
+        )}
+      </Stack>
+      { !isLargerThan1024 && (
+        <Divider orientation={"horizontal"} />
+      ) }
+    </>
   )
 }
 
