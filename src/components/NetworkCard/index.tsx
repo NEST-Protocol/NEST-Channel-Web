@@ -1,7 +1,10 @@
-import {Text, useMediaQuery, MenuList, MenuButton, Menu, MenuItem} from '@chakra-ui/react'
+import {Text, useMediaQuery, MenuList, MenuButton, Menu, MenuItem, Stack} from '@chakra-ui/react'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { CHAIN_INFO } from '../../constants/chains'
 import * as React from 'react'
+import ETH from '../../assets/svg/ETH.svg'
+import KCC from '../../assets/svg/KCC.svg'
+import BNB from '../../assets/svg/BNB.svg'
 
 export const NetworkCard = () => {
   const { chainId, library } = useActiveWeb3React()
@@ -12,18 +15,22 @@ export const NetworkCard = () => {
     {
       id: 'Rinkeby',
       chainId: '0x4',
+      icon: ETH,
     },
     {
       id: 'BNB',
       chainId: '0x38',
+      icon: BNB,
     },
     {
       id: 'BNB Testnet',
       chainId: '0x61',
+      icon: BNB,
     },
     {
       id: 'KCC',
-      chainId: '0x141'
+      chainId: '0x141',
+      icon: KCC,
     }
   ]
 
@@ -57,7 +64,12 @@ export const NetworkCard = () => {
       </MenuButton>
       <MenuList>
         { menus.map((item)=> (
-          <MenuItem key={item.id} onClick={select(item.chainId)} fontWeight={'medium'}>{item.id}</MenuItem>
+          <MenuItem key={item.id} onClick={select(item.chainId)} fontWeight={'medium'}>
+            <Stack direction={"row"} alignItems={"center"}>
+              <img src={item.icon} alt={'logo'} width={'16px'} height={'16px'}/>
+              <Text>{item.id}</Text>
+            </Stack>
+          </MenuItem>
         )) }
       </MenuList>
     </Menu>
