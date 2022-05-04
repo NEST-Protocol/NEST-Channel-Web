@@ -105,7 +105,6 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const {symbol: priceTokenSymbol, fetchStatus: priceStatus} = useToken(props.token0)
   const {info} = useChannelInfo(props.channelId)
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
-  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     const list = [...channelList]
@@ -137,7 +136,6 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
           fontWeight={600}
           whiteSpace={'nowrap'}
-          fontSize={isLargerThan1024 ? 'md' : 'xs'}
         >
           {props.channelId} / {priceTokenSymbol} /
         </Text>
@@ -145,7 +143,6 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
           {info.pairs.slice(0, 2).map((item) => (
             <TokenName
               address={item.target}
-              fontSize={isLargerThan1024 ? 'md' : 'xs'}
               color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
             />
           ))}
