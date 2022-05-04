@@ -14,6 +14,7 @@ import Divider from '../Divider'
 import { FC, useRef, useState } from 'react'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { BiChevronDownCircle } from 'react-icons/all'
+import useWindowSize from "../../hooks/useWindowSize";
 
 type OptionInput = {
   title: string
@@ -38,15 +39,16 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
   const [value, setValue] = useState(props.defaultValue)
   const inputRef = useRef(null)
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
+  const { width } = useWindowSize()
 
   return (
-    <Box pb={showOption ? '40px' : '0'}>
+    <Box pb={showOption ? (isLargerThan1024 ? '40px' : '44px') : '0'}>
       <Text fontWeight={'600'} mb={isLargerThan1024 ? '16px' : '10px'} fontSize={isLargerThan1024 ? 'md' : 'xs'} ml={isLargerThan1024 ? '116px' : '16px'} color={'secondary.500'}>
         {props.title}:
       </Text>
       <FormControl
         bg={'white'}
-        width={isLargerThan1024 ? 600 : 'full'}
+        width={isLargerThan1024 ? 600 : (width - 66) }
         ml={isLargerThan1024 ? 100 : 0}
         borderRadius={showOption ? '10px' : '0'}
         border={showOption ? '1px' : '0'}
@@ -74,15 +76,16 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
               setTimeout(() => setShowOption(false), 200)
             }}
           >
-            <NumberInputField ref={inputRef} readOnly={props.readonly} />
+            <NumberInputField ref={inputRef} minH={isLargerThan1024 ? '40px' : '44px'} readOnly={props.readonly} />
             <InputRightElement
               onClick={() =>
                 // @ts-ignore
                 inputRef.current.focus()
               }
+              h={isLargerThan1024 ? '40px' : '44px'}
               children={
                 <Stack pr={'12px'}>
-                  <BiChevronDownCircle size={'22px'} color={'#878787'} />
+                  <BiChevronDownCircle size={isLargerThan1024 ? '22px' : '16px'} color={'#878787'} />
                 </Stack>
               }
             />
@@ -92,6 +95,7 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
             <Input
               id={'amount'}
               ref={inputRef}
+              minH={isLargerThan1024 ? '40px' : '44px'}
               variant={showOption ? 'unstyled' : 'filled'}
               errorBorderColor={'primary.500'}
               readOnly={props.readonly}
@@ -114,9 +118,10 @@ const InputWithSelect: FC<OptionInput> = ({ ...props }) => {
                 // @ts-ignore
                 inputRef.current.focus()
               }
+              h={isLargerThan1024 ? '40px' : '44px'}
               children={
                 <Stack pr={'12px'}>
-                  <BiChevronDownCircle size={'22px'} color={'#878787'} />
+                  <BiChevronDownCircle size={isLargerThan1024 ? '22px' : '16px'} color={'#878787'} />
                 </Stack>
               }
             />

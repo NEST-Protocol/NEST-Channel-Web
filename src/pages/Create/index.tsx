@@ -58,7 +58,7 @@ const OpenChanel = () => {
         bg={'white'}
         px={isLargerThan1024 ? '190px' : '12px'}
         pt={isLargerThan1024 ? '68px' : '24px'}
-        pb={'36px'}
+        pb={'30px'}
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}
@@ -88,7 +88,7 @@ const OpenChanel = () => {
           </Stack>
         ) }
         {steps.map((step) => (
-          <Stack hidden={activeStep !== step.id} key={step.id} w={'full'} alignItems={"center"}>
+          <Stack hidden={activeStep !== step.id} key={step.id} w={'full'} alignItems={"center"} pb={'4px'}>
             {step.content}
           </Stack>
         ))}
@@ -115,8 +115,8 @@ const OpenChanel = () => {
 
       <Stack
         bg={'white'}
-        px={isLargerThan1024 ? '190px' : '24px'}
-        py={isLargerThan1024 ? '60px' : '24px'}
+        px={isLargerThan1024 ? '190px' : '12px'}
+        py={isLargerThan1024 ? '60px' : '30px'}
         borderRadius={'20px'}
         alignItems={'center'}
         spacing={'0'}

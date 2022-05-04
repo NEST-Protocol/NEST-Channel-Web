@@ -13,9 +13,9 @@ const TokenAddress = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack pt={isLargerThan1024 ? '60px' : '24px'} pb={isLargerThan1024 ? '36px' : '24px'} spacing={'20px'} w={isLargerThan1024 ? 800 : 'full'}>
+    <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={isLargerThan1024 ? '36px' : '24px'} spacing={'20px'} w={isLargerThan1024 ? 800 : 'full'}>
       <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} w={'full'}>
-        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} color={'secondary.500'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'}>
           Quotation Token:
         </Text>
         {quotationTokenList.map((address: string) => (
@@ -38,7 +38,7 @@ const TokenAddress = () => {
       <Divider dashed={true} />
 
       <Stack spacing={isLargerThan1024 ? '16px' : '10px'}>
-        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} color={'secondary.500'}>
+        <Text fontWeight={'600'} ml={isLargerThan1024 ? '116px' : '16px'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'}>
           Mining Token:
         </Text>
         <Stack direction={'row'} spacing={0}>
@@ -46,6 +46,7 @@ const TokenAddress = () => {
             <InputGroup>
               <Input
                 variant={'filled'}
+                minH={isLargerThan1024 ? '40px' : '44px'}
                 fontSize={miningTokenAddress === '' ? '15px' : '17px'}
                 isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
                 errorBorderColor={'primary.500'}

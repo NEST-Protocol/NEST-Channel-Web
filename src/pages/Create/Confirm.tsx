@@ -42,7 +42,7 @@ const Confirm = () => {
   }, [chainId, priceTokenName])
 
   return (
-    <Stack pt={'60px'} pb={'30px'} w={isLargerThan1024 ? '680px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
+    <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} w={isLargerThan1024 ? '680px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
       <ConfirmDetail title={`Price Token`} token={priceTokenAddress} />
       <ConfirmDetail
         title={`Quotation Token`}

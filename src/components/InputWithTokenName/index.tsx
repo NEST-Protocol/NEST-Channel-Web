@@ -40,6 +40,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
         <InputGroup>
           <Input
             variant={'filled'}
+            minH={isLargerThan1024 ? '40px' : '44px'}
             fontSize={address === '' ? '15px' : '17px'}
             placeholder={'Input Token Address'}
             isInvalid={!valid}

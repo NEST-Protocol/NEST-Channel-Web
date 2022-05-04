@@ -36,7 +36,7 @@ const Configuration = () => {
   }
 
   return (
-    <Stack pt={isLargerThan1024 ? '60px' : '24px'} pb={isLargerThan1024 ? '30px' : '24px'} w={isLargerThan1024 ? 800 : 'full'} spacing={'20px'}>
+    <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={isLargerThan1024 ? '30px' : '24px'} w={isLargerThan1024 ? 800 : 'full'} spacing={'20px'}>
       {priceTokenName === 'PUSD' ? (
         <InputWithSelect
           title={'Price Token Unit'}
