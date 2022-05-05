@@ -45,25 +45,27 @@ export const NetworkCard = () => {
           params: [{chainId: formattedChainId}],
         })
       } catch (switchError) {
-        try {
-          await ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: '0x141',
-                chainName: 'KCC Mainnet network',
-                nativeCurrency: {
-                  name: 'KCS',
-                  symbol: 'KCS',
-                  decimals: 18
+        if (chainId === 321) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x141',
+                  chainName: 'KCC Mainnet network',
+                  nativeCurrency: {
+                    name: 'KCS',
+                    symbol: 'KCS',
+                    decimals: 18
+                  },
+                  rpcUrls: ['https://rpc-mainnet.kcc.network'],
+                  blockExplorerUrls: ['https://explorer.kcc.io/']
                 },
-                rpcUrls: ['https://rpc-mainnet.kcc.network'],
-                blockExplorerUrls: ['https://explorer.kcc.io/']
-              },
-            ],
-          });
-        } catch (addError) {
-          // handle "add" error
+              ],
+            });
+          } catch (addError) {
+            // handle "add" error
+          }
         }
       }
     }
