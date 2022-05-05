@@ -86,7 +86,7 @@ export const NetworkCard = () => {
         fontSize={isLargerThan1024 ? 'md' : 'xs'}
         fontWeight={'medium'}
         px={'20px'}
-        leftIcon={<img src={info.logoUrl} alt={'logo'}/>}
+        leftIcon={<img src={info.logoUrl} alt={'logo'} width={'16px'} height={'16px'}/>}
       >
         {info.label}
       </MenuButton>
@@ -94,6 +94,7 @@ export const NetworkCard = () => {
         {menus.map((item) => (
           <MenuItem
             key={item.id}
+            px={'20px'}
             onClick={select(item.chainId)}
             fontWeight={'medium'}
             icon={<img src={item.icon} alt={'logo'} width={'16px'} height={'16px'}/>}
