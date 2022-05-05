@@ -25,7 +25,7 @@ const QuotationFrequency = () => {
   useInterval(() => asyncFetch(), 120000)
 
   return (
-    <Stack bg={'white'} w={'full'} h={isLargerThan1024 ? '460px' : '320px'} spacing={0} borderRadius={'20px'} p={isLargerThan1024 ? '20px' : '0'} border={"1px solid"} borderColor={"#EEEEEE"}>
+    <Stack bg={'white'} w={'full'} h={isLargerThan1024 ? '460px' : '320px'} spacing={0} borderRadius={'20px'} p={isLargerThan1024 ? '20px' : '0'} border={"1px solid"} borderColor={"secondary.300"}>
       <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Quotation Frequency (Last 20 quotes)</Text>
       <Stack p={'20px'} h={'full'} w={'full'} alignItems={"center"}>
         <Text fontSize={'xs'} fontWeight={'medium'} pb={'10px'}>Interval from last quotation</Text>

@@ -34,7 +34,7 @@ const Administrator = () => {
   }
 
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'} border={"1px solid"} borderColor={"#EEEEEE"}>
+    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'} border={"1px solid"} borderColor={"secondary.300"}>
       <Text fontWeight={'bold'} mr={'88px'}>
         Administrator
       </Text>

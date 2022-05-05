@@ -34,7 +34,7 @@ const Information = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"#EEEEEE"}>
+    <Stack bg={'white'} w={'full'} borderRadius={'20px'} p={'20px'} border={"1px solid"} borderColor={"secondary.300"}>
       <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Information</Text>
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />

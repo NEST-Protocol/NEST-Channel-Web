@@ -1,6 +1,8 @@
 // import arbitrumLogoUrl from 'assets/svg/arbitrum_logo.svg'
 // import optimismLogoUrl from 'assets/svg/optimism_logo.svg'
 import kccLogoUrl from '../assets/svg/KCC.svg'
+import ETHLogoUrl from '../assets/svg/ETH.svg'
+import BNBLogoUrl from '../assets/svg/BNB.svg'
 
 export enum SupportedChainId {
   // MAINNET = 1,
@@ -62,10 +64,10 @@ interface L1ChainInfo {
   readonly infoLink: string
   readonly label: string
   readonly nativeSymbol: string
+  readonly logoUrl: string
 }
 export interface L2ChainInfo extends L1ChainInfo {
   readonly bridge: string
-  readonly logoUrl: string
 }
 
 type ChainInfo = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & {
@@ -86,6 +88,7 @@ export const CHAIN_INFO: ChainInfo = {
     infoLink: 'https://nestprotocol.org/',
     label: 'Rinkeby',
     nativeSymbol: 'ETH',
+    logoUrl: ETHLogoUrl
   },
   // [SupportedChainId.ROPSTEN]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -93,6 +96,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Ropsten',
   //   nativeSymbol: 'ETH',
+  //   logoUrl: ETHLogoUrl
   // },
   // [SupportedChainId.KOVAN]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -100,6 +104,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Kovan',
   //   nativeSymbol: 'ETH',
+  //   logoUrl: ETHLogoUrl
   // },
   // [SupportedChainId.GOERLI]: {
   //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -107,6 +112,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   infoLink: 'https://nestprotocol.org/',
   //   label: 'Görli',
   //   nativeSymbol: 'ETH',
+  //   logoUrl: ETHLogoUrl
   // },
   [SupportedChainId.BSC]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -114,6 +120,7 @@ export const CHAIN_INFO: ChainInfo = {
     infoLink: 'https://nestprotocol.org/',
     label: 'BNB',
     nativeSymbol: 'BNB',
+    logoUrl: BNBLogoUrl
   },
   [SupportedChainId.BSCTestnet]: {
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -121,6 +128,7 @@ export const CHAIN_INFO: ChainInfo = {
     infoLink: 'https://nestprotocol.org/',
     label: 'BNB - Testnet',
     nativeSymbol: 'BNB',
+    logoUrl: BNBLogoUrl
   },
   [SupportedChainId.KCC]: {
     bridge: '',

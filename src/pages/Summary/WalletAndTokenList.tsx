@@ -33,7 +33,7 @@ const WalletAndTokenList = () => {
 
   return (
     <Stack bg={'white'} minW={'3xs'} h={'auto'} borderRadius={'20px'} px={'20px'} py={isLargerThan1024 ? '20px' : '24px'} spacing={'24px'} border={"1px solid"}
-           borderColor={"#EEEEEE"} alignItems={"center"}>
+           borderColor={"secondary.300"} alignItems={"center"}>
       <Stack spacing={'24px'} w={isLargerThan1024 ? 'full' : '80%'}>
         <Web3Status/>
 

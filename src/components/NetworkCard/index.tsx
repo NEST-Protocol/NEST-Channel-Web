@@ -1,52 +1,70 @@
-import {Text, useMediaQuery, MenuList, MenuButton, Menu, MenuItem, Stack} from '@chakra-ui/react'
-import { useActiveWeb3React } from '../../hooks/web3'
-import { CHAIN_INFO } from '../../constants/chains'
+import {Button, Menu, MenuButton, MenuItem, MenuList, useMediaQuery} from '@chakra-ui/react'
+import {useActiveWeb3React} from '../../hooks/web3'
+import {CHAIN_INFO, SupportedChainId} from '../../constants/chains'
+import {BigNumber, utils} from 'ethers'
 import * as React from 'react'
-import ETH from '../../assets/svg/ETH.svg'
-import KCC from '../../assets/svg/KCC.svg'
-import BNB from '../../assets/svg/BNB.svg'
 
 export const NetworkCard = () => {
-  const { chainId, library } = useActiveWeb3React()
+  const {chainId, library} = useActiveWeb3React()
   const info = chainId ? CHAIN_INFO[chainId] : undefined
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   const menus = [
     {
       id: 'Rinkeby',
-      chainId: '0x4',
-      icon: ETH,
+      chainId: SupportedChainId.RINKEBY,
+      icon: chainId ? CHAIN_INFO[SupportedChainId.RINKEBY].logoUrl : undefined,
     },
     {
       id: 'BNB',
-      chainId: '0x38',
-      icon: BNB,
+      chainId: SupportedChainId.BSC,
+      icon: chainId ? CHAIN_INFO[SupportedChainId.BSC].logoUrl : undefined,
     },
     {
       id: 'BNB Testnet',
-      chainId: '0x61',
-      icon: BNB,
+      chainId: SupportedChainId.BSCTestnet,
+      icon: chainId ? CHAIN_INFO[SupportedChainId.BSCTestnet].logoUrl : undefined,
     },
     {
       id: 'KCC',
-      chainId: '0x141',
-      icon: KCC,
+      chainId: SupportedChainId.KCC,
+      icon: chainId ? CHAIN_INFO[SupportedChainId.KCC].logoUrl : undefined,
     }
   ]
 
-  const select = (id: string) => {
+  const select = (chainId: number) => {
     return async () => {
-      const { ethereum } = window
+      const {ethereum} = window
       if (!ethereum || !ethereum.on) {
         return
       }
+      const formattedChainId = utils.hexStripZeros(BigNumber.from(chainId).toHexString())
       try {
         await ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: id }],
+          params: [{chainId: formattedChainId}],
         })
       } catch (switchError) {
-        console.log(switchError)
+        try {
+          await ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: '0x141',
+                chainName: 'KCC Mainnet network',
+                nativeCurrency: {
+                  name: 'KCS',
+                  symbol: 'KCS',
+                  decimals: 18
+                },
+                rpcUrls: ['https://rpc-mainnet.kcc.network'],
+                blockExplorerUrls: ['https://explorer.kcc.io/']
+              },
+            ],
+          });
+        } catch (addError) {
+          // handle "add" error
+        }
       }
     }
   }
@@ -56,21 +74,32 @@ export const NetworkCard = () => {
   }
 
   return (
-    <Menu>
-      <MenuButton>
-        <Text variant={'ghost'} fontSize={isLargerThan1024 ? 'md' : 'xs'} fontWeight={'medium'}>
-          {info.label}
-        </Text>
+    <Menu autoSelect={false}>
+      <MenuButton
+        as={Button}
+        bg={"white"}
+        color={'primary.500'}
+        _hover={{color: 'primary.500', bg: 'white'}}
+        _active={{color: 'primary.500', bg: 'white'}}
+        fontSize={isLargerThan1024 ? 'md' : 'xs'}
+        fontWeight={'medium'}
+        px={'20px'}
+        leftIcon={<img src={info.logoUrl} alt={'logo'}/>}
+      >
+        {info.label}
       </MenuButton>
-      <MenuList>
-        { menus.map((item)=> (
-          <MenuItem key={item.id} onClick={select(item.chainId)} fontWeight={'medium'}>
-            <Stack direction={"row"} alignItems={"center"}>
-              <img src={item.icon} alt={'logo'} width={'16px'} height={'16px'}/>
-              <Text>{item.id}</Text>
-            </Stack>
+      <MenuList borderRadius={'12px'} borderColor={'secondary.300'}>
+        {menus.map((item) => (
+          <MenuItem
+            key={item.id}
+            onClick={select(item.chainId)}
+            fontWeight={'medium'}
+            icon={<img src={item.icon} alt={'logo'} width={'16px'} height={'16px'}/>}
+            isDisabled={item.chainId === chainId}
+          >
+            {item.id}
           </MenuItem>
-        )) }
+        ))}
       </MenuList>
     </Menu>
   )
