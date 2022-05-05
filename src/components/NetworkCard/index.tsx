@@ -45,68 +45,73 @@ export const NetworkCard = () => {
           params: [{chainId: formattedChainId}],
         })
       } catch (switchError) {
-        if (chainId === SupportedChainId.KCC) {
-          try {
-            await ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.KCC).toHexString()),
-                  chainName: 'KCC Mainnet network',
-                  nativeCurrency: {
-                    name: 'KCS',
-                    symbol: 'KCS',
-                    decimals: 18
+        // @ts-ignore
+        if (switchError.code === 4902) {
+          if (chainId === SupportedChainId.KCC) {
+            try {
+              await ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.KCC).toHexString()),
+                    chainName: 'KCC Mainnet network',
+                    nativeCurrency: {
+                      name: 'KCS',
+                      symbol: 'KCS',
+                      decimals: 18
+                    },
+                    rpcUrls: ['https://rpc-mainnet.kcc.network'],
+                    blockExplorerUrls: ['https://explorer.kcc.io/']
                   },
-                  rpcUrls: ['https://rpc-mainnet.kcc.network'],
-                  blockExplorerUrls: ['https://explorer.kcc.io/']
-                },
-              ],
-            });
-          } catch (addError) {
-            // handle "add" error
+                ],
+              });
+            } catch (addError) {
+              // handle "add" error
+            }
           }
-        } else if (chainId === SupportedChainId.BSC) {
-          try {
-            await ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSC).toHexString()),
-                  chainName: 'BSC',
-                  nativeCurrency: {
-                    name: 'BNB',
-                    symbol: 'BNB',
-                    decimals: 18
+          else if (chainId === SupportedChainId.BSC) {
+            try {
+              await ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSC).toHexString()),
+                    chainName: 'BSC',
+                    nativeCurrency: {
+                      name: 'BNB',
+                      symbol: 'BNB',
+                      decimals: 18
+                    },
+                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                    blockExplorerUrls: ['https://bscscan.com']
                   },
-                  rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                  blockExplorerUrls: ['https://bscscan.com']
-                },
-              ],
-            });
-          } catch (addError) {
-            // handle "add" error
+                ],
+              });
+            } catch (addError) {
+              // handle "add" error
+            }
           }
-        } else if (chainId === SupportedChainId.BSCTestnet) {
-          try {
-            await ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSCTestnet).toHexString()),
-                  chainName: 'BSC Testnet',
-                  nativeCurrency: {
-                    name: 'BNB',
-                    symbol: 'BNB',
-                    decimals: 18
+          else if (chainId === SupportedChainId.BSCTestnet) {
+            try {
+              await ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSCTestnet).toHexString()),
+                    chainName: 'BSC Testnet',
+                    nativeCurrency: {
+                      name: 'BNB',
+                      symbol: 'BNB',
+                      decimals: 18
+                    },
+                    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                    blockExplorerUrls: ['https://testnet.bscscan.com/']
                   },
-                  rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-                  blockExplorerUrls: ['https://testnet.bscscan.com/']
-                },
-              ],
-            });
-          } catch (addError) {
-            // handle "add" error
+                ],
+              });
+            } catch (addError) {
+              // handle "add" error
+            }
           }
         }
       }
