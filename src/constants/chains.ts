@@ -14,7 +14,7 @@ export enum SupportedChainId {
   BSC = 56,
   BSCTestnet = 97,
 
-  Polygon = 137,
+  POLYGON = 137,
   KCC = 321,
 
   // ARBITRUM_ONE = 42161,
@@ -31,7 +31,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   // SupportedChainId.KOVAN,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
-  SupportedChainId.Polygon,
+  SupportedChainId.POLYGON,
   SupportedChainId.KCC,
 
   // SupportedChainId.ARBITRUM_ONE,
@@ -53,7 +53,7 @@ export const L1_CHAIN_IDS = [
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
 
 export const L2_CHAIN_IDS = [
-  SupportedChainId.Polygon,
+  SupportedChainId.POLYGON,
   SupportedChainId.KCC,
   // SupportedChainId.ARBITRUM_ONE,
   // SupportedChainId.ARBITRUM_RINKEBY,
@@ -151,8 +151,8 @@ export const CHAIN_INFO: ChainInfo = {
     logoUrl: kccLogoUrl,
     nativeSymbol: 'KCS',
   },
-  [SupportedChainId.Polygon]: {
-    chainId: SupportedChainId.Polygon,
+  [SupportedChainId.POLYGON]: {
+    chainId: SupportedChainId.POLYGON,
     bridge: '',
     docs: '',
     explorer: 'https://polygonscan.com',

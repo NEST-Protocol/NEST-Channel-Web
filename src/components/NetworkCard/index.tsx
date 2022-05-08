@@ -15,7 +15,7 @@ export const NetworkCard = () => {
     CHAIN_INFO[SupportedChainId.BSC],
     CHAIN_INFO[SupportedChainId.BSCTestnet],
     CHAIN_INFO[SupportedChainId.KCC],
-    CHAIN_INFO[SupportedChainId.Polygon]
+    CHAIN_INFO[SupportedChainId.POLYGON]
   ]
 
   const select = (chainId: number) => {
@@ -100,7 +100,7 @@ export const NetworkCard = () => {
                 // handle "add" error
               }
               break;
-            case SupportedChainId.Polygon:
+            case SupportedChainId.POLYGON:
               try {
                 await ethereum.request({
                   method: 'wallet_addEthereumChain',

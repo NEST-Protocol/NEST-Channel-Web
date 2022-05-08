@@ -38,7 +38,7 @@ export function getExplorerLink(chainId: number, data: string, type: ExplorerDat
     }
   }
 
-  if (chainId === SupportedChainId.Polygon) {
+  if (chainId === SupportedChainId.POLYGON) {
     switch (type) {
       case ExplorerDataType.TRANSACTION:
         return `https://polygonscan.com/tx/${data}`
