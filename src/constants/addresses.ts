@@ -2,6 +2,14 @@ import { SupportedChainId } from './chains'
 
 type AddressMap = { [chainId: number]: string }
 
+export const NEST_ADDRESS: AddressMap = {
+  [SupportedChainId.MAINNET]: '0x04abEdA201850aC0124161F037Efd70c74ddC74C',
+  [SupportedChainId.RINKEBY]: '0xE313F3f49B647fBEDDC5F2389Edb5c93CBf4EE25',
+  [SupportedChainId.BSC]: '0x98f8669F6481EbB341B522fCD3663f79A3d1A6A7',
+  [SupportedChainId.BSCTestnet]: '0x821edD79cc386E56FeC9DA5793b87a3A52373cdE',
+  [SupportedChainId.KCC]: '0x98f8669F6481EbB341B522fCD3663f79A3d1A6A7',
+}
+
 export const PUSD_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0xCCEcC702Ec67309Bc3DDAF6a42E9e5a6b8Da58f0',
   [SupportedChainId.RINKEBY]: '0x5407cab67ad304FB8A4aC46D83b3Dd63A9dbA575',
