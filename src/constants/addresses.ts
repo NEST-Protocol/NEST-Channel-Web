@@ -3,7 +3,7 @@ import { SupportedChainId } from './chains'
 type AddressMap = { [chainId: number]: string }
 
 export const NEST_ADDRESS: AddressMap = {
-  // [SupportedChainId.MAINNET]: '',
+  [SupportedChainId.MAINNET]: '0x04abEdA201850aC0124161F037Efd70c74ddC74C',
   [SupportedChainId.RINKEBY]: '0xE313F3f49B647fBEDDC5F2389Edb5c93CBf4EE25',
   [SupportedChainId.BSC]: '0x98f8669F6481EbB341B522fCD3663f79A3d1A6A7',
   [SupportedChainId.BSCTestnet]: '0x821edD79cc386E56FeC9DA5793b87a3A52373cdE',
@@ -26,7 +26,7 @@ export const USDT_ADDRESS: AddressMap = {
 }
 
 export const HBTC_ADDRESS: AddressMap = {
-  // [SupportedChainId.MAINNET]: '',
+  [SupportedChainId.MAINNET]: '0x0316EB71485b0Ab14103307bf65a021042c6d380',
   [SupportedChainId.RINKEBY]: '0xaE73d363Cb4aC97734E07e48B01D0a1FF5D1190B',
 }
 
@@ -35,7 +35,7 @@ export const PBTC_ADDRESS: AddressMap = {
 }
 
 export const NEST_OPEN_PLATFORM_ADDRESS: AddressMap = {
-  // [SupportedChainId.MAINNET]: '',
+  [SupportedChainId.MAINNET]: '0xE544cF993C7d477C7ef8E91D28aCA250D135aa03',
   [SupportedChainId.RINKEBY]: '0xc08E6A853241B9a08225EECf93F3b279FA7A1bE7',
   [SupportedChainId.BSC]: '0x09CE0e021195BA2c1CDE62A8B187abf810951540',
   [SupportedChainId.BSCTestnet]: '0xF2f9E62f52389EF223f5Fa8b9926e95386935277',

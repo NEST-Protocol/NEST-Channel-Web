@@ -11,6 +11,11 @@ export const NetworkCard = () => {
 
   const menus = [
     {
+      id: 'Ethereum',
+      chainId: SupportedChainId.MAINNET,
+      icon: chainId ? CHAIN_INFO[SupportedChainId.MAINNET].logoUrl : undefined,
+    },
+    {
       id: 'Rinkeby',
       chainId: SupportedChainId.RINKEBY,
       icon: chainId ? CHAIN_INFO[SupportedChainId.RINKEBY].logoUrl : undefined,

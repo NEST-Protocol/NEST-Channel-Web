@@ -11,14 +11,14 @@ type ChannelOpenLogsFilter = {
 }
 
 export const CHANNEL_OPEN_LOGS_FILTER: { [chainId: number]: ChannelOpenLogsFilter } = {
-  // [SupportedChainId.MAINNET]: {
-  //   hostname: 'https://api.etherscan.io',
-  //   address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.MAINNET],
-  //   topics: ['0xde1433d3525be2096f0e9653e6f408254f9a4b2975bbb4415d2afcd24182fb53'],
-  //   fromBlock: 0,
-  //   toBlock: 'latest',
-  //   apikey: process.env.REACT_APP_ETHERSCAN_KEY ?? 'YourApiKey',
-  // },
+  [SupportedChainId.MAINNET]: {
+    hostname: 'https://api.etherscan.io',
+    address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.MAINNET],
+    topics: ['0xd5d675c43c23a6c1e3ad060a603f30590f57c52d5e4a71994bf009848e8fe9e1'],
+    fromBlock: 13827379,
+    toBlock: 'latest',
+    apikey: process.env.REACT_APP_ETHERSCAN_KEY ?? 'YourApiKey',
+  },
   [SupportedChainId.RINKEBY]: {
     hostname: 'https://api-rinkeby.etherscan.io',
     address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.RINKEBY],
