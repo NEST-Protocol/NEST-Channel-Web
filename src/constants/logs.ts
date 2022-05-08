@@ -51,4 +51,12 @@ export const CHANNEL_OPEN_LOGS_FILTER: { [chainId: number]: ChannelOpenLogsFilte
     toBlock: 'latest',
     apikey: process.env.REACT_APP_KCCSCAN_KEY ?? 'YourApiKey',
   },
+  [SupportedChainId.Polygon]: {
+    hostname: 'https://api.polygonscan.com',
+    address: NEST_OPEN_PLATFORM_ADDRESS[SupportedChainId.Polygon],
+    topics: ['0xd5d675c43c23a6c1e3ad060a603f30590f57c52d5e4a71994bf009848e8fe9e1'],
+    fromBlock: 0,
+    toBlock: 'latest',
+    apikey: process.env.REACT_APP_POLYGONSCAN_KEY ?? 'YourApiKey',
+  },
 }

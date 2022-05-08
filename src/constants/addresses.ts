@@ -30,16 +30,13 @@ export const HBTC_ADDRESS: AddressMap = {
   [SupportedChainId.RINKEBY]: '0xaE73d363Cb4aC97734E07e48B01D0a1FF5D1190B',
 }
 
-export const PBTC_ADDRESS: AddressMap = {
-  [SupportedChainId.KCC]: '0x32D4a9a94537a88118e878c56b93009Af234A6ce'
-}
-
 export const NEST_OPEN_PLATFORM_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0xE544cF993C7d477C7ef8E91D28aCA250D135aa03',
   [SupportedChainId.RINKEBY]: '0xc08E6A853241B9a08225EECf93F3b279FA7A1bE7',
   [SupportedChainId.BSC]: '0x09CE0e021195BA2c1CDE62A8B187abf810951540',
   [SupportedChainId.BSCTestnet]: '0xF2f9E62f52389EF223f5Fa8b9926e95386935277',
   [SupportedChainId.KCC]: '0x7DBe94A4D6530F411A1E7337c7eb84185c4396e6',
+  [SupportedChainId.Polygon]: '0x09CE0e021195BA2c1CDE62A8B187abf810951540',
 }
 
 export const PETH_ADDRESS: AddressMap = {

@@ -38,6 +38,20 @@ export function getExplorerLink(chainId: number, data: string, type: ExplorerDat
     }
   }
 
+  if (chainId === SupportedChainId.Polygon) {
+    switch (type) {
+      case ExplorerDataType.TRANSACTION:
+        return `https://polygonscan.com/tx/${data}`
+      case ExplorerDataType.ADDRESS:
+      case ExplorerDataType.TOKEN:
+        return `https://polygonscan.com/address/${data}`
+      case ExplorerDataType.BLOCK:
+        return `https://polygonscan.com/block/${data}`
+      default:
+        return `https://polygonscan.com/`
+    }
+  }
+
   // if (chainId === SupportedChainId.ARBITRUM_ONE) {
   //   switch (type) {
   //     case ExplorerDataType.TRANSACTION:

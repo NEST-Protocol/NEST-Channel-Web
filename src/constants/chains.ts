@@ -3,6 +3,7 @@
 import kccLogoUrl from '../assets/svg/KCC.svg'
 import ETHLogoUrl from '../assets/svg/ETH.svg'
 import BNBLogoUrl from '../assets/svg/BNB.svg'
+import PolygonLogoUrl from '../assets/svg/polygon.svg'
 
 export enum SupportedChainId {
   MAINNET = 1,
@@ -12,6 +13,8 @@ export enum SupportedChainId {
   // KOVAN = 42,
   BSC = 56,
   BSCTestnet = 97,
+
+  Polygon = 137,
   KCC = 321,
 
   // ARBITRUM_ONE = 42161,
@@ -28,6 +31,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   // SupportedChainId.KOVAN,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
+  SupportedChainId.Polygon,
   SupportedChainId.KCC,
 
   // SupportedChainId.ARBITRUM_ONE,
@@ -49,6 +53,7 @@ export const L1_CHAIN_IDS = [
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
 
 export const L2_CHAIN_IDS = [
+  SupportedChainId.Polygon,
   SupportedChainId.KCC,
   // SupportedChainId.ARBITRUM_ONE,
   // SupportedChainId.ARBITRUM_RINKEBY,
@@ -145,6 +150,16 @@ export const CHAIN_INFO: ChainInfo = {
     label: 'KCC',
     logoUrl: kccLogoUrl,
     nativeSymbol: 'KCS',
+  },
+  [SupportedChainId.Polygon]: {
+    chainId: SupportedChainId.Polygon,
+    bridge: '',
+    docs: '',
+    explorer: 'https://polygonscan.com',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Polygon',
+    logoUrl: PolygonLogoUrl,
+    nativeSymbol: 'MATIC',
   },
   // [SupportedChainId.ARBITRUM_RINKEBY]: {
   //   bridge: 'https://bridge.arbitrum.io/',

@@ -105,7 +105,6 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const {symbol: priceTokenSymbol, fetchStatus: priceStatus} = useToken(props.token0)
   const {info} = useChannelInfo(props.channelId)
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
-
   useEffect(() => {
     const list = [...channelList]
     setChannelList(
