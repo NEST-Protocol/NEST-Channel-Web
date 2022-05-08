@@ -29,7 +29,6 @@ export const useActiveChannelList = () => {
           CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].apikey
       )
       const data = await request.json()
-      console.log(data)
       if (data.status === '1') {
         const logs = data.result
         if (logs) {
@@ -57,7 +56,7 @@ export const useActiveChannelList = () => {
   useEffect(() => {
     refresh()
   }, [chainId, library, refresh])
-  useInterval(refresh, 120000)
+  useInterval(refresh, 10000)
 
   return channelList
 }
