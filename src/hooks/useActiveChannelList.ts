@@ -49,7 +49,7 @@ export const useActiveChannelList = () => {
         setChannelList(list)
       }
     } catch (e) {
-      setChannelList([])
+      console.log(e)
     }
   }, [chainId, setChannelList, web3.eth.abi])
 
