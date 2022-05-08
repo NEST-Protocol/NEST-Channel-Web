@@ -59,6 +59,7 @@ export const L2_CHAIN_IDS = [
 export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]
 
 interface L1ChainInfo {
+  readonly chainId: number
   readonly docs: string
   readonly explorer: string
   readonly infoLink: string
@@ -76,6 +77,7 @@ type ChainInfo = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & {
 
 export const CHAIN_INFO: ChainInfo = {
   [SupportedChainId.MAINNET]: {
+    chainId: SupportedChainId.MAINNET,
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://etherscan.io/',
     infoLink: 'https://nestprotocol.org/',
@@ -84,6 +86,7 @@ export const CHAIN_INFO: ChainInfo = {
     logoUrl: ETHLogoUrl
   },
   [SupportedChainId.RINKEBY]: {
+    chainId: SupportedChainId.RINKEBY,
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://rinkeby.etherscan.io/',
     infoLink: 'https://nestprotocol.org/',
@@ -116,6 +119,7 @@ export const CHAIN_INFO: ChainInfo = {
   //   logoUrl: ETHLogoUrl
   // },
   [SupportedChainId.BSC]: {
+    chainId: SupportedChainId.BSC,
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
@@ -124,6 +128,7 @@ export const CHAIN_INFO: ChainInfo = {
     logoUrl: BNBLogoUrl
   },
   [SupportedChainId.BSCTestnet]: {
+    chainId: SupportedChainId.BSCTestnet,
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
     explorer: 'https://testnet.bscscan.com/',
     infoLink: 'https://nestprotocol.org/',
@@ -132,6 +137,7 @@ export const CHAIN_INFO: ChainInfo = {
     logoUrl: BNBLogoUrl
   },
   [SupportedChainId.KCC]: {
+    chainId: SupportedChainId.KCC,
     bridge: '',
     docs: 'https://offchainlabs.com/',
     explorer: 'https://scan.kcc.io/',

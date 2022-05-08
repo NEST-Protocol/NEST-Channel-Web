@@ -10,31 +10,11 @@ export const NetworkCard = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   const menus = [
-    {
-      id: 'Ethereum',
-      chainId: SupportedChainId.MAINNET,
-      icon: chainId ? CHAIN_INFO[SupportedChainId.MAINNET].logoUrl : undefined,
-    },
-    {
-      id: 'Rinkeby',
-      chainId: SupportedChainId.RINKEBY,
-      icon: chainId ? CHAIN_INFO[SupportedChainId.RINKEBY].logoUrl : undefined,
-    },
-    {
-      id: 'BNB',
-      chainId: SupportedChainId.BSC,
-      icon: chainId ? CHAIN_INFO[SupportedChainId.BSC].logoUrl : undefined,
-    },
-    {
-      id: 'BNB Testnet',
-      chainId: SupportedChainId.BSCTestnet,
-      icon: chainId ? CHAIN_INFO[SupportedChainId.BSCTestnet].logoUrl : undefined,
-    },
-    {
-      id: 'KCC',
-      chainId: SupportedChainId.KCC,
-      icon: chainId ? CHAIN_INFO[SupportedChainId.KCC].logoUrl : undefined,
-    }
+    CHAIN_INFO[SupportedChainId.MAINNET],
+    CHAIN_INFO[SupportedChainId.RINKEBY],
+    CHAIN_INFO[SupportedChainId.BSC],
+    CHAIN_INFO[SupportedChainId.BSCTestnet],
+    CHAIN_INFO[SupportedChainId.KCC]
   ]
 
   const select = (chainId: number) => {
@@ -73,8 +53,7 @@ export const NetworkCard = () => {
             } catch (addError) {
               // handle "add" error
             }
-          }
-          else if (chainId === SupportedChainId.BSC) {
+          } else if (chainId === SupportedChainId.BSC) {
             try {
               await ethereum.request({
                 method: 'wallet_addEthereumChain',
@@ -95,8 +74,7 @@ export const NetworkCard = () => {
             } catch (addError) {
               // handle "add" error
             }
-          }
-          else if (chainId === SupportedChainId.BSCTestnet) {
+          } else if (chainId === SupportedChainId.BSCTestnet) {
             try {
               await ethereum.request({
                 method: 'wallet_addEthereumChain',
@@ -145,14 +123,14 @@ export const NetworkCard = () => {
       <MenuList borderRadius={'12px'} borderColor={'secondary.300'}>
         {menus.map((item) => (
           <MenuItem
-            key={item.id}
+            key={item.label}
             px={'20px'}
             onClick={select(item.chainId)}
             fontWeight={'medium'}
-            icon={<img src={item.icon} alt={'logo'} width={'16px'} height={'16px'}/>}
+            icon={<img src={item.logoUrl} alt={'logo'} width={'16px'} height={'16px'}/>}
             isDisabled={item.chainId === chainId}
           >
-            {item.id}
+            {item.label}
           </MenuItem>
         ))}
       </MenuList>
