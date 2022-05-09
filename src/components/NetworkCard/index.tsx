@@ -30,6 +30,7 @@ export const NetworkCard = () => {
           method: 'wallet_switchEthereumChain',
           params: [{chainId: formattedChainId}],
         })
+        window.location.reload()
       } catch (switchError) {
         // @ts-ignore
         if (switchError.code === 4902) {
