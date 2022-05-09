@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Summary from './Summary'
-import {Button, Stack, useMediaQuery} from '@chakra-ui/react'
+import {Button, Link, Stack, useMediaQuery} from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -23,17 +23,9 @@ const Header = () => {
 
   return (
     <Stack w={isLargerThan1024 ? 'container.xl' : 'full'} p={'20px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-      <Button
-        variant={'ghost'}
-        p={0}
-        onClick={() => {
-          const w = window.open('about:blank')
-          // @ts-ignore
-          w.location.href = 'https://nestprotocol.org/'
-        }}
-      >
+      <Link href={'https://nestprotocol.org/'} isExternal>
         <Logo w={isLargerThan1024 ? '88px' : '44px'} h={isLargerThan1024 ? '28px' : '14px'} />
-      </Button>
+      </Link>
       <NetworkCard />
     </Stack>
   )
