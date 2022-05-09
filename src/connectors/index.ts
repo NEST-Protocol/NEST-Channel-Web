@@ -28,7 +28,7 @@ const NETWORK_URLS: { [key in SupportedChainId]: string } = {
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
-  defaultChainId: SupportedChainId.BSC,
+  defaultChainId: SupportedChainId.MAINNET,
 })
 
 export const injected = new InjectedConnector({
