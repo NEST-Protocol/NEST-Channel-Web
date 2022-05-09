@@ -22,7 +22,7 @@ const Header = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack w={isLargerThan1024 ? 'container.xl' : 'full'} px={'24px'} py={'28px'} h={'60px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'} mb={'6px'}>
+    <Stack w={isLargerThan1024 ? 'container.xl' : 'full'} p={'20px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
       <Button
         variant={'ghost'}
         p={0}
