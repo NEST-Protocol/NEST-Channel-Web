@@ -125,7 +125,7 @@ export const TokenName: FC<TokenNameProps> = ({ ...props }) => {
           fontSize={props.fontSize ?? 'md'}
           fontWeight={'semibold'}
         >
-          {props.hasParentheses ? `(${symbol})` : symbol}
+          {isAddress(props.address) ? (props.hasParentheses ? `(${symbol})` : symbol) : ''}
         </Text>
       )}
     </>

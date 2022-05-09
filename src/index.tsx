@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals'
 import * as serviceWorker from './serviceWorker'
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from './theme'
-import { createGlobalStyle } from 'styled-components'
 import 'focus-visible/dist/focus-visible'
 import { HashRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
@@ -13,42 +12,7 @@ import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary'
 import { NetworkContextName } from './constants/misc'
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: "Montserrat", serif;
-    background: #FBEECC;
-  }
-
-  .js-focus-visible :focus:not([data-focus-visible-added]) {
-    outline: none;
-    box-shadow: none;
-  }
-
-  * {
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  *::-webkit-scrollbar {
-    display: none;
-  }
-  
-  * {
-    -ms-overflow-style: none;
-  }
-  
-  div,a,img {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-`
-
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
-
-const Updaters = () => {
-  return <></>
-}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -57,8 +21,6 @@ ReactDOM.render(
         <Web3ReactProvider getLibrary={getLibrary}>
           <Web3ProviderNetwork getLibrary={getLibrary}>
             <ChakraProvider theme={theme}>
-              <GlobalStyle />
-              <Updaters />
               <App />
             </ChakraProvider>
           </Web3ProviderNetwork>
