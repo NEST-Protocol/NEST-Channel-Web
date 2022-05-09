@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Summary from './Summary'
-import {Button, Link, Stack, useMediaQuery} from '@chakra-ui/react'
+import {Link, Stack, useMediaQuery} from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
