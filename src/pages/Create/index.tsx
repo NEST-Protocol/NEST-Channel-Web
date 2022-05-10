@@ -9,7 +9,6 @@ import {useRecoilState} from 'recoil'
 import {activeStepAtom} from '../../state/Create'
 import {useCreateChannel} from '../../hooks/useCreateChannel'
 import {PROCESSING} from '../../constants/misc'
-import {is} from "@react-three/fiber/dist/declarations/src/core/is";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <TokenAddress/>},
