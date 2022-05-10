@@ -53,7 +53,7 @@ const OpenChanel = () => {
   }
 
   return (
-    <Stack p={'20px'} spacing={'20px'}>
+    <Stack px={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
         px={isLargerThan1024 ? '190px' : '12px'}

@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <Stack w={isLargerThan1024 ? 'container.xl' : 'full'} p={'20px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
       <Link href={'https://nestprotocol.org/'} isExternal>
-        <Logo w={isLargerThan1024 ? '88px' : '44px'} h={isLargerThan1024 ? '28px' : '14px'} />
+        <Logo />
       </Link>
       <NetworkCard />
     </Stack>

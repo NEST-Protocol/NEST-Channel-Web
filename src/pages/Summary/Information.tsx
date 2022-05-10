@@ -147,11 +147,12 @@ type InformationDetailProps = {
 const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
   const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   const { chainId } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   if (props.value === undefined || props.loading) {
     return (
-      <WrapItem>
-        <Stack direction={'row'} w={'300px'}>
+      <WrapItem w={isLargerThan1024 ? '300px' : 'full'}>
+        <Stack direction={'row'} w={'full'}>
           <Text color={'secondary.500'} fontWeight={'600'} whiteSpace={'nowrap'}>
             {props.title}
           </Text>
@@ -163,8 +164,8 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
   }
 
   return (
-    <WrapItem>
-      <Stack direction={'row'} w={'300px'}>
+    <WrapItem w={isLargerThan1024 ? '300px' : 'full'}>
+      <Stack direction={'row'} w={'full'}>
         <Text
           color={'secondary.500'}
           fontWeight={'600'}
