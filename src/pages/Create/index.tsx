@@ -9,6 +9,7 @@ import {useRecoilState} from 'recoil'
 import {activeStepAtom} from '../../state/Create'
 import {useCreateChannel} from '../../hooks/useCreateChannel'
 import {PROCESSING} from '../../constants/misc'
+import {is} from "@react-three/fiber/dist/declarations/src/core/is";
 
 const steps = [
   {id: 0, label: 'Token Address', content: <TokenAddress/>},
@@ -53,13 +54,13 @@ const OpenChanel = () => {
   }
 
   return (
-    <Stack px={'20px'} spacing={'20px'}>
+    <Stack px={'20px'} py={isLargerThan1024 ? '20px' : '0px'} spacing={'20px'}>
       <Stack
         bg={'white'}
         px={isLargerThan1024 ? '190px' : '12px'}
         pt={isLargerThan1024 ? '68px' : '24px'}
         pb={'30px'}
-        borderRadius={'20px'}
+        borderRadius={'12px'}
         alignItems={'center'}
         spacing={'0'}
         border={"1px solid"} borderColor={"secondary.300"}
@@ -117,7 +118,7 @@ const OpenChanel = () => {
         bg={'white'}
         px={isLargerThan1024 ? '190px' : '12px'}
         py={isLargerThan1024 ? '60px' : '30px'}
-        borderRadius={'20px'}
+        borderRadius={'12px'}
         alignItems={'center'}
         spacing={'0'}
         hidden={activeStep === 2 || activeStep === 3}

@@ -35,7 +35,7 @@ const Content = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack background={isLargerThan1024 ? 'rgba(255,255,255, 0.5)' : ''} borderRadius={'20px'} w={isLargerThan1024 ? 'container.xl' : 'full'} h={'full'}>
+    <Stack background={isLargerThan1024 ? 'rgba(255,255,255, 0.5)' : ''} borderRadius={'12px'} w={isLargerThan1024 ? 'container.xl' : 'full'} h={'full'}>
       <Routes>
         <Route path="/" element={<Summary />} />
         <Route path="/create" element={<OpenChanel />} />

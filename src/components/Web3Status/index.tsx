@@ -243,7 +243,7 @@ export const WalletModal = () => {
       return (
         <>
           <ModalOverlay />
-          <ModalContent padding={'20px'} borderRadius={'20px'}>
+          <ModalContent padding={'20px'} borderRadius={'12px'}>
             <ModalHeader>Account</ModalHeader>
             <ModalBody>
               <AccountDetails openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)} />
@@ -256,7 +256,7 @@ export const WalletModal = () => {
     return (
       <>
         <ModalOverlay />
-        <ModalContent padding={'20px'} borderRadius={'20px'}>
+        <ModalContent padding={'20px'} borderRadius={'12px'}>
           <ModalHeader>Connect Wallet</ModalHeader>
           <ModalBody padding={'20px'}>
             {walletView === WALLET_VIEWS.PENDING ? (

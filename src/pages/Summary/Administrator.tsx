@@ -34,7 +34,7 @@ const Administrator = () => {
   }
 
   return (
-    <Stack bg={'white'} w={'full'} borderRadius={'20px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'} border={"1px solid"} borderColor={"secondary.300"}>
+    <Stack bg={'white'} w={'full'} borderRadius={'12px'} px={'20px'} py={'8px'} alignItems={'center'} direction={'row'} border={"1px solid"} borderColor={"secondary.300"}>
       <Text fontWeight={'bold'} mr={'88px'}>
         Administrator
       </Text>
@@ -133,8 +133,8 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
           Deposit
         </Button>
       </PopoverTrigger>
-      <PopoverContent borderRadius={'20px'} border={'none'}>
-        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
+      <PopoverContent borderRadius={'12px'} border={'none'}>
+        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'12px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Deposit</Text>
             <NumberInput
@@ -242,8 +242,8 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
           Withdraw
         </Button>
       </PopoverTrigger>
-      <PopoverContent borderRadius={'20px'} border={'none'}>
-        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
+      <PopoverContent borderRadius={'12px'} border={'none'}>
+        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'12px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw</Text>
             <NumberInput
@@ -328,8 +328,8 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
           Withdraw Fee
         </Button>
       </PopoverTrigger>
-      <PopoverContent borderRadius={'20px'} border={'none'}>
-        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'20px'}>
+      <PopoverContent borderRadius={'12px'} border={'none'}>
+        <PopoverBody boxShadow={'0px 0px 60px 0px #BFBFBF'} borderRadius={'12px'}>
           <Stack alignItems={'center'} spacing={'20px'} p={'20px'}>
             <Text fontWeight={'bold'}>Withdraw Fee</Text>
             <NumberInput
