@@ -37,7 +37,9 @@ const OpenChanel = () => {
     return (
       <HStack spacing={'20px'} minW={isLargerThan1024 ? '' : '60px'} justifyContent={"center"}>
         <Button
-          w={'40px'}
+          w={'36px'}
+          h={'36px'}
+          size={'sm'}
           variant={activeStep >= props.id ? 'solid' : 'outline'}
           onClick={() => {
             setActiveStep(props.id)
@@ -97,7 +99,7 @@ const OpenChanel = () => {
         ) : (
           <Button
             w={isLargerThan1024 ? '176px' : '80%'}
-            minH={isLargerThan1024 ? '40px' : '44px'}
+            minH={isLargerThan1024 ? '36px' : '44px'}
             isLoading={status === PROCESSING}
             disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
             onClick={async () => {

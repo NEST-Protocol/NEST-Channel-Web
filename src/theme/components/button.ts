@@ -2,7 +2,8 @@ export const Button = {
   baseStyle: {
     borderRadius: 'full',
     fontWeight: 'semibold',
-    height: '40px',
+    height: '36px',
+    maxHeight: '36px'
   },
   variants: {
     outline: {

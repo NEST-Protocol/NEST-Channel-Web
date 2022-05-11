@@ -39,7 +39,7 @@ const WalletAndTokenList = () => {
 
         <Input
           variant="filled"
-          minH={isLargerThan1024 ? '40px' : '44px'}
+          maxH={isLargerThan1024 ? '36px' : '44px'}
           placeholder="Token Address"
           fontSize={searchText === '' ? '15px' : '17px'}
           onChange={(e) => {
