@@ -107,7 +107,7 @@ export const NetworkCard = () => {
                   method: 'wallet_addEthereumChain',
                   params: [
                     {
-                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSCTestnet).toHexString()),
+                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.POLYGON).toHexString()),
                       chainName: 'Polygon',
                       nativeCurrency: {
                         name: 'MATIC',
