@@ -13,6 +13,7 @@ export const useToken = (tokenAddress: string) => {
   const [fetchStatus, setFetchStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('')
   const { chainId } = useActiveWeb3React()
+  const [totalSupply, setTotalSupply] = useState(new BigNumber(0))
 
   const fetch = useCallback(async () => {
     if (tokenAddress === ZERO_ADDRESS) {
@@ -22,19 +23,17 @@ export const useToken = (tokenAddress: string) => {
     try {
       setFetchStatus(PROCESSING)
       const res = await contract?.symbol()
+      const res2 = await contract?.totalSupply()
       if (res) {
         setSymbol(res)
-        setFetchStatus(SUCCESS)
-        setTimeout(() => {
-          setFetchStatus(IDLE)
-        }, IDLE_DELAY)
-      } else {
-        setSymbol('')
-        setFetchStatus(ERROR)
-        setTimeout(() => {
-          setFetchStatus(IDLE)
-        }, IDLE_DELAY)
       }
+      if (res2) {
+        setTotalSupply(parseToBigNumber(res2))
+      }
+      setFetchStatus(SUCCESS)
+      setTimeout(() => {
+        setFetchStatus(IDLE)
+      }, IDLE_DELAY)
     } catch (e) {
       setSymbol('Error')
       setFetchStatus(ERROR)
@@ -48,7 +47,7 @@ export const useToken = (tokenAddress: string) => {
     fetch()
   }, [fetch])
 
-  const balanceOf = async (account: string) => {
+  const balanceOf = useCallback(async (account: string) => {
     if (tokenAddress === ZERO_ADDRESS) {
       return parseToBigNumber((await library?.getBalance(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
     }
@@ -58,17 +57,17 @@ export const useToken = (tokenAddress: string) => {
     } catch (e) {
       return new BigNumber(0)
     }
-  }
+  }, [contract, library, tokenAddress])
 
-  const allowance = async (owner: string, spender: string) => {
+  const allowance = useCallback(async (owner: string, spender: string) => {
     try {
       return parseToBigNumber((await contract?.allowance(owner, spender)) ?? new BigNumber(NaN)).shiftedBy(-18)
     } catch (e) {
       return new BigNumber(0)
     }
-  }
+  }, [contract])
 
-  const approve = async (spender: string, value: string) => {
+  const approve = useCallback( async (spender: string, value: string) => {
     try {
       setApproveStatus(PROCESSING)
       const tx = await contract?.approve(spender, value)
@@ -95,10 +94,11 @@ export const useToken = (tokenAddress: string) => {
         setApproveStatus(IDLE)
       }, IDLE_DELAY)
     }
-  }
+  }, [contract])
 
   return {
     symbol,
+    totalSupply,
     allowance,
     balanceOf,
     approve,
