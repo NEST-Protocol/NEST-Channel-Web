@@ -16,8 +16,8 @@ const QuotationFrequency = () => {
     try {
       const q = await fetch(`https://nestdapp.io/nestwebApi/listOracleQuoteData/${chainId}/${activeChannelId}/20`)
       const res = await q.json()
-      if (res?.data) {
-        setData(res.data)
+      if (res?.value) {
+        setData(res.value)
       } else {
         console.log('refresh data failed')
       }
