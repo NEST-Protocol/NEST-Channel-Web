@@ -8,6 +8,7 @@ import { getContract } from '../utils'
 import { useMemo } from 'react'
 import { Erc20, NestOpenPlatform } from '../abis/types'
 import { NEST_OPEN_PLATFORM_ADDRESS } from '../constants/addresses'
+import {ZERO_ADDRESS} from "../constants/misc";
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -23,6 +24,7 @@ export function useContract<T extends Contract = Contract>(
     if (typeof addressOrAddressMap === 'string') address = addressOrAddressMap
     else address = addressOrAddressMap[chainId]
     if (!address) return null
+    if (address === ZERO_ADDRESS) return null
     try {
       return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
     } catch (error) {
@@ -33,6 +35,7 @@ export function useContract<T extends Contract = Contract>(
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
+
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
