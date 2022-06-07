@@ -7,45 +7,25 @@ import PolygonLogoUrl from '../assets/svg/polygon.svg'
 
 export enum SupportedChainId {
   MAINNET = 1,
-  // ROPSTEN = 3,
   RINKEBY = 4,
-  // GOERLI = 5,
-  // KOVAN = 42,
   BSC = 56,
   BSCTestnet = 97,
-
   POLYGON = 137,
   KCC = 321,
-
-  // ARBITRUM_ONE = 42161,
-  // ARBITRUM_RINKEBY = 421611,
-  // OPTIMISM = 10,
-  // OPTIMISTIC_KOVAN = 69,
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
-  // SupportedChainId.ROPSTEN,
   SupportedChainId.RINKEBY,
-  // SupportedChainId.GOERLI,
-  // SupportedChainId.KOVAN,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
   SupportedChainId.POLYGON,
   SupportedChainId.KCC,
-
-  // SupportedChainId.ARBITRUM_ONE,
-  // SupportedChainId.ARBITRUM_RINKEBY,
-  // SupportedChainId.OPTIMISM,
-  // SupportedChainId.OPTIMISTIC_KOVAN,
 ]
 
 export const L1_CHAIN_IDS = [
   SupportedChainId.MAINNET,
-  // SupportedChainId.ROPSTEN,
   SupportedChainId.RINKEBY,
-  // SupportedChainId.GOERLI,
-  // SupportedChainId.KOVAN,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
 ] as const
@@ -55,10 +35,6 @@ export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
 export const L2_CHAIN_IDS = [
   SupportedChainId.POLYGON,
   SupportedChainId.KCC,
-  // SupportedChainId.ARBITRUM_ONE,
-  // SupportedChainId.ARBITRUM_RINKEBY,
-  // SupportedChainId.OPTIMISM,
-  // SupportedChainId.OPTIMISTIC_KOVAN,
 ] as const
 
 export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]
@@ -99,30 +75,6 @@ export const CHAIN_INFO: ChainInfo = {
     nativeSymbol: 'ETH',
     logoUrl: ETHLogoUrl
   },
-  // [SupportedChainId.ROPSTEN]: {
-  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
-  //   explorer: 'https://ropsten.etherscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Ropsten',
-  //   nativeSymbol: 'ETH',
-  //   logoUrl: ETHLogoUrl
-  // },
-  // [SupportedChainId.KOVAN]: {
-  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
-  //   explorer: 'https://kovan.etherscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Kovan',
-  //   nativeSymbol: 'ETH',
-  //   logoUrl: ETHLogoUrl
-  // },
-  // [SupportedChainId.GOERLI]: {
-  //   docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
-  //   explorer: 'https://goerli.etherscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Görli',
-  //   nativeSymbol: 'ETH',
-  //   logoUrl: ETHLogoUrl
-  // },
   [SupportedChainId.BSC]: {
     chainId: SupportedChainId.BSC,
     docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
@@ -161,31 +113,4 @@ export const CHAIN_INFO: ChainInfo = {
     logoUrl: PolygonLogoUrl,
     nativeSymbol: 'MATIC',
   },
-  // [SupportedChainId.ARBITRUM_RINKEBY]: {
-  //   bridge: 'https://bridge.arbitrum.io/',
-  //   docs: 'https://offchainlabs.com/',
-  //   explorer: 'https://rinkeby-explorer.arbitrum.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Arbitrum Rinkeby',
-  //   logoUrl: arbitrumLogoUrl,
-  //   nativeSymbol: 'ETH',
-  // },
-  // [SupportedChainId.OPTIMISM]: {
-  //   bridge: 'https://gateway.optimism.io/',
-  //   docs: 'https://optimism.io/',
-  //   explorer: 'https://optimistic.etherscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Optimism',
-  //   logoUrl: optimismLogoUrl,
-  //   nativeSymbol: 'ETH',
-  // },
-  // [SupportedChainId.OPTIMISTIC_KOVAN]: {
-  //   bridge: 'https://gateway.optimism.io/',
-  //   docs: 'https://optimism.io/',
-  //   explorer: 'https://optimistic.etherscan.io/',
-  //   infoLink: 'https://nestprotocol.org/',
-  //   label: 'Optimistic Kovan',
-  //   logoUrl: optimismLogoUrl,
-  //   nativeSymbol: 'ETH',
-  // },
 }

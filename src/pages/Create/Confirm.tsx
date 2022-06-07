@@ -2,7 +2,6 @@ import {Divider, Link, Stack, Text, useMediaQuery} from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { isAddress, shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { useRecoilValue } from 'recoil'
 import {
   attenuationFactorAtom,
@@ -17,6 +16,7 @@ import {
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../../constants/addresses'
 import { CHAIN_INFO } from '../../constants/chains'
 import { TokenName } from '../../components/InputWithTokenName'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const Confirm = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)

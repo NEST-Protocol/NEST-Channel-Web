@@ -1,8 +1,9 @@
 import {Button, Menu, MenuButton, MenuItem, MenuList, useMediaQuery} from '@chakra-ui/react'
-import {useActiveWeb3React} from '../../hooks/web3'
 import {CHAIN_INFO, SupportedChainId} from '../../constants/chains'
-import {BigNumber, utils} from 'ethers'
 import * as React from 'react'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+import {switchToNetwork} from "../../utils/switchToNetwork";
+import {useCallback} from "react";
 
 export const NetworkCard = () => {
   const {chainId, library} = useActiveWeb3React()
@@ -18,118 +19,17 @@ export const NetworkCard = () => {
     CHAIN_INFO[SupportedChainId.POLYGON]
   ]
 
-  const select = (chainId: number) => {
-    return async () => {
-      const {ethereum} = window
-      if (!ethereum || !ethereum.on) {
-        return
-      }
-      const formattedChainId = utils.hexStripZeros(BigNumber.from(chainId).toHexString())
-      try {
-        await ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{chainId: formattedChainId}],
+  const handleChainSwitch = useCallback(
+    (targetChain: number) => {
+      if (!library?.provider) return
+      switchToNetwork({provider: library.provider, chainId: targetChain})
+        .then(() => console.log('success'))
+        .catch((error) => {
+          console.error('Failed to switch networks', error)
         })
-        window.location.reload()
-      } catch (switchError) {
-        // @ts-ignore
-        if (switchError.code === 4902) {
-          switch (chainId) {
-            case SupportedChainId.KCC:
-              try {
-                await ethereum.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.KCC).toHexString()),
-                      chainName: 'KCC Mainnet network',
-                      nativeCurrency: {
-                        name: 'KCS',
-                        symbol: 'KCS',
-                        decimals: 18
-                      },
-                      rpcUrls: ['https://rpc-mainnet.kcc.network'],
-                      blockExplorerUrls: ['https://explorer.kcc.io/']
-                    },
-                  ],
-                });
-              } catch (addError) {
-                // handle "add" error
-              }
-              break;
-            case SupportedChainId.BSC:
-              try {
-                await ethereum.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSC).toHexString()),
-                      chainName: 'BSC',
-                      nativeCurrency: {
-                        name: 'BNB',
-                        symbol: 'BNB',
-                        decimals: 18
-                      },
-                      rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                      blockExplorerUrls: ['https://bscscan.com']
-                    },
-                  ],
-                });
-              } catch (addError) {
-                // handle "add" error
-              }
-              break;
-            case SupportedChainId.BSCTestnet:
-              try {
-                await ethereum.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.BSCTestnet).toHexString()),
-                      chainName: 'BSC Testnet',
-                      nativeCurrency: {
-                        name: 'BNB',
-                        symbol: 'BNB',
-                        decimals: 18
-                      },
-                      rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-                      blockExplorerUrls: ['https://testnet.bscscan.com/']
-                    },
-                  ],
-                });
-              } catch (addError) {
-                // handle "add" error
-              }
-              break;
-            case SupportedChainId.POLYGON:
-              try {
-                await ethereum.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: utils.hexStripZeros(BigNumber.from(SupportedChainId.POLYGON).toHexString()),
-                      chainName: 'Polygon',
-                      nativeCurrency: {
-                        name: 'MATIC',
-                        symbol: 'MATIC',
-                        decimals: 18
-                      },
-                      rpcUrls: ['https://rpc-mainnet.matic.network'],
-                      blockExplorerUrls: ['https://polygonscan.com/']
-                    },
-                  ],
-                });
-              } catch (addError) {
-                // handle "add" error
-              }
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    }
-  }
+    },
+    [library]
+  );
 
   if (!chainId || !info || !library) {
     return null
@@ -155,7 +55,7 @@ export const NetworkCard = () => {
           <MenuItem
             key={item.label}
             px={'20px'}
-            onClick={select(item.chainId)}
+            onClick={() => handleChainSwitch(item.chainId)}
             fontWeight={'medium'}
             icon={<img src={item.logoUrl} alt={'logo'} width={'16px'} height={'16px'}/>}
             isDisabled={item.chainId === chainId}

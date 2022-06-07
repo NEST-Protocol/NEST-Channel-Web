@@ -4,16 +4,15 @@ declare module '*.png'
 declare module '*.ttf'
 
 interface Window {
+  // walletLinkExtension is injected by the Coinbase Wallet extension
+  walletLinkExtension?: any
   ethereum?: {
+    // value that is populated and returns true by the Coinbase Wallet mobile dapp browser
+    isCoinbaseWallet?: true
     isMetaMask?: true
-    isConnected: () => boolean
-    request: <T extends unknown>(args: RequestArguments) => Promise<T>
-    on?: (...args: any[]) => void
-    removeListener?: (...args: any[]) => void
+    isTally?: false
     autoRefreshOnNetworkChange?: boolean
-    _metamask: {
-      isUnlocked: () => Promise<boolean>
-    }
   }
   web3?: Record<string, unknown>
 }
+

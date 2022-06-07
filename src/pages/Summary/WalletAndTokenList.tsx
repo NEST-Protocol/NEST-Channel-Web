@@ -5,11 +5,11 @@ import Web3Status from '../../components/Web3Status'
 import {useActiveChannelList} from '../../hooks/useActiveChannelList'
 import {useRecoilState, useRecoilValue} from 'recoil'
 import {activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo, channelListAtom} from '../../state/Summary'
-import {useActiveWeb3React} from '../../hooks/web3'
 import {useToken} from '../../hooks/Tokens'
 import {IDLE} from '../../constants/misc'
 import {useChannelInfo} from '../../hooks/useChannelInfo'
 import {TokenName} from '../../components/InputWithTokenName'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()

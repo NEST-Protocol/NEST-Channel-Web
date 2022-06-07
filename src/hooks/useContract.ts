@@ -3,12 +3,12 @@ import { Contract } from '@ethersproject/contracts'
 import ERC20_ABI from '../abis/erc20.json'
 import NestOpenPlatform_ABI from '../abis/nestOpenPlatform.json'
 
-import { useActiveWeb3React } from './web3'
 import { getContract } from '../utils'
 import { useMemo } from 'react'
 import { Erc20, NestOpenPlatform } from '../abis/types'
 import { NEST_OPEN_PLATFORM_ADDRESS } from '../constants/addresses'
 import {ZERO_ADDRESS} from "../constants/misc";
+import useActiveWeb3React from "./useActiveWeb3React";
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(

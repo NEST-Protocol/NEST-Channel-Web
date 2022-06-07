@@ -8,7 +8,7 @@ import theme from './theme'
 import 'focus-visible/dist/focus-visible'
 import { HashRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
-import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { createWeb3ReactRoot, Web3ReactProvider } from 'web3-react-core'
 import getLibrary from './utils/getLibrary'
 import { NetworkContextName } from './constants/misc'
 

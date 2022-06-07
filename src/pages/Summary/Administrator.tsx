@@ -12,7 +12,6 @@ import {
 import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Summary'
 import { useChannelInfo } from '../../hooks/useChannelInfo'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../../constants/misc'
 import { useNestOpenPlatformContract } from '../../hooks/useContract'
@@ -23,6 +22,7 @@ import { useBalance } from '../../hooks/useBalance'
 import { CHAIN_INFO } from '../../constants/chains'
 import { useToken } from '../../hooks/Tokens'
 import BigNumber from 'bignumber.js'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const Administrator = () => {
   const channelId = useRecoilValue(activeChannelIdAtom)

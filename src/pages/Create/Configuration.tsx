@@ -10,7 +10,7 @@ import {
   standardOutputAtom,
 } from '../../state/Create/form'
 import { CHAIN_INFO } from '../../constants/chains'
-import { useActiveWeb3React } from '../../hooks/web3'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const Configuration = () => {
   const [priceTokenUnit, setPriceTokenUnit] = useRecoilState(priceTokenUnitAtom)

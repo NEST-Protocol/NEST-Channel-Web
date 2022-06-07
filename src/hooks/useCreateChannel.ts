@@ -16,10 +16,10 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
 import { useNestOpenPlatformContract } from './useContract'
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
-import { useActiveWeb3React } from './web3'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
 import { isAddress } from '../utils'
+import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useCreateChannel = () => {
   const quotationTokenList = useRecoilValue(quotationTokenListAtom)

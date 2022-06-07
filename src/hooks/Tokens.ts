@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../constants/misc'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { CHAIN_INFO } from '../constants/chains'
-import { useActiveWeb3React } from './web3'
 import BigNumber from 'bignumber.js'
+import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useToken = (tokenAddress: string) => {
   const { library } = useActiveWeb3React()

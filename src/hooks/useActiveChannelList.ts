@@ -2,9 +2,9 @@ import { ChannelInfo, channelListAtom } from '../state/Summary'
 import { useRecoilState } from 'recoil'
 import { useCallback, useEffect } from 'react'
 import Web3 from 'web3'
-import { useActiveWeb3React } from './web3'
 import { CHANNEL_OPEN_LOGS_FILTER } from '../constants/logs'
 import useInterval from '@use-it/interval'
+import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useActiveChannelList = () => {
   const [channelList, setChannelList] = useRecoilState(channelListAtom)

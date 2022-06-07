@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react'
 import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { useChannelInfo } from '../../hooks/useChannelInfo'
 import { isAddress, shortenAddress } from '../../utils'
 import { PROCESSING } from '../../constants/misc'
@@ -24,6 +23,7 @@ import { BigNumberish } from '@ethersproject/bignumber'
 import TokenIcon from '../../components/TokenIcon'
 import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Summary'
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()

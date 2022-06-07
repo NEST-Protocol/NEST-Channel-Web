@@ -4,7 +4,7 @@ import {useCallback, useEffect, useState} from 'react'
 import useInterval from '@use-it/interval'
 import {useRecoilValue} from 'recoil'
 import {activeChannelIdAtom} from '../../state/Summary'
-import {useActiveWeb3React} from "../../hooks/web3";
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 
 const QuotationFrequency = () => {
   const [data, setData] = useState([])

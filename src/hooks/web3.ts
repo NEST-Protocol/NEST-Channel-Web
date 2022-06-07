@@ -1,16 +1,10 @@
-import { Web3Provider } from '@ethersproject/providers'
-import { useWeb3React } from '@web3-react/core'
-import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
+import type { EthereumProvider } from '../lib/ethereum'
 import { useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
-import { gnosisSafe, injected } from '../connectors'
-import { IS_IN_IFRAME, NetworkContextName } from '../constants/misc'
+import { useWeb3React } from 'web3-react-core'
 
-export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
-  const context = useWeb3React<Web3Provider>()
-  const contextNetwork = useWeb3React<Web3Provider>(NetworkContextName)
-  return context.active ? context : contextNetwork
-}
+import { gnosisSafe, injected } from '../connectors'
+import {IS_IN_IFRAME} from '../constants/misc'
+import { isMobile } from '../utils/userAgent'
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React()
@@ -68,13 +62,13 @@ export function useEagerConnect() {
 
 /**
  * Use for network and injected - logs user in
- * and out after checking what network there on
+ * and out after checking what network theyre on
  */
 export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React()
 
   useEffect(() => {
-    const { ethereum } = window
+    const ethereum = window.ethereum as EthereumProvider | undefined
 
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleChainChanged = () => {
