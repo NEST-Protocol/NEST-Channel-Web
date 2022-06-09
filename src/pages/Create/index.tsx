@@ -37,7 +37,7 @@ const OpenChanel = () => {
         border={"1px solid"} borderColor={"secondary.300"}
       >
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? 100 : 30) : 0}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
             Quotation Token:
           </Text>
           {quotationTokenList.map((address: string) => (
@@ -50,7 +50,7 @@ const OpenChanel = () => {
 
 
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
             Quotation Pair:
           </Text>
           <Stack direction={'row'} spacing={0} w={'full'} justifyContent={"center"}>
@@ -59,7 +59,7 @@ const OpenChanel = () => {
         </Stack>
 
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
             Mining Token:
           </Text>
           <Stack direction={'row'} spacing={0}>
@@ -86,7 +86,7 @@ const OpenChanel = () => {
         </Stack>
 
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
             Mining Standard Output:
           </Text>
           <FormControl>
