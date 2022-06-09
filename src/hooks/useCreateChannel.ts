@@ -1,15 +1,8 @@
 import {
   attenuationFactorAtom,
-  invalidConfigurationAtom,
-  invalidTokenAddressAtom,
-  miningTokenAddressAtom,
-  priceCallingFeeAtom,
   priceTokenAddressAtom,
   priceTokenNameAtom,
   priceTokenUnitAtom,
-  quotationFeeAtom,
-  quotationTokenListAtom,
-  standardOutputAtom,
   statusAtom,
 } from '../state/Create/form'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -18,22 +11,15 @@ import { useNestOpenPlatformContract } from './useContract'
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
-import { isAddress } from '../utils'
 import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useCreateChannel = () => {
-  const quotationTokenList = useRecoilValue(quotationTokenListAtom)
   const priceTokenName = useRecoilValue(priceTokenNameAtom)
-  const miningTokenAddress = useRecoilValue(miningTokenAddressAtom)
   const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
-  const standardOutput = useRecoilValue(standardOutputAtom)
-  const quotationFee = useRecoilValue(quotationFeeAtom)
-  const priceCallingFee = useRecoilValue(priceCallingFeeAtom)
+  const quotationFee = '0'
+  const priceCallingFee = '0'
   const attenuationFactor = useRecoilValue(attenuationFactorAtom)
   const [status, setStatus] = useRecoilState(statusAtom)
-
-  const [invalidTokenAddress, setInvalidTokenAddress] = useRecoilState(invalidTokenAddressAtom)
-  const [invalidConfiguration, setInvalidConfiguration] = useRecoilState(invalidConfigurationAtom)
 
   const { chainId } = useActiveWeb3React()
 
@@ -51,29 +37,7 @@ export const useCreateChannel = () => {
     }
   }, [chainId, priceTokenName, setPriceTokenAddress])
 
-  useEffect(() => {
-    if (
-      isAddress(miningTokenAddress) &&
-      (priceTokenName === 'PETH' || priceTokenName === 'PUSD' || priceTokenName === 'PBTC') &&
-      quotationTokenList.length > 0
-    ) {
-      setInvalidTokenAddress(false)
-    } else {
-      setInvalidTokenAddress(true)
-    }
-  }, [quotationTokenList, priceTokenName, miningTokenAddress, setInvalidTokenAddress, priceTokenAddress])
-
-  useEffect(() => {
-    if (priceTokenUnit === '0') {
-      setInvalidConfiguration(true)
-    } else if (priceTokenName === 'PETH') {
-      setInvalidConfiguration(priceTokenUnit !== '1' && priceTokenUnit !== '2' && priceTokenUnit !== '3')
-    } else if (priceTokenName === 'PUSD') {
-      setInvalidConfiguration(priceTokenUnit !== '1000' && priceTokenUnit !== '2000' && priceTokenUnit !== '3000')
-    }
-  }, [priceTokenName, priceTokenUnit, setInvalidConfiguration])
-
-  const create = async () => {
+  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: string) => {
     setStatus(PROCESSING)
     const config = {
       // 标准出矿量 uint96
@@ -116,8 +80,6 @@ export const useCreateChannel = () => {
   }
 
   return {
-    invalidTokenAddress,
-    invalidConfiguration,
     create,
     status,
     priceTokenAddress,

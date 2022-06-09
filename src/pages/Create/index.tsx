@@ -1,139 +1,211 @@
-import {Button, HStack, Stack, Text, useMediaQuery} from '@chakra-ui/react'
-import TokenAddress, {TokenAddressTip} from './TokenAddress'
-import Configuration, {ConfigurationTip} from './Configuration'
-import Confirm, {ConfirmTip} from './Confirm'
-import Done from './Done'
-import Divider from '../../components/Divider'
-import {FC} from 'react'
-import {useRecoilState} from 'recoil'
-import {activeStepAtom} from '../../state/Create'
+import {
+  Button, Divider,
+  FormControl,
+  HStack,
+  Input,
+  InputGroup,
+  InputRightElement, Link,
+  Stack,
+  Text,
+  useMediaQuery
+} from '@chakra-ui/react'
 import {useCreateChannel} from '../../hooks/useCreateChannel'
-import {PROCESSING} from '../../constants/misc'
-
-const steps = [
-  {id: 0, label: 'Token Address', content: <TokenAddress/>},
-  {id: 1, label: 'Configuration', content: <Configuration/>},
-  {id: 2, label: 'Confirm', content: <Confirm/>},
-]
-
-const tips = [
-  {id: 0, label: 'Token Address', content: <TokenAddressTip/>},
-  {id: 1, label: 'Configuration', content: <ConfigurationTip/>},
-  {id: 2, label: 'Confirm', content: <ConfirmTip/>},
-]
-
-type StepItemProps = {
-  title: string
-  id: number
-  hiddenText?: boolean
-}
+import InputWithTokenName, {TokenName} from "../../components/InputWithTokenName";
+import {isAddress, shortenAddress} from "../../utils";
+import {FC, useState} from "react";
+import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
+import {CHAIN_INFO} from "../../constants/chains";
+import {PUSD_ADDRESS} from "../../constants/addresses";
 
 const OpenChanel = () => {
-  const [activeStep, setActiveStep] = useRecoilState(activeStepAtom)
-  const {invalidTokenAddress, invalidConfiguration, create, status} = useCreateChannel()
+  const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
+  const [miningTokenAddress, setMiningTokenAddress] = useState<string>('')
+  const [standardOutput, setStandardOutput] = useState('0')
+  const {create, status} = useCreateChannel()
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
-
-  const StepButton: FC<StepItemProps> = ({...props}) => {
-    return (
-      <HStack spacing={'20px'} minW={isLargerThan1024 ? '' : '60px'} justifyContent={"center"}>
-        <Button
-          w={'36px'}
-          h={'36px'}
-          size={'sm'}
-          variant={activeStep >= props.id ? 'solid' : 'outline'}
-          onClick={() => {
-            setActiveStep(props.id)
-          }}
-          color={activeStep >= props.id ? 'white' : 'secondary.500'}
-          borderColor={activeStep >= props.id ? 'primary.500' : 'secondary.500'}
-        >
-          {props.id + 1}
-        </Button>
-        <Text hidden={props.hiddenText} color={activeStep >= props.id ? 'black' : 'secondary.500'}>{props.title}</Text>
-      </HStack>
-    )
-  }
+  const { chainId } = useActiveWeb3React()
 
   return (
-    <Stack px={'20px'} py={isLargerThan1024 ? '20px' : '0px'} spacing={'20px'}>
+    <Stack px={'20px'} py={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
-        px={isLargerThan1024 ? '190px' : '12px'}
-        pt={isLargerThan1024 ? '68px' : '24px'}
-        pb={'30px'}
+        py={'60px'}
         borderRadius={'12px'}
         alignItems={'center'}
-        spacing={'0'}
+        spacing={'22px'}
         border={"1px solid"} borderColor={"secondary.300"}
       >
-        <Stack
-          direction={'row'}
-          px={isLargerThan1024 ? '' : '20px'}
-          w={isLargerThan1024 ? '800px' : 'full'}
-          alignItems={'center'}
-          fontWeight={'bold'}
-          spacing={isLargerThan1024 ? '20px' : '8px'}
-          whiteSpace={'nowrap'}
-          hidden={activeStep === 3}
-        >
-          <StepButton id={0} title={'Token Address'} hiddenText={!isLargerThan1024}/>
-          <Divider active={activeStep >= 1}/>
-          <StepButton id={1} title={'Configuration'} hiddenText={!isLargerThan1024}/>
-          <Divider active={activeStep >= 2}/>
-          <StepButton id={2} title={'Confirm'} hiddenText={!isLargerThan1024}/>
+        <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+            Quotation Token:
+          </Text>
+          {quotationTokenList.map((address: string) => (
+            <InputWithTokenName key={address} address={address} isReadOnly={true} tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
+          ))}
+          <InputWithTokenName tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
         </Stack>
-        { !isLargerThan1024 && (
-          <Stack direction={"row"} w={'full'} justifyContent={"space-around"} pt={1}>
-            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=0 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Token Address</Text>
-            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=1 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Configuration</Text>
-            <Text fontSize={'xs'} fontWeight={'bold'} color={activeStep >=2 ? 'black' : 'secondary.500'} w={'100px'} textAlign={"center"}>Confirm</Text>
-          </Stack>
-        ) }
-        {steps.map((step) => (
-          <Stack hidden={activeStep !== step.id} key={step.id} w={'full'} alignItems={"center"} pb={'4px'}>
-            {step.content}
-          </Stack>
-        ))}
-        {activeStep === 3 ? (
-          <Done/>
-        ) : (
-          <Button
-            w={isLargerThan1024 ? '176px' : '80%'}
-            minH={isLargerThan1024 ? '36px' : '44px'}
-            isLoading={status === PROCESSING}
-            disabled={activeStep === steps.length - 1 ? invalidTokenAddress || invalidConfiguration : false}
-            onClick={async () => {
-              if (activeStep === steps.length - 1) {
-                await create()
-              }
-              const newStep = activeStep + 1
-              setActiveStep(newStep)
-            }}
-          >
-            {activeStep === steps.length - 1 ? 'Create' : 'Next'}
-          </Button>
-        )}
-      </Stack>
 
-      <Stack
-        bg={'white'}
-        px={isLargerThan1024 ? '190px' : '12px'}
-        py={isLargerThan1024 ? '60px' : '30px'}
-        borderRadius={'12px'}
-        alignItems={'center'}
-        spacing={'0'}
-        hidden={activeStep === 2 || activeStep === 3}
-        border={"1px solid"} borderColor={"secondary.300"}
-      >
-        {tips.map((tip) => {
-          return (
-            <Stack hidden={activeStep !== tip.id} key={tip.id}>
-              {tip.content}
-            </Stack>
-          )
-        })}
+        <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+            Mining Token:
+          </Text>
+          <Stack direction={'row'} spacing={0}>
+            <FormControl>
+              <InputGroup>
+                <Input
+                  variant={'filled'}
+                  pr={'80px'}
+                  minH={isLargerThan1024 ? '40px' : '44px'}
+                  fontSize={miningTokenAddress === '' ? '15px' : '17px'}
+                  isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
+                  errorBorderColor={'primary.500'}
+                  placeholder={'Input Token Address'}
+                  onChange={(event) => setMiningTokenAddress(event.target.value)}
+                  defaultValue={miningTokenAddress}
+                  onFocus={(e) => {
+                    e.target.setSelectionRange(0, miningTokenAddress.length)
+                  }}
+                />
+                <InputRightElement pr={'36px'} h={'full'} children={<TokenName address={miningTokenAddress} />} />
+              </InputGroup>
+            </FormControl>
+          </Stack>
+        </Stack>
+
+        <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+            Mining Standard Output:
+          </Text>
+          <FormControl>
+            <InputGroup>
+              <Input
+                variant={'filled'}
+                minH={isLargerThan1024 ? '40px' : '44px'}
+                fontSize={standardOutput === '' ? '15px' : '17px'}
+                errorBorderColor={'primary.500'}
+                placeholder={'Input Output Quantity'}
+                onChange={(event) => setStandardOutput(event.target.value)}
+                defaultValue={standardOutput}
+                onFocus={(e) => {
+                  e.target.setSelectionRange(0, miningTokenAddress.length)
+                }}
+              />
+              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'semibold'}>NEST/Block</Text>} />
+            </InputGroup>
+          </FormControl>
+        </Stack>
+
+        <Stack py={'16px'}>
+          <Button w={'180px'}>
+            Confirm
+          </Button>
+        </Stack>
+
+        <HStack pt={'22px'}>
+          <Text fontWeight={'semibold'} fontSize={'lg'}>Summary of parameter list</Text>
+        </HStack>
+
+        <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} w={isLargerThan1024 ? '600px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
+          <ConfirmDetail
+            title={`Quotation Token`}
+            tokens={quotationTokenList.length === 0 ? ['NaN'] : quotationTokenList}
+            invalid={quotationTokenList.length === 0}
+          />
+          <ConfirmDetail title={`Price Token`} token={PUSD_ADDRESS[chainId ?? 1]} />
+          <ConfirmDetail
+            title={`Mining Token`}
+            token={miningTokenAddress === '' ? 'NaN' : miningTokenAddress}
+            invalid={miningTokenAddress === ''}
+          />
+          <ConfirmDetail
+            title={'Price Token Unit'}
+            value={'2000'}
+            unit={'PUSD'}
+          />
+          <ConfirmDetail title={'Mining Standard Output'} value={standardOutput} unit={'NEST/Block'} />
+          <ConfirmDetail title={'Quotation Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} />
+          <ConfirmDetail title={'Price Calling Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol} />
+          <ConfirmDetail
+            title={'Attenuation Factor'}
+            value={'80'}
+            unit={'%'}
+          />
+        </Stack>
       </Stack>
     </Stack>
+  )
+}
+
+type ConfirmDetailProps = {
+  title: string
+  value?: string
+  token?: string
+  tokens?: string[]
+  unit?: string
+  invalid?: boolean
+}
+
+const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
+  const { chainId } = useActiveWeb3React()
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
+
+  return (
+    <>
+      <Stack direction={'row'} w={'full'} justifyContent={'space-between'} fontSize={'lg'}>
+        <Text color={'secondary.500'} fontWeight={'semibold'} whiteSpace={"nowrap"}>
+          {props.title}:
+        </Text>
+
+        {props.token && (
+          <Stack direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'end'}>
+            <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />
+            <Link
+              href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
+              isExternal
+              color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
+              fontWeight={'semibold'}
+              textAlign={"end"}
+              minW={'100px'}
+              whiteSpace={"nowrap"}
+            >
+              {shortenAddress(props.token, isLargerThan1024 ? 6 : 3)}
+            </Link>
+          </Stack>
+        )}
+
+        {props.tokens && (
+          <Stack spacing={isLargerThan1024 ? '20px' : '10px'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={"end"}>
+            {props.tokens.map((address, index) => (
+              <Stack key={index} direction={'row'} w={'full'} justifyContent={'end'}>
+                <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'} />
+                <Link
+                  href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
+                  isExternal
+                  color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
+                  fontWeight={'semibold'}
+                  minW={'100px'}
+                  textAlign={"end"}
+                  whiteSpace={"nowrap"}
+                >
+                  {shortenAddress(address, isLargerThan1024 ? 6 : 3)}
+                </Link>
+              </Stack>
+            ))}
+          </Stack>
+        )}
+
+        {props.value && (
+          <Text fontWeight={'bold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
+            {props.value} {props.unit}
+          </Text>
+        )}
+
+      </Stack>
+      { !isLargerThan1024 && (
+        <Divider orientation={"horizontal"} />
+      ) }
+    </>
   )
 }
 
