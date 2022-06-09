@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import {Route, Routes, useNavigate} from 'react-router-dom'
 import Summary from './Summary'
-import {Link, Stack, useMediaQuery} from '@chakra-ui/react'
+import {Stack, useMediaQuery} from '@chakra-ui/react'
 import { Logo } from '../components/Logo'
 import OpenChanel from './Create'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -20,12 +20,15 @@ export const App = () => {
 
 const Header = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
+  const navigate = useNavigate()
 
   return (
     <Stack w={isLargerThan1024 ? 'container.xl' : 'full'} p={'20px'} direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-      <Link href={'https://nestprotocol.org/'} isExternal>
-        <Logo />
-      </Link>
+      <Logo
+        cursor={"pointer"}
+        onClick={() => {
+        navigate('/')
+      }}/>
       <NetworkCard />
     </Stack>
   )
