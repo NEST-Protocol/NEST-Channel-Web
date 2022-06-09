@@ -35,6 +35,9 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
 
   return (
     <Stack direction={'row'} spacing={0}>
+      { props.isReadOnly && (
+        <Stack w={isLargerThan1024 ? 100 : 30}/>
+      ) }
       <FormControl w={isLargerThan1024 ? 600 : 'full'} isReadOnly={props.isReadOnly}>
         <InputGroup>
           <Input
@@ -94,7 +97,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
       </FormControl>
       {
         props.isReadOnly && (
-          <Stack w={isLargerThan1024 ? 100 : 30} justifyContent={'center'} pl={'12px'}>
+          <Stack w={isLargerThan1024 ? 100 : 30} justifyContent={'center'} pl={'12px'} cursor={"pointer"}>
             <img src={Delete} alt={'delete'} width={'20px'} height={'20px'} onClick={deleteItem} />
           </Stack>
         )

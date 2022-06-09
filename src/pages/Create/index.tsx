@@ -37,13 +37,25 @@ const OpenChanel = () => {
         border={"1px solid"} borderColor={"secondary.300"}
       >
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? 100 : 30) : 0}>
             Quotation Token:
           </Text>
           {quotationTokenList.map((address: string) => (
             <InputWithTokenName key={address} address={address} isReadOnly={true} tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
           ))}
-          <InputWithTokenName tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
+          <Stack alignItems={"center"}>
+            <InputWithTokenName tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
+          </Stack>
+        </Stack>
+
+
+        <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'}>
+            Quotation Pair:
+          </Text>
+          <Stack direction={'row'} spacing={0} w={'full'} justifyContent={"center"}>
+            <Text fontWeight={'bold'} fontSize={'lg'}>2000 PUSD = x ETH</Text>
+          </Stack>
         </Stack>
 
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
@@ -57,7 +69,7 @@ const OpenChanel = () => {
                   variant={'filled'}
                   pr={'80px'}
                   minH={isLargerThan1024 ? '40px' : '44px'}
-                  fontSize={miningTokenAddress === '' ? '15px' : '17px'}
+                  fontSize={miningTokenAddress === '' ? 'md' : 'lg'}
                   isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
                   errorBorderColor={'primary.500'}
                   placeholder={'Input Token Address'}
@@ -82,7 +94,7 @@ const OpenChanel = () => {
               <Input
                 variant={'filled'}
                 minH={isLargerThan1024 ? '40px' : '44px'}
-                fontSize={standardOutput === '' ? '15px' : '17px'}
+                fontSize={standardOutput === '' ? 'md' : 'lg'}
                 errorBorderColor={'primary.500'}
                 placeholder={'Input Output Quantity'}
                 onChange={(event) => setStandardOutput(event.target.value)}
@@ -91,7 +103,7 @@ const OpenChanel = () => {
                   e.target.setSelectionRange(0, miningTokenAddress.length)
                 }}
               />
-              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'semibold'}>NEST/Block</Text>} />
+              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'bold'} fontSize={'lg'}>NEST/Block</Text>} />
             </InputGroup>
           </FormControl>
         </Stack>
@@ -158,8 +170,8 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
         </Text>
 
         {props.token && (
-          <Stack direction={'row'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={'end'}>
-            <TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />
+          <Stack direction={'row'} w={isLargerThan1024 ? '240px' : 'full'} justifyContent={'end'}>
+            {/*<TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />*/}
             <Link
               href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
               isExternal
