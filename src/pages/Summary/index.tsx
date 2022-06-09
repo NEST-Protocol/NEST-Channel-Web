@@ -3,6 +3,7 @@ import Information from './Information'
 import Administrator from './Administrator'
 import QuotationFrequency from './QuotationFrequency'
 import {Stack, useMediaQuery, Text} from '@chakra-ui/react'
+import Attention from "./Attention";
 
 const Root = () => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
@@ -17,6 +18,7 @@ const Root = () => {
               <Information />
               <Administrator />
               <QuotationFrequency />
+              <Attention />
             </Stack>
           </Stack>
         ) : (

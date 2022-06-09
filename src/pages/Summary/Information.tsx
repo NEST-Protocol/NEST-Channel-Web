@@ -35,7 +35,7 @@ const Information = () => {
 
   return (
     <Stack bg={'white'} w={'full'} borderRadius={'12px'} p={'20px'} border={"1px solid"} borderColor={"secondary.300"}>
-      <Text fontWeight={'bold'} hidden={!isLargerThan1024}>Information</Text>
+      <Text fontWeight={'semibold'} hidden={!isLargerThan1024}>Information</Text>
       <Wrap justify={'space-between'}>
         <InformationDetail title={'ChannelId'} value={formatNumber(info.channelId)} loading={status === PROCESSING} />
         { !isLargerThan1024 && (
