@@ -5,6 +5,7 @@ import { parseToBigNumber } from '../utils/bignumberUtil'
 import { CHAIN_INFO } from '../constants/chains'
 import BigNumber from 'bignumber.js'
 import useActiveWeb3React from "./useActiveWeb3React";
+import {isAddress} from "../utils";
 
 export const useToken = (tokenAddress: string) => {
   const { library } = useActiveWeb3React()
@@ -16,6 +17,11 @@ export const useToken = (tokenAddress: string) => {
   const [totalSupply, setTotalSupply] = useState(new BigNumber(0))
 
   const fetch = useCallback(async () => {
+    if (!isAddress(tokenAddress)) {
+      setSymbol('')
+      return
+    }
+
     if (tokenAddress === ZERO_ADDRESS) {
       setSymbol(CHAIN_INFO[chainId ?? 1].nativeSymbol)
       return

@@ -20,6 +20,7 @@ import Divider from "../../components/Divider";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from "../../constants/misc";
 import {useNestOpenPlatformContract} from "../../hooks/useContract";
 import {parseToBigNumber} from "../../utils/bignumberUtil";
+import TokenIcon from "../../components/TokenIcon";
 
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
@@ -81,7 +82,6 @@ const OpenChanel = () => {
     }
   }
 
-
   return (
     <Stack px={'20px'} py={'20px'} spacing={'20px'}>
       <Stack
@@ -93,9 +93,12 @@ const OpenChanel = () => {
         border={"1px solid"} borderColor={"secondary.300"}
       >
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
-            Quotation Token:
-          </Text>
+          <HStack>
+            <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
+              Quotation Token:
+            </Text>
+          </HStack>
+
           {quotationTokenList.map((address: string) => (
             <InputWithTokenName key={address} address={address} isReadOnly={true} tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
           ))}
@@ -140,7 +143,7 @@ const OpenChanel = () => {
                     e.target.setSelectionRange(0, miningTokenAddress.length)
                   }}
                 />
-                <InputRightElement pr={'36px'} h={'full'} children={<></>} />
+                <InputRightElement pr={'16px'} h={'full'} children={<TokenIcon address={miningTokenAddress} />} />
               </InputGroup>
             </FormControl>
           </Stack>
@@ -159,7 +162,7 @@ const OpenChanel = () => {
               variant={"filled"}
             >
               <NumberInputField id='amount' onChange={(e) => setStandardOutput(Number(e.target.value))}/>
-              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'bold'} fontSize={'md'}>NEST/Block</Text>} />
+              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={4} children={<Text fontWeight={'bold'} fontSize={'md'}>NEST/Block</Text>} />
             </NumberInput>
           </FormControl>
         </Stack>
@@ -168,6 +171,7 @@ const OpenChanel = () => {
           <Button
             w={'180px'}
             isLoading={status === PROCESSING}
+            disabled={quotationTokenList.length === 0 || miningTokenAddress === ''}
             onClick={() => create(quotationTokenList, miningTokenAddress, standardOutput)}
           >
             { status === IDLE && ('Confirm') }

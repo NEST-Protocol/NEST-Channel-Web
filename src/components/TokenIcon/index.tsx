@@ -3,31 +3,31 @@ import NEST from '../../assets/svg/NEST.svg'
 import PETH from '../../assets/svg/PETH.svg'
 import PBTC from '../../assets/svg/PBTC.svg'
 import PUSD from '../../assets/svg/PUSD.svg'
-import ETH from '../../assets/svg/ETH.svg'
-import HBTC from '../../assets/svg/HBTC.svg'
+import {useToken} from "../../hooks/Tokens";
 
 type TokenIconProps = {
-  symbol: string
+  address: string
+  size?: string
 }
 
 const TokenIcon: FC<TokenIconProps> = ({ ...props }) => {
-  switch (props.symbol) {
-    case 'NEST':
-      return <img src={NEST} alt={'NEST'} height={'20px'} width={'20px'} />
-    case 'PETH':
-      return <img src={PETH} alt={'PETH'} height={'20px'} width={'20px'} />
-    case 'PBTC':
-      return <img src={PBTC} alt={'PBTC'} height={'20px'} width={'20px'} />
-    case 'PUSD':
-      return <img src={PUSD} alt={'PUSD'} height={'20px'} width={'20px'} />
-    case 'ETH':
-      return <img src={ETH} alt={'ETH'} height={'20px'} width={'20px'} />
-    case 'HBTC':
-      return <img src={HBTC} alt={'HBTC'} height={'20px'} width={'20px'} />
+  const { symbol } = useToken(props.address)
 
-    default:
-      return <></>
+  if (symbol === '') {
+    return <></>
   }
+
+  if (symbol === 'NEST') {
+    return <img src={NEST} alt={''} height={props.size ?? '20px'} width={props.size ?? '20px'} />
+  } else if (symbol === 'PETH') {
+    return <img src={PETH} alt={''} height={props.size ?? '20px'} width={props.size ?? '20px'} />
+  } else if (symbol === 'PBTC') {
+    return <img src={PBTC} alt={''} height={props.size ?? '20px'} width={props.size ?? '20px'} />
+  } else if (symbol === 'PUSD') {
+    return <img src={PUSD} alt={''} height={props.size ?? '20px'} width={props.size ?? '20px'} />
+  }
+
+  return <img src={`/tokens/${symbol}.png`} height={props.size ?? '20px'} width={props.size ?? '20px'} alt={""}/>
 }
 
 export default TokenIcon

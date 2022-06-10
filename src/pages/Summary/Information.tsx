@@ -192,7 +192,7 @@ const InformationDetail: FC<InformationDetailProps> = ({ ...props }) => {
               fontWeight={'bold'}
             >
               <Stack direction={'row'} alignItems={'center'}>
-                <TokenIcon symbol={symbolName} />
+                <TokenIcon address={String(props.value)} />
                 <Text>{symbolName}</Text>
               </Stack>
             </Link>
@@ -215,7 +215,7 @@ const QuotationTokenItem: FC<QuotationTokenItemProps> = ({ ...props }) => {
   const { symbol: symbolName } = useToken(isAddress(props.value) ? String(isAddress(props.value)) : PUSD_ADDRESS[1])
   return (
     <Stack direction={'row'} alignItems={'center'} minW={'80px'}>
-      <TokenIcon symbol={symbolName} />
+      <TokenIcon address={props.value} />
       <Text>{symbolName}</Text>
     </Stack>
   )

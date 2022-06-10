@@ -15,6 +15,7 @@ import {isAddress} from '../../utils'
 import { PUSD_ADDRESS } from '../../constants/addresses'
 import { PROCESSING } from '../../constants/misc'
 import Delete from '../../assets/svg/delete.svg'
+import TokenIcon from "../TokenIcon";
 
 type InputWithTokenNameProps = {
   address?: string
@@ -87,10 +88,9 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
           { props.isReadOnly && (
             <InputRightElement
               h={'full'}
+              pr={'16px'}
               children={
-                <Stack pr={'36px'}>
-                  {/*<TokenName address={address} />*/}
-                </Stack>
+                <TokenIcon address={address}/>
               }
             />
           ) }
