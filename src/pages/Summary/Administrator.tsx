@@ -105,6 +105,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
           break
         case 1:
           setDepositStatus(SUCCESS)
+          await refresh()
           await refreshChannelInfo()
           setTimeout(() => {
             setDepositStatus(IDLE)
@@ -124,6 +125,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
       return
     }
     await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(10).shiftedBy(36).toFixed(0))
+    await refresh()
   }
 
   return (
@@ -221,6 +223,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
           break
         case 1:
           setWithdrawStatus(SUCCESS)
+          await refresh()
           await fetchChannelInfo()
           setTimeout(() => {
             setWithdrawStatus(IDLE)

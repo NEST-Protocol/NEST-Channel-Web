@@ -23,10 +23,12 @@ import {parseToBigNumber} from "../../utils/bignumberUtil";
 import TokenIcon from "../../components/TokenIcon";
 import questionUrl from "../../assets/svg/question_icon.svg"
 import {useNavigate} from "react-router-dom";
+import {useToken} from "../../hooks/Tokens";
 
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
   const [miningTokenAddress, setMiningTokenAddress] = useState<string>('')
+  const {symbol: miningTokenSymbol } = useToken(miningTokenAddress)
   const [standardOutput, setStandardOutput] = useState(0)
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
   const [status, setStatus] = useState(IDLE)
@@ -229,7 +231,7 @@ const OpenChanel = () => {
             >
               <NumberInputField id='amount' onChange={(e) => setStandardOutput(Number(e.target.value))}/>
               <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={4}
-                                 children={<Text fontWeight={'bold'} fontSize={'md'}>NEST/Block</Text>}/>
+                                 children={<Text fontWeight={'bold'} fontSize={'md'}>{miningTokenSymbol}/Block</Text>}/>
             </NumberInput>
           </FormControl>
         </Stack>
