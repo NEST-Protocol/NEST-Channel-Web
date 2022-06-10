@@ -1,41 +1,14 @@
-import {
-  attenuationFactorAtom,
-  priceTokenAddressAtom,
-  priceTokenNameAtom,
-  priceTokenUnitAtom,
-  statusAtom,
-} from '../state/Create/form'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useNestOpenPlatformContract } from './useContract'
-import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { parseToBigNumber } from '../utils/bignumberUtil'
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from '../constants/misc'
+import {PUSD_ADDRESS} from "../constants/addresses";
 import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useCreateChannel = () => {
-  const priceTokenName = useRecoilValue(priceTokenNameAtom)
-  const priceTokenUnit = useRecoilValue(priceTokenUnitAtom)
-  const quotationFee = '0'
-  const priceCallingFee = '0'
-  const attenuationFactor = useRecoilValue(attenuationFactorAtom)
-  const [status, setStatus] = useRecoilState(statusAtom)
-
-  const { chainId } = useActiveWeb3React()
-
+  const [status, setStatus] = useState(IDLE)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
-
-  const [priceTokenAddress, setPriceTokenAddress] = useRecoilState(priceTokenAddressAtom)
-
-  useEffect(() => {
-    if (priceTokenName === 'PETH') {
-      setPriceTokenAddress(PETH_ADDRESS[chainId ?? 1])
-    } else if (priceTokenName === 'PUSD') {
-      setPriceTokenAddress(PUSD_ADDRESS[chainId ?? 1])
-    } else {
-      setPriceTokenAddress('Invalid Token')
-    }
-  }, [chainId, priceTokenName, setPriceTokenAddress])
+  const { chainId } = useActiveWeb3React()
 
   const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: string) => {
     setStatus(PROCESSING)
@@ -43,18 +16,18 @@ export const useCreateChannel = () => {
       // 标准出矿量 uint96
       rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
       // postFee uint16
-      postFeeUnit: parseToBigNumber(quotationFee).shiftedBy(4).toFixed(0),
+      postFeeUnit: parseToBigNumber(0).shiftedBy(4).toFixed(0),
       // singleFee uint16
-      singleFee: parseToBigNumber(priceCallingFee).shiftedBy(4).toFixed(0),
+      singleFee: parseToBigNumber(0).shiftedBy(4).toFixed(0),
       // 衰减系数 uint16，万分制
-      reductionRate: parseToBigNumber(attenuationFactor).shiftedBy(2).toFixed(0),
+      reductionRate: parseToBigNumber(80).shiftedBy(2).toFixed(0),
     }
 
     const args = {
       // 计价代币地址 address
-      token0: priceTokenAddress,
+      token0: PUSD_ADDRESS[chainId ?? 1],
       // 计价单位 uint96
-      unit: parseToBigNumber(priceTokenUnit).shiftedBy(18).toFixed(0),
+      unit: parseToBigNumber(2000).shiftedBy(18).toFixed(0),
       // 出矿代币地址 address
       reward: miningTokenAddress,
       // 报价代币地址 address
@@ -91,6 +64,5 @@ export const useCreateChannel = () => {
   return {
     create,
     status,
-    priceTokenAddress,
   }
 }

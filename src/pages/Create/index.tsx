@@ -39,7 +39,7 @@ const OpenChanel = () => {
         border={"1px solid"} borderColor={"secondary.300"}
       >
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
             Quotation Token:
           </Text>
           {quotationTokenList.map((address: string) => (
@@ -51,21 +51,21 @@ const OpenChanel = () => {
         </Stack>
 
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
             Quotation Pair:
           </Text>
           <Stack spacing={4} w={'full'} alignItems={"center"}>
             {quotationTokenList.map((address: string) => (
               <HStack key={address} minW={'200px'}>
-                <Text fontWeight={'bold'} fontSize={'lg'}>2000 PUSD = x </Text>
-                <TokenName address={address} fontSize={'lg'} color={'black'} fontWeight={'bold'}/>
+                <Text fontWeight={'bold'} fontSize={'md'}>2000 PUSD = x </Text>
+                <TokenName address={address} fontSize={'md'} color={'black'} fontWeight={'bold'}/>
               </HStack>
             ))}
           </Stack>
         </Stack>
 
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
             Mining Token:
           </Text>
           <Stack direction={'row'} spacing={0}>
@@ -76,7 +76,7 @@ const OpenChanel = () => {
                   pr={'80px'}
                   minH={isLargerThan1024 ? '40px' : '44px'}
                   fontWeight={'bold'}
-                  fontSize={miningTokenAddress === '' ? 'md' : 'lg'}
+                  fontSize={miningTokenAddress === '' ? 'sm' : 'md'}
                   isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
                   errorBorderColor={'primary.500'}
                   placeholder={'Input Token Address'}
@@ -93,7 +93,7 @@ const OpenChanel = () => {
         </Stack>
 
         <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
-          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
+          <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
             Mining Standard Output:
           </Text>
           <FormControl>
@@ -101,7 +101,7 @@ const OpenChanel = () => {
               <Input
                 variant={'filled'}
                 minH={isLargerThan1024 ? '40px' : '44px'}
-                fontSize={standardOutput === '' ? 'md' : 'lg'}
+                fontSize={standardOutput === '' ? 'md' : 'md'}
                 errorBorderColor={'primary.500'}
                 placeholder={'Input Output Quantity'}
                 onChange={(event) => setStandardOutput(event.target.value)}
@@ -110,7 +110,7 @@ const OpenChanel = () => {
                   e.target.setSelectionRange(0, miningTokenAddress.length)
                 }}
               />
-              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'bold'} fontSize={'lg'}>NEST/Block</Text>} />
+              <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'bold'} fontSize={'md'}>NEST/Block</Text>} />
             </InputGroup>
           </FormControl>
         </Stack>
@@ -129,7 +129,7 @@ const OpenChanel = () => {
 
         <HStack pt={'22px'} w={'800px'} spacing={4}>
           <Divider />
-          <Text fontWeight={'semibold'} fontSize={'lg'} whiteSpace={"nowrap"}>Summary of parameter list</Text>
+          <Text fontWeight={'semibold'} fontSize={'md'} whiteSpace={"nowrap"}>Summary of parameter list</Text>
           <Divider />
         </HStack>
 
@@ -179,7 +179,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
   return (
     <>
-      <Stack direction={'row'} w={'full'} justifyContent={'space-between'} fontSize={'lg'}>
+      <Stack direction={'row'} w={'full'} justifyContent={'space-between'} fontSize={'md'}>
         <Text color={'secondary.500'} fontWeight={'semibold'} whiteSpace={"nowrap"}>
           {props.title}:
         </Text>
