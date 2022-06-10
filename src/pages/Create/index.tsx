@@ -254,29 +254,50 @@ const OpenChanel = () => {
           <Divider/>
         </HStack>
 
-        <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} px={4} w={isLargerThan1024 ? '600px' : 'full'}
+        <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={isLargerThan1024 ? '30px' : '0'} px={4} w={isLargerThan1024 ? '600px' : 'full'}
                spacing={isLargerThan1024 ? '20px' : '10px'}>
           <ConfirmDetail
             title={`Quotation Token`}
             tokens={quotationTokenList.length === 0 ? ['NaN'] : quotationTokenList}
             invalid={quotationTokenList.length === 0}
-            placeholder={"Input Token Address"}
+            placeholder={"No Address"}
           />
-          <ConfirmDetail title={`Price Token`} token={PUSD_ADDRESS[chainId ?? 1]} placeholder={"Input Token Address"}/>
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
+          <ConfirmDetail title={`Price Token`} token={PUSD_ADDRESS[chainId ?? 1]} placeholder={"No Address"}/>
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail
             title={`Mining Token`}
             token={miningTokenAddress === '' ? 'NaN' : miningTokenAddress}
             invalid={miningTokenAddress === ''}
-            placeholder={"Input Token Address"}
+            placeholder={"No Address"}
           />
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail
             title={'Price Token Unit'}
             value={'2000'}
             unit={'PUSD'}
           />
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail title={isLargerThan1024 ? 'Mining Standard Output' : 'Standard Output'} value={standardOutput} unit={'NEST/Block'}/>
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail title={'Quotation Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}/>
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail title={'Price Calling Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}/>
+          {!isLargerThan1024 && (
+            <Divider/>
+          )}
           <ConfirmDetail
             title={'Attenuation Factor'}
             value={'80'}
@@ -388,11 +409,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
             {props.value} {props.unit}
           </Text>
         )}
-
       </Stack>
-      {!isLargerThan1024 && (
-        <Divider/>
-      )}
     </>
   )
 }
