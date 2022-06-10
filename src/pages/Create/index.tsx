@@ -138,7 +138,7 @@ const OpenChanel = () => {
               Quotation Pair:
             </Text>
             <Tooltip
-              label={""}
+              label={"The number of pricing token for each quotation pair defaults to 2000."}
               bg={'white'}
               fontSize={'md'}
               fontWeight={'medium'}

@@ -17,13 +17,12 @@ export const useToken = (tokenAddress: string) => {
   const [totalSupply, setTotalSupply] = useState(new BigNumber(0))
 
   const fetch = useCallback(async () => {
-    if (!isAddress(tokenAddress)) {
-      setSymbol('')
-      return
-    }
-
     if (tokenAddress === ZERO_ADDRESS) {
       setSymbol(CHAIN_INFO[chainId ?? 1].nativeSymbol)
+      return
+    }
+    if (!isAddress(tokenAddress)) {
+      setSymbol('')
       return
     }
     try {
