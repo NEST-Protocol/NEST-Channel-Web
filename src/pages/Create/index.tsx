@@ -4,7 +4,7 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputRightElement, Link,
+  InputRightElement, Link, NumberInput, NumberInputField,
   Stack,
   Text,
   useMediaQuery
@@ -23,7 +23,7 @@ import {ERROR, IDLE, PROCESSING, SUCCESS} from "../../constants/misc";
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
   const [miningTokenAddress, setMiningTokenAddress] = useState<string>('')
-  const [standardOutput, setStandardOutput] = useState('0')
+  const [standardOutput, setStandardOutput] = useState(0)
   const {create, status} = useCreateChannel()
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
   const { chainId } = useActiveWeb3React()
@@ -97,21 +97,16 @@ const OpenChanel = () => {
             Mining Standard Output:
           </Text>
           <FormControl>
-            <InputGroup>
-              <Input
-                variant={'filled'}
-                minH={isLargerThan1024 ? '40px' : '44px'}
-                fontSize={standardOutput === '' ? 'md' : 'md'}
-                errorBorderColor={'primary.500'}
-                placeholder={'Input Output Quantity'}
-                onChange={(event) => setStandardOutput(event.target.value)}
-                defaultValue={standardOutput}
-                onFocus={(e) => {
-                  e.target.setSelectionRange(0, miningTokenAddress.length)
-                }}
-              />
+            <NumberInput
+              min={0}
+              value={standardOutput}
+              minH={isLargerThan1024 ? '40px' : '44px'}
+              errorBorderColor={'primary.500'}
+              variant={"filled"}
+            >
+              <NumberInputField id='amount' onChange={(e) => setStandardOutput(Number(e.target.value))}/>
               <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={'16px'} children={<Text fontWeight={'bold'} fontSize={'md'}>NEST/Block</Text>} />
-            </InputGroup>
+            </NumberInput>
           </FormControl>
         </Stack>
 
@@ -166,7 +161,7 @@ const OpenChanel = () => {
 
 type ConfirmDetailProps = {
   title: string
-  value?: string
+  value?: string | number
   token?: string
   tokens?: string[]
   unit?: string
@@ -220,7 +215,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
           </Stack>
         )}
 
-        {props.value && (
+        {(props.value || props.value === 0) && (
           <Text fontWeight={'bold'} color={props.value === 'NaN' || props.invalid ? 'primary.500' : 'black'}>
             {props.value} {props.unit}
           </Text>

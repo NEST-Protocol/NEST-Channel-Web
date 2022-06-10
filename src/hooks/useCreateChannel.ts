@@ -10,7 +10,7 @@ export const useCreateChannel = () => {
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const { chainId } = useActiveWeb3React()
 
-  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: string) => {
+  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: number) => {
     setStatus(PROCESSING)
     const config = {
       // 标准出矿量 uint96
