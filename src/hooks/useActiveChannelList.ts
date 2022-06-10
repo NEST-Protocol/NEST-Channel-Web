@@ -16,18 +16,18 @@ export const useActiveChannelList = () => {
       try {
         let list: ChannelInfo[] = []
         const request = await fetch(
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].hostname +
+          CHANNEL_OPEN_LOGS_FILTER[chainId].hostname +
           '/api?module=logs&action=getLogs' +
           '&fromBlock=' +
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].fromBlock +
+          CHANNEL_OPEN_LOGS_FILTER[chainId].fromBlock +
           '&toBlock=' +
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].toBlock +
+          CHANNEL_OPEN_LOGS_FILTER[chainId].toBlock +
           '&address=' +
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].address +
+          CHANNEL_OPEN_LOGS_FILTER[chainId].address +
           '&topic0=' +
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].topics[0] +
+          CHANNEL_OPEN_LOGS_FILTER[chainId].topics[0] +
           '&apikey=' +
-          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].apikey
+          CHANNEL_OPEN_LOGS_FILTER[chainId].apikey
         )
         const data = await request.json()
         if (data.status === '1') {
