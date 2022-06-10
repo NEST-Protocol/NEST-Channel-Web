@@ -321,13 +321,14 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
           <>
             { isAddress(props.token) ? (
               <Stack direction={'row'} w={isLargerThan1024 ? '240px' : 'full'} justifyContent={'end'}>
+                <TokenIcon address={props.token} />
                 <Link
                   href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
                   isExternal
                   color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
                   fontWeight={'semibold'}
                   textAlign={"end"}
-                  minW={'100px'}
+                  minW={'170px'}
                   whiteSpace={"nowrap"}
                 >
                   {shortenAddress(props.token, isLargerThan1024 ? 6 : 3)}
@@ -350,13 +351,14 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
             {props.tokens.map((address, index) => (
               <>
                 { isAddress(address) ? (
-                  <Stack key={index} direction={'row'} w={'full'} justifyContent={'end'}>
+                  <Stack key={index} direction={'row'} justifyContent={'end'}>
+                    <TokenIcon address={address}/>
                     <Link
                       href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                       isExternal
                       color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
                       fontWeight={'semibold'}
-                      minW={'100px'}
+                      minW={'170px'}
                       textAlign={"end"}
                       whiteSpace={"nowrap"}
                     >
