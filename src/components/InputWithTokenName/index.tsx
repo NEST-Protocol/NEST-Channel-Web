@@ -35,15 +35,15 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
-    <Stack direction={'row'} spacing={0}>
+    <Stack direction={'row'} spacing={0} w={'full'}>
       { props.isReadOnly && (
-        <Stack w={isLargerThan1024 ? 100 : 30}/>
+        <Stack w={isLargerThan1024 ? 100 : 0}/>
       ) }
       <FormControl w={isLargerThan1024 ? 600 : 'full'} isReadOnly={props.isReadOnly}>
         <InputGroup>
           <Input
             variant={'filled'}
-            pr={props.isReadOnly ? '80px' : ''}
+            pr={props.isReadOnly ? '50px' : ''}
             minH={isLargerThan1024 ? '40px' : '44px'}
             fontSize={address === '' ? 'sm' : 'md'}
             fontWeight={'bold'}

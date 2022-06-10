@@ -30,6 +30,8 @@ const Root = () => {
             {/*<Administrator />*/}
             <Text fontWeight={'semibold'}>Quotation Frequency</Text>
             <QuotationFrequency />
+            <Text fontWeight={'semibold'}>Attention</Text>
+            <Attention />
           </Stack>
         )
       }

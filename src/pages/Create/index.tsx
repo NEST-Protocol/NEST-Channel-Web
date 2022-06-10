@@ -90,16 +90,21 @@ const OpenChanel = () => {
     <Stack px={'20px'} py={'20px'} spacing={'20px'}>
       <Stack
         bg={'white'}
-        py={'60px'}
+        py={isLargerThan1024 ? '60px' : '22px'}
         borderRadius={'12px'}
         alignItems={'center'}
         spacing={'22px'}
         border={"1px solid"} borderColor={"secondary.300"}
       >
-        <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}>
+        <Stack
+          id="quotation token address"
+          spacing={isLargerThan1024 ? '16px' : '10px'}
+          w={isLargerThan1024 ? 600 : 'full'}
+          px={4}
+        >
           <HStack>
             <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'}
-                  pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : '30px') : 4}>
+                  pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : 4) : 4}>
               Quotation Token:
             </Text>
             <Tooltip
@@ -124,7 +129,11 @@ const OpenChanel = () => {
           </Stack>
         </Stack>
 
-        <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
+        <Stack
+          spacing={isLargerThan1024 ? '16px' : '10px'}
+          w={isLargerThan1024 ? 600 : 'full'}
+          px={4}
+        >
           <HStack>
             <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
               Quotation Pair:
@@ -143,7 +152,7 @@ const OpenChanel = () => {
           </HStack>
           <Stack spacing={4} w={'full'} alignItems={"center"}>
             {quotationTokenList.map((address: string) => (
-              <HStack key={address} minW={'200px'}>
+              <HStack key={address} minW={isLargerThan1024 ? '200px' : '170px'}>
                 <Text fontWeight={'bold'} fontSize={'md'}>2000 PUSD = x </Text>
                 <TokenName address={address} fontSize={'md'} color={'black'} fontWeight={'bold'}/>
               </HStack>
@@ -151,7 +160,7 @@ const OpenChanel = () => {
           </Stack>
         </Stack>
 
-        <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
+        <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'} px={4}>
           <HStack>
             <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
               Mining Token:
@@ -173,7 +182,7 @@ const OpenChanel = () => {
               <InputGroup>
                 <Input
                   variant={'filled'}
-                  pr={'80px'}
+                  pr={'50px'}
                   minH={isLargerThan1024 ? '40px' : '44px'}
                   fontWeight={'bold'}
                   fontSize={miningTokenAddress === '' ? 'sm' : 'md'}
@@ -193,7 +202,7 @@ const OpenChanel = () => {
           </Stack>
         </Stack>
 
-        <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'}
+        <Stack id="quotation token address" spacing={isLargerThan1024 ? '16px' : '10px'} px={4}
                w={isLargerThan1024 ? 600 : 'full'}>
           <HStack>
             <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={4}>
@@ -239,7 +248,7 @@ const OpenChanel = () => {
           </Button>
         </Stack>
 
-        <HStack pt={'22px'} w={'700px'} spacing={4}>
+        <HStack pt={'22px'} w={isLargerThan1024 ? '700px' : 'full'} spacing={4} px={4}>
           <Divider/>
           <Text fontWeight={'semibold'} fontSize={'md'} whiteSpace={"nowrap"}>Summary of parameter list</Text>
           <Divider/>
@@ -265,7 +274,7 @@ const OpenChanel = () => {
             value={'2000'}
             unit={'PUSD'}
           />
-          <ConfirmDetail title={'Mining Standard Output'} value={standardOutput} unit={'NEST/Block'}/>
+          <ConfirmDetail title={isLargerThan1024 ? 'Mining Standard Output' : 'Standard Output'} value={standardOutput} unit={'NEST/Block'}/>
           <ConfirmDetail title={'Quotation Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}/>
           <ConfirmDetail title={'Price Calling Fee'} value={'0'} unit={CHAIN_INFO[chainId ?? 1].nativeSymbol}/>
           <ConfirmDetail
@@ -302,7 +311,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
           <Text color={'secondary.500'} fontWeight={'semibold'} whiteSpace={"nowrap"}>
             {props.title}:
           </Text>
-          { props.tooltip && (
+          {props.tooltip && (
             <Tooltip
               label={props.tooltip}
               bg={'white'}
@@ -314,24 +323,24 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
             >
               <img src={questionUrl} alt={''}/>
             </Tooltip>
-          ) }
+          )}
         </HStack>
 
         {props.token && (
           <>
-            { isAddress(props.token) ? (
+            {isAddress(props.token) ? (
               <Stack direction={'row'} w={isLargerThan1024 ? '240px' : 'full'} justifyContent={'end'}>
-                <TokenIcon address={props.token} />
+                <TokenIcon address={props.token}/>
                 <Link
                   href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
                   isExternal
                   color={!isAddress(props.token) || props.invalid ? 'primary.500' : 'link.500'}
                   fontWeight={'semibold'}
                   textAlign={"end"}
-                  minW={'170px'}
+                  minW={isLargerThan1024 ? '170px' : '120px'}
                   whiteSpace={"nowrap"}
                 >
-                  {shortenAddress(props.token, isLargerThan1024 ? 6 : 3)}
+                  {shortenAddress(props.token, isLargerThan1024 ? 6 : 4)}
                 </Link>
               </Stack>
             ) : (
@@ -341,34 +350,35 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({...props}) => {
                 whiteSpace={"nowrap"}
                 color={'secondary.500'}
               >{props.placeholder}</Text>
-            ) }
+            )}
           </>
         )}
 
         {props.tokens && (
           <Stack spacing={isLargerThan1024 ? '20px' : '10px'} w={isLargerThan1024 ? '240px' : 'full'}
                  justifyContent={"end"}>
-            {props.tokens.map((address, index) => (
-              <>
-                { isAddress(address) ? (
-                  <Stack key={index} direction={'row'} justifyContent={'end'}>
+            {props.tokens.map((address) => (
+              <Stack direction={'row'} justifyContent={'end'} key={address}>
+                {isAddress(address) ? (
+                  <>
                     <TokenIcon address={address}/>
                     <Link
                       href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                       isExternal
                       color={!isAddress(address) || props.invalid ? 'primary.500' : 'link.500'}
                       fontWeight={'semibold'}
-                      minW={'170px'}
+                      minW={isLargerThan1024 ? '170px' : '120px'}
                       textAlign={"end"}
                       whiteSpace={"nowrap"}
                     >
-                      {shortenAddress(address, isLargerThan1024 ? 6 : 3)}
+                      {shortenAddress(address, isLargerThan1024 ? 6 : 4)}
                     </Link>
-                  </Stack>
+                  </>
                 ) : (
-                  <Text fontWeight={'semibold'} textAlign={"end"} whiteSpace={"nowrap"} color={'secondary.500'}>{props.placeholder}</Text>
-                ) }
-              </>
+                  <Text fontWeight={'semibold'} textAlign={"end"} whiteSpace={"nowrap"}
+                        color={'secondary.500'}>{props.placeholder}</Text>
+                )}
+              </Stack>
             ))}
           </Stack>
         )}
