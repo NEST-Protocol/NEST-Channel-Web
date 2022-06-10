@@ -54,7 +54,12 @@ const OpenChanel = () => {
             Quotation Pair:
           </Text>
           <Stack direction={'row'} spacing={0} w={'full'} justifyContent={"center"}>
-            <Text fontWeight={'bold'} fontSize={'lg'}>2000 PUSD = x ETH</Text>
+            {quotationTokenList.map((address: string) => (
+              <HStack>
+                <Text fontWeight={'bold'} fontSize={'lg'}>2000 PUSD = x </Text>
+                <TokenName address={address} fontSize={'lg'} color={'black'}/>
+              </HStack>
+            ))}
           </Stack>
         </Stack>
 
@@ -171,7 +176,6 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
         {props.token && (
           <Stack direction={'row'} w={isLargerThan1024 ? '240px' : 'full'} justifyContent={'end'}>
-            {/*<TokenName address={props.token} hasParentheses={props.token !== 'NaN'} color={'secondary.500'} />*/}
             <Link
               href={getExplorerLink(chainId || 1, props.token, ExplorerDataType.TOKEN)}
               isExternal
@@ -187,10 +191,9 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
         )}
 
         {props.tokens && (
-          <Stack spacing={isLargerThan1024 ? '20px' : '10px'} w={isLargerThan1024 ? '220px' : 'full'} justifyContent={"end"}>
+          <Stack spacing={isLargerThan1024 ? '20px' : '10px'} w={isLargerThan1024 ? '240px' : 'full'} justifyContent={"end"}>
             {props.tokens.map((address, index) => (
               <Stack key={index} direction={'row'} w={'full'} justifyContent={'end'}>
-                <TokenName address={address} hasParentheses={address !== 'NaN'} color={'secondary.500'} />
                 <Link
                   href={getExplorerLink(chainId || 1, address, ExplorerDataType.TOKEN)}
                   isExternal
