@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useNestOpenPlatformContract } from './useContract'
 import { PETH_ADDRESS, PUSD_ADDRESS } from '../constants/addresses'
 import { parseToBigNumber } from '../utils/bignumberUtil'
-import { ERROR, PROCESSING, SUCCESS } from '../constants/misc'
+import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from '../constants/misc'
 import useActiveWeb3React from "./useActiveWeb3React";
 
 export const useCreateChannel = () => {
@@ -68,14 +68,23 @@ export const useCreateChannel = () => {
         switch (res.status) {
           case 0:
             setStatus(ERROR)
+            setTimeout(() => {
+              setStatus(IDLE)
+            }, IDLE_DELAY)
             break
           case 1:
             setStatus(SUCCESS)
+            setTimeout(() => {
+              setStatus(IDLE)
+            }, IDLE_DELAY)
             break
         }
       }
     } catch (e) {
       setStatus(ERROR)
+      setTimeout(() => {
+        setStatus(IDLE)
+      }, IDLE_DELAY)
     }
   }
 

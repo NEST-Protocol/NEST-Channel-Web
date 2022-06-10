@@ -18,6 +18,7 @@ import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
 import {CHAIN_INFO} from "../../constants/chains";
 import {PUSD_ADDRESS} from "../../constants/addresses";
 import Divider from "../../components/Divider";
+import {ERROR, IDLE, PROCESSING, SUCCESS} from "../../constants/misc";
 
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
@@ -115,8 +116,14 @@ const OpenChanel = () => {
         </Stack>
 
         <Stack py={'16px'}>
-          <Button w={'180px'}>
-            Confirm
+          <Button
+            w={'180px'}
+            isLoading={status === PROCESSING}
+            onClick={() => create(quotationTokenList, miningTokenAddress, standardOutput)}
+          >
+            { status === IDLE && ('Confirm') }
+            { status === SUCCESS && ('Success') }
+            { status === ERROR && ('Error') }
           </Button>
         </Stack>
 
