@@ -143,7 +143,7 @@ const OpenChanel = () => {
                     e.target.setSelectionRange(0, miningTokenAddress.length)
                   }}
                 />
-                <InputRightElement pr={'16px'} h={'full'} children={<TokenIcon address={miningTokenAddress} />} />
+                <InputRightElement pr={'16px'} h={'full'} children={isAddress(miningTokenAddress) ? <TokenIcon address={miningTokenAddress} /> : <></>} />
               </InputGroup>
             </FormControl>
           </Stack>
@@ -171,7 +171,7 @@ const OpenChanel = () => {
           <Button
             w={'180px'}
             isLoading={status === PROCESSING}
-            disabled={quotationTokenList.length === 0 || miningTokenAddress === ''}
+            disabled={quotationTokenList.length === 0 || !isAddress(miningTokenAddress)}
             onClick={() => create(quotationTokenList, miningTokenAddress, standardOutput)}
           >
             { status === IDLE && ('Confirm') }

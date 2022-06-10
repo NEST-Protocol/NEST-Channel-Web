@@ -90,7 +90,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
               h={'full'}
               pr={'16px'}
               children={
-                <TokenIcon address={address}/>
+                isAddress(address) ? <TokenIcon address={address}/> : <></>
               }
             />
           ) }

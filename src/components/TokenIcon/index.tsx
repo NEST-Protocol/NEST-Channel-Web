@@ -13,7 +13,7 @@ type TokenIconProps = {
 const TokenIcon: FC<TokenIconProps> = ({ ...props }) => {
   const { symbol } = useToken(props.address)
 
-  if (symbol === '') {
+  if (symbol === '' || symbol === 'Error') {
     return <></>
   }
 
