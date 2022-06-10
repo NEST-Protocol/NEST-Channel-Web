@@ -44,7 +44,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
             variant={'filled'}
             pr={props.isReadOnly ? '80px' : ''}
             minH={isLargerThan1024 ? '40px' : '44px'}
-            fontSize={address === '' ? 'sm' : 'lg'}
+            fontSize={address === '' ? 'sm' : 'md'}
             fontWeight={'bold'}
             placeholder={'Input Token Address'}
             isInvalid={!valid}

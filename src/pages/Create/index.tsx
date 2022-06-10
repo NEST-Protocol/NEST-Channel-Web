@@ -127,7 +127,7 @@ const OpenChanel = () => {
           </Button>
         </Stack>
 
-        <HStack pt={'22px'} w={'800px'} spacing={4}>
+        <HStack pt={'22px'} w={'700px'} spacing={4}>
           <Divider />
           <Text fontWeight={'semibold'} fontSize={'md'} whiteSpace={"nowrap"}>Summary of parameter list</Text>
           <Divider />
