@@ -99,12 +99,11 @@ const OpenChanel = () => {
         <Stack
           id="quotation token address"
           spacing={isLargerThan1024 ? '16px' : '10px'}
-          w={isLargerThan1024 ? 600 : 'full'}
+          w={isLargerThan1024 ? 800 : 'full'}
           px={4}
         >
           <HStack>
-            <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'}
-                  pl={quotationTokenList.length > 0 ? (isLargerThan1024 ? '116px' : 4) : 4}>
+            <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'md' : 'xs'} color={'secondary.500'} pl={isLargerThan1024 ? '116px' : '16px' }>
               Quotation Token:
             </Text>
             <Tooltip
@@ -124,9 +123,9 @@ const OpenChanel = () => {
             <InputWithTokenName key={address} address={address} isReadOnly={true} tokenList={quotationTokenList}
                                 setTokenList={setQuotationTokenList}/>
           ))}
-          <Stack alignItems={"center"}>
+          <HStack w={'full'} alignItems={"center"} px={isLargerThan1024 ? '100px' : '0'}>
             <InputWithTokenName tokenList={quotationTokenList} setTokenList={setQuotationTokenList}/>
-          </Stack>
+          </HStack>
         </Stack>
 
         <Stack
