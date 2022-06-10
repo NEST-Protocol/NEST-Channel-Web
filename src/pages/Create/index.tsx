@@ -49,7 +49,6 @@ const OpenChanel = () => {
           </Stack>
         </Stack>
 
-
         <Stack spacing={isLargerThan1024 ? '16px' : '10px'} w={isLargerThan1024 ? 600 : 'full'}>
           <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
             Quotation Pair:
@@ -127,7 +126,7 @@ const OpenChanel = () => {
           <Divider />
         </HStack>
 
-        <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} w={isLargerThan1024 ? '600px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
+        <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} px={4} w={isLargerThan1024 ? '600px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
           <ConfirmDetail
             title={`Quotation Token`}
             tokens={quotationTokenList.length === 0 ? ['NaN'] : quotationTokenList}
