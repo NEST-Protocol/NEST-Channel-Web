@@ -1,5 +1,5 @@
 import {
-  Button, Divider,
+  Button,
   FormControl,
   HStack,
   Input,
@@ -17,6 +17,7 @@ import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
 import {CHAIN_INFO} from "../../constants/chains";
 import {PUSD_ADDRESS} from "../../constants/addresses";
+import Divider from "../../components/Divider";
 
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
@@ -74,6 +75,7 @@ const OpenChanel = () => {
                   variant={'filled'}
                   pr={'80px'}
                   minH={isLargerThan1024 ? '40px' : '44px'}
+                  fontWeight={'bold'}
                   fontSize={miningTokenAddress === '' ? 'md' : 'lg'}
                   isInvalid={miningTokenAddress !== '' && !isAddress(miningTokenAddress)}
                   errorBorderColor={'primary.500'}
@@ -84,7 +86,7 @@ const OpenChanel = () => {
                     e.target.setSelectionRange(0, miningTokenAddress.length)
                   }}
                 />
-                <InputRightElement pr={'36px'} h={'full'} children={<TokenName address={miningTokenAddress} />} />
+                <InputRightElement pr={'36px'} h={'full'} children={<></>} />
               </InputGroup>
             </FormControl>
           </Stack>
@@ -119,8 +121,10 @@ const OpenChanel = () => {
           </Button>
         </Stack>
 
-        <HStack pt={'22px'}>
-          <Text fontWeight={'semibold'} fontSize={'lg'}>Summary of parameter list</Text>
+        <HStack pt={'22px'} w={'800px'} spacing={4}>
+          <Divider />
+          <Text fontWeight={'semibold'} fontSize={'lg'} whiteSpace={"nowrap"}>Summary of parameter list</Text>
+          <Divider />
         </HStack>
 
         <Stack pt={isLargerThan1024 ? '60px' : '30px'} pb={'30px'} w={isLargerThan1024 ? '600px' : 'full'} spacing={isLargerThan1024 ? '20px' : '10px'}>
@@ -218,7 +222,7 @@ const ConfirmDetail: FC<ConfirmDetailProps> = ({ ...props }) => {
 
       </Stack>
       { !isLargerThan1024 && (
-        <Divider orientation={"horizontal"} />
+        <Divider />
       ) }
     </>
   )

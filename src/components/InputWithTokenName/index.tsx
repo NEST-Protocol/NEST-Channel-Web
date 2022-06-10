@@ -45,6 +45,7 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
             pr={props.isReadOnly ? '80px' : ''}
             minH={isLargerThan1024 ? '40px' : '44px'}
             fontSize={address === '' ? 'sm' : 'lg'}
+            fontWeight={'bold'}
             placeholder={'Input Token Address'}
             isInvalid={!valid}
             errorBorderColor={'primary.500'}
@@ -87,8 +88,8 @@ const InputWithTokenName: FC<InputWithTokenNameProps> = ({ ...props }) => {
             <InputRightElement
               h={'full'}
               children={
-                <Stack pr={'36px'} >
-                  <TokenName address={address} />
+                <Stack pr={'36px'}>
+                  {/*<TokenName address={address} />*/}
                 </Stack>
               }
             />
@@ -126,7 +127,7 @@ export const TokenName: FC<TokenNameProps> = ({ ...props }) => {
         <Text
           color={symbol === 'Error' ? 'red' : props.color || 'primary.500'}
           fontSize={props.fontSize ?? 'md'}
-          fontWeight={props.fontWeight ?? 'semibold'}
+          fontWeight={props.fontWeight ?? 'bold'}
         >
           {isAddress(props.address) ? (props.hasParentheses ? `(${symbol})` : symbol) : ''}
         </Text>
