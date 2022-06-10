@@ -12,10 +12,11 @@ export const useActiveChannelList = () => {
   const { chainId, library } = useActiveWeb3React()
 
   const refresh = useCallback(async () => {
-    try {
-      let list: ChannelInfo[] = []
-      const request = await fetch(
-        CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].hostname +
+    if (chainId) {
+      try {
+        let list: ChannelInfo[] = []
+        const request = await fetch(
+          CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].hostname +
           '/api?module=logs&action=getLogs' +
           '&fromBlock=' +
           CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].fromBlock +
@@ -27,29 +28,30 @@ export const useActiveChannelList = () => {
           CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].topics[0] +
           '&apikey=' +
           CHANNEL_OPEN_LOGS_FILTER[chainId ?? 1].apikey
-      )
-      const data = await request.json()
-      if (data.status === '1') {
-        const logs = data.result
-        if (logs) {
-          logs.forEach((res: any) => {
-            // open (uint256 channelId, address token0, uint256 unit, address reward)
-            const decodeParameters = web3.eth.abi.decodeParameters(
-              ['uint256', 'address', 'uint256', 'address'],
-              res.data
-            )
-            const info: ChannelInfo = {
-              channelId: decodeParameters[0],
-              token0: decodeParameters[1],
-              pairs: [],
-            }
-            list.push(info)
-          })
+        )
+        const data = await request.json()
+        if (data.status === '1') {
+          const logs = data.result
+          if (logs) {
+            logs.forEach((res: any) => {
+              // open (uint256 channelId, address token0, uint256 unit, address reward)
+              const decodeParameters = web3.eth.abi.decodeParameters(
+                ['uint256', 'address', 'uint256', 'address'],
+                res.data
+              )
+              const info: ChannelInfo = {
+                channelId: decodeParameters[0],
+                token0: decodeParameters[1],
+                pairs: [],
+              }
+              list.push(info)
+            })
+          }
+          setChannelList(list)
         }
-        setChannelList(list)
+      } catch (e) {
+        console.log(e)
       }
-    } catch (e) {
-      console.log(e)
     }
   }, [chainId, setChannelList, web3.eth.abi])
 
