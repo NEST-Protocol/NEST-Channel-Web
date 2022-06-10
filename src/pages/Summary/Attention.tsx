@@ -1,9 +1,12 @@
-import {HStack, Stack, Text} from "@chakra-ui/react";
+import {HStack, Stack, Text, chakra, Link} from "@chakra-ui/react";
+import miningUrl from '../../assets/svg/mining_icon.svg'
+import callingUrl from '../../assets/svg/calling_icon.svg'
+import rightUrl from '../../assets/svg/RIGHT_2_icon.svg'
 
 const Attention = () => {
   const list = [
-    {id: 1, icon: '', label: 'How to Mining?', link: ''},
-    {id: 2, icon: '', label: 'How to Calling?', link: ''},
+    {id: 1, icon: miningUrl, label: 'How to Mining?', link: ''},
+    {id: 2, icon: callingUrl, label: 'How to Calling?', link: ''},
   ]
 
   return (
@@ -17,10 +20,10 @@ const Attention = () => {
           list.map((item) => (
             <HStack
               key={item.id} cursor={"pointer"}
-              onClick={() => {
-                window.open(item.link)
-              }}>
-              <Text fontWeight={'semibold'} fontSize={'15px'}>{item.label}</Text>
+              spacing={'22px'}>
+              <chakra.img src={item.icon} alt={''} />
+              <Link href={item.link} isExternal fontWeight={'semibold'} fontSize={'15px'}>{item.label}</Link>
+              <chakra.img src={rightUrl} alt={''} _hover={{transform: 'translateX(8px)'}}/>
             </HStack>
           ))
         }
@@ -28,5 +31,7 @@ const Attention = () => {
     </Stack>
   )
 }
+
+
 
 export default Attention
