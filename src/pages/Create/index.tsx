@@ -53,11 +53,11 @@ const OpenChanel = () => {
           <Text fontWeight={'600'} fontSize={isLargerThan1024 ? 'lg' : 'xs'} color={'secondary.500'} pl={4}>
             Quotation Pair:
           </Text>
-          <Stack direction={'row'} spacing={0} w={'full'} justifyContent={"center"}>
+          <Stack spacing={4} w={'full'} alignItems={"center"}>
             {quotationTokenList.map((address: string) => (
-              <HStack>
+              <HStack key={address} minW={'200px'}>
                 <Text fontWeight={'bold'} fontSize={'lg'}>2000 PUSD = x </Text>
-                <TokenName address={address} fontSize={'lg'} color={'black'}/>
+                <TokenName address={address} fontSize={'lg'} color={'black'} fontWeight={'bold'}/>
               </HStack>
             ))}
           </Stack>

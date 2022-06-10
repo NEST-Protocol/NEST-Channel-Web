@@ -110,6 +110,7 @@ type TokenNameProps = {
   address: string
   color?: string
   fontSize?: string
+  fontWeight?: string
   hasParentheses?: boolean
 }
 
@@ -125,7 +126,7 @@ export const TokenName: FC<TokenNameProps> = ({ ...props }) => {
         <Text
           color={symbol === 'Error' ? 'red' : props.color || 'primary.500'}
           fontSize={props.fontSize ?? 'md'}
-          fontWeight={'semibold'}
+          fontWeight={props.fontWeight ?? 'semibold'}
         >
           {isAddress(props.address) ? (props.hasParentheses ? `(${symbol})` : symbol) : ''}
         </Text>
