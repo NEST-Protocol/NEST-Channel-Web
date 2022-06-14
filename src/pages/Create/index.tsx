@@ -88,8 +88,6 @@ const OpenChanel = () => {
     }
   }
 
-  console.log(miningTokenDecimals)
-
   return (
     <Stack px={'20px'} py={'20px'} spacing={'20px'}>
       <Stack
