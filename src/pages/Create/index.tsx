@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   FormControl,
   HStack,
@@ -7,14 +8,14 @@ import {
   InputRightElement, Link, NumberInput, NumberInputField,
   Stack,
   Text, Tooltip,
-  useMediaQuery
+  useMediaQuery, useToast
 } from '@chakra-ui/react'
 import InputWithTokenName, {TokenName} from "../../components/InputWithTokenName";
 import {isAddress, shortenAddress} from "../../utils";
-import {FC, useState} from "react";
+import {FC, useCallback, useEffect, useState} from "react";
 import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 import {ExplorerDataType, getExplorerLink} from "../../utils/getExplorerLink";
-import {CHAIN_INFO} from "../../constants/chains";
+import {CHAIN_INFO, SupportedChainId} from "../../constants/chains";
 import {PUSD_ADDRESS} from "../../constants/addresses";
 import Divider from "../../components/Divider";
 import {ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS} from "../../constants/misc";
@@ -35,8 +36,37 @@ const OpenChanel = () => {
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const {chainId} = useActiveWeb3React()
   const navigate = useNavigate()
+  const [invalidMiningToken, setInvalidMiningToken] = useState(false)
+  const toast = useToast()
 
-  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: number, decimal: number) => {
+
+  const checkMiningToken = useCallback(( )=>{
+    if (chainId === SupportedChainId.POLYGON && miningTokenAddress === "0x0000000000000000000000000000000000001010") {
+      setInvalidMiningToken(true)
+      toast({
+        position: 'top',
+        render: () => (
+          <Box
+            color="white"
+            p={3}
+            px={6}
+            bg="primary.500"
+            textAlign={'center'}
+            fontWeight={'bold'}
+            borderRadius={'full'}
+          >
+            Sorry, we don't support this mining token. We only support ERC20 Token or ETH.
+          </Box>
+        ),
+      })
+    }
+    }, [chainId, miningTokenAddress, toast])
+
+  useEffect(()=>{
+    checkMiningToken()
+  }, [checkMiningToken])
+
+  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: string, decimal: number) => {
     setStatus(PROCESSING)
     const config = {
       // 标准出矿量 uint96
@@ -242,8 +272,8 @@ const OpenChanel = () => {
           <Button
             w={'180px'}
             isLoading={status === PROCESSING}
-            disabled={quotationTokenList.length === 0 || !isAddress(miningTokenAddress)}
-            onClick={() => create(quotationTokenList, miningTokenAddress, Number(standardOutput), miningTokenDecimals)}
+            disabled={quotationTokenList.length === 0 || !isAddress(miningTokenAddress) || !standardOutput || invalidMiningToken}
+            onClick={() => create(quotationTokenList, miningTokenAddress, standardOutput ?? '0', miningTokenDecimals)}
           >
             {status === IDLE && ('Confirm')}
             {status === SUCCESS && ('Success')}
