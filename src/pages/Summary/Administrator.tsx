@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   NumberInput,
   NumberInputField,
@@ -7,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Stack,
-  Text,
+  Text, useToast,
 } from '@chakra-ui/react'
 import { useRecoilValue } from 'recoil'
 import { activeChannelIdAtom } from '../../state/Summary'
@@ -19,7 +20,7 @@ import {NEST_ADDRESS, NEST_OPEN_PLATFORM_ADDRESS} from '../../constants/addresse
 import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
 import { formatWithUnit, parseToNumber } from '../../utils/unit'
 import { useBalance } from '../../hooks/useBalance'
-import { CHAIN_INFO } from '../../constants/chains'
+import {CHAIN_INFO, SupportedChainId} from '../../constants/chains'
 import { useToken } from '../../hooks/Tokens'
 import BigNumber from 'bignumber.js'
 import useActiveWeb3React from "../../hooks/useActiveWeb3React";
@@ -69,6 +70,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState(0)
   const [allowanceAmount, setAllowanceAmount] = useState(0)
+  const toast = useToast()
 
   const refresh = useCallback(async () => {
     if (!account) {
@@ -123,6 +125,25 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const handleApprove = async () => {
     if (!chainId) {
       return
+    }
+
+    if (chainId === SupportedChainId.POLYGON && props.tokenAddress === '0x0000000000000000000000000000000000001010') {
+      toast({
+        position: 'top',
+        render: () => (
+          <Box
+            color="white"
+            p={3}
+            px={6}
+            bg="primary.500"
+            textAlign={'center'}
+            fontWeight={'bold'}
+            borderRadius={'full'}
+          >
+            Sorry, we don't support this mining token. We only support ERC20 Token or ETH.
+          </Box>
+        ),
+      })
     }
     await approve(NEST_OPEN_PLATFORM_ADDRESS[chainId], parseToBigNumber(10).shiftedBy(36).toFixed(0))
     await refresh()
