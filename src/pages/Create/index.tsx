@@ -28,19 +28,19 @@ import {useToken} from "../../hooks/Tokens";
 const OpenChanel = () => {
   const [quotationTokenList, setQuotationTokenList] = useState<string[]>([])
   const [miningTokenAddress, setMiningTokenAddress] = useState<string>('')
-  const {symbol: miningTokenSymbol } = useToken(miningTokenAddress)
-  const [standardOutput, setStandardOutput] = useState(0)
+  const {symbol: miningTokenSymbol, decimals: miningTokenDecimals} = useToken(miningTokenAddress)
+  const [standardOutput, setStandardOutput] = useState('0')
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
   const [status, setStatus] = useState(IDLE)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const {chainId} = useActiveWeb3React()
   const navigate = useNavigate()
 
-  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: number) => {
+  const create = async (quotationTokenList: string[], miningTokenAddress: string, standardOutput: number, decimal: number) => {
     setStatus(PROCESSING)
     const config = {
       // 标准出矿量 uint96
-      rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(18).toFixed(0),
+      rewardPerBlock: parseToBigNumber(standardOutput).shiftedBy(decimal).toFixed(0),
       // postFee uint16
       postFeeUnit: parseToBigNumber(0).shiftedBy(4).toFixed(0),
       // singleFee uint16
@@ -87,6 +87,8 @@ const OpenChanel = () => {
       }, IDLE_DELAY)
     }
   }
+
+  console.log(miningTokenDecimals)
 
   return (
     <Stack px={'20px'} py={'20px'} spacing={'20px'}>
@@ -229,7 +231,9 @@ const OpenChanel = () => {
               errorBorderColor={'primary.500'}
               variant={"filled"}
             >
-              <NumberInputField id='amount' onChange={(e) => setStandardOutput(Number(e.target.value))}/>
+              <NumberInputField
+                onChange={(e) => setStandardOutput(e.target.value)}
+              />
               <InputRightElement h={'full'} w={'120px'} justifyContent={"end"} pr={4}
                                  children={<Text fontWeight={'bold'} fontSize={'md'}>{miningTokenSymbol}/Block</Text>}/>
             </NumberInput>
@@ -241,7 +245,7 @@ const OpenChanel = () => {
             w={'180px'}
             isLoading={status === PROCESSING}
             disabled={quotationTokenList.length === 0 || !isAddress(miningTokenAddress)}
-            onClick={() => create(quotationTokenList, miningTokenAddress, standardOutput)}
+            onClick={() => create(quotationTokenList, miningTokenAddress, Number(standardOutput), miningTokenDecimals)}
           >
             {status === IDLE && ('Confirm')}
             {status === SUCCESS && ('Success')}

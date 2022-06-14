@@ -48,7 +48,7 @@ const WalletAndTokenList = () => {
         />
       </Stack>
 
-      <Stack overflow={'scroll'} h={isLargerThan1024 ? (activeChannelInfo.opener === account ? '490px' : '414px') : ''} w={'full'}>
+      <Stack overflow={'scroll'} h={isLargerThan1024 ? (activeChannelInfo.opener === account ? '600px' : '540px') : ''} w={'full'}>
         <Stack direction={'row'} fontSize={isLargerThan1024 ? 'sm' : 'md'} fontWeight={'semibold'} w={'full'} justifyContent={"space-around"}>
           <Text>Channel</Text>
           <Box>

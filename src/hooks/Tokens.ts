@@ -13,6 +13,7 @@ export const useToken = (tokenAddress: string) => {
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const [fetchStatus, setFetchStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('')
+  const [decimals, setDecimals] = useState(0)
   const { chainId } = useActiveWeb3React()
   const [totalSupply, setTotalSupply] = useState(new BigNumber(0))
 
@@ -29,11 +30,15 @@ export const useToken = (tokenAddress: string) => {
       setFetchStatus(PROCESSING)
       const res = await contract?.symbol()
       const res2 = await contract?.totalSupply()
+      const res3 = await contract?.decimals()
       if (res) {
         setSymbol(res)
       }
       if (res2) {
         setTotalSupply(parseToBigNumber(res2))
+      }
+      if (res3) {
+        setDecimals(res3)
       }
       setFetchStatus(SUCCESS)
       setTimeout(() => {
@@ -103,6 +108,7 @@ export const useToken = (tokenAddress: string) => {
 
   return {
     symbol,
+    decimals,
     totalSupply,
     allowance,
     balanceOf,
