@@ -65,6 +65,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
     balanceOf,
     approve,
     approveStatus,
+    decimals: tokenDecimals,
     symbol: tokenSymbol,
     allowance,
   } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
@@ -94,7 +95,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
         value = parseToBigNumber(amount).shiftedBy(18)
       }
       //  function increase(uint channelId, uint96 vault) external payable;
-      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0), {
+      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(tokenDecimals).toFixed(0), {
         value: value.toFixed(0),
       })
       const res = await tx.wait()
@@ -218,7 +219,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { info, refresh: fetchChannelInfo } = useChannelInfo(channelId)
-  const { balanceOf, symbol: tokenSymbol } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
+  const { balanceOf, symbol: tokenSymbol, decimals } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
 
   const refresh = useCallback(async () => {
@@ -233,7 +234,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
     if (!nestOpenPlatform) return
     try {
       setWithdrawStatus(PROCESSING)
-      const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(decimals).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
         case 0:
