@@ -59,23 +59,23 @@ export const useToken = (tokenAddress: string) => {
 
   const balanceOf = useCallback(async (account: string) => {
     if (tokenAddress === ZERO_ADDRESS) {
-      return parseToBigNumber((await library?.getBalance(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
+      return parseToBigNumber((await library?.getBalance(account)) ?? new BigNumber(NaN)).shiftedBy(-decimals)
     }
 
     try {
-      return parseToBigNumber((await contract?.balanceOf(account)) ?? new BigNumber(NaN)).shiftedBy(-18)
+      return parseToBigNumber((await contract?.balanceOf(account)) ?? new BigNumber(NaN)).shiftedBy(-decimals)
     } catch (e) {
       return new BigNumber(0)
     }
-  }, [contract, library, tokenAddress])
+  }, [contract, decimals, library, tokenAddress])
 
   const allowance = useCallback(async (owner: string, spender: string) => {
     try {
-      return parseToBigNumber((await contract?.allowance(owner, spender)) ?? new BigNumber(NaN)).shiftedBy(-18)
+      return parseToBigNumber((await contract?.allowance(owner, spender)) ?? new BigNumber(NaN)).shiftedBy(-decimals)
     } catch (e) {
       return new BigNumber(0)
     }
-  }, [contract])
+  }, [contract, decimals])
 
   const approve = useCallback( async (spender: string, value: string) => {
     try {
