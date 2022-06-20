@@ -29,8 +29,8 @@ const Information = () => {
   const { chainId } = useActiveWeb3React()
   const channelId = useRecoilValue(activeChannelIdAtom)
   const { info, status } = useChannelInfo(channelId)
-  const { symbol: miningTokenSymbol } = useToken(info.reward)
-  const { symbol: priceTokenSymbol } = useToken(info.token0)
+  const { symbol: miningTokenSymbol, decimals: miningTokenDecimals } = useToken(info.reward)
+  const { symbol: priceTokenSymbol, decimals: priceTokenDecimals } = useToken(info.token0)
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
   return (
@@ -47,7 +47,7 @@ const Information = () => {
         ) }
         <InformationDetail
           title={'Price Token Unit'}
-          value={formatNumber(parseToBigNumber(info.unit).shiftedBy(-18))}
+          value={formatNumber(parseToBigNumber(info.unit).shiftedBy(-priceTokenDecimals))}
           loading={status === PROCESSING}
           unit={priceTokenSymbol}
         />
@@ -60,7 +60,7 @@ const Information = () => {
         ) }
         <InformationDetail
           title={'Standard Output'}
-          value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-18))}
+          value={formatNumber(parseToBigNumber(info.rewardPerBlock).shiftedBy(-miningTokenDecimals))}
           unit={miningTokenSymbol + '/Block'}
           loading={status === PROCESSING}
         />
@@ -96,7 +96,7 @@ const Information = () => {
         ) }
         <InformationDetail
           title={'Total Mining Token'}
-          value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-18))}
+          value={formatNumber(parseToBigNumber(info.vault).shiftedBy(-miningTokenDecimals))}
           // unit={miningTokenSymbol}
           loading={status === PROCESSING}
         />
