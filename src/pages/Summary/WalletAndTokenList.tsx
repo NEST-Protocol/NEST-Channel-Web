@@ -4,12 +4,14 @@ import {useNavigate} from 'react-router-dom'
 import Web3Status from '../../components/Web3Status'
 import {useActiveChannelList} from '../../hooks/useActiveChannelList'
 import {useRecoilState, useRecoilValue} from 'recoil'
-import {activeChannelIdAtom, activeChannelInfoAtom, ChannelInfo, channelListAtom} from '../../state/Summary'
+import {activeChannelIdAtom, activeChannelInfoAtom, channelListAtom} from '../../state/Summary'
 import {useToken} from '../../hooks/Tokens'
 import {IDLE} from '../../constants/misc'
 import {useChannelInfo} from '../../hooks/useChannelInfo'
 import {TokenName} from '../../components/InputWithTokenName'
 import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+import {PriceChannelViewStruct} from "../../abis/types/NestOpenPlatform";
+import {parseToBigNumber} from "../../utils/bignumberUtil";
 
 const WalletAndTokenList = () => {
   const navigate = useNavigate()
@@ -20,10 +22,10 @@ const WalletAndTokenList = () => {
   const toast = useToast()
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
-  const handleSearch = (channel: ChannelInfo) => {
+  const handleSearch = (channel: PriceChannelViewStruct) => {
     let isQuoteToken = false
-    channel.pairs.forEach((item) => {
-      if (item !== undefined && item.toLowerCase().includes(searchText.toLowerCase())) {
+    channel.pairs.forEach(({target}) => {
+      if (target !== undefined && target.toLowerCase().includes(searchText.toLowerCase())) {
         isQuoteToken = true
       }
     })
@@ -61,8 +63,8 @@ const WalletAndTokenList = () => {
           <Text>Quote</Text>
         </Stack>
         <Divider/>
-        {channelList.filter(handleSearch).map(({channelId, token0, pairs}) => (
-          <ChannelListItem key={channelId} channelId={channelId} token0={token0} pairs={pairs}/>
+        {channelList.filter(handleSearch).map((item) => (
+          <ChannelListItem key={parseToBigNumber(item.channelId).toFixed()} item={item}/>
         ))}
       </Stack>
       <Spacer/>
@@ -100,15 +102,15 @@ const WalletAndTokenList = () => {
   )
 }
 
-const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
+const ChannelListItem: FC<{item: PriceChannelViewStruct}> = ({item}) => {
   const [activeChannelId, setActiveChannelId] = useRecoilState(activeChannelIdAtom)
-  const {symbol: priceTokenSymbol, fetchStatus: priceStatus} = useToken(props.token0)
-  const {info} = useChannelInfo(props.channelId)
+  const {symbol: priceTokenSymbol, fetchStatus: priceStatus} = useToken(item.token0)
+  const {info} = useChannelInfo(parseToBigNumber(item.channelId).toFixed())
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
   useEffect(() => {
     setChannelList(
       channelList.map((info) =>
-        info.channelId === props.channelId
+        info.channelId === item.channelId
           ? {
             ...info,
             pairs: info.pairs.map((item) => item),
@@ -117,7 +119,7 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
       )
     )
     // eslint-disable-next-line
-  }, [info.pairs, props.channelId, setChannelList])
+  }, [info.pairs, item.channelId, setChannelList])
 
   return (
     <Skeleton isLoaded={priceStatus === IDLE}>
@@ -127,25 +129,25 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
         spacing={1}
         cursor={'pointer'}
         onClick={() => {
-          setActiveChannelId(props.channelId)
+          setActiveChannelId(parseToBigNumber(item.channelId).toFixed())
         }}
       >
         <Text
-          color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
+          color={activeChannelId === item.channelId ? 'primary.500' : 'secondary.500'}
           fontWeight={600}
           whiteSpace={'nowrap'}
         >
-          {props.channelId} / {priceTokenSymbol} /
+          {item.channelId} / {priceTokenSymbol} /
         </Text>
         <Stack direction={'row'} w={'full'} spacing={1} overflow={'scroll'} alignItems={'center'}>
-          {info.pairs.slice(0, 2).map((item) => (
+          {info.pairs.slice(0, 2).map((pair) => (
             <TokenName
-              address={item.target}
-              color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}
+              address={pair.target}
+              color={activeChannelId === item.channelId ? 'primary.500' : 'secondary.500'}
             />
           ))}
           {info.pairs.length > 2 && (
-            <Text color={activeChannelId === props.channelId ? 'primary.500' : 'secondary.500'}>...</Text>
+            <Text color={activeChannelId === item.channelId ? 'primary.500' : 'secondary.500'}>...</Text>
           )}
         </Stack>
       </Stack>

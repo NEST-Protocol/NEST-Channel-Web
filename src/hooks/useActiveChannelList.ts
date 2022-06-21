@@ -1,10 +1,11 @@
-import { ChannelInfo, channelListAtom } from '../state/Summary'
+import { channelListAtom } from '../state/Summary'
 import { useRecoilState } from 'recoil'
 import { useCallback, useEffect } from 'react'
 import Web3 from 'web3'
 import { CHANNEL_OPEN_LOGS_FILTER } from '../constants/logs'
 import useInterval from '@use-it/interval'
 import useActiveWeb3React from "./useActiveWeb3React";
+import {PriceChannelViewStruct} from "../abis/types/NestOpenPlatform";
 
 export const useActiveChannelList = () => {
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
@@ -14,7 +15,7 @@ export const useActiveChannelList = () => {
   const refresh = useCallback(async () => {
     if (chainId) {
       try {
-        let list: ChannelInfo[] = []
+        let list: PriceChannelViewStruct[] = []
         const request = await fetch(
           CHANNEL_OPEN_LOGS_FILTER[chainId].hostname +
           '/api?module=logs&action=getLogs' +
@@ -39,9 +40,20 @@ export const useActiveChannelList = () => {
                 ['uint256', 'address', 'uint256', 'address'],
                 res.data
               )
-              const info: ChannelInfo = {
+              const info: PriceChannelViewStruct = {
                 channelId: decodeParameters[0],
                 token0: decodeParameters[1],
+                unit: 'NaN',
+                reward: 'NaN',
+                rewardPerBlock: 'NaN',
+                vault: 'NaN',
+                rewards: 'NaN',
+                postFeeUnit: 'NaN',
+                count: 'NaN',
+                opener: 'NaN',
+                genesisBlock: 'NaN',
+                singleFee: 'NaN',
+                reductionRate: 'NaN',
                 pairs: [],
               }
               list.push(info)
