@@ -20,6 +20,7 @@ export const useToken = (tokenAddress: string) => {
   const fetch = useCallback(async () => {
     if (tokenAddress === ZERO_ADDRESS) {
       setSymbol(CHAIN_INFO[chainId ?? 1].nativeSymbol)
+      setDecimals(18)
       return
     }
     if (!isAddress(tokenAddress)) {
