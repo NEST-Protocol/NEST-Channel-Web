@@ -47,6 +47,7 @@ export const useToken = (tokenAddress: string) => {
       }, IDLE_DELAY)
     } catch (e) {
       setSymbol('Error')
+      setDecimals(0)
       setFetchStatus(ERROR)
       setTimeout(() => {
         setFetchStatus(IDLE)
