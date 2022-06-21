@@ -13,7 +13,7 @@ export const useToken = (tokenAddress: string) => {
   const [approveStatus, setApproveStatus] = useState(IDLE)
   const [fetchStatus, setFetchStatus] = useState(IDLE)
   const [symbol, setSymbol] = useState('')
-  const [decimals, setDecimals] = useState(0)
+  const [decimals, setDecimals] = useState(18)
   const { chainId } = useActiveWeb3React()
   const [totalSupply, setTotalSupply] = useState(new BigNumber(0))
 
@@ -47,7 +47,7 @@ export const useToken = (tokenAddress: string) => {
       }, IDLE_DELAY)
     } catch (e) {
       setSymbol('Error')
-      setDecimals(0)
+      setDecimals(18)
       setFetchStatus(ERROR)
       setTimeout(() => {
         setFetchStatus(IDLE)
