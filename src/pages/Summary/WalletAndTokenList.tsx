@@ -106,15 +106,14 @@ const ChannelListItem: FC<ChannelInfo> = ({...props}) => {
   const {info} = useChannelInfo(props.channelId)
   const [channelList, setChannelList] = useRecoilState(channelListAtom)
   useEffect(() => {
-    const list = [...channelList]
     setChannelList(
-      list.map((pair) =>
-        pair.channelId === props.channelId
+      channelList.map((info) =>
+        info.channelId === props.channelId
           ? {
-            ...pair,
-            pairs: info.pairs.map(({target}) => target),
+            ...info,
+            pairs: info.pairs.map((item) => item),
           }
-          : pair
+          : info
       )
     )
     // eslint-disable-next-line

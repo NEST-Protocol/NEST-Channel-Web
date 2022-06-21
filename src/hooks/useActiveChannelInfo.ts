@@ -23,7 +23,7 @@ export const useActiveChannelInfo = () => {
 
   useEffect(() => {
     refresh()
-  }, [channelId, nestOpenPlatform, refresh, setInfo])
+  }, [refresh])
 
   return { info, status, refresh }
 }
