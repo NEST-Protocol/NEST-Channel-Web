@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react'
 import { FC } from 'react'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { useChannelInfo } from '../../hooks/useChannelInfo'
 import { isAddress, shortenAddress } from '../../utils'
 import { PROCESSING } from '../../constants/misc'
 import { CHAIN_INFO } from '../../constants/chains'
@@ -21,14 +20,12 @@ import { PUSD_ADDRESS } from '../../constants/addresses'
 import { useToken } from '../../hooks/Tokens'
 import { BigNumberish } from '@ethersproject/bignumber'
 import TokenIcon from '../../components/TokenIcon'
-import { useRecoilValue } from 'recoil'
-import { activeChannelIdAtom } from '../../state/Summary'
 import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+import {useActiveChannelInfo} from "../../hooks/useActiveChannelInfo";
 
 const Information = () => {
   const { chainId } = useActiveWeb3React()
-  const channelId = useRecoilValue(activeChannelIdAtom)
-  const { info, status } = useChannelInfo(channelId)
+  const { info, status } = useActiveChannelInfo()
   const { symbol: miningTokenSymbol, decimals: miningTokenDecimals } = useToken(info.reward)
   const { symbol: priceTokenSymbol, decimals: priceTokenDecimals } = useToken(info.token0)
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')

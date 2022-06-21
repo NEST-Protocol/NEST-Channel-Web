@@ -10,9 +10,6 @@ import {
   Stack,
   Text, useToast,
 } from '@chakra-ui/react'
-import { useRecoilValue } from 'recoil'
-import { activeChannelIdAtom } from '../../state/Summary'
-import { useChannelInfo } from '../../hooks/useChannelInfo'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { ERROR, IDLE, IDLE_DELAY, PROCESSING, SUCCESS, ZERO_ADDRESS } from '../../constants/misc'
 import { useNestOpenPlatformContract } from '../../hooks/useContract'
@@ -24,10 +21,10 @@ import {CHAIN_INFO, SupportedChainId} from '../../constants/chains'
 import { useToken } from '../../hooks/Tokens'
 import BigNumber from 'bignumber.js'
 import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+import {useActiveChannelInfo} from "../../hooks/useActiveChannelInfo";
 
 const Administrator = () => {
-  const channelId = useRecoilValue(activeChannelIdAtom)
-  const { info, status } = useChannelInfo(channelId)
+  const { info, status } = useActiveChannelInfo()
   const { account } = useActiveWeb3React()
 
   if (info.opener !== account) {
@@ -55,12 +52,10 @@ type PopoverProps = {
 
 const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [depositStatus, setDepositStatus] = useState(IDLE)
-  const channelId = useRecoilValue(activeChannelIdAtom)
-  const { refresh: refreshChannelInfo } = useChannelInfo(channelId)
+  const { refresh: refreshChannelInfo, info } = useActiveChannelInfo()
   const {
     balanceOf,
     approve,
@@ -95,7 +90,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
         value = parseToBigNumber(amount).shiftedBy(18)
       }
       //  function increase(uint channelId, uint96 vault) external payable;
-      const tx = await nestOpenPlatform.increase(activeChannelId, parseToBigNumber(amount).shiftedBy(tokenDecimals).toFixed(0), {
+      const tx = await nestOpenPlatform.increase(info.channelId, parseToBigNumber(amount).shiftedBy(tokenDecimals).toFixed(0), {
         value: value.toFixed(0),
       })
       const res = await tx.wait()
@@ -213,12 +208,10 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
 
 const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
   const { account } = useActiveWeb3React()
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
   const [amount, setAmount] = useState('0')
   const [withdrawStatus, setWithdrawStatus] = useState(IDLE)
-  const channelId = useRecoilValue(activeChannelIdAtom)
-  const { info, refresh: fetchChannelInfo } = useChannelInfo(channelId)
+  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
   const { balanceOf, symbol: tokenSymbol, decimals } = useToken(props.tokenAddress ?? NEST_ADDRESS[1])
   const [balance, setBalance] = useState('')
 
@@ -234,7 +227,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
     if (!nestOpenPlatform) return
     try {
       setWithdrawStatus(PROCESSING)
-      const tx = await nestOpenPlatform.decrease(activeChannelId, parseToBigNumber(amount).shiftedBy(decimals).toFixed(0))
+      const tx = await nestOpenPlatform.decrease(info.channelId, parseToBigNumber(amount).shiftedBy(decimals).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
         case 0:
@@ -309,10 +302,8 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
 
 const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
   const { chainId, account } = useActiveWeb3React()
-  const activeChannelId = useRecoilValue(activeChannelIdAtom)
   const nestOpenPlatform = useNestOpenPlatformContract(true)
-  const channelId = useRecoilValue(activeChannelIdAtom)
-  const { info, refresh: fetchChannelInfo } = useChannelInfo(channelId)
+  const { info, refresh: fetchChannelInfo } = useActiveChannelInfo()
   const [amount, setAmount] = useState('0')
   const { balance } = useBalance(account)
   const [withdrawFeeStatus, setWithdrawFeeStatus] = useState(IDLE)
@@ -321,7 +312,7 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
     if (!nestOpenPlatform) return
     try {
       setWithdrawFeeStatus(PROCESSING)
-      const tx = await nestOpenPlatform.pay(activeChannelId, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
+      const tx = await nestOpenPlatform.pay(info.channelId, account, parseToBigNumber(amount).shiftedBy(18).toFixed(0))
       const res = await tx.wait()
       switch (res.status) {
         case 0:
