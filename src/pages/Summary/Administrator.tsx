@@ -167,7 +167,7 @@ const DepositPopover: FC<PopoverProps> = ({ ...props }) => {
                 setAmount(parseToNumber(valueString, tokenSymbol))
               }}
               value={formatWithUnit(amount, tokenSymbol)}
-              max={balance}
+              max={Math.floor(balance)}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
@@ -277,7 +277,7 @@ const WithdrawPopover: FC<PopoverProps> = ({ ...props }) => {
                 setAmount(parseToNumber(valueString, tokenSymbol))
               }}
               value={formatWithUnit(amount, tokenSymbol)}
-              max={Number(info?.vault)}
+              max={parseToBigNumber(info?.vault).shiftedBy(-decimals).toNumber()}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
@@ -363,7 +363,7 @@ const WithdrawFeePopover: FC<PopoverProps> = ({ ...props }) => {
                 setAmount(parseToNumber(valueString, CHAIN_INFO[chainId ?? 1].nativeSymbol))
               }}
               value={formatWithUnit(amount, CHAIN_INFO[chainId ?? 1].nativeSymbol)}
-              max={parseToBigNumber(info.rewards).toNumber()}
+              max={parseToBigNumber(info.rewards).shiftedBy(-18).toNumber()}
               min={0}
               onFocus={(e) => {
                 e.target.setSelectionRange(0, amount.length)
