@@ -5,8 +5,8 @@ import rightUrl from '../../assets/svg/RIGHT_2_icon.svg'
 
 const Attention = () => {
   const list = [
-    {id: 1, icon: miningUrl, label: 'How to Mining?', link: 'https://www.nestprotocol.org/#/docs/NEST-Oracle/Mining-on-NEST-Oracle.md'},
-    {id: 2, icon: callingUrl, label: 'How to Calling?', link: 'https://www.nestprotocol.org/#/docs/NEST-Oracle/Calling-Price.md'},
+    {id: 1, icon: miningUrl, label: 'How to Mining?', link: 'https://nestprotocol.org/docs/NEST-Oracle/How-to-Mining'},
+    {id: 2, icon: callingUrl, label: 'How to Calling?', link: 'https://nestprotocol.org/docs/NEST-Oracle/How-to-Call-Price'},
   ]
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)')
 
