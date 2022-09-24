@@ -8,6 +8,7 @@ import PolygonLogoUrl from '../assets/svg/polygon.svg'
 export enum SupportedChainId {
   MAINNET = 1,
   RINKEBY = 4,
+  GOERLI = 5,
   BSC = 56,
   BSCTestnet = 97,
   POLYGON = 137,
@@ -17,6 +18,7 @@ export enum SupportedChainId {
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
   SupportedChainId.RINKEBY,
+  SupportedChainId.GOERLI,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
   SupportedChainId.POLYGON,
@@ -26,6 +28,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
 export const L1_CHAIN_IDS = [
   SupportedChainId.MAINNET,
   SupportedChainId.RINKEBY,
+  SupportedChainId.GOERLI,
   SupportedChainId.BSC,
   SupportedChainId.BSCTestnet,
 ] as const
@@ -72,6 +75,15 @@ export const CHAIN_INFO: ChainInfo = {
     explorer: 'https://rinkeby.etherscan.io/',
     infoLink: 'https://nestprotocol.org/',
     label: 'Rinkeby',
+    nativeSymbol: 'ETH',
+    logoUrl: ETHLogoUrl
+  },
+  [SupportedChainId.GOERLI]: {
+    chainId: SupportedChainId.GOERLI,
+    docs: 'https://nestprotocol.org/doc/zhnestwhitepaper.pdf',
+    explorer: 'https://goerli.etherscan.io/',
+    infoLink: 'https://nestprotocol.org/',
+    label: 'Goerli',
     nativeSymbol: 'ETH',
     logoUrl: ETHLogoUrl
   },

@@ -13,6 +13,7 @@ export const NetworkCard = () => {
   const menus = [
     CHAIN_INFO[SupportedChainId.MAINNET],
     CHAIN_INFO[SupportedChainId.RINKEBY],
+    CHAIN_INFO[SupportedChainId.GOERLI],
     CHAIN_INFO[SupportedChainId.BSC],
     CHAIN_INFO[SupportedChainId.BSCTestnet],
     CHAIN_INFO[SupportedChainId.KCC],

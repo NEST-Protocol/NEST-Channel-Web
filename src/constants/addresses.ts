@@ -5,6 +5,7 @@ type AddressMap = { [chainId: number]: string }
 export const NEST_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0x04abEdA201850aC0124161F037Efd70c74ddC74C',
   [SupportedChainId.RINKEBY]: '0xE313F3f49B647fBEDDC5F2389Edb5c93CBf4EE25',
+  [SupportedChainId.GOERLI]: '0xE2975bf674617bbCE57D2c72dCfC926716D8AC1F',
   [SupportedChainId.BSC]: '0x98f8669F6481EbB341B522fCD3663f79A3d1A6A7',
   [SupportedChainId.BSCTestnet]: '0x821edD79cc386E56FeC9DA5793b87a3A52373cdE',
   [SupportedChainId.KCC]: '0x98f8669F6481EbB341B522fCD3663f79A3d1A6A7',
@@ -13,6 +14,7 @@ export const NEST_ADDRESS: AddressMap = {
 export const PUSD_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0xCCEcC702Ec67309Bc3DDAF6a42E9e5a6b8Da58f0',
   [SupportedChainId.RINKEBY]: '0x5407cab67ad304FB8A4aC46D83b3Dd63A9dbA575',
+  [SupportedChainId.GOERLI]: '0x5cbb73B367FD69807381d06BC2041BEc86d8487d',
   [SupportedChainId.BSC]: '0x9b2689525e07406D8A6fB1C40a1b86D2cd34Cbb2',
   [SupportedChainId.BSCTestnet]: '0x3DA5c9aafc6e6D6839E62e2fB65825869019F291',
   [SupportedChainId.KCC]: '0x0C4CD7cA70172Af5f4BfCb7b0ACBf6EdFEaFab31',
@@ -22,6 +24,7 @@ export const PUSD_ADDRESS: AddressMap = {
 export const NEST_OPEN_PLATFORM_ADDRESS: AddressMap = {
   [SupportedChainId.MAINNET]: '0xE544cF993C7d477C7ef8E91D28aCA250D135aa03',
   [SupportedChainId.RINKEBY]: '0xc08E6A853241B9a08225EECf93F3b279FA7A1bE7',
+  [SupportedChainId.GOERLI]: '0x3948F9ec377110327dE3Fb8176C8Ed46296d76bA',
   [SupportedChainId.BSC]: '0x09CE0e021195BA2c1CDE62A8B187abf810951540',
   [SupportedChainId.BSCTestnet]: '0xF2f9E62f52389EF223f5Fa8b9926e95386935277',
   [SupportedChainId.KCC]: '0x7DBe94A4D6530F411A1E7337c7eb84185c4396e6',
